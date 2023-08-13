@@ -9,8 +9,7 @@ import Header from '../components/Header';
 import {
     Grid,
     GridItem,
-    Container,
-    useColorModeValue
+    Container
   } from '@chakra-ui/react';
 
 function RootLayout() {
@@ -18,15 +17,6 @@ function RootLayout() {
   return (
     <Container maxWidth={'1600px'}>
         <Grid
-          bgGradient={useColorModeValue(
-            'radial(gray.300 1px, transparent 1px)',
-            'radial(gray.300 1px, transparent 1px)'
-          )}
-          backgroundSize="20px 20px"
-          opacity="1"
-
-          marginLeft={'-16px'}
-          marginRight={'-16px'}
           templateColumns='repeat(12, 1fr)'> 
 
             <GridItem 
@@ -42,9 +32,8 @@ function RootLayout() {
             marginRight={{md: '1em'}}
             colSpan={{base: 12, sm: 12, md: 12}}
             colStart={{base: 1, sm: 1, md: 1}}>
-                <Outlet />
+                <Outlet />     
             </GridItem>
-
         </Grid>
   </Container>
   )

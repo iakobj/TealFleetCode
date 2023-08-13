@@ -11,7 +11,9 @@ function ErrorBoundary() {
 
     return (
         <Box>  
-            <Text align={'center'}>
+            <Text 
+            align={'center'}
+            marginTop={'60px'}>
                 Something went wrong... 
             </Text>
         </Box>
