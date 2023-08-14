@@ -21,8 +21,7 @@ import {
   // Navigation bar components
 import HeaderMainNav from './HeaderMainNav';
 import HeaderSubNav from './HeaderSubNav';
-
-import ComponentTemplate from './ComponentTemplate';
+import HeaderProfileMenu from './HeaderProfileMenu';
 
 function Header() {
 
@@ -32,6 +31,7 @@ function Header() {
         gridTemplateColumns= 'repeat(12, 1fr)'
         gridTemplateRows='repeat(2, 1fr)'>  
 
+            
             <GridItem
             colSpan={{base: 12, sm: 12, md: 12}}
             colStart={{base: 1, sm: 1, md: 1}}
@@ -50,25 +50,28 @@ function Header() {
                     objectFit='cover'
                     />
 
-                        <Text
-                        color='white'
-                        fontSize='1.5em'
-                        marginTop={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
-                        margin={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
-                        >
-                            TealFleet
-                        </Text>
+                    <Text
+                    color='white'
+                    fontSize='1.5em'
+                    marginTop={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
+                    margin={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
+                    >
+                        TealFleet
+                    </Text>
 
-                    <Container>
+                    <Spacer/>
+
+                    <Box margin={{base: '0.5em', sm: '0.5em', md: '0.5em'}}>
                         <HeaderMainNav/>
-                    </Container>
+                    </Box>
                     
-                    <Container>
-                        <ComponentTemplate/>
-                    </Container>
+                    <Spacer/>
+
+                    <Box margin={{base: '0.5em', sm: '0.5em', md: '0.5em'}}>
+                        <HeaderProfileMenu/>
+                    </Box>
 
                 </Flex>
-
             </GridItem>
 
             <GridItem
@@ -78,10 +81,10 @@ function Header() {
             rowStart={{base: 2, sm: 2, md: 2}}
             bg='#F4F7F4'
             boxShadow='md'
-            marginBottom={{md: '0.8em'}}
+            marginBottom={{md: '1.1em'}}
             borderRadius={{md: '0em 0em 0em 0em'}}>
 
-                <Center>
+                <Center margin={{base: '0.2em', sm: '0.2em', md: '0.2em'}}>
                     <HeaderSubNav/>
                 </Center>
 

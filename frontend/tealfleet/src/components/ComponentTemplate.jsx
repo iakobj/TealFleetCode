@@ -5,15 +5,15 @@ import * as React from 'react';
 // Chakra-UI components 
 import {
     Text,
-    Box
+    Flex
   } from '@chakra-ui/react';
   
   function Sample() {
 
     return (
-        <Box>
+        <Flex>
           <Text>Sample Text</Text>
-        </Box>
+        </Flex>
     )
   }
 

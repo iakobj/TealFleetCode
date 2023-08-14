@@ -45,8 +45,7 @@ const navItems = mainNavItems.NavItems;
             {Object.keys(navItems).map(key => (
                 <Text
                 color='blackAlpha.700'
-                marginTop={{base: '0.5em', sm: '0.5em', md: '0.5em'}}
-                fontSize={{base: 'sm', sm:'sm', md: 'lg', }}
+                fontSize={{base: 'sm', sm:'sm', md: 'lg'}}
                 key={navItems[key].nav_item_id}>
                     {navItems[key].nav_item}
                 </Text>
