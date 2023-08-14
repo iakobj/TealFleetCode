@@ -14,12 +14,15 @@ import {
     Container,
     Tab,
     Tabs,
-    TabList
+    TabList,
+    Center
   } from '@chakra-ui/react';
 
   // Navigation bar components
 import HeaderMainNav from './HeaderMainNav';
 import HeaderSubNav from './HeaderSubNav';
+
+import ComponentTemplate from './ComponentTemplate';
 
 function Header() {
 
@@ -42,20 +45,28 @@ function Header() {
                     <Image
                     src='public/images/TealFleet-White.png'
                     alt='TealFleet Logo'
-                    boxSize={{base: '2.2em', sm: '2.2em', md: '2.2em'  }}
+                    boxSize={{base: '2em', sm: '2em', md: '2em'  }}
                     margin={{base: '0.35em', sm: '0.35em', md: '0.35em'}}
                     objectFit='cover'
                     />
 
                         <Text
                         color='white'
-                        fontSize='1.55em'
+                        fontSize='1.5em'
                         marginTop={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
                         margin={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
                         >
                             TealFleet
                         </Text>
-                    <HeaderMainNav/>
+
+                    <Container>
+                        <HeaderMainNav/>
+                    </Container>
+                    
+                    <Container>
+                        <ComponentTemplate/>
+                    </Container>
+
                 </Flex>
 
             </GridItem>
@@ -69,9 +80,12 @@ function Header() {
             boxShadow='md'
             marginBottom={{md: '0.8em'}}
             borderRadius={{md: '0em 0em 0em 0em'}}>
-                <Text align={'center'}>
-                    bottom navbar
-                </Text>
+
+                <Center>
+                    <HeaderSubNav/>
+                </Center>
+
+
             </GridItem>
         </Grid>
     )

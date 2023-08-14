@@ -4,7 +4,9 @@ import * as React from 'react';
 // Chakra-UI components 
 import {
     Flex,
-    Text
+    Text,
+    Container,
+    HStack
 
   } from '@chakra-ui/react';
 
@@ -40,12 +42,18 @@ const navItems = mainNavItems.NavItems;
 
     return (
         <Flex>
+            <HStack spacing='0.5em'> 
             {Object.keys(navItems).map(key => (
-                <Text key={navItems[key].nav_item_id}
-                color='white'>
+                <Text
+                as='b'
+                color='white'
+                marginTop={{base: '0.5em', sm: '0.5em', md: '0.5em'}}
+                fontSize={{base: 'sm', sm:'sm', md: 'lg', }}
+                key={navItems[key].nav_item_id}>
                     {navItems[key].nav_item}
                 </Text>
             ))}
+            </HStack>
         </Flex>
     )
   }
