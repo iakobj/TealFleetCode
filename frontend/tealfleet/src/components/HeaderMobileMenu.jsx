@@ -6,7 +6,9 @@ import { Link as ChakraLink } from '@chakra-ui/react'
 import {
     Text,
     Box,
+    HStack,
     VStack,
+    Button,
     IconButton,
     Divider,
     Drawer,
@@ -81,15 +83,31 @@ const sNavItems = subNavItems.NavItems;
 
     return (
         <Box>
-            <IconButton
-            aria-label='Main menu' 
-            icon={<HamburgerIcon boxSize={{base: 6, sm: 6, md: 5}}/>}   
-            ref={btnRef} 
-            colorScheme='teal' 
-            size={{base: 'md', sm: 'md', md: 'sm'}}
-            onClick={onOpen}>
+            <HStack>
+                <Button
+                colorScheme='teal'
+                size={{base: 'md', sm:'md' , md: 'sm', lg: 'md'}}>
+                    <BellIcon 
+                    boxSize={6}
+                    color='white'/>
+
+                    <Text
+                    fontSize={{base: 'md', sm:'md' , md: 'lg', lg: 'lg'}}
+                    color='white'>
+                        12
+                    </Text>
+                </Button>
                 
-            </IconButton>
+                <IconButton
+                aria-label='Main menu' 
+                icon={<HamburgerIcon boxSize={{base: 6, sm: 6, md: 6}}/>}   
+                ref={btnRef} 
+                colorScheme='teal' 
+                size={{base: 'md', sm: 'md', md: 'sm', lg: 'md'}}
+                onClick={onOpen}>
+                </IconButton>
+            </HStack>
+
             <Drawer
             isOpen={isOpen}
             placement='right'

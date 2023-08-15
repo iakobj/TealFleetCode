@@ -11,6 +11,7 @@ import {
     HStack,
     Button,
     Menu,
+    IconButton,
     MenuButton,
     MenuList,
     MenuItem,
@@ -27,18 +28,21 @@ import {
         <Flex>
             <HStack>
                 <Box>
-                    <BellIcon 
-                    boxSize={6}
-                    color='white'/>
-                </Box>
-                <Box 
-                marginRight='1em'
-                marginLeft='-0.5em'>
-                    <Text
-                    fontSize={{base: 'sm', sm:'sm', md: 'lg'}}
-                    color='white'>
-                        12
-                    </Text>
+                <HStack>
+                    <Button
+                    colorScheme='teal'
+                    size='sm'>
+                        <BellIcon 
+                        boxSize={6}
+                        color='white'/>
+
+                        <Text
+                        fontSize={{base: 'md', sm:'md', md: 'lg'}}
+                        color='white'>
+                            12
+                        </Text>
+                    </Button>
+                </HStack>
                 </Box>
 
                 <Menu>
