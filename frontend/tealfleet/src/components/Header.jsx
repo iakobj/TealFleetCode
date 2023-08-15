@@ -45,11 +45,11 @@ function Header() {
                     <Image
                     src='public/images/TealFleet-White.png'
                     alt='TealFleet Logo'
-                    boxSize={{base: '2.5em', sm: '2.5em', md: '2em'  }}
+                    boxSize={{base: '2.5em', sm: '2.5em', md: '2.3em'  }}
                     margin={{base: '0.65em', sm: '0.65em', md: '0.35em'}}
                     objectFit='cover'
                     />
-                    <Hide breakpoint='(max-width: 980px)'>
+                    <Hide breakpoint='(max-width: 1015px)'>
                         <Text
                         color='white'
                         fontSize='1.5em'
@@ -59,7 +59,7 @@ function Header() {
                         </Text>
                     </Hide>
 
-                    <Show breakpoint='(max-width: 800px)'>
+                    <Show breakpoint='(max-width: 825px)'>
                         <Text
                         color='white'
                         fontSize='1.5em'
@@ -69,22 +69,22 @@ function Header() {
                         </Text>
                     </Show>
 
-                    <Hide breakpoint='(max-width: 800px)'>
+                    <Hide breakpoint='(max-width: 825px)'>
                         <Spacer/>
-                        <Box margin={{base: '0.5em', sm: '0.5em', md: '0.5em'}}>
+                        <Box margin={{base: '0.6em', sm: '0.6em', md: '0.6em'}}>
                             <HeaderMainNav/>
                         </Box>
                     </Hide>
                     
                     <Spacer/>
 
-                    <Hide breakpoint='(max-width: 800px)'>
+                    <Hide breakpoint='(max-width: 825px)'>
                         <Box margin={{base: '0.7em', sm: '0.7em', md: '0.5em'}}>
                             <HeaderProfileMenu/>
                         </Box>
                     </Hide>
 
-                    <Show breakpoint='(max-width: 800px)'>
+                    <Show breakpoint='(max-width: 825px)'>
                         <Box margin={{base: '0.7em', sm: '0.7em', md: '0.5em'}}>
                             <HeaderMobileMenu/>
                         </Box>
@@ -92,7 +92,7 @@ function Header() {
                 </Flex>
             </GridItem>
 
-            <Hide breakpoint='(max-width: 800px)'>
+            <Hide breakpoint='(max-width: 825px)'>
                 <GridItem
                 colSpan={{base: 12, sm: 12, md: 12}}
                 colStart={{base: 1, sm: 1, md: 1}}
