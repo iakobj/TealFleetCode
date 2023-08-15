@@ -11,11 +11,9 @@ import {
     Image,
     Flex,
     Spacer,
-    Container,
-    Tab,
-    Tabs,
-    TabList,
-    Center
+    Center,
+    Show, 
+    Hide 
   } from '@chakra-ui/react';
 
   // Navigation bar components
@@ -42,6 +40,7 @@ function Header() {
             marginTop={{md: '0.8em'}}
             borderRadius={{md: '1.0em 1.0em 0em 0em'}}>
                 <Flex>
+                    
                     <Image
                     src='public/images/TealFleet-White.png'
                     alt='TealFleet Logo'
@@ -49,21 +48,24 @@ function Header() {
                     margin={{base: '0.35em', sm: '0.35em', md: '0.35em'}}
                     objectFit='cover'
                     />
-
-                    <Text
-                    color='white'
-                    fontSize='1.5em'
-                    marginTop={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
-                    margin={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
-                    >
-                        TealFleet
-                    </Text>
-
+                    <Hide breakpoint='(max-width: 980px)'>
+                        <Text
+                        color='white'
+                        fontSize='1.5em'
+                        marginTop={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
+                        margin={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
+                        >
+                            TealFleet
+                        </Text>
+                    </Hide>
+                    <Hide breakpoint='(max-width: 800px)'>
                     <Spacer/>
 
-                    <Box margin={{base: '0.5em', sm: '0.5em', md: '0.5em'}}>
-                        <HeaderMainNav/>
-                    </Box>
+                    
+                        <Box margin={{base: '0.5em', sm: '0.5em', md: '0.5em'}}>
+                            <HeaderMainNav/>
+                        </Box>
+                    </Hide>
                     
                     <Spacer/>
 

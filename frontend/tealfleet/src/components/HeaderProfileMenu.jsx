@@ -16,11 +16,13 @@ import {
     MenuGroup,
     MenuOptionGroup,
     MenuDivider,
+    Show,
+    Hide
     
   } from '@chakra-ui/react';
   
   // Chakra-UI icons 
-  import { BellIcon } from '@chakra-ui/icons'
+  import { BellIcon, HamburgerIcon } from '@chakra-ui/icons'
 
   function HeaderProfileMenu() {
 
@@ -32,9 +34,11 @@ import {
                     boxSize={6}
                     color='white'/>
                 </Box>
-                <Box marginRight='1em'>
+                <Box 
+                marginRight='1em'
+                marginLeft='-0.5em'>
                     <Text
-                    as='b' 
+                    fontSize={{base: 'sm', sm:'sm', md: 'lg'}}
                     color='white'>
                         12
                     </Text>
@@ -42,12 +46,21 @@ import {
 
                 <Menu>
                     <MenuButton>
+                    <Hide breakpoint='(max-width: 980px)'>
                         <Text
                         as='b'
                         color='white'
                         fontSize={{base: 'sm', sm:'sm', md: 'lg'}}>
                             Jakob Jozelj
                         </Text>
+                    </Hide>
+                    <Show breakpoint='(max-width: 980px)'>
+                        <Box>
+                            <HamburgerIcon 
+                            boxSize={6}
+                            color='white'/>
+                        </Box>
+                    </Show>
                     </MenuButton>
                     <MenuList>
                             <MenuItem as='a' href='#'>Profile</MenuItem>
