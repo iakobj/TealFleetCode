@@ -13,9 +13,6 @@ import RootLayout from './layouts/RootLayout';
 // Pages
 import ErrorBoundary from './pages/ErrorBoundary';
 
-
-
-
 // ChakraProvider component
 import { ChakraProvider } from '@chakra-ui/react'
 
