@@ -1,6 +1,7 @@
 // React components
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ChakraLink } from '@chakra-ui/react'
 
 // Chakra-UI components 
 import {
@@ -20,6 +21,7 @@ import {
 import HeaderMainNav from './HeaderMainNav';
 import HeaderSubNav from './HeaderSubNav';
 import HeaderProfileMenu from './HeaderProfileMenu';
+import HeaderMobileMenu from './HeaderMobileMenu';
 
 function Header() {
 
@@ -39,26 +41,36 @@ function Header() {
             marginTop={{md: '0.8em'}}
             borderRadius={{md: '1.0em 1.0em 0em 0em'}}>
                 <Flex>
-                    
+
                     <Image
                     src='public/images/TealFleet-White.png'
                     alt='TealFleet Logo'
-                    boxSize={{base: '2em', sm: '2em', md: '2em'  }}
-                    margin={{base: '0.35em', sm: '0.35em', md: '0.35em'}}
+                    boxSize={{base: '2.5em', sm: '2.5em', md: '2em'  }}
+                    margin={{base: '0.65em', sm: '0.65em', md: '0.35em'}}
                     objectFit='cover'
                     />
                     <Hide breakpoint='(max-width: 980px)'>
                         <Text
                         color='white'
                         fontSize='1.5em'
-                        marginTop={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
                         margin={{base: '0.15em', sm: '0.15em', md: '0.15em'}}
                         >
                             TealFleet
                         </Text>
                     </Hide>
+
+                    <Show breakpoint='(max-width: 800px)'>
+                        <Text
+                        color='white'
+                        fontSize='1.5em'
+                        margin={{base: '0.45em', sm: '0.45em', md: '0.15em'}}
+                        >
+                            TealFleet
+                        </Text>
+                    </Show>
+
                     <Hide breakpoint='(max-width: 800px)'>
-                    <Spacer/>
+                        <Spacer/>
                         <Box margin={{base: '0.5em', sm: '0.5em', md: '0.5em'}}>
                             <HeaderMainNav/>
                         </Box>
@@ -66,30 +78,39 @@ function Header() {
                     
                     <Spacer/>
 
-                    <Box margin={{base: '0.5em', sm: '0.5em', md: '0.5em'}}>
-                        <HeaderProfileMenu/>
-                    </Box>
+                    <Hide breakpoint='(max-width: 800px)'>
+                        <Box margin={{base: '0.7em', sm: '0.7em', md: '0.5em'}}>
+                            <HeaderProfileMenu/>
+                        </Box>
+                    </Hide>
 
+                    <Show breakpoint='(max-width: 800px)'>
+                        <Box margin={{base: '0.7em', sm: '0.7em', md: '0.5em'}}>
+                            <HeaderMobileMenu/>
+                        </Box>
+                    </Show>
                 </Flex>
             </GridItem>
 
-            <GridItem
-            colSpan={{base: 12, sm: 12, md: 12}}
-            colStart={{base: 1, sm: 1, md: 1}}
-            rowSpan={{base: 1, sm: 1, md: 1}}
-            rowStart={{base: 2, sm: 2, md: 2}}
-            bg='#F4F7F4'
-            boxShadow='md'
-            marginBottom={{md: '1.1em'}}
-            borderRadius={{md: '0em 0em 0em 0em'}}>
+            <Hide breakpoint='(max-width: 800px)'>
+                <GridItem
+                colSpan={{base: 12, sm: 12, md: 12}}
+                colStart={{base: 1, sm: 1, md: 1}}
+                rowSpan={{base: 1, sm: 1, md: 1}}
+                rowStart={{base: 2, sm: 2, md: 2}}
+                bg='#F4F7F4'
+                boxShadow='md'
+                marginBottom={{md: '1.1em'}}
+                borderRadius={{md: '0em 0em 0em 0em'}}>
 
-                <Center margin={{base: '0.2em', sm: '0.2em', md: '0.2em'}}>
-                    <HeaderSubNav/>
-                </Center>
+                    <Center margin={{base: '0.2em', sm: '0.2em', md: '0.2em'}}>
+                        <HeaderSubNav/>
+                    </Center>
 
-
-            </GridItem>
+                </GridItem>
+            </Hide>
         </Grid>
+
     )
   }
 

@@ -1,24 +1,21 @@
 // React components
 import * as React from 'react';
+import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ChakraLink } from '@chakra-ui/react'
 
 // Chakra-UI components 
 import {
     Text,
     Flex,
-    Icon,
     Box,
     HStack,
+    Button,
     Menu,
     MenuButton,
     MenuList,
     MenuItem,
-    MenuItemOption,
-    MenuGroup,
-    MenuOptionGroup,
-    MenuDivider,
     Show,
-    Hide
-    
+    Hide 
   } from '@chakra-ui/react';
   
   // Chakra-UI icons 
@@ -45,7 +42,11 @@ import {
                 </Box>
 
                 <Menu>
-                    <MenuButton>
+                    <MenuButton 
+                    as={Button} 
+                    colorScheme='teal'
+                    size='sm'>
+
                     <Hide breakpoint='(max-width: 980px)'>
                         <Text
                         as='b'

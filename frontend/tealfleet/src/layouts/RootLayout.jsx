@@ -17,7 +17,9 @@ function RootLayout() {
   return (
     <Container maxWidth={'1600px'}>
         <Grid
-          templateColumns='repeat(12, 1fr)'> 
+        marginLeft={{base: '-16px', sm: '-16px', md: '0px'}}
+        marginRight={{base: '-16px', sm: '-16px', md: '0px'}}
+        templateColumns='repeat(12, 1fr)'> 
             <GridItem 
             as='header'
             colSpan={{base: 12, sm: 12, md: 12}}

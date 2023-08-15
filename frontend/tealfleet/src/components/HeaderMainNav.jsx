@@ -1,13 +1,13 @@
 // React components
 import * as React from 'react';
+import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ChakraLink } from '@chakra-ui/react'
 
 // Chakra-UI components 
 import {
     Flex,
     Text,
-    Container,
     HStack
-
   } from '@chakra-ui/react';
 
 let mainNavItems = {
