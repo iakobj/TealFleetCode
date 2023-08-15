@@ -30,8 +30,33 @@ import {
         },
         main_nav_item_5: {
             nav_item_id: 5,
-            nav_item: 'PureStorage'
+            nav_item: 'Veeam'
+        },
+        main_nav_item_6: {
+            nav_item_id: 6,
+            nav_item: 'VMware'
+        },
+        main_nav_item_7: {
+            nav_item_id: 7,
+            nav_item: 'F5'
+        },
+        main_nav_item_8: {
+            nav_item_id: 8,
+            nav_item: 'Microsoft'
+        },
+        main_nav_item_9: {
+            nav_item_id: 9,
+            nav_item: 'Lenovo'
+        },
+        main_nav_item_10: {
+            nav_item_id: 10,
+            nav_item: 'HP'
+        },
+        main_nav_item_11: {
+            nav_item_id: 11,
+            nav_item: 'IBM'
         }
+        
     }
 };
 

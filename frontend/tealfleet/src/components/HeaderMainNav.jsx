@@ -42,7 +42,7 @@ const navItems = mainNavItems.NavItems;
 
     return (
         <Flex>
-            <HStack spacing='0.5em'> 
+            <HStack spacing={{md: '0.5em', lg: '0.5em', xl: '2.0em'}}> 
             {Object.keys(navItems).map(key => (
                 <Text
                 as='b'
