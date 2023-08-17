@@ -3,6 +3,8 @@
 # dependencies
 /frontend/node_modules
 /backend/node_modules
+/frontend/tealfleet/node_modules
+/backend/tealfleet/node_modules
 /.pnp
 .pnp.js
 package-lock.json
@@ -15,7 +17,7 @@ frontend/build
 backend/build
 
 # database
-/backend/db
+/backend/tealfleet/db
 
 # misc
 .DS_Store
