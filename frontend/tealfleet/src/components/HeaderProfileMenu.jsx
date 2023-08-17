@@ -27,23 +27,7 @@ import {
     return (
         <Flex>
             <HStack>
-                <Box>
-                <HStack>
-                    <Button
-                    colorScheme='teal'
-                    size='sm'>
-                        <BellIcon 
-                        boxSize={6}
-                        color='white'/>
 
-                        <Text
-                        fontSize={{base: 'md', sm:'md', md: 'lg'}}
-                        color='white'>
-                            12
-                        </Text>
-                    </Button>
-                </HStack>
-                </Box>
 
                 <Menu>
                     <MenuButton 

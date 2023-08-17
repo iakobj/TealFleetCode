@@ -22,7 +22,7 @@ import {
   } from '@chakra-ui/react';
 
 // Chakra-UI icons 
-import { BellIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { HamburgerIcon } from '@chakra-ui/icons'
 
   let mainNavItems = {
     NavItems: {
@@ -84,20 +84,6 @@ const sNavItems = subNavItems.NavItems;
     return (
         <Box>
             <HStack>
-                <Button
-                colorScheme='teal'
-                size={{base: 'md', sm:'md' , md: 'sm', lg: 'md'}}>
-                    <BellIcon 
-                    boxSize={6}
-                    color='white'/>
-
-                    <Text
-                    fontSize={{base: 'md', sm:'md' , md: 'lg', lg: 'lg'}}
-                    color='white'>
-                        12
-                    </Text>
-                </Button>
-                
                 <IconButton
                 aria-label='Main menu' 
                 icon={<HamburgerIcon boxSize={{base: 6, sm: 6, md: 6}}/>}   
@@ -112,8 +98,7 @@ const sNavItems = subNavItems.NavItems;
             isOpen={isOpen}
             placement='right'
             onClose={onClose}
-            finalFocusRef={btnRef}
-            >
+            finalFocusRef={btnRef}>
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />

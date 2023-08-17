@@ -37,7 +37,6 @@ let mainNavItems = {
 
 const navItems = mainNavItems.NavItems;
 
-
   function HeaderMainNav() {
 
     return (
