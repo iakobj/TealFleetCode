@@ -20,7 +20,7 @@ import {
   } from '@chakra-ui/react';
   
   // Chakra-UI icons 
-  import { BellIcon, HamburgerIcon } from '@chakra-ui/icons'
+  import { HamburgerIcon } from '@chakra-ui/icons'
 
   function HeaderProfileMenu() {
 
@@ -40,7 +40,7 @@ import {
                         as='b'
                         color='white'
                         fontSize={{base: 'sm', sm:'sm', md: 'lg'}}>
-                            Jakob Jozelj
+                            Jakob
                         </Text>
                     </Hide>
                     <Show breakpoint='(max-width: 980px)'>

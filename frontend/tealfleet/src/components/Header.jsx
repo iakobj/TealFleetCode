@@ -11,7 +11,6 @@ import {
     Text,
     Box,
     Image,
-    Flex,
     Spacer,
     Center,
     Show, 
@@ -68,8 +67,7 @@ function Header() {
                         <Box>
                             <Text
                             color='white'
-                            fontSize='1.5em'
-                            margin={{base: '0.45em', sm: '0.45em', md: '0.15em'}}>
+                            fontSize='1.5em'>
                                 TealFleet
                             </Text>
                         </Box>
@@ -122,7 +120,6 @@ function Header() {
                 </GridItem>
             </Hide>
         </Grid>
-
     )
   }
 
