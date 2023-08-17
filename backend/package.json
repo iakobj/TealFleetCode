@@ -1,0 +1,16 @@
+{
+  "name": "tealfleet",
+  "version": "0.1.0",
+  "description": "TealFleet backend server",
+  "main": "Server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jakob Jozelj",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3"
+  }
+}
