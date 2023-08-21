@@ -1,4 +1,3 @@
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/75ac28bb-b49d-4078-a8e0-9d6f9cec27b6/Untitled.png)
 
 TealFleet is an idea in the making.
 
