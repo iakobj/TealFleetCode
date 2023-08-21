@@ -1,4 +1,3 @@
-<img width="1169" alt="image" src="https://github.com/iakobj/TealFleetCode/assets/16597630/e5c38a99-d347-4831-b4c0-b6f8b5b8ee6f">
 
 
 TealFleet is an idea in the making. 
