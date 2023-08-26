@@ -1,5 +1,11 @@
 
+<img
+width="100px"
+height="100px"
+src="./screenshots/TealFleet-Teal.png"/>
+
 TealFleet is an idea in the making.
+
 
 Goal of this project is self-hosted a web app for insight into  physical and virtual assets in small to mid size data-centers.
 
@@ -8,7 +14,9 @@ Goal of this project is self-hosted a web app for insight into  physical and vir
 - OS, Hypervisors, backup software , ..
 - Virtual and physical appliances
 
-The primary goal of the application is to provide users with an interface that is easy to use, offers clear visibility, and presents a well-organized overview of assets along with the associated information, such as:
+<img src="./screenshots/TealFleet-navbar.png"/>
+
+Aim of the application is to provide users with an interface that is easy to use, offers clear visibility, and presents a well-organized overview of assets along with the associated information, such as:
 
 - Vendor name
 - Product part number and serial number
@@ -22,25 +30,18 @@ The 'Cards' design would serve as the primary means to display this information.
 So far i have done:
 
 - initial database scheme design,
-
 - Detailed GUI wire-framing for main parts of the app,
-
 - Started with implementation
 
-Wire framing is done with Figma
 
 Frontend
-
+- Wire framing is done with Figma
 - React, react Router
-
 - ChakraUI
-
 - Vite
 
 Backend
 
 - NodeJS
 - ExpressJS
-- 
-
-Database will be PostgreSQL
+- Database will be PostgreSQL
