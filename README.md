@@ -4,8 +4,7 @@ width="100px"
 height="100px"
 src="./screenshots/TealFleet-Teal.png"/>
 
-# TealFleet 
-## Is an idea in the making.
+# TealFleet - Is an idea in the making.
 
 
 Goal of this project is self-hosted a web app for insight into  physical and virtual assets in small to mid size data-centers.
