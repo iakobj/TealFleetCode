@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Outlet } from 'react-router-dom';
 
 // Routes and Components
-import Header from '../components/Header';
+import Header from './header/Header';
 
 // Chakra-UI components 
 import {
