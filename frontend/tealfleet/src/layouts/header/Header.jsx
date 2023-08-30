@@ -45,7 +45,7 @@ function Header() {
 
                     <Box>
                         <Image
-                        src='public/images/TealFleet-White.png'
+                        src='/images/TealFleet-White.png'
                         alt='TealFleet Logo'
                         boxSize={{base: '2.5em', sm: '2.5em', md: '2.3em'  }}
                         marginLeft={{base: '0.35em', sm: '0.35em', md: '0.35em'}}
