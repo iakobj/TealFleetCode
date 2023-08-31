@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
 })
 
 // Express routers
-const tenantsRouter = require("./routes/tenants");
+const tenantsRouter = require("./routes/tenantsRouter");
 
 
 app.use("/tenants", tenantsRouter);

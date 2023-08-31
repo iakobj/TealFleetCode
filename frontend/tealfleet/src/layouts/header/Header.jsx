@@ -37,7 +37,7 @@ function Header() {
             colStart={{base: 1, sm: 1, md: 1}}
             rowSpan={{base: 1, sm: 1, md: 1}}
             rowStart={{base: 1, sm: 1, md: 1}}
-            bg='#008080'
+            bg='teal.600'
             boxShadow='md'
             marginTop={{md: '0.8em'}}
             borderRadius={{md: '1.0em 1.0em 0em 0em'}}>
@@ -108,7 +108,7 @@ function Header() {
                 colStart={{base: 1, sm: 1, md: 1}}
                 rowSpan={{base: 1, sm: 1, md: 1}}
                 rowStart={{base: 2, sm: 2, md: 2}}
-                bg='#F4F7F4'
+                bg='gray.50'
                 boxShadow='md'
                 marginBottom={{md: '1.1em'}}
                 borderRadius={{md: '0em 0em 0em 0em'}}>
