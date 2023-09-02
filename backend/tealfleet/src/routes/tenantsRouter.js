@@ -1,16 +1,13 @@
-const express = require('express');
+const express = require("express");
 const tenantsRouter = express.Router();
 
 // Import Controllers
 const {
-    cTenantsGetAll, 
-    cTenantsGetById,
+  cTenantsGetAll,
+  cTenantsGetById,
+} = require("../controllers/tenantsControllers");
 
-} = require('../controllers/tenantsControllers');
-
-
-tenantsRouter.get('/', cTenantsGetAll ); // Get all tenants
-tenantsRouter.get('/:id', cTenantsGetById ); // Get tenant by ID
-
+tenantsRouter.get("/", cTenantsGetAll); // Get all tenants
+tenantsRouter.get("/:id", cTenantsGetById); // Get tenant by ID
 
 module.exports = tenantsRouter;
