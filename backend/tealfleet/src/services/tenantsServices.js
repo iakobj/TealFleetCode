@@ -1,5 +1,8 @@
+const { index: db } = require("../services/db/index");
+
 module.exports.tenantsGetAll = () => {
-  return ["tenats", "get", "all"];
+  const result = db.query("SELECT * FROM tenants");
+  return result;
 };
 
 module.exports.tenantsGetById = (id) => {
