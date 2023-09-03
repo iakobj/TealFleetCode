@@ -4,7 +4,8 @@
   "description": "TealFleet backend server",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch \"src/**\" --ext \"ts,js,json\" --exec \"ts-node src/app.js\""
   },
   "author": "Jakob Jozelj",
   "dependencies": {
@@ -12,7 +13,11 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "nodemon": "^3.0.1",
     "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.2",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1"
   }
 }
