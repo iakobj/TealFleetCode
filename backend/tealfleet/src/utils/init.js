@@ -12,6 +12,3 @@ module.exports.createTables = async () => {
     pool.end(); // Close the database connection when done
   }
 };
-
-
-

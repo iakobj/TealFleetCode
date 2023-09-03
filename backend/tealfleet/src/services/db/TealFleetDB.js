@@ -1,13 +1,13 @@
 module.exports.tfdb = `
 
-CREATE TABLE "tenants" (
+CREATE TABLE IF NOT EXISTS "tenants" (
   "tenant_id" uuid PRIMARY KEY,
   "is_root" boolean,
   "tenant_name" varchar,
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "users" (
+CREATE TABLE IF NOT EXISTS "users" (
   "user_id" uuid PRIMARY KEY,
   "role_id" uuid,
   "tenant_id" uuid,
@@ -25,23 +25,23 @@ CREATE TABLE "users" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "main_navigation" (
+CREATE TABLE IF NOT EXISTS "main_navigation" (
   "main_navigation_id" uuid PRIMARY KEY,
   "main_nav_item" varchar
 );
 
-CREATE TABLE "sub_navigation" (
+CREATE TABLE IF NOT EXISTS "sub_navigation" (
   "sub_navigation_id" uuid PRIMARY KEY,
   "main_nav_id" uuid,
   "sub_nav_item" varchar
 );
 
-CREATE TABLE "roles" (
+CREATE TABLE IF NOT EXISTS "roles" (
   "role_id" uuid PRIMARY KEY,
   "role" varchar
 );
 
-CREATE TABLE "alerts" (
+CREATE TABLE IF NOT EXISTS "alerts" (
   "alert_id" uuid PRIMARY KEY,
   "tenant_id" uuid,
   "alert_type_id" uuid,
@@ -53,17 +53,17 @@ CREATE TABLE "alerts" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "alerts_type" (
+CREATE TABLE IF NOT EXISTS "alerts_type" (
   "alert_type_id" uuid PRIMARY KEY,
   "type" varchar
 );
 
-CREATE TABLE "alerts_category" (
+CREATE TABLE IF NOT EXISTS "alerts_category" (
   "alert_category_id" uuid PRIMARY KEY,
   "category" varchar
 );
 
-CREATE TABLE "logs" (
+CREATE TABLE IF NOT EXISTS "logs" (
   "log_id" uuid PRIMARY KEY,
   "user_id" uuid,
   "tenant_id" uuid,
@@ -73,7 +73,7 @@ CREATE TABLE "logs" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "contracts" (
+CREATE TABLE IF NOT EXISTS "contracts" (
   "contract_id" uuid PRIMARY KEY,
   "tenant_id" uuid,
   "contract_type_id" uuid,
@@ -85,14 +85,14 @@ CREATE TABLE "contracts" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "contract_types" (
+CREATE TABLE IF NOT EXISTS "contract_types" (
   "contract_type_id" uuid PRIMARY KEY,
   "type" varchar,
   "description" text,
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "software_list" (
+CREATE TABLE IF NOT EXISTS "software_list" (
   "software_list_id" uuid PRIMARY KEY,
   "vendor_id" uuid,
   "sw_category_id" uuid,
@@ -106,7 +106,7 @@ CREATE TABLE "software_list" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "software_assets" (
+CREATE TABLE IF NOT EXISTS "software_assets" (
   "software_asset_id" uuid PRIMARY KEY,
   "software_list_id" uuid,
   "hardware_asset_id" uuid,
@@ -116,7 +116,7 @@ CREATE TABLE "software_assets" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "hardware_list" (
+CREATE TABLE IF NOT EXISTS "hardware_list" (
   "hardware_list_id" uuid PRIMARY KEY,
   "vendor_id" uuid,
   "hw_category_id" uuid,
@@ -130,7 +130,7 @@ CREATE TABLE "hardware_list" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "hardware_assets" (
+CREATE TABLE IF NOT EXISTS "hardware_assets" (
   "hardware_asset_id" uuid PRIMARY KEY,
   "hardware_list_id" uuid,
   "tenant_id" uuid,
@@ -140,40 +140,40 @@ CREATE TABLE "hardware_assets" (
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "sw_asset_contracts" (
+CREATE TABLE IF NOT EXISTS "sw_asset_contracts" (
   "sw_asset_contract_id" uuid PRIMARY KEY,
   "software_asset_id" uuid,
   "contract_id" uuid,
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "hw_asset_contracts" (
+CREATE TABLE IF NOT EXISTS "hw_asset_contracts" (
   "hw_asset_contract_id" uuid PRIMARY KEY,
   "hardware_asset_id" uuid,
   "contract_id" uuid,
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "sw_categories" (
+CREATE TABLE IF NOT EXISTS "sw_categories" (
   "sw_category_id" uuid PRIMARY KEY,
   "category" varchar,
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "hw_categories" (
+CREATE TABLE IF NOT EXISTS "hw_categories" (
   "hw_category_id" uuid PRIMARY KEY,
   "category" varchar,
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "vendors" (
+CREATE TABLE IF NOT EXISTS "vendors" (
   "vendor_id" uuid PRIMARY KEY,
   "name" varchar,
   "image" varchar,
   "created_at" timestamp DEFAULT (now())
 );
 
-CREATE TABLE "sites" (
+CREATE TABLE IF NOT EXISTS "sites" (
   "site_id" uuid PRIMARY KEY,
   "tenant_id" uuid,
   "user_id" uuid,

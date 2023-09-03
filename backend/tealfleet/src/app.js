@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+// function that creates tables if they are not already created
 const { createTables } = require("./utils/init");
 
 createTables();

@@ -8,7 +8,7 @@ const result = require("dotenv").config({
 if (result.error) {
   console.error("Error loading .env file:", result.error);
 }
-
+// The pool is initially created empty and will create new clients lazily as they are needed.
 const pool = new Pool({
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
