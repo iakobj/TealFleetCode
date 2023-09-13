@@ -2,54 +2,54 @@ module.exports.tfdb = `
 
 CREATE TABLE IF NOT EXISTS "tenants" (
   "tenant_id" uuid PRIMARY KEY,
-  "is_root" boolean,
-  "tenant_name" varchar,
+  "is_root" boolean NOT NULL,
+  "tenant_name" varchar NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "users" (
   "user_id" uuid PRIMARY KEY,
-  "role_id" uuid,
-  "tenant_id" uuid,
-  "first_name" varchar,
-  "last_name" varchar,
-  "email" varchar,
-  "password" varchar,
-  "phone" varchar,
+  "role_id" uuid NOT NULL,
+  "tenant_id" uuid NOT NULL,
+  "first_name" varchar NOT NULL,
+  "last_name" varchar NOT NULL,
+  "email" varchar NOT NULL,
+  "password" varchar NOT NULL,
+  "phone" varchar NOT NULL,
   "title" varchar,
-  "view_dashboard" boolean,
-  "view_fleet" boolean,
-  "view_support" boolean,
-  "view_marketplace" boolean,
-  "view_administration" boolean,
+  "view_dashboard" boolean NOT NULL,
+  "view_fleet" boolean NOT NULL,
+  "view_support" boolean NOT NULL,
+  "view_marketplace" boolean NOT NULL,
+  "view_administration" boolean NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "main_navigation" (
   "main_navigation_id" uuid PRIMARY KEY,
-  "main_nav_item" varchar
+  "main_nav_item" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "sub_navigation" (
   "sub_navigation_id" uuid PRIMARY KEY,
-  "main_nav_id" uuid,
-  "sub_nav_item" varchar
+  "main_nav_id" uuid NOT NULL,
+  "sub_nav_item" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "roles" (
   "role_id" uuid PRIMARY KEY,
-  "role" varchar
+  "role" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "alerts" (
   "alert_id" uuid PRIMARY KEY,
-  "tenant_id" uuid,
-  "alert_type_id" uuid,
-  "alert_category_id" uuid,
-  "asset_id" uuid,
-  "title" varchar,
-  "description" varchar,
-  "dismissed" boolean,
+  "tenant_id" uuid NOT NULL,
+  "alert_type_id" uuid NOT NULL,
+  "alert_category_id" uuid NOT NULL,
+  "asset_id" uuid NOT NULL,
+  "title" varchar NOT NULL,
+  "description" varchar NOT NULL,
+  "dismissed" boolean NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
@@ -60,130 +60,130 @@ CREATE TABLE IF NOT EXISTS "alerts_type" (
 
 CREATE TABLE IF NOT EXISTS "alerts_category" (
   "alert_category_id" uuid PRIMARY KEY,
-  "category" varchar
+  "category" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "logs" (
   "log_id" uuid PRIMARY KEY,
-  "user_id" uuid,
-  "tenant_id" uuid,
-  "type" varchar,
-  "title" varchar,
-  "log_description" varchar,
+  "user_id" uuid NOT NULL,
+  "tenant_id" uuid NOT NULL,
+  "type" varchar NOT NULL,
+  "title" varchar NOT NULL,
+  "log_description" varchar NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "contracts" (
   "contract_id" uuid PRIMARY KEY,
-  "tenant_id" uuid,
-  "contract_type_id" uuid,
-  "contract_no" varchar,
-  "description" text,
-  "valid_from" date,
-  "valid_to" date,
-  "changed_at" timestamp,
+  "tenant_id" uuid NOT NULL,
+  "contract_type_id" uuid NOT NULL,
+  "contract_no" varchar NOT NULL,
+  "description" text NOT NULL,
+  "valid_from" date NOT NULL,
+  "valid_to" date NOT NULL,
+  "changed_at" timestamp NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "contract_types" (
   "contract_type_id" uuid PRIMARY KEY,
-  "type" varchar,
-  "description" text,
+  "type" varchar NOT NULL,
+  "description" text NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "software_list" (
   "software_list_id" uuid PRIMARY KEY,
-  "vendor_id" uuid,
-  "sw_category_id" uuid,
-  "model_name" varchar,
-  "version_number" varchar,
-  "picture" varchar,
-  "release_date" date,
-  "end_of_life" date,
-  "end_of_support" date,
-  "changed_at" timestamp,
+  "vendor_id" uuid NOT NULL,
+  "sw_category_id" uuid NOT NULL,
+  "model_name" varchar NOT NULL,
+  "version_number" varchar NOT NULL,
+  "picture" varchar NOT NULL,
+  "release_date" date NOT NULL,
+  "end_of_life" date NOT NULL,
+  "end_of_support" date NOT NULL,
+  "changed_at" timestamp NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "software_assets" (
   "software_asset_id" uuid PRIMARY KEY,
-  "software_list_id" uuid,
-  "hardware_asset_id" uuid,
-  "tenant_id" uuid,
-  "site_id" uuid,
-  "changed_at" timestamp,
+  "software_list_id" uuid NOT NULL,
+  "hardware_asset_id" uuid NOT NULL,
+  "tenant_id" uuid NOT NULL,
+  "site_id" uuid NOT NULL,
+  "changed_at" timestamp NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "hardware_list" (
   "hardware_list_id" uuid PRIMARY KEY,
-  "vendor_id" uuid,
-  "hw_category_id" uuid,
-  "model_name" varchar,
-  "part_number" varchar,
-  "picture" varchar,
-  "release_date" date,
-  "end_of_life" date,
-  "end_of_support" date,
-  "changed_at" timestamp,
+  "vendor_id" uuid NOT NULL,
+  "hw_category_id" uuid NOT NULL,
+  "model_name" varchar NOT NULL,
+  "part_number" varchar NOT NULL,
+  "picture" varchar NOT NULL,
+  "release_date" date NOT NULL,
+  "end_of_life" date NOT NULL,
+  "end_of_support" date NOT NULL,
+  "changed_at" timestamp NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "hardware_assets" (
   "hardware_asset_id" uuid PRIMARY KEY,
-  "hardware_list_id" uuid,
-  "tenant_id" uuid,
-  "site_id" uuid,
-  "serial_no" varchar,
-  "changed_at" timestamp,
+  "hardware_list_id" uuid NOT NULL,
+  "tenant_id" uuid NOT NULL,
+  "site_id" uuid NOT NULL,
+  "serial_no" varchar NOT NULL,
+  "changed_at" timestamp NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "sw_asset_contracts" (
   "sw_asset_contract_id" uuid PRIMARY KEY,
-  "software_asset_id" uuid,
-  "contract_id" uuid,
+  "software_asset_id" uuid NOT NULL,
+  "contract_id" uuid NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "hw_asset_contracts" (
   "hw_asset_contract_id" uuid PRIMARY KEY,
-  "hardware_asset_id" uuid,
-  "contract_id" uuid,
+  "hardware_asset_id" uuid NOT NULL,
+  "contract_id" uuid NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "sw_categories" (
   "sw_category_id" uuid PRIMARY KEY,
-  "category" varchar,
+  "category" varchar NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "hw_categories" (
   "hw_category_id" uuid PRIMARY KEY,
-  "category" varchar,
+  "category" varchar NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "vendors" (
   "vendor_id" uuid PRIMARY KEY,
-  "name" varchar,
-  "image" varchar,
+  "name" varchar NOT NULL,
+  "image" varchar NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "sites" (
   "site_id" uuid PRIMARY KEY,
-  "tenant_id" uuid,
-  "user_id" uuid,
-  "asset_id" uuid,
-  "name" varchar,
-  "address1" varchar,
-  "city" varchar,
-  "postcode" integer,
-  "country" varchar,
-  "changed_at" timestamp,
+  "tenant_id" uuid NOT NULL,
+  "user_id" uuid NOT NULL,
+  "asset_id" uuid NOT NULL,
+  "name" varchar NOT NULL,
+  "address1" varchar NOT NULL,
+  "city" varchar NOT NULL,
+  "postcode" integer NOT NULL,
+  "country" varchar NOT NULL,
+  "changed_at" timestamp NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
 
