@@ -1,4 +1,4 @@
-const { query, pool } = require("../services/db/index");
+const { query } = require("../services/db/index");
 const { tfdb } = require("../services/db/TealFleetDB");
 
 // Function to execute the CREATE TABLE queries sequentially
@@ -9,6 +9,6 @@ module.exports.createTables = async () => {
   } catch (error) {
     console.error("Error creating tables:", error);
   } finally {
-    pool.end(); // Close the database connection when done
+   // pool.end(); // Close the database connection when done
   }
 };

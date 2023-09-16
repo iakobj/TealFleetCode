@@ -100,8 +100,8 @@ CREATE TABLE IF NOT EXISTS "software_list" (
   "version_number" varchar NOT NULL,
   "picture" varchar NOT NULL,
   "release_date" date NOT NULL,
-  "end_of_life" date NOT NULL,
-  "end_of_support" date NOT NULL,
+  "end_of_life" date,
+  "end_of_support" date,
   "changed_at" timestamp NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
@@ -124,8 +124,8 @@ CREATE TABLE IF NOT EXISTS "hardware_list" (
   "part_number" varchar NOT NULL,
   "picture" varchar NOT NULL,
   "release_date" date NOT NULL,
-  "end_of_life" date NOT NULL,
-  "end_of_support" date NOT NULL,
+  "end_of_life" date,
+  "end_of_support" date,
   "changed_at" timestamp NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );

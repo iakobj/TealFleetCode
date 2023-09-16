@@ -1,6 +1,7 @@
 const express = require("express");
 const tenantsRouter = express.Router();
 
+
 // Import Controllers
 const {
   cTenantsGetAll,

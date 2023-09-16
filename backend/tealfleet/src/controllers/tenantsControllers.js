@@ -4,14 +4,14 @@ const {
 } = require("../services/tenantsServices");
 
 // Get all tenants
-module.exports.cTenantsGetAll = (req, res) => {
-  const all = tenantsGetAll();
-  res.send(all);
+module.exports.cTenantsGetAll = async (req, res) => {
+  const all = await tenantsGetAll();
+  res.send(all.rows);
 };
 
 // Get tenant by ID
-module.exports.cTenantsGetById = (req, res) => {
+module.exports.cTenantsGetById = async (req, res) => {
   const id = req.params.id;
-  const tenant = tenantsGetById(id);
-  res.send(tenant);
+  const tenant = await tenantsGetById(id);
+  res.send(tenant.rows);
 };

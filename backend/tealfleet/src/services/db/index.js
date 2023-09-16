@@ -26,8 +26,11 @@ const pool = new Pool({
         is an error object (or null if no error occurred), and the second parameter 
         is the result of the query.
 */
+
+console.log("Before - module.exports.query")
 module.exports.query = (text, params, callback) => {
+  console.log('module.exports.query = (text, params, callback)');
   return pool.query(text, params, callback);
 };
 
-module.exports.pool = pool;
+//module.exports.pool = pool;
