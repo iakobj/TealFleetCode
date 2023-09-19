@@ -9,6 +9,6 @@ const {
 } = require("../controllers/tenantsControllers");
 
 tenantsRouter.get("/", cTenantsGetAll); // Get all tenants
-tenantsRouter.get("/:id", cTenantsGetById); // Get tenant by ID
+tenantsRouter.get("/id/:id", cTenantsGetById); // Get tenant by ID
 
 module.exports = tenantsRouter;

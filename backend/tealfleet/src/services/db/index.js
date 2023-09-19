@@ -27,10 +27,8 @@ const pool = new Pool({
         is the result of the query.
 */
 
-console.log("Before - module.exports.query")
+console.log("DB Index - pool")
 module.exports.query = (text, params, callback) => {
-  console.log('module.exports.query = (text, params, callback)');
   return pool.query(text, params, callback);
 };
 
-//module.exports.pool = pool;
