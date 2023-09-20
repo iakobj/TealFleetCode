@@ -4,7 +4,6 @@ const path = require("path");
 const result = require("dotenv").config({
   path: path.resolve(__dirname, "../../../.env"),
 });
-
 if (result.error) {
   console.error("Error loading .env file:", result.error);
 }
@@ -27,8 +26,7 @@ const pool = new Pool({
         is the result of the query.
 */
 
-console.log("DB Index - pool")
+console.log("DB Index - pool");
 module.exports.query = (text, params, callback) => {
   return pool.query(text, params, callback);
 };
-

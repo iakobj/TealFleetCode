@@ -1,17 +1,48 @@
 const {
   tenantsGetAll,
   tenantsGetById,
+  tenantsGetByName,
 } = require("../services/tenantsServices");
 
 // Get all tenants
 module.exports.cTenantsGetAll = async (req, res) => {
-  const all = await tenantsGetAll();
-  res.send(all.rows);
+  try {
+    const result = await tenantsGetAll();
+    res.status(200).send(result.rows);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No tenants found");
+  }
 };
 
 // Get tenant by ID
 module.exports.cTenantsGetById = async (req, res) => {
   const id = req.params.id;
-  const tenant = await tenantsGetById(id);
-  res.send(tenant.rows);
+  try {
+    const result = await tenantsGetById(id);
+    res.status(200).send(result.rows);
+  } catch (err) {
+    console.log(err);
+    res
+      .status(404)
+      .send(
+        `The tenant was not found, invalid input syntax for type uuid ${id}`
+      );
+  }
+};
+
+// Get tenant by name
+module.exports.cTenantsGetByName = async (req, res) => {
+  const name = req.params.name;
+  try {
+    const result = await tenantsGetByName(name);
+    res.status(200).send(result.rows);
+  } catch (err) {
+    console.log(err);
+    res
+      .status(404)
+      .send(
+        `The tenant was not found, invalid input syntax for type name ${name}`
+      );
+  }
 };
