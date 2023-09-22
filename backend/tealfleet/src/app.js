@@ -21,19 +21,8 @@ const options = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "TealFleet Express API with Swagger",
+      title: "TealFleet API",
       version: "0.1.0",
-      description:
-        "This is a TealFleet CRUD API application made with Express and documented with Swagger",
-      license: {
-        name: "None",
-        url: "None",
-      },
-      contact: {
-        name: "TealFleet",
-        url: "https://tealfleet.com",
-        email: "info@tealfleet.com",
-      },
     },
     servers: [
       {

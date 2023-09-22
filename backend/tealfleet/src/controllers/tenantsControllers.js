@@ -36,13 +36,17 @@ module.exports.cTenantsGetByName = async (req, res) => {
   const name = req.params.name;
   try {
     const result = await tenantsGetByName(name);
-    res.status(200).send(result.rows);
+    if (result.rows.length === 0) {
+      res
+        .status(404)
+        .send(
+          `The tenant was not found, invalid input syntax for type name ${name}`
+        );
+    } else {
+      res.status(200).send(result.rows);
+    }
   } catch (err) {
     console.log(err);
-    res
-      .status(404)
-      .send(
-        `The tenant was not found, invalid input syntax for type name ${name}`
-      );
+    res.status(500).send("500 Internal Server Error");
   }
 };
