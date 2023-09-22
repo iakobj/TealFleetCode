@@ -47,8 +47,10 @@ app.get("/", (req, res) => {
 
 // Express routers
 const tenantsRouter = require("./routes/tenantsRouter");
+const usersRouter = require("./routes/usersRouter");
 
 app.use("/tenants", tenantsRouter);
+app.use("/users", usersRouter);
 
 app.listen(port, () => {
   console.log(

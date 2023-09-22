@@ -90,7 +90,7 @@ const {
 } = require("../controllers/tenantsControllers");
 
 tenantsRouter.get("/", cTenantsGetAll); // Get all tenants
-tenantsRouter.get("/id/:id", cTenantsGetById); // Get tenant by ID
-tenantsRouter.get("/name/:name", cTenantsGetByName); // Get tenant by Name
+tenantsRouter.get("/id/:id", cTenantsGetById); // Get tenant by id
+tenantsRouter.get("/name/:name", cTenantsGetByName); // Get tenant by name
 
 module.exports = tenantsRouter;
