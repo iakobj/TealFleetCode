@@ -15,7 +15,7 @@ module.exports.cTenantsGetAll = async (req, res) => {
   }
 };
 
-// Get tenant by ID
+// Get tenant by id
 module.exports.cTenantsGetById = async (req, res) => {
   const id = req.params.id;
   try {

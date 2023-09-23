@@ -18,7 +18,7 @@ module.exports.cUsersGetAll = async (req, res) => {
   }
 };
 
-// Get user by ID
+// Get user by id
 module.exports.cUsersGetById = async (req, res) => {
   const id = req.params.id;
   try {
