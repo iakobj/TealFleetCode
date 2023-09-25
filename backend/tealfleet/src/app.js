@@ -49,10 +49,12 @@ app.get("/", (req, res) => {
 const tenantsRouters = require("./routes/tenantsRouters");
 const usersRouters = require("./routes/usersRouters");
 const vendorsRouters = require("./routes/vendorsRouters");
+const navigationRouters = require("./routes/navigationRouters");
 
 app.use("/tenants", tenantsRouters);
 app.use("/users", usersRouters);
 app.use("/vendors", vendorsRouters);
+app.use("/navigation", navigationRouters);
 
 app.listen(port, () => {
   console.log(

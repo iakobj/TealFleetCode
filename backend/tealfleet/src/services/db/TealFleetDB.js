@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS "users" (
 );
 
 CREATE TABLE IF NOT EXISTS "main_navigation" (
-  "main_navigation_id" uuid PRIMARY KEY,
+  "main_nav_id" uuid PRIMARY KEY,
   "main_nav_item" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "sub_navigation" (
-  "sub_navigation_id" uuid PRIMARY KEY,
+  "sub_nav_id" uuid PRIMARY KEY,
   "main_nav_id" uuid NOT NULL,
   "sub_nav_item" varchar NOT NULL
 );
@@ -221,8 +221,8 @@ ALTER TABLE "contracts" ADD CONSTRAINT "contracts_contract_type_id_fkey" FOREIGN
 ALTER TABLE "contracts" DROP CONSTRAINT IF EXISTS "contracts_tenant_id_fkey";
 ALTER TABLE "contracts" ADD CONSTRAINT "contracts_tenant_id_fkey" FOREIGN KEY ("tenant_id") REFERENCES "tenants" ("tenant_id");
 
-ALTER TABLE "sub_navigation" DROP CONSTRAINT IF EXISTS "sub_navigation_main_navigation_id_fkey";
-ALTER TABLE "sub_navigation" ADD CONSTRAINT "sub_navigation_main_navigation_id_fkey" FOREIGN KEY ("main_nav_id") REFERENCES "main_navigation" ("main_navigation_id");
+ALTER TABLE "sub_navigation" DROP CONSTRAINT IF EXISTS "sub_nav_main_nav_id_fkey";
+ALTER TABLE "sub_navigation" ADD CONSTRAINT "sub_nav_main_nav_id_fkey" FOREIGN KEY ("main_nav_id") REFERENCES "main_navigation" ("main_nav_id");
 
 ALTER TABLE "software_assets" DROP CONSTRAINT IF EXISTS "software_assets_software_list_id_fkey";
 ALTER TABLE "software_assets" ADD CONSTRAINT "software_assets_software_list_id_fkey" FOREIGN KEY ("software_list_id") REFERENCES "software_list" ("software_list_id");

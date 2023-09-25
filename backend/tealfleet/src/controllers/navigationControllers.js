@@ -1,13 +1,13 @@
 const {
-    navigationGetAll,
-    navigationGetById,
-    navigationGetByName,
+    navigationGetAllMain,
+    navigationGetByIdMain,
+    navigationGetByNameMain,
   } = require("../services/navigationServices");
   
   // Get all navigation items
   module.exports.cNavigationGetAll = async (req, res) => {
     try {
-      const result = await navigationGetAll();
+      const result = await navigationGetAllMain();
       res.status(200).send(result.rows);
     } catch (err) {
       console.log(err);
@@ -19,7 +19,7 @@ const {
   module.exports.cNavigationGetById = async (req, res) => {
     const id = req.params.id;
     try {
-      const result = await navigationGetById(id);
+      const result = await navigationGetByIdMain(id);
       res.status(200).send(result.rows);
     } catch (err) {
       console.log(err);
@@ -35,7 +35,7 @@ const {
   module.exports.cNavigationGetByName = async (req, res) => {
     const name = req.params.name;
     try {
-      const result = await navigationGetByName(name);
+      const result = await navigationGetByNameMain(name);
       if (result.rows.length === 0) {
         res
           .status(404)
