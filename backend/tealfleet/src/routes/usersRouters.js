@@ -80,7 +80,7 @@
  */
 
 const express = require("express");
-const usersRouter = express.Router();
+const usersRouters = express.Router();
 
 // Import Controllers
 const {
@@ -92,11 +92,11 @@ const {
   cUsersGetByTitle,
 } = require("../controllers/usersControllers");
 
-usersRouter.get("/", cUsersGetAll); // Get all users
-usersRouter.get("/id/:id", cUsersGetById); // Get user by id
-usersRouter.get("/name/:name", cUsersGetByName); // Get user by name
-usersRouter.get("/email/:email", cUsersGetByEmail); // Get user by email
-usersRouter.get("/phone/:phone", cUsersGetByPhone); // Get user by phone
-usersRouter.get("/title/:title", cUsersGetByTitle); // Get user by title
+usersRouters.get("/", cUsersGetAll); // Get all users
+usersRouters.get("/id/:id", cUsersGetById); // Get user by id
+usersRouters.get("/name/:name", cUsersGetByName); // Get user by name
+usersRouters.get("/email/:email", cUsersGetByEmail); // Get user by email
+usersRouters.get("/phone/:phone", cUsersGetByPhone); // Get user by phone
+usersRouters.get("/title/:title", cUsersGetByTitle); // Get user by title
 
-module.exports = usersRouter;
+module.exports = usersRouters;

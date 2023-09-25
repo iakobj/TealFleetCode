@@ -46,13 +46,13 @@ app.get("/", (req, res) => {
 });
 
 // Express routers
-const tenantsRouter = require("./routes/tenantsRouter");
-const usersRouter = require("./routes/usersRouter");
-const vendorsRouter = require("./routes/vendorsRouter");
+const tenantsRouters = require("./routes/tenantsRouters");
+const usersRouters = require("./routes/usersRouters");
+const vendorsRouters = require("./routes/vendorsRouters");
 
-app.use("/tenants", tenantsRouter);
-app.use("/users", usersRouter);
-app.use("/vendors", vendorsRouter);
+app.use("/tenants", tenantsRouters);
+app.use("/users", usersRouters);
+app.use("/vendors", vendorsRouters);
 
 app.listen(port, () => {
   console.log(

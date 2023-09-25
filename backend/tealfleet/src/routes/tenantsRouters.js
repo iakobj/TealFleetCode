@@ -80,7 +80,7 @@
  */
 
 const express = require("express");
-const tenantsRouter = express.Router();
+const tenantsRouters = express.Router();
 
 // Import Controllers
 const {
@@ -89,8 +89,8 @@ const {
   cTenantsGetByName,
 } = require("../controllers/tenantsControllers");
 
-tenantsRouter.get("/", cTenantsGetAll); // Get all tenants
-tenantsRouter.get("/id/:id", cTenantsGetById); // Get tenant by id
-tenantsRouter.get("/name/:name", cTenantsGetByName); // Get tenant by name
+tenantsRouters.get("/", cTenantsGetAll); // Get all tenants
+tenantsRouters.get("/id/:id", cTenantsGetById); // Get tenant by id
+tenantsRouters.get("/name/:name", cTenantsGetByName); // Get tenant by name
 
-module.exports = tenantsRouter;
+module.exports = tenantsRouters;

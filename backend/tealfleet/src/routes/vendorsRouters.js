@@ -80,7 +80,7 @@
  */
 
  const express = require("express");
- const vendorsRouter = express.Router();
+ const vendorsRouters = express.Router();
  
  // Import Controllers
  const {
@@ -89,9 +89,9 @@
    cVendorsGetByName
  } = require("../controllers/vendorsControllers");
  
- vendorsRouter.get("/", cVendorsGetAll); // Get all vendors
- vendorsRouter.get("/id/:id", cVendorsGetById); // Get vendor by id
- vendorsRouter.get("/name/:name", cVendorsGetByName); // Get vendor by name
+ vendorsRouters.get("/", cVendorsGetAll); // Get all vendors
+ vendorsRouters.get("/id/:id", cVendorsGetById); // Get vendor by id
+ vendorsRouters.get("/name/:name", cVendorsGetByName); // Get vendor by name
  
- module.exports = vendorsRouter;
+ module.exports = vendorsRouters;
  
