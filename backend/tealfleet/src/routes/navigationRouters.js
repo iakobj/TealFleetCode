@@ -58,24 +58,6 @@
  *             schema:
  *               $ref: '#/components/schemas/Navigation_id_404'
  * 
- * /Navigation/name/{name}:
- *   get:
- *     summary: Get navigation element by name
- *     tags: [Navigation]
- *     responses:
- *       200:
- *         description: navigation element exists.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Navigation_200'
- *       404:
- *         description: navigation element does not exist.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Navigation_name_404'
- *
  *
  */
 
@@ -86,12 +68,10 @@
  const {
    cNavigationGetAll,
    cNavigationGetById,
-   cNavigationGetByName,
  } = require("../controllers/NavigationControllers");
  
  NavigationRouters.get("/", cNavigationGetAll); // Get all navigation element
  NavigationRouters.get("/id/:id", cNavigationGetById); // Get navigation element by id
- NavigationRouters.get("/name/:name", cNavigationGetByName); // Get navigation element by name
  
  module.exports = NavigationRouters;
  
