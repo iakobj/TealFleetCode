@@ -27,7 +27,7 @@ module.exports.cSoftwareCatGetAll = async (req, res) => {
 };
 
 // Get software from catalog by id
-module.exports.cSoftwareGetById = async (req, res) => {
+module.exports.cSoftwareCatGetById = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await SoftwareCatGetById(id);
@@ -43,7 +43,7 @@ module.exports.cSoftwareGetById = async (req, res) => {
 };
 
 // Get software from cataloge by name
-module.exports.cSoftwareGetByName = async (req, res) => {
+module.exports.cSoftwareCatGetByName = async (req, res) => {
   const name = req.params.name;
   try {
     const result = await SoftwareCatGetByName(name);
