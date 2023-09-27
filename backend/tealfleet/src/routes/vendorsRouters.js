@@ -79,19 +79,18 @@
  *
  */
 
- const express = require("express");
- const vendorsRouters = express.Router();
- 
- // Import Controllers
- const {
-   cVendorsGetAll,
-   cVendorsGetById,
-   cVendorsGetByName
- } = require("../controllers/vendorsControllers");
- 
- vendorsRouters.get("/", cVendorsGetAll); // Get all vendors
- vendorsRouters.get("/id/:id", cVendorsGetById); // Get vendor by id
- vendorsRouters.get("/name/:name", cVendorsGetByName); // Get vendor by name
- 
- module.exports = vendorsRouters;
- 
+const express = require("express");
+const vendorsRouters = express.Router();
+
+// Import Controllers
+const {
+  cVendorsGetAll,
+  cVendorsGetById,
+  cVendorsGetByName,
+} = require("../controllers/vendorsControllers");
+
+vendorsRouters.get("/", cVendorsGetAll); // Get all vendors
+vendorsRouters.get("/id/:id", cVendorsGetById); // Get vendor by id
+vendorsRouters.get("/name/:name", cVendorsGetByName); // Get vendor by name
+
+module.exports = vendorsRouters;

@@ -61,17 +61,16 @@
  *
  */
 
- const express = require("express");
- const NavigationRouters = express.Router();
- 
- // Import Controllers
- const {
-   cNavigationGetAll,
-   cNavigationGetById,
- } = require("../controllers/NavigationControllers");
- 
- NavigationRouters.get("/", cNavigationGetAll); // Get all navigation element
- NavigationRouters.get("/id/:id", cNavigationGetById); // Get navigation element by id
- 
- module.exports = NavigationRouters;
- 
+const express = require("express");
+const NavigationRouters = express.Router();
+
+// Import Controllers
+const {
+  cNavigationGetAll,
+  cNavigationGetById,
+} = require("../controllers/NavigationControllers");
+
+NavigationRouters.get("/", cNavigationGetAll); // Get all navigation element
+NavigationRouters.get("/id/:id", cNavigationGetById); // Get navigation element by id
+
+module.exports = NavigationRouters;
