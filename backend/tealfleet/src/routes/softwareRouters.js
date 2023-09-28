@@ -101,14 +101,14 @@ const {
 // Software catalog
 SoftwareRouters.get("/catalog", cSoftwareCatGetAll); // Get all Software from catalog
 SoftwareRouters.get("/catalog/id/:id", cSoftwareCatGetById); // Get software by id from catalog
-SoftwareRouters.get("/catalog/name/:name", cSoftwareCatGetByName); // Get software by name from catalog
+SoftwareRouters.get("/catalog/name/:name", cSoftwareCatGetByName); // Get software by model name from catalog
 SoftwareRouters.get("/catalog/vendor/:vendor", cSoftwareCatGetByVendor); // Get software by vendor from catalog
 SoftwareRouters.get("/catalog/version/:version", cSoftwareCatGetByVersion); // Get software by version from catalog
 
 // Software assets
 SoftwareRouters.get("/asset/", cSoftwareAssGetAll); // Get all Software from assets
 SoftwareRouters.get("/asset/id/:id", cSoftwareAssGetById); // Get software by id from assets
-SoftwareRouters.get("/asset/name/:name", cSoftwareAssGetByName); // Get software by name from assets
+SoftwareRouters.get("/asset/name/:name", cSoftwareAssGetByName); // Get software by model name from assets
 SoftwareRouters.get("/asset/vendor/:vendor", cSoftwareAssGetByVendor); // Get software by vendor from assets
 SoftwareRouters.get("/asset/version/:version", cSoftwareAssGetByVersion); // Get software by version from assets
 SoftwareRouters.get("/asset/tenant/:tenant", cSoftwareAssGetByTenant); // Get software by tenant from assets

@@ -22,17 +22,22 @@ module.exports.SoftwareCatGetByName = async (name) => {
   return result;
 };
 
-module.exports.SoftwareCatGetByVendor = async (name) => {
-  const result = query("SELECT * FROM software_catalog WHERE model_name = $1", [
-    name,
+module.exports.SoftwareCatGetByVendor = async (vendor) => {
+  const vendor_id = query("SELECT vendor_id FROM vendors WHERE vendor = $1", [
+    vendor,
+  ]);
+
+  const result = query("SELECT * FROM software_catalog WHERE vendor_id = $1", [
+    vendor_id,
   ]);
   return result;
 };
 
-module.exports.SoftwareCatGetByVersion = async (name) => {
-  const result = query("SELECT * FROM software_catalog WHERE model_name = $1", [
-    name,
-  ]);
+module.exports.SoftwareCatGetByVersion = async (version) => {
+  const result = query(
+    "SELECT * FROM software_catalog WHERE version_number = $1",
+    [version]
+  );
   return result;
 };
 
@@ -44,30 +49,41 @@ module.exports.SoftwareAssGetAll = async () => {
 };
 
 module.exports.SoftwareAssGetById = async (id) => {
-  const result = query("SELECT * FROM software_asset WHERE software_asset_id = $1", [
-    id,
-  ]);
+  const result = query(
+    "SELECT * FROM software_asset WHERE software_asset_id = $1",
+    [id]
+  );
   return result;
 };
 
 module.exports.SoftwareAssGetByName = async (name) => {
-  const result = query("SELECT * FROM software_asset WHERE software_asset_id = $1", [
-    name,
-  ]);
+  const software_catalog_id = query(
+    "SELECT software_catalog_id FROM software_catalog WHERE model_name = $1",
+    [name]
+  );
+
+  const result = query(
+    "SELECT * FROM software_assets WHERE software_catalog_id = $1",
+    [software_catalog_id]
+  );
   return result;
 };
 
 module.exports.SoftwareAssGetByVendor = async (vendor) => {
-  const result = query("SELECT * FROM software_asset WHERE software_asset_id = $1", [
-    vendor,
-  ]);
-  return result;
+    const vendor_id = query("SELECT vendor_id FROM vendors WHERE vendor = $1", [
+        vendor,
+      ]);
+    
+      const result = query("SELECT * FROM software_catalog, software_assets WHERE software_catalog.vendor_id = $1", [
+        vendor_id,
+      ]);
 };
 
 module.exports.SoftwareAssGetByVersion = async (version) => {
-  const result = query("SELECT * FROM software_asset WHERE software_asset_id = $1", [
-    version,
-  ]);
+  const result = query(
+    "SELECT * FROM software_asset WHERE software_asset_id = $1",
+    [version]
+  );
   return result;
 };
 
