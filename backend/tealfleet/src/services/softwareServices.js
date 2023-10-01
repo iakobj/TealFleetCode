@@ -70,13 +70,15 @@ module.exports.SoftwareAssGetByName = async (name) => {
 };
 
 module.exports.SoftwareAssGetByVendor = async (vendor) => {
-    const vendor_id = query("SELECT vendor_id FROM vendors WHERE vendor = $1", [
-        vendor,
-      ]);
-    
-      const result = query("SELECT * FROM software_catalog, software_assets WHERE software_catalog.vendor_id = $1", [
-        vendor_id,
-      ]);
+  const vendor_id = query("SELECT vendor_id FROM vendors WHERE vendor = $1", [
+    vendor,
+  ]);
+
+  const result = query(
+    "SELECT * FROM software_catalog, software_assets WHERE software_catalog.vendor_id = $1",
+    [vendor_id]
+  );
+  return result;
 };
 
 module.exports.SoftwareAssGetByVersion = async (version) => {

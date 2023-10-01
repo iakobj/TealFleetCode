@@ -26,7 +26,7 @@ const pool = new Pool({
         is the result of the query.
 */
 
-console.log("DB Index - pool");
 module.exports.query = (text, params, callback) => {
+  console.log("Running TealFleet Database Querry...");
   return pool.query(text, params, callback);
 };

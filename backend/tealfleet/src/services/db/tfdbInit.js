@@ -1,4 +1,4 @@
-module.exports.tfdb = `
+module.exports.tfdbInit = `
 
 CREATE TABLE IF NOT EXISTS "tenants" (
   "tenant_id" uuid PRIMARY KEY,

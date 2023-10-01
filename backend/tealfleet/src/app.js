@@ -37,9 +37,39 @@ const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // function that creates tables if they are not already created
-const { createTables } = require("./utils/init");
+const { utilTfdbInit } = require("./utils/utilTfdbInit");
 
-createTables();
+// function that seeds demo information to the tfdb
+const { utilTfdbSeed } = require("./utils/utilTfdbSeed");
+
+// function that resets the tfdb to an empty state
+const { utilTfdbReset } = require("./utils/utilTfdbReset");
+
+const args = process.argv;
+
+if (args[2] == "seed") {
+  console.log("Seeding started...");
+  utilTfdbSeed();
+} else if (args[2] == "init") {
+  console.log("Init started...");
+  utilTfdbInit();
+} else if (args[2] == "reset") {
+  console.log("Reseting started...");
+  utilTfdbReset();
+} else if (args[2] == "help") {
+  console.log(
+    "node app.js init  // it creates the tables needed in the tealfleet database"
+  );
+  console.log(
+    "node app.js reset  // it drops all the tables tealfleet database"
+  );
+  console.log(
+    "node app.js seed  // populates the tables in the tealfleet database with demo/test rows"
+  );
+  return false;
+} else {
+  console.log("No arguments recognized, continuing with running the app.");
+}
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

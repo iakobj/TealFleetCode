@@ -84,18 +84,18 @@ const SoftwareRouters = express.Router();
 
 // Import Controllers
 const {
-    cSoftwareCatGetAll,
-    cSoftwareCatGetById,
-    cSoftwareCatGetByName,
-    cSoftwareCatGetByVendor,
-    cSoftwareCatGetByVersion,
-    cSoftwareAssGetAll,
-    cSoftwareAssGetById,
-    cSoftwareAssGetByName,
-    cSoftwareAssGetByVendor,
-    cSoftwareAssGetByVersion,
-    cSoftwareAssGetByTenant,
-    cSoftwareAssGetBySite,
+  cSoftwareCatGetAll,
+  cSoftwareCatGetById,
+  cSoftwareCatGetByName,
+  cSoftwareCatGetByVendor,
+  cSoftwareCatGetByVersion,
+  cSoftwareAssGetAll,
+  cSoftwareAssGetById,
+  cSoftwareAssGetByName,
+  cSoftwareAssGetByVendor,
+  cSoftwareAssGetByVersion,
+  cSoftwareAssGetByTenant,
+  cSoftwareAssGetBySite,
 } = require("../controllers/SoftwareControllers");
 
 // Software catalog

@@ -1,11 +1,11 @@
 const { query } = require("../services/db/index");
-const { dummytfdb } = require("../services/db/dummytfDB");
+const { tfdbInit } = require("../services/db/tfdbInit");
 
 // Function to execute the CREATE TABLE queries sequentially
-module.exports.createTables = async () => {
+module.exports.utilTfdbInit = async () => {
   try {
-    query(dummytfdb);
-    console.log("Tables in dummytfdb created successfully.");
+    query(tfdbInit);
+    console.log("Tables in tfdb created successfully.");
   } catch (error) {
     console.error("Error creating tables:", error);
   }
