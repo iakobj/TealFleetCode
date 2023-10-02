@@ -25,7 +25,6 @@ module.exports.cNavigationGetById = async (req, res) => {
     const result1 = await navigationMainGetById(id);
     const result2 = await navigationSubGetById(id);
     result1.rows.push(result2.rows);
-    console.log(result1.rows);
     res.status(200).send(result1.rows);
   } catch (err) {
     console.log(err);

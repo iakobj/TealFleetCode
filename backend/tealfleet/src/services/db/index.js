@@ -26,7 +26,13 @@ const pool = new Pool({
         is the result of the query.
 */
 
-module.exports.query = (text, params, callback) => {
+module.exports.query = async (text, params, callback) => {
   console.log("Running TealFleet Database Querry...");
-  return pool.query(text, params, callback);
+  try {
+    const result = await pool.query(text, params, callback);
+    return result;
+  } catch (error) {
+    // Handle any errors that occur during the query
+    throw error;
+  }
 };

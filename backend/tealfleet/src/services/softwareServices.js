@@ -23,13 +23,16 @@ module.exports.SoftwareCatGetByName = async (name) => {
 };
 
 module.exports.SoftwareCatGetByVendor = async (vendor) => {
-  const vendor_id = query("SELECT vendor_id FROM vendors WHERE vendor = $1", [
-    vendor,
-  ]);
-
-  const result = query("SELECT * FROM software_catalog WHERE vendor_id = $1", [
-    vendor_id,
-  ]);
+  const get_vendor_id = await query(
+    "SELECT vendor_id FROM vendors WHERE name = $1",
+    [vendor]
+  );
+  vendor_id = get_vendor_id.rows[0].vendor_id;
+  const result = await query(
+    "SELECT * FROM software_catalog WHERE vendor_id = $1",
+    [vendor_id]
+  );
+  console.log(result);
   return result;
 };
 
