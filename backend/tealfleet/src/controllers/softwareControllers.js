@@ -156,14 +156,14 @@ module.exports.cSoftwareAssGetByVendor = async (req, res) => {
   const vendor = req.params.vendor;
   try {
     const result = await SoftwareAssGetByVendor(vendor);
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       res
         .status(404)
         .send(
           `The software was not found, invalid input syntax for type vendor ${vendor}`
         );
     } else {
-      res.status(200).send(result.rows);
+      res.status(200).send(result);
     }
   } catch (err) {
     console.log(err);

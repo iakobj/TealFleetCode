@@ -47,12 +47,12 @@ module.exports.SoftwareCatGetByVersion = async (version) => {
 // Software Asset Services
 
 module.exports.SoftwareAssGetAll = async () => {
-  const result = query("SELECT * FROM software_asset");
+  const result = await query("SELECT * FROM software_asset");
   return result;
 };
 
 module.exports.SoftwareAssGetById = async (id) => {
-  const result = query(
+  const result = await query(
     "SELECT * FROM software_asset WHERE software_asset_id = $1",
     [id]
   );
@@ -60,12 +60,15 @@ module.exports.SoftwareAssGetById = async (id) => {
 };
 
 module.exports.SoftwareAssGetByName = async (name) => {
-  const software_catalog_id = query(
+  console.log(name);
+  const get_software_catalog_id = await query(
     "SELECT software_catalog_id FROM software_catalog WHERE model_name = $1",
     [name]
   );
+  software_catalog_id = get_software_catalog_id.rows[0].software_catalog_id;
+  console.log(software_catalog_id);
 
-  const result = query(
+  const result = await query(
     "SELECT * FROM software_assets WHERE software_catalog_id = $1",
     [software_catalog_id]
   );
@@ -73,14 +76,29 @@ module.exports.SoftwareAssGetByName = async (name) => {
 };
 
 module.exports.SoftwareAssGetByVendor = async (vendor) => {
-  const vendor_id = query("SELECT vendor_id FROM vendors WHERE vendor = $1", [
-    vendor,
-  ]);
-
-  const result = query(
-    "SELECT * FROM software_catalog, software_assets WHERE software_catalog.vendor_id = $1",
-    [vendor_id]
+  const get_vendor_id = await query(
+    "SELECT vendor_id FROM vendors WHERE name = $1",
+    [vendor]
   );
+  vendor_id = get_vendor_id.rows[0].vendor_id;
+  // Create the temporary table
+  const join = await query(
+    `
+    SELECT *
+    FROM software_assets
+    JOIN software_catalog
+    ON software_catalog.software_catalog_id = software_assets.software_catalog_id;
+  `
+  );
+
+  const i = join.rows.length;
+  const result = [];
+  for (j = 0; j < i; j++) {
+    if (join.rows[j].vendor_id == vendor_id) {
+      result[j] = join.rows[j];
+    }
+  }
+
   return result;
 };
 
