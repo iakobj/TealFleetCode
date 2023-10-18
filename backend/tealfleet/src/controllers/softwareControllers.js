@@ -171,7 +171,7 @@ module.exports.cSoftwareAssGetByVendor = async (req, res) => {
   }
 };
 
-// Get software from assets by vendor
+// Get software version from assets by vendor
 module.exports.cSoftwareAssGetByVersion = async (req, res) => {
   const version = req.params.version;
   try {

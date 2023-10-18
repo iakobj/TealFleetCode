@@ -82,15 +82,18 @@ module.exports.SoftwareAssGetByVendor = async (vendor) => {
   );
   vendor_id = get_vendor_id.rows[0].vendor_id;
   // Create the temporary table
-  const join = await query(
+  const result = await query(
     `
     SELECT *
     FROM software_assets
     JOIN software_catalog
-    ON software_catalog.software_catalog_id = software_assets.software_catalog_id;
-  `
+    ON software_catalog.software_catalog_id = software_assets.software_catalog_id
+    WHERE vendor_id = $1;
+  `, [vendor_id]
   );
 
+/**
+ * // save all the rows that have a matching vendor_id from first select statement into result array
   const i = join.rows.length;
   const result = [];
   for (j = 0; j < i; j++) {
@@ -98,8 +101,10 @@ module.exports.SoftwareAssGetByVendor = async (vendor) => {
       result[j] = join.rows[j];
     }
   }
+ */
+  
 
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareAssGetByVersion = async (version) => {
