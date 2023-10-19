@@ -16,9 +16,10 @@ module.exports.SoftwareCatGetById = async (id) => {
 };
 
 module.exports.SoftwareCatGetByName = async (name) => {
-  const result = await query("SELECT * FROM software_catalog WHERE model_name = $1", [
-    name,
-  ]);
+  const result = await query(
+    "SELECT * FROM software_catalog WHERE model_name = $1",
+    [name]
+  );
   return result.rows;
 };
 
@@ -97,11 +98,6 @@ module.exports.SoftwareAssGetByVendor = async (vendor) => {
 };
 
 module.exports.SoftwareAssGetByVersion = async (version) => {
-  const get_vendor_id = await query(
-    "SELECT vendor_id FROM vendors WHERE name = $1",
-    [vendor]
-  );
-  vendor_id = get_vendor_id.rows[0].vendor_id;
   // Create the temporary table
   const result = await query(
     `
@@ -109,24 +105,53 @@ module.exports.SoftwareAssGetByVersion = async (version) => {
     FROM software_assets
     JOIN software_catalog
     ON software_catalog.software_catalog_id = software_assets.software_catalog_id
-    WHERE vendor_id = $1;
+    WHERE version_number = $1;
   `,
-    [vendor_id]
+    [version]
   );
 
   return result.rows;
 };
 
 module.exports.SoftwareAssGetByTenant = async (tenant) => {
-  const result = await query("SELECT * FROM software_asset WHERE tenant_id = $1", [
-    tenant,
-  ]);
+  const get_tenant_id = await query(
+    "SELECT tenant_id FROM tenants WHERE tenant_name = $1",
+    [tenant]
+  );
+  tenant_id = get_tenant_id.rows[0].tenant_id;
+
+  // Create the temporary table
+  const result = await query(
+    `
+    SELECT *
+    FROM software_assets
+    JOIN software_catalog
+    ON software_catalog.software_catalog_id = software_assets.software_catalog_id
+    WHERE tenant_id = $1;
+  `,
+    [tenant_id]
+  );
+
   return result.rows;
 };
 
 module.exports.SoftwareAssGetBySite = async (site) => {
-  const result = await query("SELECT * FROM software_asset WHERE site_id = $1", [
+  const get_site_id = await query("SELECT site_id FROM sites WHERE name = $1", [
     site,
   ]);
+  site_id = get_site_id.rows[0].site_id;
+
+  // Create the temporary table
+  const result = await query(
+    `
+    SELECT *
+    FROM software_assets
+    JOIN software_catalog
+    ON software_catalog.software_catalog_id = software_assets.software_catalog_id
+    WHERE site_id = $1;
+  `,
+    [site_id]
+  );
+
   return result.rows;
 };
