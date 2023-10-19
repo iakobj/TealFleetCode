@@ -10,8 +10,8 @@ module.exports.cNavigationGetAll = async (req, res) => {
   try {
     const result1 = await navigationMainGetAll();
     const result2 = await navigationSubGetAll();
-    result1.rows.push(result2.rows);
-    res.status(200).send(result1.rows);
+    result1.push(result2);
+    res.status(200).send(result1);
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -24,8 +24,8 @@ module.exports.cNavigationGetById = async (req, res) => {
   try {
     const result1 = await navigationMainGetById(id);
     const result2 = await navigationSubGetById(id);
-    result1.rows.push(result2.rows);
-    res.status(200).send(result1.rows);
+    result1.push(result2);
+    res.status(200).send(result1);
   } catch (err) {
     console.log(err);
     res

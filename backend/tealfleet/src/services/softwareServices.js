@@ -4,7 +4,7 @@ const { query } = require("../services/db/index");
 
 module.exports.SoftwareCatGetAll = async () => {
   const result = query("SELECT * FROM software_catalog");
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareCatGetById = async (id) => {
@@ -12,14 +12,14 @@ module.exports.SoftwareCatGetById = async (id) => {
     "SELECT * FROM software_catalog WHERE software_catalog_id = $1",
     [id]
   );
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareCatGetByName = async (name) => {
   const result = query("SELECT * FROM software_catalog WHERE model_name = $1", [
     name,
   ]);
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareCatGetByVendor = async (vendor) => {
@@ -33,7 +33,7 @@ module.exports.SoftwareCatGetByVendor = async (vendor) => {
     [vendor_id]
   );
   console.log(result);
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareCatGetByVersion = async (version) => {
@@ -41,14 +41,14 @@ module.exports.SoftwareCatGetByVersion = async (version) => {
     "SELECT * FROM software_catalog WHERE version_number = $1",
     [version]
   );
-  return result;
+  return result.rows;
 };
 
 // Software Asset Services
 
 module.exports.SoftwareAssGetAll = async () => {
   const result = await query("SELECT * FROM software_asset");
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareAssGetById = async (id) => {
@@ -56,7 +56,7 @@ module.exports.SoftwareAssGetById = async (id) => {
     "SELECT * FROM software_asset WHERE software_asset_id = $1",
     [id]
   );
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareAssGetByName = async (name) => {
@@ -72,7 +72,7 @@ module.exports.SoftwareAssGetByName = async (name) => {
     "SELECT * FROM software_assets WHERE software_catalog_id = $1",
     [software_catalog_id]
   );
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareAssGetByVendor = async (vendor) => {
@@ -92,18 +92,6 @@ module.exports.SoftwareAssGetByVendor = async (vendor) => {
   `, [vendor_id]
   );
 
-/**
- * // save all the rows that have a matching vendor_id from first select statement into result array
-  const i = join.rows.length;
-  const result = [];
-  for (j = 0; j < i; j++) {
-    if (join.rows[j].vendor_id == vendor_id) {
-      result[j] = join.rows[j];
-    }
-  }
- */
-  
-
   return result.rows;
 };
 
@@ -112,19 +100,19 @@ module.exports.SoftwareAssGetByVersion = async (version) => {
     "SELECT * FROM software_asset WHERE software_asset_id = $1",
     [version]
   );
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareAssGetByTenant = async (tenant) => {
   const result = query("SELECT * FROM software_asset WHERE tenant_id = $1", [
     tenant,
   ]);
-  return result;
+  return result.rows;
 };
 
 module.exports.SoftwareAssGetBySite = async (site) => {
   const result = query("SELECT * FROM software_asset WHERE site_id = $1", [
     site,
   ]);
-  return result;
+  return result.rows;
 };
