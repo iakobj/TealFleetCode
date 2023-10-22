@@ -47,7 +47,7 @@ module.exports.hardwareCatGetByVersion = async (version) => {
 
 module.exports.hardwareCatGetByCategory = async (category) => {
     const get_category_id = await query(
-      "SELECT category_id FROM hw_categories WHERE hw_category_id = $1",
+      "SELECT hw_category_id FROM hw_categories WHERE category = $1",
       [category]
     );
     const hw_category_id = get_category_id.rows[0].hw_category_id;

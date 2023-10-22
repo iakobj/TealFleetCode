@@ -89,6 +89,7 @@ const {
   cSoftwareCatGetByName,
   cSoftwareCatGetByVendor,
   cSoftwareCatGetByVersion,
+  cSoftwareCatGetByCategory,
   cSoftwareAssGetAll,
   cSoftwareAssGetById,
   cSoftwareAssGetByName,

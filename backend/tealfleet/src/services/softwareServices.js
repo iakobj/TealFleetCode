@@ -47,12 +47,13 @@ module.exports.softwareCatGetByVersion = async (version) => {
 
 module.exports.softwareCatGetByCategory = async (category) => {
   const get_category_id = await query(
-    "SELECT category_id FROM sw_categories WHERE sw_category_id = $1",
+    "SELECT sw_category_id FROM sw_categories WHERE category = $1",
     [category]
   );
+
   const sw_category_id = get_category_id.rows[0].sw_category_id;
   const result = await query(
-    "SELECT * FROM hardware_catalog WHERE sw_category_id = $1",
+    "SELECT * FROM software_catalog WHERE sw_category_id = $1",
     [sw_category_id]
   );
 

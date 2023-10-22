@@ -83,7 +83,7 @@ module.exports.cSoftwareCatGetByVendor = async (req, res) => {
   }
 };
 
-// Get software from cataloge by vendor
+// Get software from cataloge by version
 module.exports.cSoftwareCatGetByVersion = async (req, res) => {
   const version = req.params.version;
   try {
@@ -105,7 +105,7 @@ module.exports.cSoftwareCatGetByVersion = async (req, res) => {
 
 // Get Software from cataloge by category
 module.exports.cSoftwareCatGetByCategory = async (req, res) => {
-  const category = req.params.version;
+  const category = req.params.category;
   try {
     const result = await softwareCatGetByCategory(category);
     if (result.length === 0) {
