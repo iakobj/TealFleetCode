@@ -90,6 +90,7 @@ const {
   cUsersGetByEmail,
   cUsersGetByPhone,
   cUsersGetByTitle,
+  cUsersGetByRole,
 } = require("../controllers/usersControllers");
 
 usersRouters.get("/", cUsersGetAll); // Get all users
@@ -97,6 +98,7 @@ usersRouters.get("/id/:id", cUsersGetById); // Get user by id
 usersRouters.get("/name/:name", cUsersGetByName); // Get user by name
 usersRouters.get("/email/:email", cUsersGetByEmail); // Get user by email
 usersRouters.get("/phone/:phone", cUsersGetByPhone); // Get user by phone
-usersRouters.get("/title/:title", cUsersGetByTitle); // Get user by title
+usersRouters.get("/title/:title", cUsersGetByTitle); // Get users by title
+usersRouters.get("/role/:role", cUsersGetByRole); // Get users by role
 
 module.exports = usersRouters;
