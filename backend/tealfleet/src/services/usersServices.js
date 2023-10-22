@@ -11,7 +11,9 @@ module.exports.usersGetById = async (id) => {
 };
 
 module.exports.usersGetByName = async (name) => {
-  const result = await query("SELECT * FROM users WHERE first_name = $1", [name]);
+  const result = await query("SELECT * FROM users WHERE first_name = $1", [
+    name,
+  ]);
   return result.rows;
 };
 
@@ -27,5 +29,20 @@ module.exports.usersGetByPhone = async (phone) => {
 
 module.exports.usersGetByTitle = async (title) => {
   const result = await query("SELECT * FROM users WHERE title = $1", [title]);
+  return result.rows;
+};
+
+module.exports.usersGetByRole = async (role) => {
+  const get_role_id = await query(
+    "SELECT role_id FROM roles WHERE role_name = $1",
+    [role]
+  );
+
+  const role_id = get_role_id.rows[0].role_id;
+
+  const result = await query("SELECT * FROM users WHERE role_id = $1", [
+    role_id,
+  ]);
+
   return result.rows;
 };
