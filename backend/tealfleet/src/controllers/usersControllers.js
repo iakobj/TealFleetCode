@@ -5,6 +5,7 @@ const {
   usersGetByEmail,
   usersGetByPhone,
   usersGetByTitle,
+  usersGetByRole
 } = require("../services/usersServices");
 
 // Get all users
@@ -32,7 +33,7 @@ module.exports.cUsersGetById = async (req, res) => {
   }
 };
 
-// Get user by name
+// Get users by name
 module.exports.cUsersGetByName = async (req, res) => {
   const name = req.params.name;
   try {
@@ -92,7 +93,7 @@ module.exports.cUsersGetByPhone = async (req, res) => {
   }
 };
 
-// Get user by title
+// Get users by title
 module.exports.cUsersGetByTitle = async (req, res) => {
   const title = req.params.title;
   try {
@@ -102,6 +103,26 @@ module.exports.cUsersGetByTitle = async (req, res) => {
         .status(404)
         .send(
           `The user was not found, invalid input syntax for type title ${title}`
+        );
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("500 Internal Server Error");
+  }
+};
+
+// Get users by role
+module.exports.cUsersGetByRole = async (req, res) => {
+  const role = req.params.role;
+  try {
+    const result = await usersGetByRole(role);
+    if (result.length === 0) {
+      res
+        .status(404)
+        .send(
+          `The user was not found, invalid input syntax for type role ${role}`
         );
     } else {
       res.status(200).send(result);
