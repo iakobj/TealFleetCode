@@ -104,6 +104,7 @@ softwareRouters.get("/catalog/id/:id", cSoftwareCatGetById); // Get software by 
 softwareRouters.get("/catalog/name/:name", cSoftwareCatGetByName); // Get software by model name from catalog
 softwareRouters.get("/catalog/vendor/:vendor", cSoftwareCatGetByVendor); // Get software by vendor from catalog
 softwareRouters.get("/catalog/version/:version", cSoftwareCatGetByVersion); // Get software by version from catalog
+softwareRouters.get("/catalog/category/:category", cSoftwareCatGetByCategory); // Get software by version from category
 
 // Software assets
 softwareRouters.get("/asset/", cSoftwareAssGetAll); // Get all Software from assets
