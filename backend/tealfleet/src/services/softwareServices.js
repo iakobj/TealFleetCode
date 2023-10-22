@@ -2,12 +2,12 @@ const { query } = require("../services/db/index");
 
 // Software Catalog Services
 
-module.exports.SoftwareCatGetAll = async () => {
+module.exports.softwareCatGetAll = async () => {
   const result = await query("SELECT * FROM software_catalog");
   return result.rows;
 };
 
-module.exports.SoftwareCatGetById = async (id) => {
+module.exports.softwareCatGetById = async (id) => {
   const result = await query(
     "SELECT * FROM software_catalog WHERE software_catalog_id = $1",
     [id]
@@ -15,7 +15,7 @@ module.exports.SoftwareCatGetById = async (id) => {
   return result.rows;
 };
 
-module.exports.SoftwareCatGetByName = async (name) => {
+module.exports.softwareCatGetByName = async (name) => {
   const result = await query(
     "SELECT * FROM software_catalog WHERE model_name = $1",
     [name]
@@ -23,7 +23,7 @@ module.exports.SoftwareCatGetByName = async (name) => {
   return result.rows;
 };
 
-module.exports.SoftwareCatGetByVendor = async (vendor) => {
+module.exports.softwareCatGetByVendor = async (vendor) => {
   const get_vendor_id = await query(
     "SELECT vendor_id FROM vendors WHERE name = $1",
     [vendor]
@@ -37,7 +37,7 @@ module.exports.SoftwareCatGetByVendor = async (vendor) => {
   return result.rows;
 };
 
-module.exports.SoftwareCatGetByVersion = async (version) => {
+module.exports.softwareCatGetByVersion = async (version) => {
   const result = await query(
     "SELECT * FROM software_catalog WHERE version_number = $1",
     [version]
@@ -47,12 +47,12 @@ module.exports.SoftwareCatGetByVersion = async (version) => {
 
 // Software Asset Services
 
-module.exports.SoftwareAssGetAll = async () => {
+module.exports.softwareAssGetAll = async () => {
   const result = await query("SELECT * FROM software_asset");
   return result.rows;
 };
 
-module.exports.SoftwareAssGetById = async (id) => {
+module.exports.softwareAssGetById = async (id) => {
   const result = await query(
     "SELECT * FROM software_asset WHERE software_asset_id = $1",
     [id]
@@ -60,8 +60,7 @@ module.exports.SoftwareAssGetById = async (id) => {
   return result.rows;
 };
 
-module.exports.SoftwareAssGetByName = async (name) => {
-  console.log(name);
+module.exports.softwareAssGetByName = async (name) => {
   const get_software_catalog_id = await query(
     "SELECT software_catalog_id FROM software_catalog WHERE model_name = $1",
     [name]
@@ -76,7 +75,7 @@ module.exports.SoftwareAssGetByName = async (name) => {
   return result.rows;
 };
 
-module.exports.SoftwareAssGetByVendor = async (vendor) => {
+module.exports.softwareAssGetByVendor = async (vendor) => {
   const get_vendor_id = await query(
     "SELECT vendor_id FROM vendors WHERE name = $1",
     [vendor]
@@ -97,7 +96,7 @@ module.exports.SoftwareAssGetByVendor = async (vendor) => {
   return result.rows;
 };
 
-module.exports.SoftwareAssGetByVersion = async (version) => {
+module.exports.softwareAssGetByVersion = async (version) => {
   // Create the temporary table
   const result = await query(
     `
@@ -113,7 +112,7 @@ module.exports.SoftwareAssGetByVersion = async (version) => {
   return result.rows;
 };
 
-module.exports.SoftwareAssGetByTenant = async (tenant) => {
+module.exports.softwareAssGetByTenant = async (tenant) => {
   const get_tenant_id = await query(
     "SELECT tenant_id FROM tenants WHERE tenant_name = $1",
     [tenant]
@@ -135,7 +134,7 @@ module.exports.SoftwareAssGetByTenant = async (tenant) => {
   return result.rows;
 };
 
-module.exports.SoftwareAssGetBySite = async (site) => {
+module.exports.softwareAssGetBySite = async (site) => {
   const get_site_id = await query("SELECT site_id FROM sites WHERE name = $1", [
     site,
   ]);
