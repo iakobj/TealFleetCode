@@ -87,10 +87,20 @@ const {
   cSitesGetAll,
   cSitesGetById,
   cSitesGetByName,
+  cSitesGetByAddress,
+  cSitesGetByCity,
+  cSitesGetByPostcode,
+  cSitesGetByCountry,
+  cSitesGetByTenant,
 } = require("../controllers/sitesControllers");
 
 sitesRouters.get("/", cSitesGetAll); // Get all sites
 sitesRouters.get("/id/:id", cSitesGetById); // Get site by id
 sitesRouters.get("/name/:name", cSitesGetByName); // Get site by name
+sitesRouters.get("/address/:address", cSitesGetByAddress); // Get site by address
+sitesRouters.get("/city/:city", cSitesGetByCity); // Get site by city
+sitesRouters.get("/postcode/:postcode", cSitesGetByPostcode); // Get site by post code
+sitesRouters.get("/country/:country", cSitesGetByCountry); // Get site by country
+sitesRouters.get("/tenant/:tenant", cSitesGetByTenant); // Get site by tenant
 
 module.exports = sitesRouters;

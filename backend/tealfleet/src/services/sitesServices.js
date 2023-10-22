@@ -15,17 +15,35 @@ module.exports.sitesGetByName = async (name) => {
   return result.rows;
 };
 
-module.exports.sitesGetByName = async (city) => {
-    const result = await query("SELECT * FROM sites WHERE city = $1", [city]);
-    return result.rows;
+module.exports.sitesGetByAddress = async (address) => {
+  const result = await query("SELECT * FROM sites WHERE address1 = $1", [
+    address,
+  ]);
+  return result.rows;
 };
 
-module.exports.sitesGetByPostCode = async (postcode) => {
-    const result = await query("SELECT * FROM sites WHERE postcode = $1", [postcode]);
-    return result.rows;
+module.exports.sitesGetByCity = async (city) => {
+  const result = await query("SELECT * FROM sites WHERE city = $1", [city]);
+  return result.rows;
+};
+
+module.exports.sitesGetByPostcode = async (postcode) => {
+  const result = await query("SELECT * FROM sites WHERE postcode = $1", [
+    postcode,
+  ]);
+  return result.rows;
 };
 
 module.exports.sitesGetByCountry = async (country) => {
-    const result = await query("SELECT * FROM sites WHERE country = $1", [country]);
-    return result.rows;
+  const result = await query("SELECT * FROM sites WHERE country = $1", [
+    country,
+  ]);
+  return result.rows;
+};
+
+module.exports.sitesGetByTenant = async (tenant) => {
+  const result = await query("SELECT * FROM sites WHERE tenant_id = $1", [
+    tenant,
+  ]);
+  return result.rows;
 };
