@@ -1,10 +1,10 @@
 module.exports.tfdbSeed = `
 
-INSERT INTO "roles" ("role_id", "role")
+INSERT INTO "roles" ("role_id", "role", "role_name")
 VALUES
-  ('1e2c561c-aaaa-4f79-9d3a-012345678901', 'Admin'),
-  ('3b4d675e-aaaa-41a7-bc2a-012345678902', 'Manager'),
-  ('5a6f7b8d-aaaa-2a1d-1f9a-012345678903', 'Employee');
+  ('1e2c561c-aaaa-4f79-9d3a-012345678901', 'rwd', 'user'),
+  ('3b4d675e-aaaa-41a7-bc2a-012345678902', 'rw', 'limited-user'),
+  ('5a6f7b8d-aaaa-2a1d-1f9a-012345678903', 'r', 'read-only');
 
 INSERT INTO "tenants" ("tenant_id", "is_root", "tenant_name")
 VALUES

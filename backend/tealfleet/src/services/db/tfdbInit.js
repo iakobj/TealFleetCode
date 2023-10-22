@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS "sub_navigation" (
 
 CREATE TABLE IF NOT EXISTS "roles" (
   "role_id" uuid PRIMARY KEY,
-  "role" varchar NOT NULL
+  "role" varchar NOT NULL,
+  "role_name" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "alerts" (
