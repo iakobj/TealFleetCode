@@ -4,7 +4,7 @@ const { tfdbReset } = require("../services/db/tfdbReset");
 // Function to execute the seedTealFleetDB queries sequentially
 module.exports.utilTfdbReset = async () => {
   try {
-    query(tfdbReset);
+    await query(tfdbReset);
     console.log("tfdb reset successfully.");
   } catch (error) {
     console.error("Error creating tables:", error);

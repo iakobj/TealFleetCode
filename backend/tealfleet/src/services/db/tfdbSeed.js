@@ -12,11 +12,15 @@ VALUES
   ('112d675e-6f8c-41a7-bc2a-012345678902', false, 'Demo Tenant 1'),
   ('113f7b8d-4c3e-2a1d-1f9a-012345678903', false, 'Demo Tenant 2');
 
-
-INSERT INTO "users" ("user_id", "role_id", "tenant_id", "first_name", "last_name", "email", "password", "phone", "title", "view_dashboard", "view_fleet", "view_support", "view_marketplace", "view_administration")
+INSERT INTO "sites" ("site_id", "tenant_id", "name", "address1", "city", "postcode", "country", "changed_at")
 VALUES
-  ('1a2b3c4d-1111-7a8b-9c0d-012345678901', '1e2c561c-aaaa-4f79-9d3a-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', 'John', 'Doe', 'john@example.com', 'password123', '555-123-4567', 'Manager', true, true, true, true, true),
-  ('2b3c4d5e-1112-8b9c-0d1e-012345678902', '1e2c561c-aaaa-4f79-9d3a-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', 'Jane', 'Smith', 'jane@example.com', 'password456', '555-987-6543', 'Employee', true, true, true, true, true);
+  ('1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', '111c561c-8a1d-4f79-9d3a-012345678901', 'Site 1', '123 Main St', 'City 1', 12345, 'Country 1', NOW()),
+  ('2b3c4d5e-6f7a-8b9c-0d1e-0123456aaaab', '111c561c-8a1d-4f79-9d3a-012345678901', 'Site 2', '456 Elm St', 'City 2', 56789, 'Country 2', NOW());
+
+INSERT INTO "users" ("user_id", "role_id", "tenant_id", "site_id", "first_name", "last_name", "email", "password", "phone", "title", "view_dashboard", "view_fleet", "view_support", "view_marketplace", "view_administration")
+VALUES
+  ('1a2b3c4d-1111-7a8b-9c0d-012345678901', '1e2c561c-aaaa-4f79-9d3a-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'John', 'Doe', 'john@example.com', 'password123', '555-123-4567', 'Manager', true, true, true, true, true),
+  ('2b3c4d5e-1112-8b9c-0d1e-012345678902', '1e2c561c-aaaa-4f79-9d3a-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'Jane', 'Smith', 'jane@example.com', 'password456', '555-987-6543', 'Employee', true, true, true, true, true);
 
 
 INSERT INTO "main_navigation" ("main_nav_id", "main_nav_item")
@@ -78,11 +82,6 @@ INSERT INTO "alerts" ("alert_id", "tenant_id", "alert_type_id", "alert_category_
 VALUES
   ('1a2b3c4d-aa11-7a8b-9c0d-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-8a1d-4f79-9d3a-aaa345678901', '3b4d675e-6f8c-41a7-bc2a-bbb345678902', '1a2b3c4d-5e6f-7777-9c0d-012345678901', 'Alert 1', 'Description of Alert 1', false),
   ('2b3c4d5e-aa11-8b9c-0d1e-012345678902', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-8a1d-4f79-9d3a-aaa345678901', '3b4d675e-6f8c-41a7-bc2a-bbb345678902', '1a2b3c4d-5e6f-7777-9c0d-012345678901', 'Alert 2', 'Description of Alert 2', false);
-
-INSERT INTO "sites" ("site_id", "tenant_id", "user_id", "asset_id", "name", "address1", "city", "postcode", "country", "changed_at")
-VALUES
-  ('1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-1111-7a8b-9c0d-012345678901', '1a2b3c4d-3333-7777-3c80-012345678901', 'Site 1', '123 Main St', 'City 1', 12345, 'Country 1', NOW()),
-  ('2b3c4d5e-6f7a-8b9c-0d1e-0123456aaaab', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-1111-7a8b-9c0d-012345678901', '1a2b3c4d-3333-7777-3c80-012345678901', 'Site 2', '456 Elm St', 'City 2', 56789, 'Country 2', NOW());
   
 INSERT INTO "hardware_assets" ("hardware_asset_id", "hardware_catalog_id", "tenant_id", "site_id", "serial_no", "changed_at")
 VALUES

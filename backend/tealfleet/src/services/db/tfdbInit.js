@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS "users" (
   "user_id" uuid PRIMARY KEY,
   "role_id" uuid NOT NULL,
   "tenant_id" uuid NOT NULL,
+  "site_id" uuid NOT NULL,
   "first_name" varchar NOT NULL,
   "last_name" varchar NOT NULL,
   "email" varchar NOT NULL,
@@ -177,8 +178,6 @@ CREATE TABLE IF NOT EXISTS "vendors" (
 CREATE TABLE IF NOT EXISTS "sites" (
   "site_id" uuid PRIMARY KEY,
   "tenant_id" uuid NOT NULL,
-  "user_id" uuid NOT NULL,
-  "asset_id" uuid NOT NULL,
   "name" varchar NOT NULL,
   "address1" varchar NOT NULL,
   "city" varchar NOT NULL,
@@ -201,11 +200,11 @@ ALTER TABLE "users" ADD CONSTRAINT "users_role_id_fkey" FOREIGN KEY ("role_id") 
 ALTER TABLE "users" DROP CONSTRAINT IF EXISTS "users_tenant_id_fkey";
 ALTER TABLE "users" ADD CONSTRAINT "users_tenant_id_fkey" FOREIGN KEY ("tenant_id") REFERENCES "tenants" ("tenant_id");
 
+ALTER TABLE "users" DROP CONSTRAINT IF EXISTS "users_site_id_fkey";
+ALTER TABLE "users" ADD CONSTRAINT "users_site_id_fkey" FOREIGN KEY ("site_id") REFERENCES "sites" ("site_id");
+
 ALTER TABLE "sites" DROP CONSTRAINT IF EXISTS "sites_tenant_id_fkey";
 ALTER TABLE "sites" ADD CONSTRAINT "sites_tenant_id_fkey" FOREIGN KEY ("tenant_id") REFERENCES "tenants" ("tenant_id");
-
-ALTER TABLE "sites" DROP CONSTRAINT IF EXISTS "users_tenant_id_fkey";
-ALTER TABLE "sites" ADD CONSTRAINT "users_tenant_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users" ("user_id");
 
 ALTER TABLE "alerts" DROP CONSTRAINT IF EXISTS "alerts_alert_type_id_fkey";
 ALTER TABLE "alerts" ADD FOREIGN KEY ("alert_type_id") REFERENCES "alerts_type" ("alert_type_id");
