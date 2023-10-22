@@ -4,6 +4,7 @@ const {
   softwareCatGetByName,
   softwareCatGetByVendor,
   softwareCatGetByVersion,
+  softwareCatGetByCategory,
   softwareAssGetAll,
   softwareAssGetById,
   softwareAssGetByName,
@@ -92,6 +93,26 @@ module.exports.cSoftwareCatGetByVersion = async (req, res) => {
         .status(404)
         .send(
           `The software was not found, invalid input syntax for type version ${version}`
+        );
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("500 Internal Server Error");
+  }
+};
+
+// Get Software from cataloge by category
+module.exports.cSoftwareCatGetByCategory = async (req, res) => {
+  const category = req.params.version;
+  try {
+    const result = await softwareCatGetByCategory(category);
+    if (result.length === 0) {
+      res
+        .status(404)
+        .send(
+          `The Software was not found, invalid input syntax for type category ${category}`
         );
     } else {
       res.status(200).send(result);
