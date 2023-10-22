@@ -53,9 +53,11 @@ if (args[2] == "seed") {
 } else if (args[2] == "init") {
   console.log("Init started...");
   utilTfdbInit();
+  return false;
 } else if (args[2] == "reset") {
   console.log("Reseting started...");
   utilTfdbReset();
+  return false;
 } else if (args[2] == "help") {
   console.log(
     "node app.js init  // it creates the tables needed in the tealfleet database"

@@ -20,12 +20,12 @@ module.exports.sitesGetByName = async (city) => {
     return result.rows;
 };
 
-module.exports.sitesGetByName = async (postcode) => {
+module.exports.sitesGetByPostCode = async (postcode) => {
     const result = await query("SELECT * FROM sites WHERE postcode = $1", [postcode]);
     return result.rows;
 };
 
-module.exports.sitesGetByName = async (country) => {
+module.exports.sitesGetByCountry = async (country) => {
     const result = await query("SELECT * FROM sites WHERE country = $1", [country]);
     return result.rows;
 };
