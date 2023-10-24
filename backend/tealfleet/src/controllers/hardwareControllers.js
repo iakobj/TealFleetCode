@@ -3,16 +3,18 @@ const {
   hardwareCatGetById,
   hardwareCatGetByName,
   hardwareCatGetByVendor,
-  cHardwareCatGetByPartnumber,
+  hardwareCatGetByPartnumber,
   hardwareCatGetByCategory,
+
   hardwareAssGetAll,
   hardwareAssGetById,
   hardwareAssGetByName,
   hardwareAssGetByVendor,
-  hardwareAssGetByVersion,
+  hardwareAssGetByPartnumber,
+  hardwareAssGetBySerialnumber,
   hardwareAssGetByTenant,
   hardwareAssGetBySite,
-} = require("../services/HardwareServices");
+} = require("../services/hardwareServices");
 
 // Hardware Asset Controllers
 
@@ -105,7 +107,7 @@ module.exports.cHardwareCatGetByPartnumber = async (req, res) => {
 
 // Get Hardware from cataloge by category
 module.exports.cHardwareCatGetByCategory = async (req, res) => {
-  const category = req.params.version;
+  const category = req.params.category;
   try {
     const result = await hardwareCatGetByCategory(category);
     if (result.length === 0) {
@@ -192,16 +194,36 @@ module.exports.cHardwareAssGetByVendor = async (req, res) => {
   }
 };
 
-// Get Hardware version from assets by version
-module.exports.cHardwareAssGetByVersion = async (req, res) => {
-  const version = req.params.version;
+// Get Hardware from assets by part number
+module.exports.cHardwareAssGetByPartnumber = async (req, res) => {
+  const partnumber = req.params.partnumber;
   try {
-    const result = await hardwareAssGetByVersion(version);
+    const result = await hardwareAssGetByPartnumber(partnumber);
     if (result.length === 0) {
       res
         .status(404)
         .send(
-          `The Hardware was not found, invalid input syntax for type version ${version}`
+          `The Hardware was not found, invalid input syntax for type part number ${partnumber}`
+        );
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("500 Internal Server Error");
+  }
+};
+
+// Get Hardware from assets by part number
+module.exports.cHardwareAssGetBySerialnumber = async (req, res) => {
+  const serialnumber = req.params.serialnumber;
+  try {
+    const result = await hardwareAssGetBySerialnumber(serialnumber);
+    if (result.length === 0) {
+      res
+        .status(404)
+        .send(
+          `The Hardware was not found, invalid input syntax for type serial number ${serialnumber}`
         );
     } else {
       res.status(200).send(result);

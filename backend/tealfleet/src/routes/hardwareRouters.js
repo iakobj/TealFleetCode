@@ -80,7 +80,7 @@
  */
 
 const express = require("express");
-const HardwareRouters = express.Router();
+const hardwareRouters = express.Router();
 
 // Import Controllers
 const {
@@ -89,11 +89,14 @@ const {
   cHardwareCatGetByName,
   cHardwareCatGetByVendor,
   cHardwareCatGetByPartnumber,
+  cHardwareCatGetByCategory,
+
   cHardwareAssGetAll,
   cHardwareAssGetById,
   cHardwareAssGetByName,
   cHardwareAssGetByVendor,
-  cHardwareAssGetByVersion,
+  cHardwareAssGetByPartnumber,
+  cHardwareAssGetBySerialnumber,
   cHardwareAssGetByTenant,
   cHardwareAssGetBySite,
 } = require("../controllers/hardwareControllers");
@@ -103,15 +106,16 @@ hardwareRouters.get("/catalog", cHardwareCatGetAll); // Get all Hardware from ca
 hardwareRouters.get("/catalog/id/:id", cHardwareCatGetById); // Get Hardware by id from catalog
 hardwareRouters.get("/catalog/name/:name", cHardwareCatGetByName); // Get Hardware by model name from catalog
 hardwareRouters.get("/catalog/vendor/:vendor", cHardwareCatGetByVendor); // Get Hardware by vendor from catalog
-hardwareRouters.get("/catalog/category/:category", cHardwareCatGetByCategory); // Get Hardware by version from category
 hardwareRouters.get("/catalog/partnumber/:partnumber", cHardwareCatGetByPartnumber); // Get Hardware by version from part number
+hardwareRouters.get("/catalog/category/:category", cHardwareCatGetByCategory); // Get Hardware by version from category
 
 // Hardware assets
 hardwareRouters.get("/asset/", cHardwareAssGetAll); // Get all Hardware from assets
 hardwareRouters.get("/asset/id/:id", cHardwareAssGetById); // Get Hardware by id from assets
 hardwareRouters.get("/asset/name/:name", cHardwareAssGetByName); // Get Hardware by model name from assets
 hardwareRouters.get("/asset/vendor/:vendor", cHardwareAssGetByVendor); // Get Hardware by vendor from assets
-hardwareRouters.get("/asset/version/:version", cHardwareAssGetByVersion); // Get Hardware by version from assets
+hardwareRouters.get("/asset/partnumber/:partnumber", cHardwareAssGetByPartnumber); // Get Hardware by part number from assets
+hardwareRouters.get("/asset/serialnumber/:serialnumber", cHardwareAssGetBySerialnumber); // Get Hardware by serial number from assets
 hardwareRouters.get("/asset/tenant/:tenant", cHardwareAssGetByTenant); // Get Hardware by tenant from assets
 hardwareRouters.get("/asset/site/:site", cHardwareAssGetBySite); // Get Hardware by site from assets
 
