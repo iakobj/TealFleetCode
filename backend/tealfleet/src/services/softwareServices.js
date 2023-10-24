@@ -63,13 +63,13 @@ module.exports.softwareCatGetByCategory = async (category) => {
 // Software Asset Services
 
 module.exports.softwareAssGetAll = async () => {
-  const result = await query("SELECT * FROM software_asset");
+  const result = await query("SELECT * FROM software_assets");
   return result.rows;
 };
 
 module.exports.softwareAssGetById = async (id) => {
   const result = await query(
-    "SELECT * FROM software_asset WHERE software_asset_id = $1",
+    "SELECT * FROM software_assets WHERE software_asset_id = $1",
     [id]
   );
   return result.rows;
