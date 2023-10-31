@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+const session = require("express-session");
 
 const path = require("path");
 const result = require("dotenv").config({
@@ -32,6 +34,32 @@ const options = {
   },
   apis: ["./routes/*.js"],
 };
+
+// session store and session config
+const store = new (require("connect-pg-simple")(session))({
+  createTableIfMissing: true,
+});
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: "GET,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }),
+  session({
+    name: "tealfleet.com",
+    secret: "secret-key",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+      maxAge: 3600000,
+      sameSite: "none",
+    },
+  })
+);
 
 const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));

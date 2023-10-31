@@ -1,7 +1,8 @@
 // React components
 import * as React from "react";
-import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
+import { useLocation } from 'react-router-dom';
+
 
 // Chakra-UI components
 import { Flex, Text, HStack } from "@chakra-ui/react";
@@ -58,6 +59,14 @@ let mainNavItems = {
 const navItems = mainNavItems.NavItems;
 
 function HeaderSubNav() {
+
+  let location = useLocation();
+  
+
+    console.log(location.pathname); 
+
+
+
   return (
     <Flex>
       <HStack spacing="0.8em">

@@ -68,9 +68,11 @@ const navigationRouters = express.Router();
 const {
   cNavigationGetAll,
   cNavigationGetById,
+  cNavigationMainGetAll,
 } = require("../controllers/navigationControllers");
 
 navigationRouters.get("/", cNavigationGetAll); // Get all navigation element
 navigationRouters.get("/id/:id", cNavigationGetById); // Get navigation element by id
+navigationRouters.get("/main", cNavigationMainGetAll); // Get main navigation elements
 
 module.exports = navigationRouters;

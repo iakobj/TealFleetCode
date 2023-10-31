@@ -18,6 +18,17 @@ module.exports.cNavigationGetAll = async (req, res) => {
   }
 };
 
+// Get all main navigation items
+module.exports.cNavigationMainGetAll = async (req, res) => {
+  try {
+    const result = await navigationMainGetAll();
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No navigation found");
+  }
+};
+
 // Get navigation item by id
 module.exports.cNavigationGetById = async (req, res) => {
   const id = req.params.id;
