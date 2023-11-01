@@ -3,6 +3,7 @@ const {
   navigationMainGetById,
   navigationSubGetAll,
   navigationSubGetById,
+  navigationSubGetByName,
 } = require("../services/navigationServices");
 
 // Get all navigation items
@@ -12,17 +13,6 @@ module.exports.cNavigationGetAll = async (req, res) => {
     const result2 = await navigationSubGetAll();
     result1.push(result2);
     res.status(200).send(result1);
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No navigation found");
-  }
-};
-
-// Get all main navigation items
-module.exports.cNavigationMainGetAll = async (req, res) => {
-  try {
-    const result = await navigationMainGetAll();
-    res.status(200).send(result);
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -44,5 +34,61 @@ module.exports.cNavigationGetById = async (req, res) => {
       .send(
         `The navigation item was not found, invalid input syntax for type uuid ${id}`
       );
+  }
+};
+
+// Get all main navigation items
+module.exports.cNavigationMainGetAll = async (req, res) => {
+  try {
+    const result = await navigationMainGetAll();
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No navigation found");
+  }
+};
+
+// Get  main navigation item by id
+module.exports.cNavigationMainGetById = async (req, res) => {
+  try {
+    const result = await navigationMainGetById(id);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No navigation found");
+  }
+};
+
+// Get all sub navigation items
+module.exports.cNavigationSubGetAll = async (req, res) => {
+  try {
+    const result = await navigationSubGetAll();
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No navigation found");
+  }
+};
+
+// Get all sub navigation items with maching main nav items id
+module.exports.cNavigationSubGetById = async (req, res) => {
+  try {
+    const result = await navigationSubGetById(id);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No navigation found");
+  }
+};
+
+// Get all sub navigation items with maching main nav items id
+module.exports.cNavigationSubGetByName = async (req, res) => {
+  const name = req.params.name;
+  try {
+    const result = await navigationSubGetByName(name);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No navigation found");
   }
 };
