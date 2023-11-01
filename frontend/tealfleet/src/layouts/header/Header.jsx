@@ -15,6 +15,8 @@ import {
   Hide,
 } from "@chakra-ui/react";
 
+import stickyHeader from './stickyHeader.css'
+
 // Navigation bar components
 import HeaderMainNav from "./HeaderMainNav";
 import HeaderSubNav from "./HeaderSubNav";
@@ -24,8 +26,9 @@ import HeaderAlertsBell from "./HeaderAlertsBell";
 
 function Header() {
   return (
-    <Grid
-      height={{ base: "7em", sm: "7em", md: "7em" }}
+    <div className={stickyHeader.stickyHeader}>
+    <Grid 
+      height={{ base: "6.5em", sm: "6.5em", md: "6.5em" }}
       gridTemplateColumns="repeat(12, 1fr)"
       gridTemplateRows="repeat(2, 1fr)"
     >
@@ -36,7 +39,7 @@ function Header() {
         rowStart={{ base: 1, sm: 1, md: 1 }}
         bg="teal.600"
         boxShadow="md"
-        marginTop={{ md: "0.8em" }}
+        marginTop={{ md: "0.4em" }}
         borderRadius={{ md: "1.0em 1.0em 0em 0em" }}
       >
         <HStack>
@@ -115,6 +118,7 @@ function Header() {
         </GridItem>
       </Hide>
     </Grid>
+    </div>
   );
 }
 

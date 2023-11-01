@@ -1,14 +1,17 @@
 // React components
 import * as React from "react";
 
+// Components
+import FleetCard from "../features/fleetCard/FleetCard.jsx";
+
 // Chakra-UI components
-import { Text, Flex } from "@chakra-ui/react";
+import { Text, Flex, Box } from "@chakra-ui/react";
 
 function Fleet() {
   return (
-    <Flex>
-      <Text>Fleet</Text>
-    </Flex>
+    <Box>
+      <FleetCard/>
+    </Box>
   );
 }
 
