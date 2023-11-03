@@ -1,5 +1,7 @@
 // React components
 import * as React from "react";
+import { NavLink, useNavigate, } from "react-router-dom";
+
 // Routes and Components
 import Header from "/src/layouts/header/Header.jsx";
 
@@ -14,9 +16,13 @@ import {
   Grid,
   Container,
   GridItem,
+  Button,
 } from "@chakra-ui/react";
+import Dashboard from "./Dashboard";
 
 function ErrorBoundary() {
+
+
   return (
     <Container maxWidth={"1600px"}>
       <Grid
@@ -24,13 +30,6 @@ function ErrorBoundary() {
         marginRight={{ base: "-16px", sm: "-16px", md: "0px" }}
         templateColumns="repeat(12, 1fr)"
       >
-        <GridItem
-          colSpan={{ base: 12, sm: 12, md: 12 }}
-          colStart={{ base: 1, sm: 1, md: 1 }}
-        >
-          <Header />
-        </GridItem>
-
         <GridItem
           marginBottom={"1em"}
           colSpan={{ base: 12, sm: 12, md: 12 }}

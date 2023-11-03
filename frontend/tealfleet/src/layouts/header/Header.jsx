@@ -15,7 +15,7 @@ import {
   Hide,
 } from "@chakra-ui/react";
 
-import stickyHeader from './stickyHeader.css'
+import stickyHeader from './stickyHeader.css';
 
 // Navigation bar components
 import HeaderMainNav from "./HeaderMainNav";
