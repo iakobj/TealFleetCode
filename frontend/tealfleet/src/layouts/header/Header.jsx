@@ -39,7 +39,7 @@ function Header() {
         rowStart={{ base: 1, sm: 1, md: 1 }}
         bg="teal.600"
         boxShadow="md"
-        marginTop={{ md: "0.4em" }}
+        marginTop={{ md: "0.5em" }}
         borderRadius={{ md: "1.0em 1.0em 0em 0em" }}
       >
         <HStack>

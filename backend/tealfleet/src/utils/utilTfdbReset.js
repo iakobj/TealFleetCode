@@ -5,7 +5,7 @@ const { tfdbReset } = require("../services/db/tfdbReset");
 module.exports.utilTfdbReset = async () => {
   try {
     await query(tfdbReset);
-    console.log("tfdb reset successfully.");
+    console.log("tfdb reset in progress...");
   } catch (error) {
     console.error("Error creating tables:", error);
   }

@@ -77,24 +77,39 @@ const args = process.argv;
 
 if (args[2] == "seed") {
   console.log("Seeding started...");
-  utilTfdbSeed();
+  utilTfdbSeed().then(() => {
+    console.log("Seeding done");
+  }).then(() => {
+    console.log("Tealfleet app running with seed information populated in the tfdb");
+  });
 } else if (args[2] == "init") {
   console.log("Init started...");
-  utilTfdbInit();
+  utilTfdbInit()
+    .then(() => {
+      console.log("Init done");
+    })
+    .then(() => {
+      console.log("Exiting...");
+    });
   return false;
 } else if (args[2] == "reset") {
-  console.log("Reseting started...");
-  utilTfdbReset();
+  console.log("Reset started...");
+  utilTfdbReset()
+    .then(() => {
+      console.log("Reset done");
+    })
+    .then(() => {
+      console.log("Exiting...");
+    });
   return false;
 } else if (args[2] == "help") {
+  console.log("node app.js [OPTION]");
   console.log(
-    "node app.js init  // it creates the tables needed in the tealfleet database"
+    "  init         Creates the tables needed in the tealfleet database"
   );
+  console.log("  reset        Drops all the tables in tealfleet database");
   console.log(
-    "node app.js reset  // it drops all the tables tealfleet database"
-  );
-  console.log(
-    "node app.js seed  // populates the tables in the tealfleet database with demo/test rows"
+    "  seed         Populates the tables in the tealfleet database with seed data"
   );
   return false;
 } else {

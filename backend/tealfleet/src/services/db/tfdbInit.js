@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS "contracts" (
   "contract_id" uuid PRIMARY KEY,
   "tenant_id" uuid NOT NULL,
   "contract_type_id" uuid NOT NULL,
+  "contractor_name" text NOT NULL,
   "contract_no" varchar NOT NULL,
   "description" text NOT NULL,
   "valid_from" date NOT NULL,
@@ -111,7 +112,8 @@ CREATE TABLE IF NOT EXISTS "software_catalog" (
 CREATE TABLE IF NOT EXISTS "software_assets" (
   "software_asset_id" uuid PRIMARY KEY,
   "software_catalog_id" uuid NOT NULL,
-  "hardware_asset_id" uuid NOT NULL,
+  "hardware_asset_id" uuid,
+  "software_asset_name" varchar NOT NULL,
   "tenant_id" uuid NOT NULL,
   "site_id" uuid NOT NULL,
   "changed_at" timestamp NOT NULL,
@@ -135,6 +137,7 @@ CREATE TABLE IF NOT EXISTS "hardware_catalog" (
 CREATE TABLE IF NOT EXISTS "hardware_assets" (
   "hardware_asset_id" uuid PRIMARY KEY,
   "hardware_catalog_id" uuid NOT NULL,
+  "hardware_asset_name" varchar NOT NULL,
   "tenant_id" uuid NOT NULL,
   "site_id" uuid NOT NULL,
   "serial_no" varchar NOT NULL,
