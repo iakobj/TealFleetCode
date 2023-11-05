@@ -12,27 +12,6 @@ function Fleet() {
   return (
     <div>
       <FleetFilter />
-      <SimpleGrid minChildWidth="18em" spacing="1em">
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-        <FleetCard />
-      </SimpleGrid>
     </div>
   );
 }

@@ -77,11 +77,15 @@ const args = process.argv;
 
 if (args[2] == "seed") {
   console.log("Seeding started...");
-  utilTfdbSeed().then(() => {
-    console.log("Seeding done");
-  }).then(() => {
-    console.log("Tealfleet app running with seed information populated in the tfdb");
-  });
+  utilTfdbSeed()
+    .then(() => {
+      console.log("Seeding done");
+    })
+    .then(() => {
+      console.log(
+        "Tealfleet app running with seed information populated in the tfdb"
+      );
+    });
 } else if (args[2] == "init") {
   console.log("Init started...");
   utilTfdbInit()
@@ -129,6 +133,7 @@ const softwareRouters = require("./routes/softwareRouters");
 const hardwareRouters = require("./routes/hardwareRouters");
 const rolesRouters = require("./routes/rolesRouters");
 const sitesRouters = require("./routes/sitesRouters");
+const assetsRouters = require("./routes/assetsRouters");
 
 app.use("/tenants", tenantsRouters);
 app.use("/users", usersRouters);
@@ -138,6 +143,7 @@ app.use("/software", softwareRouters);
 app.use("/hardware", hardwareRouters);
 app.use("/roles", rolesRouters);
 app.use("/sites", sitesRouters);
+app.use("/assets", assetsRouters);
 
 app.listen(port, () => {
   console.log(

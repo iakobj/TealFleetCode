@@ -22,19 +22,25 @@ import {
 
 import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
-function FleetCard() {
+function FleetCard({ fleetCardItems }) {
   return (
     <Card boxShadow="md" overflow="hidden" height={"25em"} variant="outline">
       <CardHeader>
         <VStack>
           <Box marginTop={"-0.6em"}>
             <Center>
-              <Heading size="md">UCSC-220-M5S</Heading>
+              <Heading size="md">{fleetCardItems.model_name}</Heading>
             </Center>
           </Box>
           <Box marginTop={"-0.5em"}>
             <Center>
-              <Text fontSize="lg">superbigcorpesxi01.acme.com</Text>
+              <Text fontSize="lg">
+                {" "}
+                {fleetCardItems.software_asset_name &&
+                  fleetCardItems.software_asset_name}
+                {!fleetCardItems.software_asset_name &&
+                  fleetCardItems.hardware_asset_name}
+              </Text>
             </Center>
           </Box>
         </VStack>
@@ -51,8 +57,7 @@ function FleetCard() {
           <Spacer />
           <Image
             maxH={"140px"}
-            //src={"/public/images/vendors/cisco/cisco-ucs-5108-ac2.png"}
-            src={"/public/images/vendors/cisco/cisco-c220-m6-sff.png"}
+            src={fleetCardItems.picture}
             alt={"UCSC-220-M5S"}
           />
           <Spacer />
@@ -63,7 +68,7 @@ function FleetCard() {
         <VStack height="50%">
           <Box>
             <Center>
-              <Text size="md">ACME Big Corporation</Text>
+              <Text size="md">{fleetCardItems.model_name}</Text>
             </Center>
           </Box>
         </VStack>

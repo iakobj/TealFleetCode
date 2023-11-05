@@ -84,12 +84,16 @@
  
  // Import Controllers
  const {
+   cAssetsGetAllSW,
+   cAssetsGetAllHW,
    cAssetsGetAll,
 
- } = require("../controllers/assetControllers");
+ } = require("../controllers/assetsControllers");
  
  // asset catalog
- assetsRouters.get("/fleet/card/all", cAssetsCatGetAll); // Get all asset from catalog
+ assetsRouters.get("/fleet/card/all", cAssetsGetAll); // Get all asset from catalog
+ assetsRouters.get("/fleet/card/all/sw", cAssetsGetAllSW); // Get all asset from catalog
+ assetsRouters.get("/fleet/card/all/hw", cAssetsGetAllHW); // Get all asset from catalog
 
  module.exports = assetsRouters;
  

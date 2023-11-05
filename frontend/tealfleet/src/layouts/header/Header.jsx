@@ -26,7 +26,7 @@ import HeaderAlertsBell from "./HeaderAlertsBell";
 
 function Header() {
   return (
-    <div className={stickyHeader.stickyHeader}>
+    <Box className={stickyHeader.stickyHeader}>
     <Grid 
       height={{ base: "6.5em", sm: "6.5em", md: "6.5em" }}
       gridTemplateColumns="repeat(12, 1fr)"
@@ -118,7 +118,7 @@ function Header() {
         </GridItem>
       </Hide>
     </Grid>
-    </div>
+    </Box>
   );
 }
 
