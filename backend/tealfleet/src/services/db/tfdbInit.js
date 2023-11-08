@@ -99,14 +99,14 @@ CREATE TABLE IF NOT EXISTS "software_catalog" (
   "software_catalog_id" uuid PRIMARY KEY,
   "vendor_id" uuid NOT NULL,
   "sw_category_id" uuid NOT NULL,
-  "model_name" varchar NOT NULL,
-  "version_number" varchar NOT NULL,
-  "picture" varchar NOT NULL,
-  "release_date" date NOT NULL,
-  "end_of_life" date,
-  "end_of_support" date,
-  "changed_at" timestamp NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "software_model_name" varchar NOT NULL,
+  "software_version_number" varchar NOT NULL,
+  "software_image" varchar NOT NULL,
+  "software_release_date" date NOT NULL,
+  "software_end_of_life" date,
+  "software_end_of_support" date,
+  "software_catalog_changed_at" timestamp NOT NULL,
+  "software_catalog_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "software_assets" (
@@ -116,22 +116,22 @@ CREATE TABLE IF NOT EXISTS "software_assets" (
   "software_asset_name" varchar NOT NULL,
   "tenant_id" uuid NOT NULL,
   "site_id" uuid NOT NULL,
-  "changed_at" timestamp NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "software_changed_at" timestamp NOT NULL,
+  "software_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "hardware_catalog" (
   "hardware_catalog_id" uuid PRIMARY KEY,
   "vendor_id" uuid NOT NULL,
   "hw_category_id" uuid NOT NULL,
-  "model_name" varchar NOT NULL,
-  "part_number" varchar NOT NULL,
-  "picture" varchar NOT NULL,
-  "release_date" date NOT NULL,
-  "end_of_life" date,
-  "end_of_support" date,
-  "changed_at" timestamp NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "hardware_model_name" varchar NOT NULL,
+  "hardware_part_number" varchar NOT NULL,
+  "hardware_image" varchar NOT NULL,
+  "hardware_release_date" date NOT NULL,
+  "hardware_end_of_life" date,
+  "hardware_end_of_support" date,
+  "hardware_catalog_changed_at" timestamp NOT NULL,
+  "hardware_catalog_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "hardware_assets" (
@@ -140,54 +140,54 @@ CREATE TABLE IF NOT EXISTS "hardware_assets" (
   "hardware_asset_name" varchar NOT NULL,
   "tenant_id" uuid NOT NULL,
   "site_id" uuid NOT NULL,
-  "serial_no" varchar NOT NULL,
-  "changed_at" timestamp NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "hardware_serial_no" varchar NOT NULL,
+  "hardware_changed_at" timestamp NOT NULL,
+  "hardware_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "sw_asset_contracts" (
   "sw_asset_contract_id" uuid PRIMARY KEY,
   "software_asset_id" uuid NOT NULL,
   "contract_id" uuid NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "sw_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "hw_asset_contracts" (
   "hw_asset_contract_id" uuid PRIMARY KEY,
   "hardware_asset_id" uuid NOT NULL,
   "contract_id" uuid NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "hw_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "sw_categories" (
   "sw_category_id" uuid PRIMARY KEY,
-  "category" varchar NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "sw_category" varchar NOT NULL,
+  "sw_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "hw_categories" (
   "hw_category_id" uuid PRIMARY KEY,
-  "category" varchar NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "hw_category" varchar NOT NULL,
+  "hw_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "vendors" (
   "vendor_id" uuid PRIMARY KEY,
-  "name" varchar NOT NULL,
-  "image" varchar NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "vendor_name" varchar NOT NULL,
+  "vendor_image" varchar NOT NULL,
+  "vendor_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "sites" (
   "site_id" uuid PRIMARY KEY,
   "tenant_id" uuid NOT NULL,
-  "name" varchar NOT NULL,
-  "address1" varchar NOT NULL,
-  "city" varchar NOT NULL,
-  "postcode" integer NOT NULL,
-  "country" varchar NOT NULL,
-  "changed_at" timestamp NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "site_name" varchar NOT NULL,
+  "site_address1" varchar NOT NULL,
+  "site_city" varchar NOT NULL,
+  "site_postcode" integer NOT NULL,
+  "site_country" varchar NOT NULL,
+  "site_changed_at" timestamp NOT NULL,
+  "site_created_at" timestamp DEFAULT (now())
 );
 
 

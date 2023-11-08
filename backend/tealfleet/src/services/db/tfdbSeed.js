@@ -12,7 +12,7 @@ VALUES
   ('112d675e-6f8c-41a7-bc2a-012345678902', false, 'Demo Tenant 1'),
   ('113f7b8d-4c3e-2a1d-1f9a-012345678903', false, 'Demo Tenant 2');
 
-INSERT INTO "sites" ("site_id", "tenant_id", "name", "address1", "city", "postcode", "country", "changed_at")
+INSERT INTO "sites" ("site_id", "tenant_id", "site_name", "site_address1", "site_city", "site_postcode", "site_country", "site_changed_at")
 VALUES
   ('1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', '111c561c-8a1d-4f79-9d3a-012345678901', 'Site 1', '123 Main St', 'City 1', 12345, 'Country 1', NOW()),
   ('2b3c4d5e-6f7a-8b9c-0d1e-0123456aaaab', '111c561c-8a1d-4f79-9d3a-012345678901', 'Site 2', '456 Elm St', 'City 2', 56789, 'Country 2', NOW());
@@ -51,24 +51,24 @@ VALUES
   ('3b4d675e-6f8c-41a7-bc2a-bbb345678902', 'Alert Category 1'),
   ('5a6f7b8d-4c3e-2a1d-1f9a-bbb345678903', 'Alert Category 2');
 
-INSERT INTO "sw_categories" ("sw_category_id", "category")
+INSERT INTO "sw_categories" ("sw_category_id", "sw_category")
 VALUES
   ('1e2c561c-1234-1234-1234-012345678901', 'SW Category 1'),
   ('3b4d675e-1234-1234-1234-012345678902', 'SW Category 2');
 
 
-INSERT INTO "hw_categories" ("hw_category_id", "category")
+INSERT INTO "hw_categories" ("hw_category_id", "hw_category")
 VALUES
   ('3b4d675e-4321-4321-4321-012345678902', 'Category 1'),
   ('5a6f7b8d-4321-4321-4321-012345678903', 'Category 2');
 
 
-INSERT INTO "vendors" ("vendor_id", "name", "image")
+INSERT INTO "vendors" ("vendor_id", "vendor_name", "vendor_image")
 VALUES
   ('1a2b3c4d-8b8b-8b8b-8b8b-012345678901', 'Vendor 1', 'vendor1.jpg'),
   ('2b3c4d5e-8b8b-8b8b-8b8b-012345678902', 'Vendor 2', 'vendor2.jpg');
 
-INSERT INTO "hardware_catalog" ("hardware_catalog_id", "vendor_id", "hw_category_id", "model_name", "part_number", "picture", "release_date", "end_of_life", "end_of_support", "changed_at")
+INSERT INTO "hardware_catalog" ("hardware_catalog_id", "vendor_id", "hw_category_id", "hardware_model_name", "hardware_part_number", "hardware_image", "hardware_release_date", "hardware_end_of_life", "hardware_end_of_support", "hardware_catalog_changed_at")
 VALUES
   ('1e21e21c-8a1d-4f79-9d3a-a11122678901', '1a2b3c4d-8b8b-8b8b-8b8b-012345678901', '3b4d675e-4321-4321-4321-012345678902', 'Hardware Model 1', 'H12345', 'hardware1.jpg', '2022-01-01', '2025-01-01', '2025-12-31', NOW()),
   ('1e21e21c-6f8c-41a7-bc2a-a11122678902', '1a2b3c4d-8b8b-8b8b-8b8b-012345678901', '3b4d675e-4321-4321-4321-012345678902', 'Hardware Model 2', 'H67890', 'hardware2.jpg', '2022-02-01', '2024-02-01', '2024-12-31', NOW());
@@ -83,11 +83,13 @@ VALUES
   ('1a2b3c4d-aa11-7a8b-9c0d-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-8a1d-4f79-9d3a-aaa345678901', '3b4d675e-6f8c-41a7-bc2a-bbb345678902', '1a2b3c4d-5e6f-7777-9c0d-012345678901', 'Alert 1', 'Description of Alert 1', false),
   ('2b3c4d5e-aa11-8b9c-0d1e-012345678902', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-8a1d-4f79-9d3a-aaa345678901', '3b4d675e-6f8c-41a7-bc2a-bbb345678902', '1a2b3c4d-5e6f-7777-9c0d-012345678901', 'Alert 2', 'Description of Alert 2', false);
   
-INSERT INTO "hardware_assets" ("hardware_asset_id", "hardware_catalog_id", "hardware_asset_name", "tenant_id", "site_id", "serial_no", "changed_at")
+INSERT INTO "hardware_assets" ("hardware_asset_id", "hardware_catalog_id", "hardware_asset_name", "tenant_id", "site_id", "hardware_serial_no", "hardware_changed_at")
 VALUES
-  ('1a2b3c4d-3333-7777-3c80-012345678901', '1e21e21c-8a1d-4f79-9d3a-a11122678901', 'superbigesxi01.acme.com', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'SN12345', NOW()),
-  ('2b3c4d5e-3333-7777-3c80-012345678902', '1e21e21c-8a1d-4f79-9d3a-a11122678901', '192.168.1.12', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'SN67890', NOW());
-  
+  ('1a2b3c4d-3333-7777-3c80-012345678901', '1e21e21c-8a1d-4f79-9d3a-a11122678901', 'superbigcimc01.acme.com', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'SN12341', NOW()),
+  ('2b3c4d5e-3333-7777-3c80-012345678902', '1e21e21c-8a1d-4f79-9d3a-a11122678901', '192.168.1.12', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'SN67892', NOW()),
+  ('1a2b3c4d-3333-7777-3c80-012345678903', '1e21e21c-8a1d-4f79-9d3a-a11122678901', 'superbigcimc02.acme.com', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'SN12343', NOW()),
+  ('2b3c4d5e-3333-7777-3c80-012345678904', '1e21e21c-8a1d-4f79-9d3a-a11122678901', '192.168.1.13', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'SN67894', NOW());
+
 INSERT INTO "logs" ("log_id", "user_id", "tenant_id", "type", "title", "log_description")
 VALUES
   ('1a2b4444-5e6f-7a8b-9c0d-012345678901', '1a2b3c4d-1111-7a8b-9c0d-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', 'Log Type 1', 'Title Log 1', 'Description of Log 1'),
@@ -99,16 +101,18 @@ VALUES
   ('1a2b3c4d-cccc-cccc-cccc-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-cccc-1111-cc11-012345678901', 'VMware', 'Contract123', 'Contract Description 1', '2023-01-01', '2023-12-31', NOW()),
   ('2b3c4d5e-cccc-cccc-cccc-012345678902', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-cccc-1111-cc11-012345678901', 'MSP Guys', 'Contract456', 'Contract Description 2', '2023-02-01', '2023-11-30', NOW());
 
-INSERT INTO "software_catalog" ("software_catalog_id", "vendor_id", "sw_category_id", "model_name", "version_number", "picture", "release_date", "end_of_life", "end_of_support", "changed_at")
+INSERT INTO "software_catalog" ("software_catalog_id", "vendor_id", "sw_category_id", "software_model_name", "software_version_number", "software_image", "software_release_date", "software_end_of_life", "software_end_of_support", "software_catalog_changed_at")
 VALUES
   ('1a2b3c4d-5e6f-caca-caca-000045678901', '1a2b3c4d-8b8b-8b8b-8b8b-012345678901', '1e2c561c-1234-1234-1234-012345678901', 'Software Model 1', '1.0', 'software1.jpg', '2022-01-01', '2024-01-01', '2024-12-31', NOW()),
-  ('2b3c4d5e-6f7a-caca-caca-000045678902', '1a2b3c4d-8b8b-8b8b-8b8b-012345678901', '1e2c561c-1234-1234-1234-012345678901', 'Software Model 2', '2.0', 'software2.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW());
+  ('2b3c4d5e-6f7a-caca-caca-000045678902', '1a2b3c4d-8b8b-8b8b-8b8b-012345678901', '1e2c561c-1234-1234-1234-012345678901', 'Software Model 2', '2.0', 'software2.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW()),
+  ('2b3c4d5e-6f7a-caca-caca-000045678903', '1a2b3c4d-8b8b-8b8b-8b8b-012345678901', '1e2c561c-1234-1234-1234-012345678901', 'Software Model 3', '3.0', 'software3.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW());
 
 
-INSERT INTO "software_assets" ("software_asset_id", "software_catalog_id", "hardware_asset_id", "software_asset_name", "tenant_id", "site_id", "changed_at")
+INSERT INTO "software_assets" ("software_asset_id", "software_catalog_id", "hardware_asset_id", "software_asset_name", "tenant_id", "site_id", "software_changed_at")
 VALUES
   ('1a2b3c4d-b8b8-a8a8-a1a8-012345678901', '1a2b3c4d-5e6f-caca-caca-000045678901', '1a2b3c4d-3333-7777-3c80-012345678901', 'hq-vrb01.acme.com', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', NOW()),
-  ('2b3c4d5e-b8b8-a8a8-a1a8-012345678902', '1a2b3c4d-5e6f-caca-caca-000045678901', '1a2b3c4d-3333-7777-3c80-012345678901', 'hq-vcenter.acme.com','111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', NOW());
+  ('2b3c4d5e-b8b8-a8a8-a1a8-012345678902', '1a2b3c4d-5e6f-caca-caca-000045678901', '1a2b3c4d-3333-7777-3c80-012345678901', 'hq-esxi01.acme.com','111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', NOW()),
+  ('2b3c4d5e-b8b8-a8a8-a1a8-012345678903', '1a2b3c4d-5e6f-caca-caca-000045678901', '2b3c4d5e-3333-7777-3c80-012345678902', 'hq-esxi01.acme.com','111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', NOW());
 
 INSERT INTO "sw_asset_contracts" ("sw_asset_contract_id", "software_asset_id", "contract_id")
 VALUES
