@@ -1,12 +1,7 @@
 const {
   assetsGetAllHW,
   assetsGetAllSW,
-
 } = require("../services/assetsServices");
-
-const {
-  tenantsGetById,
-} = require("../services/tenantsServices");
 
 // Get (almost) all asset information
 module.exports.cAssetsGetAll = async (req, res) => {
@@ -14,13 +9,27 @@ module.exports.cAssetsGetAll = async (req, res) => {
     const result_sw = await assetsGetAllSW();
     const result_hw = await assetsGetAllHW();
 
+    result_sw.forEach(function (obj) {
+      for (var key in obj) {
+        if (!key.startsWith("software")) {
+          obj["sw_" + key] = obj[key];
+          delete obj[key];
+        }
+      }
+    });
+
+    result_hw.forEach(function (obj) {
+      for (var key in obj) {
+        if (!key.startsWith("hardware")) {
+          obj["hw_" + key] = obj[key];
+          delete obj[key];
+        }
+      }
+    });
+
     const result = result_sw.concat(result_hw);
-    
-  
 
     res.status(200).send(result);
-
-
   } catch (err) {
     console.log(err);
     res.status(404).send("No assets found");
@@ -48,5 +57,3 @@ module.exports.cAssetsGetAllSW = async (req, res) => {
     res.status(404).send("No assets found");
   }
 };
-
-

@@ -20,8 +20,6 @@ const fetchData = async () => {
 const items = await fetchData();
 const fleetCardItems = items.data;
 
-console.log(fleetCardItems);
-
 import { Search2Icon } from "@chakra-ui/icons";
 
 function FleetFilter() {
@@ -37,21 +35,21 @@ function FleetFilter() {
             </Select>
           </Box>
           <Box marginRight={"1em"}>
-            <Select placeholder="Model Name" size="md">
+            <Select placeholder="SW model" size="md">
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
               <option value="option3">Option 3</option>
             </Select>
           </Box>
           <Box marginRight={"1em"}>
-            <Select placeholder="Software" size="md">
+            <Select placeholder="HW model" size="md">
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
               <option value="option3">Option 3</option>
             </Select>
           </Box>
           <Box>
-            <Select placeholder="Site" size="md">
+            <Select placeholder="Site name" size="md">
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
               <option value="option3">Option 3</option>
