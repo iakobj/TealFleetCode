@@ -20,19 +20,24 @@ import {
 } from "@chakra-ui/react";
 
 // Chakra-UI icons
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
 function HeaderProfileMenu() {
   return (
     <Flex>
       <HStack>
         <Menu>
-          <MenuButton as={Button} colorScheme="teal" size="sm">
+          <MenuButton
+            as={Button}
+            colorScheme="teal"
+            size="sm"
+            rightIcon={<ChevronDownIcon />}
+          >
             <Hide breakpoint="(max-width: 980px)">
               <Text
                 as="b"
                 color="white"
-                fontSize={{ base: "sm", sm: "sm", md: "lg" }}
+                fontSize={{ base: "sm", sm: "sm", md: "md" }}
               >
                 Jakob
               </Text>

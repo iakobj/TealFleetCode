@@ -15,7 +15,7 @@ const mainNavItems = items.data;
 function HeaderMainNav() {
   return (
     <Flex>
-      <HStack spacing={{ md: "0.5em", lg: "0.7em", xl: "2.0em" }}>
+      <HStack spacing={{ md: "1.8em", lg: "1.8em", xl: "1.8em" }}>
         {mainNavItems &&
           mainNavItems.map &&
           mainNavItems.map((mainNavItems) => (

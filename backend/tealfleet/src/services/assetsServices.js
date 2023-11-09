@@ -11,7 +11,6 @@ module.exports.assetsGetAllHW = async () => {
     JOIN tenants ON hardware_assets.tenant_id = tenants.tenant_id
     JOIN vendors ON hardware_catalog.vendor_id = vendors.vendor_id
     JOIN sites ON hardware_assets.site_id = sites.site_id;
-
 `
   );
 

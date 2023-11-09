@@ -24,7 +24,7 @@ import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 function FleetCard({ fleetCardItems }) {
   return (
-    <Card boxShadow="md" overflow="hidden" height={"20em"} variant="outline">
+    <Card boxShadow="md" overflow="hidden" height={"23em"} variant="outline">
       <CardHeader>
         <VStack>
           <Box marginTop={"-0.6em"}>
@@ -61,7 +61,7 @@ function FleetCard({ fleetCardItems }) {
         <Flex align="center" justify="center" height="100%">
           <Spacer />
           <Image
-            maxH={"100px"}
+            maxH={"110px"}
             src={
               fleetCardItems.hardware_image
                 ? fleetCardItems.hardware_image

@@ -12,13 +12,13 @@ import { BellIcon } from "@chakra-ui/icons";
 function HeaderAlertsBell() {
   return (
     <Button
-      colorScheme="teal"
+      colorScheme="white"
       size={{ base: "md", sm: "md", md: "sm", lg: "sm" }}
     >
       <BellIcon boxSize={6} color="white" />
 
-      <Text fontSize={{ base: "md", sm: "md", md: "lg" }} color="white">
-        12
+      <Text fontSize={{ base: "md", sm: "md", md: "md" }} color="white">
+        21
       </Text>
     </Button>
   );

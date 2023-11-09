@@ -2,8 +2,6 @@
 import * as React from "react";
 import {
   createBrowserRouter,
-  createRoutesFromElements,
-  Route,
   RouterProvider,
 } from "react-router-dom";
 
@@ -15,7 +13,6 @@ import ErrorBoundary from "./pages/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
 import Fleet from "./pages/Fleet";
 import Support from "./pages/Support";
-import Marketplace from "./pages/Marketplace";
 import Administration from "./pages/Administration";
 
 // ChakraProvider component
@@ -45,11 +42,6 @@ const router = createBrowserRouter([
       {
         path: "support",
         element: <Support/>,
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "marketplace",
-        element: <Marketplace/>,
         errorElement: <ErrorBoundary />,
       },
       {

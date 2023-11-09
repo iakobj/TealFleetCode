@@ -28,7 +28,6 @@ VALUES
   ('1a2b3c4d-7a8b-7a8b-9c0d-012345678881', 'Dashboard'),
   ('1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'Fleet'),
   ('1a2b3c4d-7a8b-9c0d-1e2a-012345678883', 'Support'),
-  ('1a2b3c4d-7a8b-9c0d-1e2a-012345678884', 'Marketplace'),
   ('1a2b3c4d-7a8b-9c0d-1e2a-012345678885', 'Administration');
 
 
