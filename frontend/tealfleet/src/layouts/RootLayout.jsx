@@ -10,7 +10,7 @@ import { Grid, GridItem, Container } from "@chakra-ui/react";
 
 function RootLayout() {
   return (
-    <Container maxWidth={"1600px"}>
+    <Container maxWidth={"1700px"}>
       <Grid
         marginLeft={{ base: "-16px", sm: "-16px", md: "0px" }}
         marginRight={{ base: "-16px", sm: "-16px", md: "0px" }}

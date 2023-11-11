@@ -30,9 +30,7 @@ function FleetCard({ fleetCardItems }) {
           <Box marginTop={"-0.6em"}>
             <Center>
               <Heading size="sm">
-                {fleetCardItems.hw_tenant_name
-                  ? fleetCardItems.hw_tenant_name
-                  : fleetCardItems.sw_tenant_name}
+                {fleetCardItems.tenant_name}
               </Heading>
             </Center>
           </Box>
@@ -78,11 +76,11 @@ function FleetCard({ fleetCardItems }) {
           <Box>
             <Center>
               <Text size="md">
-                {fleetCardItems.hw_vendor_name
-                  ? fleetCardItems.hw_vendor_name + " "
+                {fleetCardItems.vendor_name
+                  ? fleetCardItems.vendor_name + " "
                   : ""}
-                {fleetCardItems.sw_vendor_name
-                  ? fleetCardItems.sw_vendor_name + " "
+                {fleetCardItems.vendor_name
+                  ? fleetCardItems.vendor_name + " "
                   : ""}
               </Text>
             </Center>

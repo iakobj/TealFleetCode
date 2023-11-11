@@ -65,30 +65,35 @@ function FleetFilter() {
   const siteNameItems = siteItems.data;
 
   const handleChange = (event) => {
+    console.log("event.target.name ");
+    console.log(event.target.name);
+    console.log("event.target.value ");
+    console.log(event.target.value);
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData.tenant);
-    console.log(fItems.data);
+
     const originalArray = fItems.data;
+    console.log(formData);
+
+    console.log(formData.tenant);
 
     const filteredArray = originalArray.filter((item) => {
-      if (item.hw_tenant_name === '' && item.sw_tenant_name === '') {
-        return originalArray;
-      }else {
-      return item.hw_tenant_name === formData.tenant || item.sw_tenant_name === formData.tenant;
-    }
+      return (
+        (!formData.tenant || item.tenant_name === formData.tenant) &&
+        (!formData.swmodel || item.software_model_name === formData.swmodel) &&
+        (!formData.hwmodel || item.hardware_model_name === formData.hwmodel) &&
+        (!formData.sitename || item.site_name === formData.sitename)
+      );
     });
-
-    console.log(filteredArray);
     setfleetCardItems(filteredArray);
   };
 
   return (
     <Box>
-      <Hide breakpoint="(max-width: 750px)">
+      <Hide breakpoint="(max-width: 57em)">
         <form onSubmit={handleSubmit}>
           <Flex marginBottom={"0.8em"}>
             <Box marginRight={"1em"}>
@@ -97,7 +102,7 @@ function FleetFilter() {
                 id="tenant"
                 name="tenant"
                 size="sm"
-                w="8em"
+                w="12em"
                 onChange={handleChange}
               >
                 {tenantItems &&
@@ -113,7 +118,14 @@ function FleetFilter() {
               </Select>
             </Box>
             <Box marginRight={"1em"}>
-              <Select placeholder="SW model" size="sm" w="8em">
+              <Select
+                placeholder="SW model"
+                size="sm"
+                w="10em"
+                id="swmodel"
+                name="swmodel"
+                onChange={handleChange}
+              >
                 {swModelItems &&
                   swModelItems.map &&
                   swModelItems.map((swModelItems) => (
@@ -124,7 +136,14 @@ function FleetFilter() {
               </Select>
             </Box>
             <Box marginRight={"1em"}>
-              <Select placeholder="HW model" size="sm" w="8em">
+              <Select
+                placeholder="HW model"
+                size="sm"
+                w="10em"
+                id="hwmodel"
+                name="hwmodel"
+                onChange={handleChange}
+              >
                 {hwModelItems &&
                   hwModelItems.map &&
                   hwModelItems.map((hwModelItems) => (
@@ -135,7 +154,14 @@ function FleetFilter() {
               </Select>
             </Box>
             <Box>
-              <Select placeholder="Site name" size="sm" w="8em">
+              <Select
+                placeholder="Site name"
+                size="sm"
+                w="10em"
+                id="sitename"
+                name="sitename"
+                onChange={handleChange}
+              >
                 {siteNameItems &&
                   siteNameItems.map &&
                   siteNameItems.map((siteNameItems) => (
@@ -164,7 +190,10 @@ function FleetFilter() {
           </Flex>
         </form>
       </Hide>
-      <SimpleGrid minChildWidth="18em" spacing="1em">
+      <SimpleGrid
+        spacing="1em"
+        columns={{ base: "1", sm: "2", md: "2", lg: "3", xl: "4", "2xl": "5" }}
+      >
         {fleetCardItems &&
           fleetCardItems.map &&
           fleetCardItems.map((fleetCardItems) => (

@@ -9,24 +9,6 @@ module.exports.cAssetsGetAll = async (req, res) => {
     const result_sw = await assetsGetAllSW();
     const result_hw = await assetsGetAllHW();
 
-    result_sw.forEach(function (obj) {
-      for (var key in obj) {
-        if (!key.startsWith("software")) {
-          obj["sw_" + key] = obj[key];
-          delete obj[key];
-        }
-      }
-    });
-
-    result_hw.forEach(function (obj) {
-      for (var key in obj) {
-        if (!key.startsWith("hardware")) {
-          obj["hw_" + key] = obj[key];
-          delete obj[key];
-        }
-      }
-    });
-
     const result = result_sw.concat(result_hw);
 
     res.status(200).send(result);

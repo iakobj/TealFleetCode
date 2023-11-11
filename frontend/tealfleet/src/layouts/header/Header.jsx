@@ -40,7 +40,7 @@ function Header() {
         bg="teal.600"
         boxShadow="md"
         marginTop={{ md: "0.5em" }}
-        borderRadius={{ md: "1.0em 1.0em 0em 0em" }}
+        borderRadius={{ md: "0.6em 0.6em 0em 0em" }}
       >
         <HStack>
           <Box>
