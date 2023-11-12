@@ -14,6 +14,8 @@ import Dashboard from "./pages/Dashboard";
 import Fleet from "./pages/Fleet";
 import Support from "./pages/Support";
 import Administration from "./pages/Administration";
+import Login from "./pages/login";
+import Register from "./pages/register";
 
 // ChakraProvider component
 import { ChakraProvider } from "@chakra-ui/react";
@@ -40,6 +42,11 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />,
       },
       {
+        path: "fleet/:vendor",
+        element: <Fleet/>,
+        errorElement: <ErrorBoundary />,
+      },
+      {
         path: "support",
         element: <Support/>,
         errorElement: <ErrorBoundary />,
@@ -51,6 +58,16 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "login",
+    element: <Login/>,
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "register",
+    element: <Register/>,
+    errorElement: <ErrorBoundary />,
+  }
 ]);
 
 function App() {

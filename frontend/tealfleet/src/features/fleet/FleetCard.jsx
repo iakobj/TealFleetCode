@@ -25,13 +25,23 @@ import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 function FleetCard({ fleetCardItems }) {
   return (
     <Card boxShadow="md" overflow="hidden" height={"23em"} variant="outline">
-      <CardHeader>
+      <CardHeader
+              flex="1"
+              style={{ overflow: "hidden" }}
+              marginTop={"0em"}
+              marginBottom={"-1.5em"}
+              height="100%"
+      >
         <VStack>
-          <Box marginTop={"-0.6em"}>
+          <Box
+            marginTop={"-0.6em"}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            textAlign="center"
+          >
             <Center>
-              <Heading size="sm">
-                {fleetCardItems.tenant_name}
-              </Heading>
+              <Heading size="sm">{fleetCardItems.tenant_name}</Heading>
             </Center>
           </Box>
           <Box marginTop={"-0.5em"}>
@@ -76,9 +86,6 @@ function FleetCard({ fleetCardItems }) {
           <Box>
             <Center>
               <Text size="md">
-                {fleetCardItems.vendor_name
-                  ? fleetCardItems.vendor_name + " "
-                  : ""}
                 {fleetCardItems.vendor_name
                   ? fleetCardItems.vendor_name + " "
                   : ""}

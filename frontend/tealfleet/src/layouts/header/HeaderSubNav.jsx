@@ -1,6 +1,7 @@
 // React components
 import * as React from "react";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 // Chakra-UI components
@@ -30,18 +31,26 @@ function HeaderSubNav() {
     });
   }, [location]);
 
+  const [clickedSubIndex, setClickedSubIndex] = useState(-1);
+
+  const handleLinkClick = (index) => {
+    setClickedSubIndex(index);
+  };
+
   return (
     <Flex>
       <HStack spacing={{ md: "0.5em", lg: "0.7em", xl: "2.0em" }}>
         {subNavItems &&
           subNavItems.map &&
-          subNavItems.map((subNavItems) => (
+          subNavItems.map((subNavItems, index) => (
             <Text
               color="blackAlpha.700"
               fontSize={{ base: "sm", sm: "sm", md: "lg" }}
               key={subNavItems.sub_nav_id}
+              onClick={() => handleLinkClick(index)}
+              fontWeight={index === clickedSubIndex ? "bold" : "400"}
             >
-              <NavLink to={subNavItems.sub_nav_item}>
+              <NavLink to={subNavItems.sub_nav_path}>
                 {subNavItems.sub_nav_item}
               </NavLink>
             </Text>

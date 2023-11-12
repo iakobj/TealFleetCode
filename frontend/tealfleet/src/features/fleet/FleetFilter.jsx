@@ -1,7 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import FleetCard from "./FleetCard.jsx";
+import Fleet from "../../pages/Fleet.jsx";
 
 // Chakra-UI components
 import {
@@ -26,14 +29,14 @@ const tItems = await fetchTenantData();
 
 // Fetch SW Model info for filter
 const fetchSWModelData = async () => {
-  const data = await fetch(`http://localhost:3000/software/catalog/`);
+  const data = await fetch(`http://localhost:3000/software/catalog/model/name`);
   return { data: await data.json() };
 };
 const swItems = await fetchSWModelData();
 
 // Fetch HW Model info for filter
 const fetchHWModelData = async () => {
-  const data = await fetch(`http://localhost:3000/hardware/catalog/`);
+  const data = await fetch(`http://localhost:3000/hardware/catalog/model/name`);
   return { data: await data.json() };
 };
 const hwItems = await fetchHWModelData();
@@ -55,6 +58,30 @@ const fItems = await fetchFleetData();
 
 // FleetFilter Component
 function FleetFilter() {
+  // Get the location of the url, and if it is empty use "Fleet"
+  const loc = useLocation();
+  const location = loc.pathname.slice(1) || "Fleet";
+
+  // From URL it gets the last word, then it updates the array of card data and displays only the ones that include the vendor name
+  React.useEffect(() => {
+    var inputLocation = location;
+    var vendorName = inputLocation.split("/");
+
+    if (vendorName.length > 1) {
+      var vendor = vendorName[1];
+      const originalArray = fItems.data;
+      // if the vendor is all it will display unchanged array of all asset fleet cards
+      if (vendor === "All") {
+        setfleetCardItems(originalArray);
+      } else {
+        const filteredArray = originalArray.filter((item) => {
+          return item.vendor_name === vendor;
+        });
+        setfleetCardItems(filteredArray);
+      }
+    }
+  }, [location]);
+
   const [formData, setFormData] = useState();
 
   const [fleetCardItems, setfleetCardItems] = useState(fItems.data);
@@ -65,30 +92,34 @@ function FleetFilter() {
   const siteNameItems = siteItems.data;
 
   const handleChange = (event) => {
-    console.log("event.target.name ");
-    console.log(event.target.name);
-    console.log("event.target.value ");
-    console.log(event.target.value);
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
+    var inputLocation = location;
+    var vendorName = inputLocation.split("/");
+
+    if (vendorName.length > 1) {
+      var vendor = vendorName[1];
+    }
+
     event.preventDefault();
-
     const originalArray = fItems.data;
-    console.log(formData);
-
-    console.log(formData.tenant);
-
     const filteredArray = originalArray.filter((item) => {
       return (
         (!formData.tenant || item.tenant_name === formData.tenant) &&
         (!formData.swmodel || item.software_model_name === formData.swmodel) &&
         (!formData.hwmodel || item.hardware_model_name === formData.hwmodel) &&
-        (!formData.sitename || item.site_name === formData.sitename)
+        (!vendor || item.vendor_name === vendor) 
+        
       );
     });
     setfleetCardItems(filteredArray);
+  };
+
+  const handleReset = () => {
+    const originalArray = fItems.data;
+    setfleetCardItems(originalArray);
   };
 
   return (
@@ -129,7 +160,7 @@ function FleetFilter() {
                 {swModelItems &&
                   swModelItems.map &&
                   swModelItems.map((swModelItems) => (
-                    <option key={swModelItems.software_catalog_id}>
+                    <option key={swModelItems.software_model_name}>
                       {swModelItems.software_model_name}
                     </option>
                   ))}
@@ -147,7 +178,7 @@ function FleetFilter() {
                 {hwModelItems &&
                   hwModelItems.map &&
                   hwModelItems.map((hwModelItems) => (
-                    <option key={hwModelItems.hardware_catalog_id}>
+                    <option key={hwModelItems.hardware_model_name}>
                       {hwModelItems.hardware_model_name}
                     </option>
                   ))}
@@ -180,19 +211,23 @@ function FleetFilter() {
             >
               Filter
             </Button>
+            <NavLink to={"/Fleet"}>
             <IconButton
               aria-label="Reset filter"
               icon={<RepeatIcon />}
               size={"sm"}
               colorScheme={"teal"}
               marginLeft={"1em"}
+              onClick={handleReset}
+              
             />
+            </NavLink>
           </Flex>
         </form>
       </Hide>
       <SimpleGrid
         spacing="1em"
-        columns={{ base: "1", sm: "2", md: "2", lg: "3", xl: "4", "2xl": "5" }}
+        columns={{ base: "1", sm: "2", md: "3", lg: "3", xl: "4", "2xl": "5" }}
       >
         {fleetCardItems &&
           fleetCardItems.map &&
