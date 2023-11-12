@@ -90,6 +90,7 @@ const {
   cHardwareCatGetByVendor,
   cHardwareCatGetByPartnumber,
   cHardwareCatGetByCategory,
+  cHardwareCatGetSWModelName,
 
   cHardwareAssGetAll,
   cHardwareAssGetById,
@@ -108,6 +109,7 @@ hardwareRouters.get("/catalog/name/:name", cHardwareCatGetByName); // Get Hardwa
 hardwareRouters.get("/catalog/vendor/:vendor", cHardwareCatGetByVendor); // Get Hardware by vendor from catalog
 hardwareRouters.get("/catalog/partnumber/:partnumber", cHardwareCatGetByPartnumber); // Get Hardware by version from part number
 hardwareRouters.get("/catalog/category/:category", cHardwareCatGetByCategory); // Get Hardware by version from category
+hardwareRouters.get("/catalog/model/name", cHardwareCatGetSWModelName); // Get all unique Hardware model names from category
 
 // Hardware assets
 hardwareRouters.get("/asset/", cHardwareAssGetAll); // Get all Hardware from assets
@@ -120,3 +122,5 @@ hardwareRouters.get("/asset/tenant/:tenant", cHardwareAssGetByTenant); // Get Ha
 hardwareRouters.get("/asset/site/:site", cHardwareAssGetBySite); // Get Hardware by site from assets
 
 module.exports = hardwareRouters;
+
+

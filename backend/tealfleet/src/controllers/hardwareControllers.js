@@ -5,6 +5,7 @@ const {
   hardwareCatGetByVendor,
   hardwareCatGetByPartnumber,
   hardwareCatGetByCategory,
+  hardwareCatGetSWModelName,
 
   hardwareAssGetAll,
   hardwareAssGetById,
@@ -122,6 +123,17 @@ module.exports.cHardwareCatGetByCategory = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send("500 Internal Server Error");
+  }
+};
+
+// Get all unique  Hardware model names from catalog
+module.exports.cHardwareCatGetSWModelName = async (req, res) => {
+  try {
+    const result = await hardwareCatGetSWModelName();
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No Hardware found");
   }
 };
 

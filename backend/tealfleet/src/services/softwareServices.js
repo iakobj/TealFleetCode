@@ -60,6 +60,11 @@ module.exports.softwareCatGetByCategory = async (category) => {
   return result.rows;
 };
 
+module.exports.softwareCatGetSWModelName = async () => {
+  const result = await query("SELECT DISTINCT software_model_name FROM software_catalog");
+  return result.rows;
+};
+
 // Software Asset Services
 
 module.exports.softwareAssGetAll = async () => {

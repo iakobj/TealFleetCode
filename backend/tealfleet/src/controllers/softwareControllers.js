@@ -5,6 +5,8 @@ const {
   softwareCatGetByVendor,
   softwareCatGetByVersion,
   softwareCatGetByCategory,
+  softwareCatGetSWModelName,
+
   softwareAssGetAll,
   softwareAssGetById,
   softwareAssGetByName,
@@ -120,6 +122,17 @@ module.exports.cSoftwareCatGetByCategory = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send("500 Internal Server Error");
+  }
+};
+
+// Get all unique software model names from catalog
+module.exports.cSoftwareCatGetSWModelName = async (req, res) => {
+  try {
+    const result = await softwareCatGetSWModelName();
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No software found");
   }
 };
 
