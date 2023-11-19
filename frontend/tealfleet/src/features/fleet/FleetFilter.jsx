@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 import FleetCard from "./FleetCard.jsx";
-import Fleet from "../../pages/Fleet.jsx";
 
 // Chakra-UI components
 import {
@@ -12,7 +11,8 @@ import {
   Box,
   Button,
   SimpleGrid,
-  Spacer,
+  Wrap,
+  WrapItem,
   Select,
   Hide,
   IconButton,
@@ -63,7 +63,7 @@ function FleetFilter() {
   const location = loc.pathname.slice(1) || "Fleet";
 
   // From URL it gets the last word, then it updates the array of card data and displays only the ones that include the vendor name
-  React.useEffect(() => {
+  useEffect(() => {
     var inputLocation = location;
     var vendorName = inputLocation.split("/");
 
@@ -91,8 +91,32 @@ function FleetFilter() {
   const hwModelItems = hwItems.data;
   const siteNameItems = siteItems.data;
 
+  // Add state for selected values
+  const [selectedTenant, setSelectedTenant] = useState("");
+  const [selectedSwModel, setSelectedSwModel] = useState("");
+  const [selectedHwModel, setSelectedHwModel] = useState("");
+  const [selectedSiteName, setSelectedSiteName] = useState("");
+
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+
+    switch (name) {
+      case "tenant":
+        setSelectedTenant(value);
+        break;
+      case "swmodel":
+        setSelectedSwModel(value);
+        break;
+      case "hwmodel":
+        setSelectedHwModel(value);
+        break;
+      case "sitename":
+        setSelectedSiteName(value);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSubmit = (event) => {
@@ -110,8 +134,7 @@ function FleetFilter() {
         (!formData.tenant || item.tenant_name === formData.tenant) &&
         (!formData.swmodel || item.software_model_name === formData.swmodel) &&
         (!formData.hwmodel || item.hardware_model_name === formData.hwmodel) &&
-        (!vendor || item.vendor_name === vendor) 
-        
+        (!vendor || item.vendor_name === vendor)
       );
     });
     setfleetCardItems(filteredArray);
@@ -120,21 +143,49 @@ function FleetFilter() {
   const handleReset = () => {
     const originalArray = fItems.data;
     setfleetCardItems(originalArray);
+
+    // Reset selected values
+    setSelectedTenant("");
+    setSelectedSwModel("");
+    setSelectedHwModel("");
+    setSelectedSiteName("");
   };
 
   return (
-    <Box>
-      <Hide breakpoint="(max-width: 57em)">
+    <Box marginTop={{base: "1em", sm: "1em", md: "0em"}}>
+      <Hide breakpoint="(max-width: 17em)">
         <form onSubmit={handleSubmit}>
-          <Flex marginBottom={"0.8em"}>
-            <Box marginRight={"1em"}>
+          <Wrap marginBottom={"0.8em"}>
+            <WrapItem>
+            <Button
+              type="submit"
+              leftIcon={<Search2Icon />}
+              size={"sm"}
+              colorScheme={"teal"}
+            >
+              Filter
+            </Button>
+            <NavLink to={"/Fleet"}>
+              <IconButton marginRight={"1em"}
+                aria-label="Reset filter"
+                icon={<RepeatIcon />}
+                size={"sm"}
+                colorScheme={"teal"}
+                marginLeft={"1em"}
+                onClick={handleReset}
+              />
+            </NavLink>
+            </WrapItem>
+
+            <WrapItem marginRight={"1em"}>
               <Select
                 placeholder="Tenant"
                 id="tenant"
                 name="tenant"
                 size="sm"
-                w="12em"
+                w={{base: "7em", sm: "7em", md: "8em", lg: "11em"}}
                 onChange={handleChange}
+                value={selectedTenant}
               >
                 {tenantItems &&
                   tenantItems.map &&
@@ -147,15 +198,16 @@ function FleetFilter() {
                     </option>
                   ))}
               </Select>
-            </Box>
-            <Box marginRight={"1em"}>
+            </WrapItem>
+            <WrapItem marginRight={"1em"}>
               <Select
                 placeholder="SW model"
                 size="sm"
-                w="10em"
+                w={{base: "7em", sm: "7em", md: "8em", lg: "11em"}}
                 id="swmodel"
                 name="swmodel"
                 onChange={handleChange}
+                value={selectedSwModel}
               >
                 {swModelItems &&
                   swModelItems.map &&
@@ -165,15 +217,16 @@ function FleetFilter() {
                     </option>
                   ))}
               </Select>
-            </Box>
-            <Box marginRight={"1em"}>
+            </WrapItem>
+            <WrapItem marginRight={"1em"}>
               <Select
                 placeholder="HW model"
                 size="sm"
-                w="10em"
+                w={{base: "7em", sm: "7em", md: "8em", lg: "11em"}}
                 id="hwmodel"
                 name="hwmodel"
                 onChange={handleChange}
+                value={selectedHwModel}
               >
                 {hwModelItems &&
                   hwModelItems.map &&
@@ -183,15 +236,16 @@ function FleetFilter() {
                     </option>
                   ))}
               </Select>
-            </Box>
-            <Box>
+            </WrapItem>
+            <WrapItem>
               <Select
                 placeholder="Site name"
                 size="sm"
-                w="10em"
+                w={{base: "7em", sm: "7em", md: "8em", lg: "11em"}}
                 id="sitename"
                 name="sitename"
                 onChange={handleChange}
+                value={selectedSiteName}
               >
                 {siteNameItems &&
                   siteNameItems.map &&
@@ -201,28 +255,8 @@ function FleetFilter() {
                     </option>
                   ))}
               </Select>
-            </Box>
-            <Spacer />
-            <Button
-              type="submit"
-              leftIcon={<Search2Icon />}
-              size={"sm"}
-              colorScheme={"teal"}
-            >
-              Filter
-            </Button>
-            <NavLink to={"/Fleet"}>
-            <IconButton
-              aria-label="Reset filter"
-              icon={<RepeatIcon />}
-              size={"sm"}
-              colorScheme={"teal"}
-              marginLeft={"1em"}
-              onClick={handleReset}
-              
-            />
-            </NavLink>
-          </Flex>
+            </WrapItem>
+          </Wrap>
         </form>
       </Hide>
       <SimpleGrid

@@ -21,13 +21,14 @@ function RootLayout() {
           as="header"
           colSpan={{ base: 12, sm: 12, md: 12 }}
           colStart={{ base: 1, sm: 1, md: 1 }}
+          position="sticky" zIndex="1" top="0"
         >
           <Header/>
         </GridItem>
 
         <GridItem
           as="main"
-          marginBottom={"5em"}
+          marginBottom={"2em"}
           colSpan={{ base: 12, sm: 12, md: 12 }}
           colStart={{ base: 1, sm: 1, md: 1 }}
         >
@@ -35,9 +36,9 @@ function RootLayout() {
         </GridItem>
         <GridItem
           as="footer"
-          marginBottom={"1em"}
           colSpan={{ base: 12, sm: 12, md: 12 }}
           colStart={{ base: 1, sm: 1, md: 1 }}
+          position="sticky" zIndex="1" bottom="0"
         >
           <Footer />
         </GridItem>
