@@ -1,7 +1,7 @@
 // React components
 import * as React from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
-import { Link as ChakraLink } from "@chakra-ui/react";
+import { Link as ChakraLink, Spacer } from "@chakra-ui/react";
 
 // Chakra-UI components
 import {
@@ -20,18 +20,18 @@ import {
 } from "@chakra-ui/react";
 
 // Chakra-UI icons
-import { HamburgerIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 function HeaderProfileMenu() {
   return (
     <Flex>
-      <HStack>
+      <HStack w={{base: "3em", sm: "5em", md: "10em"}}>
+        <Spacer/>
         <Menu>
           <MenuButton
             as={Button}
             colorScheme="teal"
             size="sm"
-            rightIcon={<ChevronDownIcon />}
           >
             <Hide breakpoint="(max-width: 980px)">
               <Text
@@ -47,6 +47,7 @@ function HeaderProfileMenu() {
                 <HamburgerIcon boxSize={6} color="white" />
               </Box>
             </Show>
+
           </MenuButton>
           <MenuList>
             <MenuItem as="a" href="#">
@@ -60,6 +61,7 @@ function HeaderProfileMenu() {
             </MenuItem>
           </MenuList>
         </Menu>
+
       </HStack>
     </Flex>
   );
