@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS "main_navigation" (
 CREATE TABLE IF NOT EXISTS "sub_navigation" (
   "sub_nav_id" uuid PRIMARY KEY,
   "main_nav_id" uuid NOT NULL,
-  "sub_nav_item" varchar NOT NULL
+  "sub_nav_item" varchar NOT NULL,
+  "sub_nav_path" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "roles" (

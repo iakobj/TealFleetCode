@@ -31,14 +31,14 @@ VALUES
   ('1a2b3c4d-7a8b-9c0d-1e2a-012345678885', 'Administration');
 
 
-INSERT INTO "sub_navigation" ("sub_nav_id", "main_nav_id", "sub_nav_item")
+INSERT INTO "sub_navigation" ("sub_nav_id", "main_nav_id", "sub_nav_item", "sub_nav_path")
 VALUES
-  ('1a2b3c4d-ffff-7a8b-9c0d-012345678901', '1a2b3c4d-7a8b-7a8b-9c0d-012345678881', 'Software'),
-  ('2b3c4d5e-ffff-8b9c-0d1e-012345678902', '1a2b3c4d-7a8b-7a8b-9c0d-012345678881', 'Hardware'),
-  ('2b3c4d5e-ffff-8b9c-0d2e-012345678883', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'All'),
-  ('2b3c4d5e-ffff-8b9c-0d3e-012345678884', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'Cisco'),
-  ('2b3c4d5e-ffff-8b9c-0d4e-012345678885', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'Dell'),
-  ('2b3c4d5e-ffff-8b9c-0d5e-012345678886', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'VMware');
+  ('1a2b3c4d-ffff-7a8b-9c0d-012345678901', '1a2b3c4d-7a8b-7a8b-9c0d-012345678881', 'Software', '/Dashboard/Software'),
+  ('2b3c4d5e-ffff-8b9c-0d1e-012345678902', '1a2b3c4d-7a8b-7a8b-9c0d-012345678881', 'Hardware', '/Dashboard/Hardware'),
+  ('2b3c4d5e-ffff-8b9c-0d2e-012345678883', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'All', '/Fleet/All'),
+  ('2b3c4d5e-ffff-8b9c-0d3e-012345678884', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'Cisco', '/Fleet/Cisco'),
+  ('2b3c4d5e-ffff-8b9c-0d4e-012345678885', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'Dell', '/Fleet/Dell'),
+  ('2b3c4d5e-ffff-8b9c-0d5e-012345678886', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'VMware', '/Fleet/VMware');
 
 INSERT INTO "alerts_type" ("alert_type_id", "type")
 VALUES
