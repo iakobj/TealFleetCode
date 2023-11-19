@@ -1,18 +1,15 @@
 // React components
 import * as React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Chakra-UI components
 import {
-  Text,
-  Flex,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
-  Spacer,
   Heading,
   Stack,
-  StackDivider,
   Box,
   Center,
   Button,
@@ -22,9 +19,36 @@ import {
 } from "@chakra-ui/react";
 
 function LoginForm() {
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
+  const navigate = useNavigate();
+
+  const [input, setInput] = useState("");
+  const handleInputChange = (e) => setInput(e.target.value);
+
+  const handleSubmit = (e) => {
+    // Read the form data
+    e.preventDefault();
+    const form = e.target;
+
+    const formData = new FormData(form);
+    const jsonData = JSON.stringify(Object.fromEntries(formData));
+    console.log(jsonData);
+
+    // You can pass formData as a fetch body directly:
+    fetch(`http://localhost:3000/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: jsonData,
+    }).then((response) => {
+      console.log(response.status);
+      if (response.status == 200) {
+        navigate("/Dashboard");
+      }
+    });
+  };
   return (
     <Card
       marginTop={"3em"}
@@ -49,93 +73,101 @@ function LoginForm() {
           </Heading>
         </Center>
       </CardHeader>
-
-      <CardBody>
-        <Stack spacing="4">
-          <Box marginTop={"1.5em"}>
-            <Center>
-              <Input
-                placeholder="Email"
-                size="md"
-                width={{
-                  base: "25em",
-                  sm: "20em",
-                  md: "20em",
-                  lg: "20em",
-                  xl: "20em",
-                  "2xl": "20em",
-                }}
-              />
-            </Center>
-          </Box>
-          <Box>
-            <Center>
-              <InputGroup
-                size="md"
-                width={{
-                  base: "25em",
-                  sm: "20em",
-                  md: "20em",
-                  lg: "20em",
-                  xl: "20em",
-                  "2xl": "20em",
-                }}
-              >
+      <form onSubmit={handleSubmit}>
+        <CardBody>
+          <Stack spacing="4">
+            <Box marginTop={"1.5em"}>
+              <Center>
                 <Input
-                  pr="4.5rem"
-                  type={show ? "text" : "password"}
-                  placeholder="Enter password"
+                  placeholder="Email"
+                  type="text"
+                  name="email"
+                  size="md"
+                  onChange={handleInputChange}
+                  width={{
+                    base: "25em",
+                    sm: "20em",
+                    md: "20em",
+                    lg: "20em",
+                    xl: "20em",
+                    "2xl": "20em",
+                  }}
                 />
-                <InputRightElement width="4.5rem">
-                  <Button
-                    h="1.75rem"
-                    size="sm"
-                    colorScheme="teal"
-                    onClick={handleClick}
-                  >
-                    {show ? "Hide" : "Show"}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </Center>
-          </Box>
-          <Box marginTop={"2.5em"}>
-            <Center>
-              <Button
-                colorScheme="teal"
-                width={{
-                  base: "25em",
-                  sm: "20em",
-                  md: "20em",
-                  lg: "20em",
-                  xl: "20em",
-                  "2xl": "20em",
-                }}
-              >
-                login
-              </Button>
-            </Center>
-          </Box>
-          <Box marginBottom={"1em"}>
-            <Center>
-              <Button
-                variant="outline"
-                colorScheme="teal"
-                width={{
-                  base: "25em",
-                  sm: "20em",
-                  md: "20em",
-                  lg: "20em",
-                  xl: "20em",
-                  "2xl": "20em",
-                }}
-              >
-                Forgot password
-              </Button>
-            </Center>
-          </Box>
-        </Stack>
-      </CardBody>
+              </Center>
+            </Box>
+            <Box>
+              <Center>
+                <InputGroup
+                  size="md"
+                  width={{
+                    base: "25em",
+                    sm: "20em",
+                    md: "20em",
+                    lg: "20em",
+                    xl: "20em",
+                    "2xl": "20em",
+                  }}
+                >
+                  <Input
+                    name='password'
+                    pr="4.5rem"
+                    type={show ? "text" : "password"}
+                    placeholder="Enter password"
+                    onChange={handleInputChange}
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      colorScheme="teal"
+                      onClick={handleClick}
+                    >
+                      {show ? "Hide" : "Show"}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </Center>
+            </Box>
+            <Box marginTop={"2.5em"}>
+              <Center>
+                <Button
+                  type='submit'
+                  colorScheme="teal"
+                  width={{
+                    base: "25em",
+                    sm: "20em",
+                    md: "20em",
+                    lg: "20em",
+                    xl: "20em",
+                    "2xl": "20em",
+                  }}
+                >
+                  login
+                </Button>
+              </Center>
+            </Box>
+
+            <Box marginBottom={"1em"}>
+              <Center>
+                <Button
+                  variant="outline"
+                  colorScheme="teal"
+                  width={{
+                    base: "25em",
+                    sm: "20em",
+                    md: "20em",
+                    lg: "20em",
+                    xl: "20em",
+                    "2xl": "20em",
+                  }}
+                >
+                  Forgot password
+                </Button>
+              </Center>
+            </Box>
+          </Stack>
+        </CardBody>
+      </form>
     </Card>
   );
 }

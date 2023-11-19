@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 const session = require("express-session");
 
+const { pool } = require("./services/db/index");
+
 const path = require("path");
 const result = require("dotenv").config({
   path: path.resolve(__dirname, "../.env"),
@@ -42,7 +44,7 @@ const store = new (require("connect-pg-simple")(session))({
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:3000"],
     credentials: true,
     methods: "GET,POST,DELETE",
     preflightContinue: false,
@@ -73,6 +75,7 @@ const { utilTfdbSeed } = require("./utils/utilTfdbSeed");
 // function that resets the tfdb to an empty state
 const { utilTfdbReset } = require("./utils/utilTfdbReset");
 
+// When starting the app it goes trogh this logic to determine starting options
 const args = process.argv;
 
 if (args[2] == "seed") {
@@ -120,10 +123,6 @@ if (args[2] == "seed") {
   console.log("No arguments recognized, continuing with running the app.");
 }
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 // Express routers
 const tenantsRouters = require("./routes/tenantsRouters");
 const usersRouters = require("./routes/usersRouters");
@@ -134,6 +133,7 @@ const hardwareRouters = require("./routes/hardwareRouters");
 const rolesRouters = require("./routes/rolesRouters");
 const sitesRouters = require("./routes/sitesRouters");
 const assetsRouters = require("./routes/assetsRouters");
+const authRouters = require("./routes/authRouters");
 
 app.use("/tenants", tenantsRouters);
 app.use("/users", usersRouters);
@@ -144,6 +144,7 @@ app.use("/hardware", hardwareRouters);
 app.use("/roles", rolesRouters);
 app.use("/sites", sitesRouters);
 app.use("/assets", assetsRouters);
+app.use("/auth", authRouters);
 
 app.listen(port, () => {
   console.log(
