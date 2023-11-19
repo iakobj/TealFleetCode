@@ -16,6 +16,8 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
 });
 
+module.exports = { pool };
+
 /*
     text: The SQL query string.
     params: An array of query parameters or an object with named parameters. 

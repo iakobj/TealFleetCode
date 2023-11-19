@@ -12,7 +12,6 @@ module.exports.authLogin = async () => {
 };
 
 module.exports.authGetUserByEmail = async (email) => {
-  console.log("assetsGetUsername");
   const result = await query("SELECT * FROM users WHERE email = $1", [
     email,
   ]);

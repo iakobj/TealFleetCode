@@ -5,16 +5,32 @@ const {
   authRegister,
 } = require("../services/authServices");
 
-const { mPassportVerify } = require("../middlewares/authMiddleware");
+const { mLogin } = require("../middlewares/authMiddleware");
 
 // Login
 module.exports.cAuthLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log(email, password);
-    await mPassportVerify(email, password);
 
-    res.status(200).send(result);
+    if (email == null || password == null) {
+      console.log("No data was sent to cAuthLogin ");
+      return res.sendStatus(403);
+    }
+
+    mLogin(email, password)
+      .then((result) => {
+        console.log("Result from mLogin middleware is: ");
+        console.log(result);
+        req.session.user = result;
+
+        res.status(200).send(req.session.user);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(403).send({ message: "Login failed" });
+      });
+
   } catch (err) {
     console.log(err);
     res.status(404).send("Login failed");

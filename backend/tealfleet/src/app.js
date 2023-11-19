@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const session = require("express-session");
-
-const { pool } = require("./services/db/index");
+const { Pool } = require("pg");
 
 const path = require("path");
 const result = require("dotenv").config({
@@ -12,6 +11,17 @@ const result = require("dotenv").config({
 if (result.error) {
   console.error("Error loading .env file:", result.error);
 }
+
+const dbconfig = {
+  host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
+  database: process.env.POSTGRES_NAME,
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+};
+console.log(process.env);
+
+const pool = new Pool(dbconfig);
 
 // PORT number for the express API server
 const port = process.env.SERVER_PORT;
@@ -39,19 +49,22 @@ const options = {
 
 // session store and session config
 const store = new (require("connect-pg-simple")(session))({
+  pool,
   createTableIfMissing: true,
 });
 
+console.log(store);
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"],
+    origin: ["http://localhost:5173"],
     credentials: true,
     methods: "GET,POST,DELETE",
     preflightContinue: false,
     optionsSuccessStatus: 204,
   }),
   session({
-    name: "tealfleet.com",
+    name: "tealfleet",
     secret: "secret-key",
     resave: false,
     saveUninitialized: false,
