@@ -2,26 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const session = require("express-session");
-const { Pool } = require("pg");
-
-const path = require("path");
-const result = require("dotenv").config({
-  path: path.resolve(__dirname, "../.env"),
-});
-if (result.error) {
-  console.error("Error loading .env file:", result.error);
-}
-
-const dbconfig = {
-  host: process.env.POSTGRES_HOST,
-  port: process.env.POSTGRES_PORT,
-  database: process.env.POSTGRES_NAME,
-  user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-};
-console.log(process.env);
-
-const pool = new Pool(dbconfig);
+const { pool } = require("./services/db/index");
 
 // PORT number for the express API server
 const port = process.env.SERVER_PORT;
@@ -52,8 +33,6 @@ const store = new (require("connect-pg-simple")(session))({
   pool,
   createTableIfMissing: true,
 });
-
-console.log(store);
 
 app.use(
   cors({
