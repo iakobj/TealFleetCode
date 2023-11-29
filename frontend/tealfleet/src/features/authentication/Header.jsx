@@ -1,5 +1,6 @@
 // React components
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 // Chakra-UI components
 import {
@@ -10,12 +11,19 @@ import {
   Box,
   Image,
   Spacer,
+  Button,
   Center,
   Show,
   Hide,
 } from "@chakra-ui/react";
 
 function Header() {
+  const navigate = useNavigate();
+
+  const register = () => {
+    navigate("/register");
+  };
+
   return (
     <Grid
       height={{ base: "4em", sm: "4em", md: "4em" }}
@@ -50,6 +58,18 @@ function Header() {
             >
               TealFleet
             </Text>
+          </Box>
+          <Spacer />
+          <Box>
+            <Button
+              marginRight="1em"
+              size="sm"
+              variant="solid"
+              colorScheme="gray"
+              onClick={register}
+            >
+              Register
+            </Button>
           </Box>
         </HStack>
       </GridItem>

@@ -3,6 +3,8 @@ import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useToast } from "@chakra-ui/react";
+
 // Chakra-UI components
 import {
   Card,
@@ -22,6 +24,8 @@ function LoginForm() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
+  const toast = useToast();
+
   const navigate = useNavigate();
 
   const [input, setInput] = useState("");
@@ -34,7 +38,6 @@ function LoginForm() {
 
     const formData = new FormData(form);
     const jsonData = JSON.stringify(Object.fromEntries(formData));
-    console.log(jsonData);
 
     // You can pass formData as a fetch body directly:
     fetch(`http://localhost:3000/auth/login`, {
@@ -43,9 +46,15 @@ function LoginForm() {
       credentials: "include",
       body: jsonData,
     }).then((response) => {
-      console.log(response.status);
       if (response.status == 200) {
         navigate("/Dashboard");
+      } else {
+        toast({
+          title: 'Login error',
+          description: "Wrong username or password.",
+          status: "error",
+          position: "bottom",
+        });
       }
     });
   };
@@ -53,7 +62,7 @@ function LoginForm() {
     <Card
       marginTop={"3em"}
       width={{
-        base: "25em",
+        base: "22em",
         sm: "25em",
         md: "32em",
         lg: "32em",
@@ -109,7 +118,7 @@ function LoginForm() {
                   }}
                 >
                   <Input
-                    name='password'
+                    name="password"
                     pr="4.5rem"
                     type={show ? "text" : "password"}
                     placeholder="Enter password"
@@ -131,7 +140,7 @@ function LoginForm() {
             <Box marginTop={"2.5em"}>
               <Center>
                 <Button
-                  type='submit'
+                  type="submit"
                   colorScheme="teal"
                   width={{
                     base: "25em",
@@ -147,7 +156,7 @@ function LoginForm() {
               </Center>
             </Box>
 
-            <Box marginBottom={"1em"}>
+            <Box marginBottom={"2.5em"}>
               <Center>
                 <Button
                   variant="outline"

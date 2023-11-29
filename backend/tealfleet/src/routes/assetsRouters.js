@@ -79,21 +79,23 @@
  *
  */
 
- const express = require("express");
- const assetsRouters = express.Router();
- 
- // Import Controllers
- const {
-   cAssetsGetAllSW,
-   cAssetsGetAllHW,
-   cAssetsGetAll,
+const express = require("express");
+const assetsRouters = express.Router();
+const bodyParser = require("body-parser");
 
- } = require("../controllers/assetsControllers");
- 
- // asset catalog
- assetsRouters.get("/fleet/card/all", cAssetsGetAll); // Get all asset from catalog
- assetsRouters.get("/fleet/card/all/sw", cAssetsGetAllSW); // Get all asset from catalog
- assetsRouters.get("/fleet/card/all/hw", cAssetsGetAllHW); // Get all asset from catalog
+assetsRouters.use(express.urlencoded({ extended: false }));
+assetsRouters.use(bodyParser.json());
 
- module.exports = assetsRouters;
- 
+// Import Controllers
+const {
+  cAssetsGetAllSW,
+  cAssetsGetAllHW,
+  cAssetsGetAll,
+} = require("../controllers/assetsControllers");
+
+// asset catalog
+assetsRouters.get("/fleet/card/all", cAssetsGetAll); // Get all asset from catalog
+assetsRouters.get("/fleet/card/all/sw", cAssetsGetAllSW); // Get all asset from catalog
+assetsRouters.get("/fleet/card/all/hw", cAssetsGetAllHW); // Get all asset from catalog
+
+module.exports = assetsRouters;

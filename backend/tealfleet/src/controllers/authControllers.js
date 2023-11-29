@@ -11,7 +11,6 @@ const { mLogin } = require("../middlewares/authMiddleware");
 module.exports.cAuthLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
 
     if (email == null || password == null) {
       console.log("No data was sent to cAuthLogin ");
@@ -21,19 +20,17 @@ module.exports.cAuthLogin = async (req, res) => {
     mLogin(email, password)
       .then((result) => {
         console.log("Result from mLogin middleware is: ");
-        console.log(result);
-        req.session.user = result;
-
-        res.status(200).send(req.session.user);
+        req.session.user = result.user;
+        req.session.authenticated = true;
+        return res.json({ user: req.session.user });
       })
       .catch((err) => {
         console.log(err);
         res.status(403).send({ message: "Login failed" });
       });
-
   } catch (err) {
     console.log(err);
-    res.status(404).send("Login failed");
+    res.status(403).send("Login failed");
   }
 };
 

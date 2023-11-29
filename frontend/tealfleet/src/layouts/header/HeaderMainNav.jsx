@@ -17,7 +17,7 @@ import HeaderSubNav from "./HeaderSubNav";
 import HeaderProfileMenu from "./HeaderProfileMenu";
 
 const fetchData = async () => {
-  const data = await fetch(`http://localhost:3000/navigation/main`);
+  const data = await fetch(`http://localhost:3000/navigation/main`, { method: 'GET', credentials: 'include',});
   return { data: await data.json() };
 };
 
