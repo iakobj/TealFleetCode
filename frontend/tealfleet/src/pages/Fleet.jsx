@@ -2,11 +2,7 @@
 import * as React from "react";
 
 // Components
-import FleetCard from "../features/fleet/FleetCard.jsx";
 import FleetFilter from "../features/fleet/FleetFilter.jsx";
-
-// Chakra-UI components
-import { Text, Flex, Box, SimpleGrid } from "@chakra-ui/react";
 
 function Fleet() {
   return (
@@ -17,3 +13,32 @@ function Fleet() {
 }
 
 export default Fleet;
+
+export const FleetDataLoader = async () => {
+  // Fetch Tenant info for filter
+  const tItems = await fetch(`http://localhost:3000/tenants/`);
+
+  // Fetch SW Model info for filter
+  const swItems = await fetch(
+    `http://localhost:3000/software/catalog/model/name`
+  );
+
+  // Fetch HW Model info for filter
+  const hwItems = await fetch(
+    `http://localhost:3000/hardware/catalog/model/name`
+  );
+
+  // Fetch Site name info for filter
+  const siteItems = await fetch(`http://localhost:3000/sites/`);
+
+  // Fetch Fleet card information
+  const fItems = await fetch(`http://localhost:3000/assets/fleet/card/all/`);
+
+  return {
+    tItems: await tItems.json(),
+    swItems: await swItems.json(),
+    hwItems: await hwItems.json(),
+    siteItems: await siteItems.json(),
+    fItems: await fItems.json(),
+  };
+};

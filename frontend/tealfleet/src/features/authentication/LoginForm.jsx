@@ -48,12 +48,20 @@ function LoginForm() {
     }).then((response) => {
       if (response.status == 200) {
         navigate("/Dashboard");
+        toast({
+          title: 'Login successeful',
+          description: "Welcome to TealFleet",
+          status: "success",
+          position: "bottom",
+          variant: "subtle"
+        });
       } else {
         toast({
           title: 'Login error',
           description: "Wrong username or password.",
           status: "error",
           position: "bottom",
+          variant: "subtle"
         });
       }
     });

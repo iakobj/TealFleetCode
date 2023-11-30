@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import FleetCard from "./FleetCard.jsx";
 
@@ -20,47 +21,19 @@ import {
 
 import { Search2Icon, RepeatIcon } from "@chakra-ui/icons";
 
-// Fetch Tenant info for filter
-const fetchTenantData = async () => {
-  const data = await fetch(`http://localhost:3000/tenants/`);
-  return { data: await data.json() };
-};
-const tItems = await fetchTenantData();
-
-// Fetch SW Model info for filter
-const fetchSWModelData = async () => {
-  const data = await fetch(`http://localhost:3000/software/catalog/model/name`);
-  return { data: await data.json() };
-};
-const swItems = await fetchSWModelData();
-
-// Fetch HW Model info for filter
-const fetchHWModelData = async () => {
-  const data = await fetch(`http://localhost:3000/hardware/catalog/model/name`);
-  return { data: await data.json() };
-};
-const hwItems = await fetchHWModelData();
-
-// Fetch Site name info for filter
-const fetchSiteNameData = async () => {
-  const data = await fetch(`http://localhost:3000/sites/`);
-  return { data: await data.json() };
-};
-const siteItems = await fetchSiteNameData();
-
-// Fetch Fleet card information
-const fetchFleetData = async () => {
-  const data = await fetch(`http://localhost:3000/assets/fleet/card/all/`);
-  return { data: await data.json() };
-};
-
-const fItems = await fetchFleetData();
-
 // FleetFilter Component
 function FleetFilter() {
   // Get the location of the url, and if it is empty use "Fleet"
   const loc = useLocation();
   const location = loc.pathname.slice(1) || "Fleet";
+
+  const loaderData = useLoaderData();
+
+  const fItems = loaderData.fItems;
+  const tenantItems = loaderData.tItems;
+  const swModelItems = loaderData.swItems;
+  const hwModelItems = loaderData.hwItems;
+  const siteNameItems = loaderData.siteItems;
 
   // From URL it gets the last word, then it updates the array of card data and displays only the ones that include the vendor name
   useEffect(() => {
@@ -68,28 +41,22 @@ function FleetFilter() {
     var vendorName = inputLocation.split("/");
 
     if (vendorName.length > 1) {
-      var vendor = vendorName[1];
-      const originalArray = fItems.data;
+      const vendor = vendorName[1];
+      const originalArray = fItems;
       // if the vendor is all it will display unchanged array of all asset fleet cards
       if (vendor === "All") {
-        setfleetCardItems(originalArray);
+        setFleetCardItems(originalArray);
       } else {
         const filteredArray = originalArray.filter((item) => {
           return item.vendor_name === vendor;
         });
-        setfleetCardItems(filteredArray);
+        setFleetCardItems(filteredArray);
       }
     }
   }, [location]);
 
   const [formData, setFormData] = useState();
-
-  const [fleetCardItems, setfleetCardItems] = useState(fItems.data);
-
-  const tenantItems = tItems.data;
-  const swModelItems = swItems.data;
-  const hwModelItems = hwItems.data;
-  const siteNameItems = siteItems.data;
+  const [fleetCardItems, setFleetCardItems] = useState(fItems);
 
   // Add state for selected values
   const [selectedTenant, setSelectedTenant] = useState("");
@@ -128,7 +95,7 @@ function FleetFilter() {
     }
 
     event.preventDefault();
-    const originalArray = fItems.data;
+    const originalArray = fItems;
     const filteredArray = originalArray.filter((item) => {
       return (
         (!formData.tenant || item.tenant_name === formData.tenant) &&
@@ -137,12 +104,12 @@ function FleetFilter() {
         (!vendor || item.vendor_name === vendor)
       );
     });
-    setfleetCardItems(filteredArray);
+    setFleetCardItems(filteredArray);
   };
 
   const handleReset = () => {
-    const originalArray = fItems.data;
-    setfleetCardItems(originalArray);
+    const originalArray = fItems;
+    setFleetCardItems(originalArray);
 
     // Reset selected values
     setSelectedTenant("");
@@ -152,29 +119,30 @@ function FleetFilter() {
   };
 
   return (
-    <Box marginTop={{base: "1em", sm: "1em", md: "0em"}}>
+    <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Hide breakpoint="(max-width: 17em)">
         <form onSubmit={handleSubmit}>
           <Wrap marginBottom={"0.8em"}>
             <WrapItem>
-            <Button
-              type="submit"
-              leftIcon={<Search2Icon />}
-              size={"sm"}
-              colorScheme={"teal"}
-            >
-              Filter
-            </Button>
-            <NavLink to={"/Fleet"}>
-              <IconButton marginRight={"1em"}
-                aria-label="Reset filter"
-                icon={<RepeatIcon />}
+              <Button
+                type="submit"
+                leftIcon={<Search2Icon />}
                 size={"sm"}
                 colorScheme={"teal"}
-                marginLeft={"1em"}
-                onClick={handleReset}
-              />
-            </NavLink>
+              >
+                Filter
+              </Button>
+              <NavLink to={"/Fleet"}>
+                <IconButton
+                  marginRight={"1em"}
+                  aria-label="Reset filter"
+                  icon={<RepeatIcon />}
+                  size={"sm"}
+                  colorScheme={"teal"}
+                  marginLeft={"1em"}
+                  onClick={handleReset}
+                />
+              </NavLink>
             </WrapItem>
 
             <WrapItem marginRight={"1em"}>
@@ -183,7 +151,7 @@ function FleetFilter() {
                 id="tenant"
                 name="tenant"
                 size="sm"
-                w={{base: "7em", sm: "7em", md: "8em", lg: "11em"}}
+                w={{ base: "7em", sm: "7em", md: "8em", lg: "11em" }}
                 onChange={handleChange}
                 value={selectedTenant}
               >
@@ -203,7 +171,7 @@ function FleetFilter() {
               <Select
                 placeholder="SW model"
                 size="sm"
-                w={{base: "7em", sm: "7em", md: "8em", lg: "11em"}}
+                w={{ base: "7em", sm: "7em", md: "8em", lg: "11em" }}
                 id="swmodel"
                 name="swmodel"
                 onChange={handleChange}
@@ -222,7 +190,7 @@ function FleetFilter() {
               <Select
                 placeholder="HW model"
                 size="sm"
-                w={{base: "7em", sm: "7em", md: "8em", lg: "11em"}}
+                w={{ base: "7em", sm: "7em", md: "8em", lg: "11em" }}
                 id="hwmodel"
                 name="hwmodel"
                 onChange={handleChange}
@@ -241,7 +209,7 @@ function FleetFilter() {
               <Select
                 placeholder="Site name"
                 size="sm"
-                w={{base: "7em", sm: "7em", md: "8em", lg: "11em"}}
+                w={{ base: "7em", sm: "7em", md: "8em", lg: "11em" }}
                 id="sitename"
                 name="sitename"
                 onChange={handleChange}
