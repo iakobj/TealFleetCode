@@ -4,6 +4,21 @@ const cors = require("cors");
 const session = require("express-session");
 const { pool } = require("./services/db/index");
 
+var fs = require('fs');
+var morgan = require('morgan');
+var path = require('path');
+var rfs = require('rotating-file-stream'); // version 2.x
+
+
+// create a rotating write stream
+var accessLogStream = rfs.createStream('access.log', {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'log')
+})
+
+// setup the logger
+app.use(morgan('short', { stream: accessLogStream }))
+
 // PORT number for the express API server
 const port = process.env.SERVER_PORT;
 
@@ -140,6 +155,6 @@ app.use("/auth", authRouters);
 
 app.listen(port, () => {
   console.log(
-    `TealFleet backend listening on port ${port}, REST API DOC http://localhost:3000/api-docs/`
+    `TealFleet backend listening on port ${port}, REST API Documentation http://localhost:3000/api-docs/`
   );
 });

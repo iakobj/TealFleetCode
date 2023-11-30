@@ -11,7 +11,7 @@ import RootLayout from "./layouts/RootLayout";
 // Pages
 import ErrorBoundary from "./pages/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
-import Fleet from "./pages/Fleet";
+import Fleet, {FleetDataLoader} from "./pages/Fleet";
 import Support from "./pages/Support";
 import Administration from "./pages/Administration";
 import Login from "./pages/login";
@@ -39,11 +39,13 @@ const router = createBrowserRouter([
       {
         path: "fleet",
         element: <Fleet/>,
+        loader: FleetDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
         path: "fleet/:vendor",
         element: <Fleet/>,
+        loader: FleetDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
