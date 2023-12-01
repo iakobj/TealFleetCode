@@ -2,15 +2,16 @@
 import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 
 // Chakra-UI components
 import { Flex, Text, HStack } from "@chakra-ui/react";
 
 function HeaderSubNav({ link }) {
   const fetchData = async () => {
+    console.log(`link:  ${link}`)
+    const subname = link.split("/")[0];
     const data = await fetch(
-      `http://localhost:3000/navigation/sub/name/${link}`
+      `http://localhost:3000/navigation/sub/name/${subname}`
     );
     return { data: await data.json() };
   };
@@ -41,7 +42,7 @@ function HeaderSubNav({ link }) {
       >
         {subNavItems &&
           subNavItems.map &&
-          subNavItems.map((subNavItems, index) => (
+          subNavItems.map((subNavItems) => (
             <Text
               color="blackAlpha.700"
               fontSize={{ base: "sm", sm: "sm", md: "lg" }}

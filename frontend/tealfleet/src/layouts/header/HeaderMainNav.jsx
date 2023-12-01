@@ -26,7 +26,7 @@ const mainNavItems = items.data;
 
 function HeaderMainNav() {
   const loc = useLocation();
-  const location = loc.pathname.slice(1) || "Dashboard";
+  const location = loc.pathname.slice(1) || "dashboard";
 
   const [clickedIndex, setClickedIndex] = useState(-1);
   const [selectedLink, setSelectedLink] = useState(location);

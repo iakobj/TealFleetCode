@@ -38,8 +38,9 @@ function FleetFilter() {
   // From URL it gets the last word, then it updates the array of card data and displays only the ones that include the vendor name
   useEffect(() => {
     var inputLocation = location;
+    console.log(`inputLocation:  ${inputLocation}`)
     var vendorName = inputLocation.split("/");
-
+    console.log(`vendorName:  ${vendorName}`)
     if (vendorName.length > 1) {
       const vendor = vendorName[1];
       const originalArray = fItems;
@@ -48,7 +49,7 @@ function FleetFilter() {
         setFleetCardItems(originalArray);
       } else {
         const filteredArray = originalArray.filter((item) => {
-          return item.vendor_name === vendor;
+          return item.vendor_name == vendor;
         });
         setFleetCardItems(filteredArray);
       }
@@ -98,24 +99,25 @@ function FleetFilter() {
     const originalArray = fItems;
     const filteredArray = originalArray.filter((item) => {
       return (
-        (!formData.tenant || item.tenant_name === formData.tenant) &&
-        (!formData.swmodel || item.software_model_name === formData.swmodel) &&
-        (!formData.hwmodel || item.hardware_model_name === formData.hwmodel) &&
-        (!vendor || item.vendor_name === vendor)
+        (!formData.tenant || item.tenant_name == formData.tenant) &&
+        (!formData.swmodel || item.software_model_name == formData.swmodel) &&
+        (!formData.hwmodel || item.hardware_model_name == formData.hwmodel) &&
+        (!vendor || item.vendor_name == vendor)
       );
     });
     setFleetCardItems(filteredArray);
   };
 
   const handleReset = () => {
-    const originalArray = fItems;
-    setFleetCardItems(originalArray);
-
     // Reset selected values
     setSelectedTenant("");
     setSelectedSwModel("");
     setSelectedHwModel("");
     setSelectedSiteName("");
+
+    const originalArray = fItems;
+    setFleetCardItems(originalArray);
+
   };
 
   return (
@@ -132,7 +134,7 @@ function FleetFilter() {
               >
                 Filter
               </Button>
-              <NavLink to={"/Fleet"}>
+              <NavLink to={"/fleet"}>
                 <IconButton
                   marginRight={"1em"}
                   aria-label="Reset filter"
