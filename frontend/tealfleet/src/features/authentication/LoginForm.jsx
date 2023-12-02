@@ -47,7 +47,7 @@ function LoginForm() {
       body: jsonData,
     }).then((response) => {
       if (response.status == 200) {
-        navigate("/Dashboard");
+        navigate("/dashboard");
         toast({
           title: 'Login successeful',
           description: "Welcome to TealFleet",
