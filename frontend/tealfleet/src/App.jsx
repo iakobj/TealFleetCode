@@ -8,14 +8,25 @@ import {
 // Root Layout scheme
 import RootLayout from "./layouts/RootLayout";
 
-// Pages
+// Fallback and Error elements
+import FallbackPage from "./pages/FallbackPage";
 import ErrorBoundary from "./pages/ErrorBoundary";
+
+// Pages
+
+// Dashboard
 import Dashboard from "./pages/Dashboard";
+import ApplianceSuits from "./pages/dashboard/ApplianceSuits";
+
 import Fleet, {FleetDataLoader} from "./pages/Fleet";
 import Support from "./pages/Support";
 import Administration from "./pages/Administration";
+
+// Authentication
 import Login from "./pages/login";
 import Register from "./pages/register";
+
+import Hardware from "./pages/dashboard/Hardware";
 
 // ChakraProvider component
 import { ChakraProvider } from "@chakra-ui/react";
@@ -33,7 +44,17 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard/>,
+        element: <ApplianceSuits/>,
+        errorElement: <ErrorBoundary />,
+      },
+      {
+        path: "dashboard/appliance-suits",
+        element: <ApplianceSuits/>,
+        errorElement: <ErrorBoundary />,
+      },
+      {
+        path: "dashboard/hardware",
+        element: <Hardware/>,
         errorElement: <ErrorBoundary />,
       },
       {
@@ -76,7 +97,7 @@ function App() {
   // Wrap ChakraProvider at the root of your app
   return (
     <ChakraProvider>
-      <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
+      <RouterProvider router={router} fallbackElement={<FallbackPage/>} />
     </ChakraProvider>
   );
 }

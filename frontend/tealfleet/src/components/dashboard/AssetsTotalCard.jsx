@@ -1,0 +1,71 @@
+// React components
+import * as React from "react";
+
+// Chakra-UI components
+import {
+  Box,
+  Text,
+  Flex,
+  Spacer,
+  HStack,
+  Card,
+  CardBody,
+  CardHeader,
+  Heading,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Progress,
+} from "@chakra-ui/react";
+
+function AssetsTotalCard({ AssetsTotalCardData }) {
+  return (
+    <Card boxShadow="md">
+      <CardBody>
+        <TableContainer>
+          <Table
+            variant="simple"
+            size={{
+              base: "sm",
+              sm: "sm",
+              md: "md",
+              lg: "md",
+            }}
+          >
+            <TableCaption>Total appliance suits by vendor</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>VENDOR</Th>
+                <Th isNumeric>TOTAL</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {AssetsTotalCardData.map((data) => (
+                <Tr key={data.vendor}>
+                  <Td>{data.vendor}</Td>
+                  <Td>{data.total}</Td>
+                  <Td>
+                    <Progress
+                      marginLeft="-4em"
+                      colorScheme="teal"
+                      size="md"
+                      value={data.percent}
+                    />
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </CardBody>
+    </Card>
+  );
+}
+
+export default AssetsTotalCard;
