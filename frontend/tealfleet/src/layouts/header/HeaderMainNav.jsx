@@ -17,7 +17,10 @@ import HeaderSubNav from "./HeaderSubNav";
 import HeaderProfileMenu from "./HeaderProfileMenu";
 
 const fetchData = async () => {
-  const data = await fetch(`http://localhost:3000/navigation/main`, { method: 'GET', credentials: 'include',});
+  const data = await fetch(`http://localhost:3000/navigation/main`, {
+    method: "GET",
+    credentials: "include",
+  });
   return { data: await data.json() };
 };
 
@@ -43,6 +46,14 @@ function HeaderMainNav() {
       gridTemplateColumns="repeat(12, 1fr)"
       gridTemplateRows="repeat(2, 1fr)"
     >
+      <GridItem
+        colSpan={{ base: 12, sm: 12, md: 12 }}
+        colStart={{ base: 1, sm: 1, md: 1 }}
+        rowSpan={{ base: 1, sm: 1, md: 1 }}
+        rowStart={{ base: 1, sm: 1, md: 1 }}
+        bg="white"
+      ></GridItem>
+
       <GridItem
         colSpan={{ base: 12, sm: 12, md: 12 }}
         colStart={{ base: 1, sm: 1, md: 1 }}
