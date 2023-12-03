@@ -29,7 +29,7 @@ function AssetsStatusCard({ AssetsStatusCardData }) {
       <CardBody>
         <Flex>
           <Box>
-            <Heading size="xl">{AssetsStatusCardData.percent}</Heading>
+            <Heading size="xl">{AssetsStatusCardData.total}</Heading>
           </Box>
           <Spacer />
           <Box marginTop="-0.6em">

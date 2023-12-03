@@ -29,3 +29,5 @@ module.exports.assetsGetAllSW = async () => {
 
   return result.rows;
 };
+
+

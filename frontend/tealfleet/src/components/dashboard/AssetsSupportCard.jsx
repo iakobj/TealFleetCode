@@ -42,8 +42,8 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
             <Thead>
               <Tr>
                 <Th>VENDOR</Th>
-                <Th isNumeric>SUPPORTED</Th>
-                <Th isNumeric>UNSUPPORTED</Th>
+                <Th>SUPPORTED</Th>
+                <Th>UNSUPPORTED</Th>
               </Tr>
             </Thead>
             <Tbody>

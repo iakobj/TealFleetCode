@@ -7,6 +7,7 @@ import {
   Text,
   Flex,
   Spacer,
+  VStack,
   Stack,
   Button,
   Card,
@@ -32,29 +33,40 @@ function AssetsListCard({ AssetsListCardData }) {
             size={{
               base: "sm",
               sm: "sm",
-              md: "md",
+              md: "sm",
               lg: "md",
             }}
           >
             <Thead>
               <Tr>
                 <Th>No.</Th>
-                <Th>VENDOR</Th>
-                <Th>MODEL</Th>
-                <Th>SUPPORT</Th>
-                <Th>SUPPORTED UNTIL</Th>
-                <Th>SITE</Th>
+                <Th>CONTRACT No.</Th>
+                <Th>CONTRACT TYPE</Th>
+                <Th>CONTRACTOR</Th>
+                <Th>VALID</Th>
+                <Th>VALID FROM</Th>
+                <Th>VALID UNTIL</Th>
+                <Th>ASSETS</Th>
               </Tr>
             </Thead>
             <Tbody>
               {AssetsListCardData.map((data) => (
-                <Tr key={data.asset_id}>
+                <Tr key={data.contract_id}>
                   <Td>{data.no}</Td>
-                  <Td>{data.vendor}</Td>
-                  <Td>{data.model}</Td>
-                  <Td>{data.support}</Td>
-                  <Td>{data.supported_until}</Td>
-                  <Td>{data.site_city}</Td>
+                  <Td>{data.contract_no}</Td>
+                  <Td>{data.contract_type}</Td>
+                  <Td>{data.contractor_name}</Td>
+                  <Td>{data.contract_valid}</Td>
+                  <Td>{data.valid_from}</Td>
+                  <Td>{data.valid_to}</Td>
+                  <Td><Button
+            size="sm"
+            colorScheme="teal"
+            variant="outline"
+            rightIcon={<ChevronRightIcon />}
+          >
+            Assets
+          </Button></Td>
                 </Tr>
               ))}
             </Tbody>

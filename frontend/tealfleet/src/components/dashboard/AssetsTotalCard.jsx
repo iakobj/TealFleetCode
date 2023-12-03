@@ -42,7 +42,8 @@ function AssetsTotalCard({ AssetsTotalCardData }) {
             <Thead>
               <Tr>
                 <Th>VENDOR</Th>
-                <Th isNumeric>TOTAL</Th>
+                <Th>AMOUNT</Th>
+                <Th>TOTAL %</Th>
               </Tr>
             </Thead>
             <Tbody>

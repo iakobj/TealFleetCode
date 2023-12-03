@@ -39,3 +39,14 @@ module.exports.cAssetsGetAllSW = async (req, res) => {
     res.status(404).send("No assets found");
   }
 };
+
+// Get information for AssetsStatusCardData 
+module.exports.cAssetsGetStatusCardData = async (req, res) => {
+  try {
+    const result = await assetsGetAllSW();
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("No assets found");
+  }
+};
