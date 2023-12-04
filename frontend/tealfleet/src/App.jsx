@@ -19,7 +19,11 @@ import Dashboard from "./pages/Dashboard";
 import ApplianceSuits from "./pages/dashboard/ApplianceSuits";
 
 import Fleet, {FleetDataLoader} from "./pages/Fleet";
+
+// Support
 import Support from "./pages/Support";
+import Contracts from "./pages/support/Contracts";
+
 import Administration from "./pages/Administration";
 
 // Authentication
@@ -72,6 +76,11 @@ const router = createBrowserRouter([
       {
         path: "support",
         element: <Support/>,
+        errorElement: <ErrorBoundary />,
+      },
+      {
+        path: "support/contracts",
+        element: <Contracts/>,
         errorElement: <ErrorBoundary />,
       },
       {

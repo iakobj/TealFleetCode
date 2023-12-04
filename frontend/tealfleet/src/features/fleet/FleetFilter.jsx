@@ -9,6 +9,7 @@ import FleetCard from "./FleetCard.jsx";
 // Chakra-UI components
 import {
   Flex,
+  Spacer,
   Box,
   Button,
   SimpleGrid,
@@ -38,9 +39,9 @@ function FleetFilter() {
   // From URL it gets the last word, then it updates the array of card data and displays only the ones that include the vendor name
   useEffect(() => {
     var inputLocation = location;
-    console.log(`inputLocation:  ${inputLocation}`)
+    console.log(`inputLocation:  ${inputLocation}`);
     var vendorName = inputLocation.split("/");
-    console.log(`vendorName:  ${vendorName}`)
+    console.log(`vendorName:  ${vendorName}`);
     if (vendorName.length > 1) {
       const vendor = vendorName[1];
       const originalArray = fItems;
@@ -117,7 +118,6 @@ function FleetFilter() {
 
     const originalArray = fItems;
     setFleetCardItems(originalArray);
-
   };
 
   return (
@@ -136,24 +136,24 @@ function FleetFilter() {
               </Button>
               <NavLink to={"/fleet"}>
                 <IconButton
-                  marginRight={"1em"}
+                  marginRight={"0.6em"}
                   aria-label="Reset filter"
                   icon={<RepeatIcon />}
                   size={"sm"}
                   colorScheme={"teal"}
-                  marginLeft={"1em"}
+                  marginLeft={"0.6em"}
                   onClick={handleReset}
                 />
               </NavLink>
             </WrapItem>
 
-            <WrapItem marginRight={"1em"}>
+            <WrapItem marginRight={"0.5em"}>
               <Select
                 placeholder="Tenant"
                 id="tenant"
                 name="tenant"
                 size="sm"
-                w={{ base: "7em", sm: "7em", md: "8em", lg: "11em" }}
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
                 onChange={handleChange}
                 value={selectedTenant}
               >
@@ -169,11 +169,11 @@ function FleetFilter() {
                   ))}
               </Select>
             </WrapItem>
-            <WrapItem marginRight={"1em"}>
+            <WrapItem marginRight={"0.5em"}>
               <Select
-                placeholder="SW model"
+                placeholder="Software"
                 size="sm"
-                w={{ base: "7em", sm: "7em", md: "8em", lg: "11em" }}
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
                 id="swmodel"
                 name="swmodel"
                 onChange={handleChange}
@@ -188,11 +188,11 @@ function FleetFilter() {
                   ))}
               </Select>
             </WrapItem>
-            <WrapItem marginRight={"1em"}>
+            <WrapItem marginRight={"0.5em"}>
               <Select
-                placeholder="HW model"
+                placeholder="Hardware"
                 size="sm"
-                w={{ base: "7em", sm: "7em", md: "8em", lg: "11em" }}
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
                 id="hwmodel"
                 name="hwmodel"
                 onChange={handleChange}
@@ -209,9 +209,9 @@ function FleetFilter() {
             </WrapItem>
             <WrapItem>
               <Select
-                placeholder="Site name"
+                placeholder="Site"
                 size="sm"
-                w={{ base: "7em", sm: "7em", md: "8em", lg: "11em" }}
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
                 id="sitename"
                 name="sitename"
                 onChange={handleChange}
@@ -225,6 +225,16 @@ function FleetFilter() {
                     </option>
                   ))}
               </Select>
+            </WrapItem>
+            <Spacer />
+            <WrapItem>
+              <Spacer />
+              <Button size={"sm"} colorScheme={"teal"}>
+                Card
+              </Button>
+              <Button marginLeft="0.6em" size={"sm"} colorScheme={"teal"}>
+                List
+              </Button>
             </WrapItem>
           </Wrap>
         </form>

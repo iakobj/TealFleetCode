@@ -2,15 +2,11 @@
 import * as React from "react";
 
 // Chakra-UI components
-import {
-  Box,
-  SimpleGrid,
-} from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 
 import AssetsStatusCard from "../../components/dashboard/AssetsStatusCard";
 import AssetsTotalCard from "../../components/dashboard/AssetsTotalCard";
 import AssetsSupportCard from "../../components/dashboard/AssetsSupportCard";
-import AssetsListCard from "../../components/dashboard/AssetsListCard";
 
 function ApplianceSuits() {
   const AssetsStatusCardData = [
@@ -43,6 +39,16 @@ function ApplianceSuits() {
       title: "Support expires in 12 months",
       total: 15,
       percent: 15,
+    },
+    {
+      title: "All active Contracts",
+      total: 7,
+      percent: 70,
+    },
+    {
+      title: "All inactive Contracts",
+      total: 3,
+      percent: 30,
     },
   ];
 
@@ -92,24 +98,11 @@ function ApplianceSuits() {
     },
   ];
 
-  const AssetsListCardData = [
-    {
-      no: "1",
-      contract_id: "123",
-      contract_no: "CON-TRACT-001231",
-      contract_type: "SUPPORT",
-      contractor_name: "MSP Pro Guys",
-      contract_valid: "Yes",
-      valid_from: "2023-02-012",
-      valid_to: "2024-02-12"
-    },
-  ];
-
   return (
-    <Box marginTop={{ base: "1em", sm: "1em", md: "0em"}}>
+    <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <SimpleGrid
         spacing="1em"
-        columns={{ base: "1", sm: "2", md: "3", lg: "3", xl: "4", "2xl": "6" }}
+        columns={{ base: "1", sm: "2", md: "4", lg: "4", xl: "4", "2xl": "4" }}
       >
         {AssetsStatusCardData.map((AssetsStatusCardData) => (
           <AssetsStatusCard
@@ -126,14 +119,6 @@ function ApplianceSuits() {
       >
         <AssetsTotalCard AssetsTotalCardData={AssetsTotalCardData} />
         <AssetsSupportCard AssetsSupportCardData={AssetsSupportCardData} />
-      </SimpleGrid>
-
-      <SimpleGrid
-        marginTop="1em"
-        spacing="1em"
-        columns={{ base: "1", sm: "1", md: "1", lg: "1" }}
-      >
-        <AssetsListCard AssetsListCardData={AssetsListCardData} />
       </SimpleGrid>
     </Box>
   );
