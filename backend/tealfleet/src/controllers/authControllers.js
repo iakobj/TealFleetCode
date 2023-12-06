@@ -10,8 +10,9 @@ const { mLogin } = require("../middlewares/authMiddleware");
 // Login
 module.exports.cAuthLogin = async (req, res) => {
   try {
+    console.log(req.body);
     const { email, password } = req.body;
-
+    
     if (email == null || password == null) {
       console.log("No data was sent to cAuthLogin ");
       return res.sendStatus(403);

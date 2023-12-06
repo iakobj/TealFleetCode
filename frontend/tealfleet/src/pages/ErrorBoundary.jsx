@@ -1,9 +1,5 @@
 // React components
 import * as React from "react";
-import { NavLink, useNavigate, } from "react-router-dom";
-
-// Routes and Components
-import Header from "/src/layouts/header/Header.jsx";
 
 // Chakra-UI components
 import {
@@ -16,13 +12,9 @@ import {
   Grid,
   Container,
   GridItem,
-  Button,
 } from "@chakra-ui/react";
-import Dashboard from "./Dashboard";
 
 function ErrorBoundary() {
-
-
   return (
     <Container maxWidth={"1600px"}>
       <Grid

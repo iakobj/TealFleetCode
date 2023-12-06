@@ -91,11 +91,15 @@ const {
   cAssetsGetAllSW,
   cAssetsGetAllHW,
   cAssetsGetAll,
+  cAssetsGetStatusCardData
 } = require("../controllers/assetsControllers");
 
 // asset catalog
 assetsRouters.get("/fleet/card/all", cAssetsGetAll); // Get all asset from catalog
 assetsRouters.get("/fleet/card/all/sw", cAssetsGetAllSW); // Get all asset from catalog
 assetsRouters.get("/fleet/card/all/hw", cAssetsGetAllHW); // Get all asset from catalog
+
+assetsRouters.get("/dashboard/widget/status", cAssetsGetStatusCardData); // dashboard widgets
+
 
 module.exports = assetsRouters;

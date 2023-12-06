@@ -1,6 +1,7 @@
 const {
   assetsGetAllHW,
   assetsGetAllSW,
+  assetsGetAllSWNum,
 } = require("../services/assetsServices");
 
 // Get (almost) all asset information
@@ -43,7 +44,7 @@ module.exports.cAssetsGetAllSW = async (req, res) => {
 // Get information for AssetsStatusCardData 
 module.exports.cAssetsGetStatusCardData = async (req, res) => {
   try {
-    const result = await assetsGetAllSW();
+    const result = await assetsGetAllSWNum();
     res.status(200).send(result);
   } catch (err) {
     console.log(err);

@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 import { useToast } from "@chakra-ui/react";
 
+// import location of the API server
+import { API_ENDPOINT } from '../../constants/apiEndpoint';
+
 // Chakra-UI components
 import {
   Card,
@@ -38,9 +41,9 @@ function LoginForm() {
 
     const formData = new FormData(form);
     const jsonData = JSON.stringify(Object.fromEntries(formData));
-
+    console.log(jsonData);
     // You can pass formData as a fetch body directly:
-    fetch(`http://localhost:3000/auth/login`, {
+    fetch(`http://${API_ENDPOINT}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

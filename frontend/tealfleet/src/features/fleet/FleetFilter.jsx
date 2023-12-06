@@ -8,7 +8,6 @@ import FleetCard from "./FleetCard.jsx";
 
 // Chakra-UI components
 import {
-  Flex,
   Spacer,
   Box,
   Button,

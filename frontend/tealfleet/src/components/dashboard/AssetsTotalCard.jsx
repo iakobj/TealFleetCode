@@ -3,19 +3,11 @@ import * as React from "react";
 
 // Chakra-UI components
 import {
-  Box,
-  Text,
-  Flex,
-  Spacer,
-  HStack,
   Card,
   CardBody,
-  CardHeader,
-  Heading,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,

@@ -1,6 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+
+// import location of the API server
+import { API_ENDPOINT } from '../../constants/apiEndpoint';
+
 import {
   Flex,
   Text,
@@ -17,7 +21,7 @@ import HeaderSubNav from "./HeaderSubNav";
 import HeaderProfileMenu from "./HeaderProfileMenu";
 
 const fetchData = async () => {
-  const data = await fetch(`http://localhost:3000/navigation/main`, {
+  const data = await fetch(`http://${API_ENDPOINT}/navigation/main`, {
     method: "GET",
     credentials: "include",
   });

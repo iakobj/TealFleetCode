@@ -12,9 +12,6 @@ import {
   Image,
   Spacer,
   Button,
-  Center,
-  Show,
-  Hide,
 } from "@chakra-ui/react";
 
 function Header() {
