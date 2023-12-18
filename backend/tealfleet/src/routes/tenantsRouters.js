@@ -91,6 +91,6 @@ const {
 
 tenantsRouters.get("/", cTenantsGetAll); // Get all tenants
 tenantsRouters.get("/id/:id", cTenantsGetById); // Get tenant by id
-tenantsRouters.get("/name/:name", cTenantsGetByName); // Get tenant by name
+tenantsRouters.get("/names/:name", cTenantsGetByName); // Get tenant by name
 
 module.exports = tenantsRouters;

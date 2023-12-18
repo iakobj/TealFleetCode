@@ -81,6 +81,6 @@ navigationRouters.get("/main", cNavigationMainGetAll); // Get main navigation el
 navigationRouters.get("/main/id/:id", cNavigationMainGetById); // Get main navigation elements by id
 navigationRouters.get("/sub", cNavigationSubGetAll); // Get main navigation elements
 navigationRouters.get("/sub/id/:id", cNavigationSubGetById); // Get sub navigation elements where main nav id matches
-navigationRouters.get("/sub/name/:name", cNavigationSubGetByName); // Get sub navigation elements where main nav name matches
+navigationRouters.get("/sub/names/:name", cNavigationSubGetByName); // Get sub navigation elements where main nav name matches
 
 module.exports = navigationRouters;

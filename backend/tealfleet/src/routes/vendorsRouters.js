@@ -91,6 +91,6 @@ const {
 
 vendorsRouters.get("/", cVendorsGetAll); // Get all vendors
 vendorsRouters.get("/id/:id", cVendorsGetById); // Get vendor by id
-vendorsRouters.get("/name/:name", cVendorsGetByName); // Get vendor by name
+vendorsRouters.get("/names/:name", cVendorsGetByName); // Get vendor by name
 
 module.exports = vendorsRouters;

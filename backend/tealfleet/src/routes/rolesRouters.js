@@ -92,7 +92,7 @@ const {
 
 rolesRouters.get("/", cRolesGetAll); // Get all Roles
 rolesRouters.get("/id/:id", cRolesGetById); // Get Role by id
-rolesRouters.get("/role/:role", cRolesGetByRole); // Get Role by role
-rolesRouters.get("/name/:name", cRolesGetByName); // Get Role by role name
+rolesRouters.get("/roles/:role", cRolesGetByRole); // Get Role by role
+rolesRouters.get("/names/:name", cRolesGetByName); // Get Role by role name
 
 module.exports = rolesRouters;

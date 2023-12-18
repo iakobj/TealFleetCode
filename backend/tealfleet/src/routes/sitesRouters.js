@@ -96,11 +96,11 @@ const {
 
 sitesRouters.get("/", cSitesGetAll); // Get all sites
 sitesRouters.get("/id/:id", cSitesGetById); // Get site by id
-sitesRouters.get("/name/:name", cSitesGetByName); // Get site by name
-sitesRouters.get("/address/:address", cSitesGetByAddress); // Get site by address
-sitesRouters.get("/city/:city", cSitesGetByCity); // Get site by city
-sitesRouters.get("/postcode/:postcode", cSitesGetByPostcode); // Get site by post code
-sitesRouters.get("/country/:country", cSitesGetByCountry); // Get site by country
-sitesRouters.get("/tenant/:tenant", cSitesGetByTenant); // Get site by tenant
+sitesRouters.get("/names/:name", cSitesGetByName); // Get site by name
+sitesRouters.get("/addresses/:address", cSitesGetByAddress); // Get site by address
+sitesRouters.get("/cities/:city", cSitesGetByCity); // Get site by city
+sitesRouters.get("/postcodes/:postcode", cSitesGetByPostcode); // Get site by post code
+sitesRouters.get("/countries/:country", cSitesGetByCountry); // Get site by country
+sitesRouters.get("/tenants/:tenant", cSitesGetByTenant); // Get site by tenant
 
 module.exports = sitesRouters;

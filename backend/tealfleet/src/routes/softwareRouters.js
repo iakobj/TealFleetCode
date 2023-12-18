@@ -101,21 +101,21 @@ const {
 } = require("../controllers/softwareControllers");
 
 // Software catalog
-softwareRouters.get("/catalog", cSoftwareCatGetAll); // Get all Software from catalog
-softwareRouters.get("/catalog/id/:id", cSoftwareCatGetById); // Get software by id from catalog
-softwareRouters.get("/catalog/name/:name", cSoftwareCatGetByName); // Get software by model name from catalog
-softwareRouters.get("/catalog/vendor/:vendor", cSoftwareCatGetByVendor); // Get software by vendor from catalog
-softwareRouters.get("/catalog/version/:version", cSoftwareCatGetByVersion); // Get software by version from catalog
-softwareRouters.get("/catalog/category/:category", cSoftwareCatGetByCategory); // Get software by version from category
-softwareRouters.get("/catalog/model/name", cSoftwareCatGetSWModelName); // Get all unique software model names
+softwareRouters.get("/catalogs", cSoftwareCatGetAll); // Get all Software from catalog
+softwareRouters.get("/catalogs/id/:id", cSoftwareCatGetById); // Get software by id from catalog
+softwareRouters.get("/catalogs/names/:name", cSoftwareCatGetByName); // Get software by model name from catalog
+softwareRouters.get("/catalogs/vendors/:vendor", cSoftwareCatGetByVendor); // Get software by vendor from catalog
+softwareRouters.get("/catalogs/versions/:version", cSoftwareCatGetByVersion); // Get software by version from catalog
+softwareRouters.get("/catalogs/categories/:category", cSoftwareCatGetByCategory); // Get software by version from category
+softwareRouters.get("/catalogs/models/names", cSoftwareCatGetSWModelName); // Get all unique software model names
 
 // Software assets
-softwareRouters.get("/asset/", cSoftwareAssGetAll); // Get all Software from assets
-softwareRouters.get("/asset/id/:id", cSoftwareAssGetById); // Get software by id from assets
-softwareRouters.get("/asset/name/:name", cSoftwareAssGetByName); // Get software by model name from assets
-softwareRouters.get("/asset/vendor/:vendor", cSoftwareAssGetByVendor); // Get software by vendor from assets
-softwareRouters.get("/asset/version/:version", cSoftwareAssGetByVersion); // Get software by version from assets
-softwareRouters.get("/asset/tenant/:tenant", cSoftwareAssGetByTenant); // Get software by tenant from assets
-softwareRouters.get("/asset/site/:site", cSoftwareAssGetBySite); // Get software by site from assets
+softwareRouters.get("/assets/", cSoftwareAssGetAll); // Get all Software from assets
+softwareRouters.get("/assets/id/:id", cSoftwareAssGetById); // Get software by id from assets
+softwareRouters.get("/assets/names/:name", cSoftwareAssGetByName); // Get software by model name from assets
+softwareRouters.get("/assets/vendors/:vendor", cSoftwareAssGetByVendor); // Get software by vendor from assets
+softwareRouters.get("/assets/versions/:version", cSoftwareAssGetByVersion); // Get software by version from assets
+softwareRouters.get("/assets/tenants/:tenant", cSoftwareAssGetByTenant); // Get software by tenant from assets
+softwareRouters.get("/assets/sites/:site", cSoftwareAssGetBySite); // Get software by site from assets
 
 module.exports = softwareRouters;

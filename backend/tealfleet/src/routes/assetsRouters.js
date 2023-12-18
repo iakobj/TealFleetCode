@@ -95,11 +95,11 @@ const {
 } = require("../controllers/assetsControllers");
 
 // asset catalog
-assetsRouters.get("/fleet/card/all", cAssetsGetAll); // Get all asset from catalog
-assetsRouters.get("/fleet/card/all/sw", cAssetsGetAllSW); // Get all asset from catalog
-assetsRouters.get("/fleet/card/all/hw", cAssetsGetAllHW); // Get all asset from catalog
+assetsRouters.get("/fleet/cards/all", cAssetsGetAll); // Get all asset from catalog
+assetsRouters.get("/fleet/cards/all/sw", cAssetsGetAllSW); // Get all asset from catalog
+assetsRouters.get("/fleet/cards/all/hw", cAssetsGetAllHW); // Get all asset from catalog
 
-assetsRouters.get("/dashboard/widget/status", cAssetsGetStatusCardData); // dashboard widgets
+assetsRouters.get("/dashboard/widgets/status", cAssetsGetStatusCardData); // dashboard widgets
 
 
 module.exports = assetsRouters;
