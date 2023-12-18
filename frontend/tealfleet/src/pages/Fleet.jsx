@@ -23,19 +23,19 @@ export const FleetDataLoader = async () => {
 
   // Fetch SW Model info for filter
   const swItems = await fetch(
-    `http://${API_ENDPOINT}/software/catalog/model/name`
+    `http://${API_ENDPOINT}/software/catalogs/models/names`
   );
 
   // Fetch HW Model info for filter
   const hwItems = await fetch(
-    `http://${API_ENDPOINT}/hardware/catalog/model/name`
+    `http://${API_ENDPOINT}/hardware/catalogs/models/names`
   );
 
   // Fetch Site name info for filter
   const siteItems = await fetch(`http://${API_ENDPOINT}/sites/`);
 
   // Fetch Fleet card information
-  const fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/card/all/`);
+  const fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/cards/all/`);
 
   return {
     tItems: await tItems.json(),

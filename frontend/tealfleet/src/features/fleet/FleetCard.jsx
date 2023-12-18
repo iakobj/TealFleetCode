@@ -75,7 +75,6 @@ function FleetCard({ fleetCardItems }) {
                 ? fleetCardItems.hardware_image
                 : fleetCardItems.software_image
             }
-            alt={"UCSC-220-M5S"}
           />
           <Spacer />
         </Flex>
