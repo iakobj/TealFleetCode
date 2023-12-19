@@ -29,11 +29,11 @@ function FleetFilter() {
 
   const loaderData = useLoaderData();
 
-  const fItems = loaderData.fItems;
-  const tenantItems = loaderData.tItems;
-  const swModelItems = loaderData.swItems;
-  const hwModelItems = loaderData.hwItems;
-  const siteNameItems = loaderData.siteItems;
+  const fItems = loaderData.fItems.data;
+  const tenantItems = loaderData.tItems.data;
+  const swModelItems = loaderData.swItems.data;
+  const hwModelItems = loaderData.hwItems.data;
+  const siteNameItems = loaderData.siteItems.data;
 
   // From URL it gets the last word, then it updates the array of card data and displays only the ones that include the vendor name
   useEffect(() => {

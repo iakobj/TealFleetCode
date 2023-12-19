@@ -3,7 +3,7 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 // import location of the API server
-import { API_ENDPOINT } from '../../constants/apiEndpoint';
+import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 import {
   Flex,
@@ -25,21 +25,20 @@ const fetchData = async () => {
     method: "GET",
     credentials: "include",
   });
-  return { data: await data.json() };
+  return { mainNavData: await data.json() };
 };
 
 const items = await fetchData();
-const mainNavItems = items.data;
+const mainNavItems = items.mainNavData.data;
 
 function HeaderMainNav() {
-  const loc = useLocation();
-  const location = loc.pathname.slice(1) || "dashboard";
+  const { pathname: location = "dashboard" } = useLocation();
 
   const [clickedIndex, setClickedIndex] = useState(-1);
   const [selectedLink, setSelectedLink] = useState(location);
 
   const handleLinkClick = (index) => {
-    const link = items.data[index].main_nav_item;
+    const link = items.mainNavData.data[index].main_nav_item;
     setClickedIndex(index);
     setSelectedLink(link);
   };

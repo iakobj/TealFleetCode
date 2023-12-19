@@ -8,17 +8,16 @@ import { Flex, Text, HStack } from "@chakra-ui/react";
 
 function HeaderSubNav({ link }) {
   const fetchData = async () => {
-    console.log(`link:  ${link}`)
     const subname = link.split("/")[0];
     const data = await fetch(
-      `http://localhost:3000/navigation/sub/name/${subname}`
+      `http://localhost:3000/navigation/sub/names/${subname}`
     );
-    return { data: await data.json() };
+    return { subNavData: await data.json() };
   };
 
   const fetchSubNavItems = async () => {
     const items = await fetchData();
-    return items.data;
+    return items.subNavData.data;
   };
 
   const [subNavItems, setSubNavItems] = useState([]);
