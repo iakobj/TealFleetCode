@@ -23,7 +23,7 @@ const {
 module.exports.cHardwareCatGetAll = async (req, res) => {
   try {
     const result = await hardwareCatGetAll();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No Hardware found");
@@ -35,7 +35,7 @@ module.exports.cHardwareCatGetById = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await hardwareCatGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res
@@ -58,7 +58,7 @@ module.exports.cHardwareCatGetByName = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type name ${name}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -78,7 +78,7 @@ module.exports.cHardwareCatGetByVendor = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type vendor ${vendor}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -98,7 +98,7 @@ module.exports.cHardwareCatGetByPartnumber = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type part number ${partnumber}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -118,7 +118,7 @@ module.exports.cHardwareCatGetByCategory = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type category ${category}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -130,7 +130,7 @@ module.exports.cHardwareCatGetByCategory = async (req, res) => {
 module.exports.cHardwareCatGetSWModelName = async (req, res) => {
   try {
     const result = await hardwareCatGetSWModelName();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No Hardware found");
@@ -143,7 +143,7 @@ module.exports.cHardwareCatGetSWModelName = async (req, res) => {
 module.exports.cHardwareAssGetAll = async (req, res) => {
   try {
     const result = await hardwareAssGetAll();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No Hardware found");
@@ -155,7 +155,7 @@ module.exports.cHardwareAssGetById = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await hardwareAssGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res
@@ -178,7 +178,7 @@ module.exports.cHardwareAssGetByName = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type name ${name}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -198,7 +198,7 @@ module.exports.cHardwareAssGetByVendor = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type vendor ${vendor}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -218,7 +218,7 @@ module.exports.cHardwareAssGetByPartnumber = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type part number ${partnumber}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -238,7 +238,7 @@ module.exports.cHardwareAssGetBySerialnumber = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type serial number ${serialnumber}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -258,7 +258,7 @@ module.exports.cHardwareAssGetByTenant = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type tenant ${tenant}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -278,7 +278,7 @@ module.exports.cHardwareAssGetBySite = async (req, res) => {
           `The Hardware was not found, invalid input syntax for type site ${site}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);

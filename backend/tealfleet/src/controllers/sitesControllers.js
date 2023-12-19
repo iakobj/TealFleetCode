@@ -13,7 +13,7 @@ const {
 module.exports.cSitesGetAll = async (req, res) => {
   try {
     const result = await sitesGetAll();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No sites found");
@@ -25,7 +25,7 @@ module.exports.cSitesGetById = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await sitesGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res
@@ -46,7 +46,7 @@ module.exports.cSitesGetByName = async (req, res) => {
           `The site was not found, invalid input syntax for type name ${name}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -66,7 +66,7 @@ module.exports.cSitesGetByAddress = async (req, res) => {
           `The site was not found, invalid input syntax for type address ${address}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -86,7 +86,7 @@ module.exports.cSitesGetByCity = async (req, res) => {
           `The site was not found, invalid input syntax for type city ${city}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -106,7 +106,7 @@ module.exports.cSitesGetByPostcode = async (req, res) => {
           `The site was not found, invalid input syntax for type post code ${postcode}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -126,7 +126,7 @@ module.exports.cSitesGetByCountry = async (req, res) => {
           `The site was not found, invalid input syntax for type country ${country}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -146,7 +146,7 @@ module.exports.cSitesGetByTenant = async (req, res) => {
           `The site was not found, invalid input syntax for type tenant ${tenant}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);

@@ -12,7 +12,8 @@ module.exports.cNavigationGetAll = async (req, res) => {
     const result1 = await navigationMainGetAll();
     const result2 = await navigationSubGetAll();
     result1.push(result2);
-    res.status(200).send(result1);
+
+    res.status(200).send({"data": result1});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -26,7 +27,7 @@ module.exports.cNavigationGetById = async (req, res) => {
     const result1 = await navigationMainGetById(id);
     const result2 = await navigationSubGetById(id);
     result1.push(result2);
-    res.status(200).send(result1);
+    res.status(200).send({"data": result1});
   } catch (err) {
     console.log(err);
     res
@@ -42,7 +43,7 @@ module.exports.cNavigationMainGetAll = async (req, res) => {
   try {
     const result = await navigationMainGetAll();
     console.log(req.sessionID, req.session.user);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -53,7 +54,7 @@ module.exports.cNavigationMainGetAll = async (req, res) => {
 module.exports.cNavigationMainGetById = async (req, res) => {
   try {
     const result = await navigationMainGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -64,7 +65,7 @@ module.exports.cNavigationMainGetById = async (req, res) => {
 module.exports.cNavigationSubGetAll = async (req, res) => {
   try {
     const result = await navigationSubGetAll();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -75,7 +76,7 @@ module.exports.cNavigationSubGetAll = async (req, res) => {
 module.exports.cNavigationSubGetById = async (req, res) => {
   try {
     const result = await navigationSubGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -87,7 +88,7 @@ module.exports.cNavigationSubGetByName = async (req, res) => {
   const name = req.params.name;
   try {
     const result = await navigationSubGetByName(name);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");

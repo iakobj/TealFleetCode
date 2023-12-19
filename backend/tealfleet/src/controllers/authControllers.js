@@ -40,7 +40,7 @@ module.exports.cAuthLogout = async (req, res) => {
   try {
     const result = await authLogout();
 
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("Logout failed");
@@ -52,7 +52,7 @@ module.exports.cAuthRegister = async (req, res) => {
   try {
     const result = await authRegister();
 
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("Register failed");

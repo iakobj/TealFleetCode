@@ -12,7 +12,7 @@ module.exports.cAssetsGetAll = async (req, res) => {
 
     const result = result_sw.concat(result_hw);
 
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No assets found");
@@ -23,7 +23,7 @@ module.exports.cAssetsGetAll = async (req, res) => {
 module.exports.cAssetsGetAllHW = async (req, res) => {
   try {
     const result = await assetsGetAllHW();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No assets found");
@@ -34,7 +34,7 @@ module.exports.cAssetsGetAllHW = async (req, res) => {
 module.exports.cAssetsGetAllSW = async (req, res) => {
   try {
     const result = await assetsGetAllSW();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No assets found");
@@ -45,7 +45,7 @@ module.exports.cAssetsGetAllSW = async (req, res) => {
 module.exports.cAssetsGetStatusCardData = async (req, res) => {
   try {
     const result = await assetsGetAllSWNum();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No assets found");

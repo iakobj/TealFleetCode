@@ -12,7 +12,7 @@ const {
 module.exports.cUsersGetAll = async (req, res) => {
   try {
     const result = await usersGetAll();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No users found");
@@ -24,7 +24,7 @@ module.exports.cUsersGetById = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await usersGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res
@@ -45,7 +45,7 @@ module.exports.cUsersGetByName = async (req, res) => {
           `The user was not found, invalid input syntax for type name ${name}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -65,7 +65,7 @@ module.exports.cUsersGetByEmail = async (req, res) => {
           `The user was not found, invalid input syntax for type email ${email}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -85,7 +85,7 @@ module.exports.cUsersGetByPhone = async (req, res) => {
           `The user was not found, invalid input syntax for type phone ${phone}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -105,7 +105,7 @@ module.exports.cUsersGetByTitle = async (req, res) => {
           `The user was not found, invalid input syntax for type title ${title}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -125,7 +125,7 @@ module.exports.cUsersGetByRole = async (req, res) => {
           `The user was not found, invalid input syntax for type role ${role}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);

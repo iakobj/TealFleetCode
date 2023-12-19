@@ -8,7 +8,7 @@ const {
 module.exports.cTenantsGetAll = async (req, res) => {
   try {
     const result = await tenantsGetAll();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No tenants found");
@@ -20,7 +20,7 @@ module.exports.cTenantsGetById = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await tenantsGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res
@@ -43,7 +43,7 @@ module.exports.cTenantsGetByName = async (req, res) => {
           `The tenant was not found, invalid input syntax for type name ${name}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);

@@ -22,7 +22,7 @@ const {
 module.exports.cSoftwareCatGetAll = async (req, res) => {
   try {
     const result = await softwareCatGetAll();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No software found");
@@ -34,7 +34,7 @@ module.exports.cSoftwareCatGetById = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await softwareCatGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res
@@ -57,7 +57,7 @@ module.exports.cSoftwareCatGetByName = async (req, res) => {
           `The software was not found, invalid input syntax for type name ${name}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -77,7 +77,7 @@ module.exports.cSoftwareCatGetByVendor = async (req, res) => {
           `The software was not found, invalid input syntax for type vendor ${vendor}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -97,7 +97,7 @@ module.exports.cSoftwareCatGetByVersion = async (req, res) => {
           `The software was not found, invalid input syntax for type version ${version}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -117,7 +117,7 @@ module.exports.cSoftwareCatGetByCategory = async (req, res) => {
           `The Software was not found, invalid input syntax for type category ${category}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -129,7 +129,7 @@ module.exports.cSoftwareCatGetByCategory = async (req, res) => {
 module.exports.cSoftwareCatGetSWModelName = async (req, res) => {
   try {
     const result = await softwareCatGetSWModelName();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No software found");
@@ -142,7 +142,7 @@ module.exports.cSoftwareCatGetSWModelName = async (req, res) => {
 module.exports.cSoftwareAssGetAll = async (req, res) => {
   try {
     const result = await softwareAssGetAll();
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No software found");
@@ -154,7 +154,7 @@ module.exports.cSoftwareAssGetById = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await softwareAssGetById(id);
-    res.status(200).send(result);
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res
@@ -177,7 +177,7 @@ module.exports.cSoftwareAssGetByName = async (req, res) => {
           `The software was not found, invalid input syntax for type name ${name}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -197,7 +197,7 @@ module.exports.cSoftwareAssGetByVendor = async (req, res) => {
           `The software was not found, invalid input syntax for type vendor ${vendor}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -217,7 +217,7 @@ module.exports.cSoftwareAssGetByVersion = async (req, res) => {
           `The software was not found, invalid input syntax for type version ${version}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -237,7 +237,7 @@ module.exports.cSoftwareAssGetByTenant = async (req, res) => {
           `The software was not found, invalid input syntax for type tenant ${tenant}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
@@ -257,7 +257,7 @@ module.exports.cSoftwareAssGetBySite = async (req, res) => {
           `The software was not found, invalid input syntax for type site ${site}`
         );
     } else {
-      res.status(200).send(result);
+      res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
