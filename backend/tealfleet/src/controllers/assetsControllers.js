@@ -19,7 +19,7 @@ module.exports.cAssetsGetAll = async (req, res) => {
   }
 };
 
-// Get (almost) all asset information SW
+// Get (almost) all software asset information 
 module.exports.cAssetsGetAllHW = async (req, res) => {
   try {
     const result = await assetsGetAllHW();
@@ -30,7 +30,7 @@ module.exports.cAssetsGetAllHW = async (req, res) => {
   }
 };
 
-// Get (almost) all asset information HW
+// Get (almost) all hardware asset information
 module.exports.cAssetsGetAllSW = async (req, res) => {
   try {
     const result = await assetsGetAllSW();

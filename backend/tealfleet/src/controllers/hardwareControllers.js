@@ -19,7 +19,7 @@ const {
 
 // Hardware Asset Controllers
 
-// Get all Hardware from catalog
+// Get all hardware from catalog
 module.exports.cHardwareCatGetAll = async (req, res) => {
   try {
     const result = await hardwareCatGetAll();
@@ -30,7 +30,7 @@ module.exports.cHardwareCatGetAll = async (req, res) => {
   }
 };
 
-// Get Hardware from catalog by id
+// Get hardware from catalog by id
 module.exports.cHardwareCatGetById = async (req, res) => {
   const id = req.params.id;
   try {
@@ -46,7 +46,7 @@ module.exports.cHardwareCatGetById = async (req, res) => {
   }
 };
 
-// Get Hardware from cataloge by name
+// Get hardware from cataloge by name
 module.exports.cHardwareCatGetByName = async (req, res) => {
   const name = req.params.name;
   try {
@@ -66,7 +66,7 @@ module.exports.cHardwareCatGetByName = async (req, res) => {
   }
 };
 
-// Get Hardware from cataloge by vendor
+// Get hardware from cataloge by vendor
 module.exports.cHardwareCatGetByVendor = async (req, res) => {
   const vendor = req.params.vendor;
   try {
@@ -86,7 +86,7 @@ module.exports.cHardwareCatGetByVendor = async (req, res) => {
   }
 };
 
-// Get Hardware from cataloge by part number
+// Get hardware from cataloge by part number
 module.exports.cHardwareCatGetByPartnumber = async (req, res) => {
   const partnumber = req.params.partnumber;
   try {
@@ -106,7 +106,7 @@ module.exports.cHardwareCatGetByPartnumber = async (req, res) => {
   }
 };
 
-// Get Hardware from cataloge by category
+// Get hardware from cataloge by category
 module.exports.cHardwareCatGetByCategory = async (req, res) => {
   const category = req.params.category;
   try {
@@ -126,7 +126,7 @@ module.exports.cHardwareCatGetByCategory = async (req, res) => {
   }
 };
 
-// Get all unique  Hardware model names from catalog
+// Get all unique hardware model names from catalog
 module.exports.cHardwareCatGetSWModelName = async (req, res) => {
   try {
     const result = await hardwareCatGetSWModelName();
@@ -139,7 +139,7 @@ module.exports.cHardwareCatGetSWModelName = async (req, res) => {
 
 // Hardware Assets Controllers
 
-// Get all Hardware from assets
+// Get all hardware from assets
 module.exports.cHardwareAssGetAll = async (req, res) => {
   try {
     const result = await hardwareAssGetAll();
@@ -150,7 +150,7 @@ module.exports.cHardwareAssGetAll = async (req, res) => {
   }
 };
 
-// Get Hardware from assets by id
+// Get hardware from assets by id
 module.exports.cHardwareAssGetById = async (req, res) => {
   const id = req.params.id;
   try {
@@ -166,7 +166,7 @@ module.exports.cHardwareAssGetById = async (req, res) => {
   }
 };
 
-// Get Hardware from assets by name
+// Get hardware from assets by name
 module.exports.cHardwareAssGetByName = async (req, res) => {
   const name = req.params.name;
   try {
@@ -186,7 +186,7 @@ module.exports.cHardwareAssGetByName = async (req, res) => {
   }
 };
 
-// Get Hardware infromation from assets by vendor
+// Get hardware infromation from assets by vendor
 module.exports.cHardwareAssGetByVendor = async (req, res) => {
   const vendor = req.params.vendor;
   try {
@@ -206,7 +206,7 @@ module.exports.cHardwareAssGetByVendor = async (req, res) => {
   }
 };
 
-// Get Hardware from assets by part number
+// Get hardware from assets by part number
 module.exports.cHardwareAssGetByPartnumber = async (req, res) => {
   const partnumber = req.params.partnumber;
   try {
@@ -226,7 +226,7 @@ module.exports.cHardwareAssGetByPartnumber = async (req, res) => {
   }
 };
 
-// Get Hardware from assets by part number
+// Get hardware from assets by part number
 module.exports.cHardwareAssGetBySerialnumber = async (req, res) => {
   const serialnumber = req.params.serialnumber;
   try {
@@ -246,7 +246,7 @@ module.exports.cHardwareAssGetBySerialnumber = async (req, res) => {
   }
 };
 
-// Get Hardware from assets by tenant
+// Get hardware from assets by tenant
 module.exports.cHardwareAssGetByTenant = async (req, res) => {
   const tenant = req.params.tenant;
   try {
@@ -266,7 +266,7 @@ module.exports.cHardwareAssGetByTenant = async (req, res) => {
   }
 };
 
-// Get Hardware from assets by site
+// Get hardware from assets by site
 module.exports.cHardwareAssGetBySite = async (req, res) => {
   const site = req.params.site;
   try {
