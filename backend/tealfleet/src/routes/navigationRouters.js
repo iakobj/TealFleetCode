@@ -67,7 +67,6 @@ const navigationRouters = express.Router();
 // Import Controllers
 const {
   cNavigationGetAll,
-  cNavigationGetById,
   cNavigationMainGetAll,
   cNavigationMainGetById,
   cNavigationSubGetAll,
@@ -76,7 +75,6 @@ const {
 } = require("../controllers/navigationControllers");
 
 navigationRouters.get("/", cNavigationGetAll); // Get all navigation element
-navigationRouters.get("/id/:id", cNavigationGetById); // Get navigation element by id
 navigationRouters.get("/main", cNavigationMainGetAll); // Get main navigation elements
 navigationRouters.get("/main/id/:id", cNavigationMainGetById); // Get main navigation elements by id
 navigationRouters.get("/sub", cNavigationSubGetAll); // Get main navigation elements
