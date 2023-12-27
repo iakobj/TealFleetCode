@@ -8,7 +8,7 @@ import { Flex, Text, HStack } from "@chakra-ui/react";
 
 function HeaderSubNav({ link }) {
   const fetchData = async () => {
-    const subname = link.split("/")[0];
+    const subname = link.split("/")[0] === "" ? link.split("/")[1] : link.split("/")[0];
     const data = await fetch(
       `http://localhost:3000/navigation/sub/names/${subname}`
     );
