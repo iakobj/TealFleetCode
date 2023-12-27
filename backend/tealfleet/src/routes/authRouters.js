@@ -5,13 +5,26 @@
  *     auth_200:
  *       type: object
  *       example:
- *         user_id: 20ae5464-e9dc-496f-b8ba-d674a2a47bba,
- *         is_root: false,
- *         user_name: ACME,
- *         created_at: 2023-09-16T17:44:22.623Z
- *     auth_404:
- *       type: string
- *       example: No auth found
+ *         "cookie": 
+ *          "originalMaxAge": 3600000
+ *          "expires": "2023-12-27T19:38:11.026Z"
+ *          "httpOnly": true
+ *          "path": "/"
+ *          "sameSite": "none"
+ *         "user":
+ *          "role_id": "1e2c561c-aaaa-4f79-9d3a-012345678901"
+ *          "tenant_id": "111c561c-8a1d-4f79-9d3a-012345678901"
+ *          "site_id": "1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa"
+ *          "firstname": "John"
+ *          "lastname": "Doe"
+ *          "phone": "555-123-4567"
+ *          "email": "john.doe@corpo.com"
+ *          "title": "Manager"
+ *         "authenticated": true
+ *     auth_403:
+ *       type: object
+ *       example:
+ *         "message": "Login failed"
  *     auth_id_404:
  *       type: string
  *       example: The user was not found, invalid input syntax for type uuid 3a019320-0e16-4cfa-83de-45475b100730d
@@ -21,28 +34,33 @@
 
  * tags:
  *   name: auth
- *   description: The Tealfleet managing API
- * /auth:
+ *   description: Authentication
+ * /auth/login:
  *   get:
- *     summary: Get all auth
  *     tags: [auth]
+ *     parameters:
+ *       type: object
+ *       example:
+ *       name: email
+ *       password: password
+ *     summary: Authenticate an user with email and password
  *     responses:
  *       200:
- *         description: user exists.
+ *         description: Email and password exists and are correct.
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/auth_200'
- *       404:
- *         description: user does not exist.
+ *       403:
+ *         description: Email and password does not exists or are incorrect.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/auth_404'
+ *               $ref: '#/components/schemas/auth_403'
  * 
- * /auth/id/{id}:
+ * /auth/logout:
  *   get:
- *     summary: Get user by id
+ *     summary: Log out an user
  *     tags: [auth]
  *     responses:
  *       200:
@@ -58,9 +76,9 @@
  *             schema:
  *               $ref: '#/components/schemas/auth_id_404'
  * 
- * /auth/name/{name}:
+ * /auth/register:
  *   get:
- *     summary: Get user by name
+ *     summary: Register the user (for successeful login the user has to be approved by tenant admin)
  *     tags: [auth]
  *     responses:
  *       200:
