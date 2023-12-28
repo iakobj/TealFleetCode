@@ -5,12 +5,6 @@
  *     auth_200:
  *       type: object
  *       example:
- *         "cookie": 
- *          "originalMaxAge": 3600000
- *          "expires": "2023-12-27T19:38:11.026Z"
- *          "httpOnly": true
- *          "path": "/"
- *          "sameSite": "none"
  *         "user":
  *          "role_id": "1e2c561c-aaaa-4f79-9d3a-012345678901"
  *          "tenant_id": "111c561c-8a1d-4f79-9d3a-012345678901"
@@ -20,7 +14,6 @@
  *          "phone": "555-123-4567"
  *          "email": "john.doe@example.com"
  *          "title": "Manager"
- *         "authenticated": true
  *     auth_403:
  *       type: object
  *       example:
@@ -33,17 +26,23 @@
  *       example: The user was not found, invalid input syntax for type name ACMEs
 
  * tags:
- *   name: Auth
+ *   name: auth
  *   description: Authentication
  * /auth/login:
- *   get:
+ *   post:
  *     summary: Log in an user
- *     tags: [Auth]
- *     parameters:
+ *     tags: [auth]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
+ *           schema:
+ *            type: object
+ *            properties:
+ *             email:
+ *              type: string
+ *             password:
+ *              type: string
  *           example:
  *             email: example@example.com
  *             password: password
@@ -64,7 +63,7 @@
  * /auth/logout:
  *   get:
  *     summary: Log out an user
- *     tags: [Auth]
+ *     tags: [auth]
  *     responses:
  *       200:
  *         description: user exists.
@@ -82,7 +81,7 @@
  * /auth/register:
  *   get:
  *     summary: Register the user (for successeful login the user has to be approved by tenant admin)
- *     tags: [Auth]
+ *     tags: [auth]
  *     responses:
  *       200:
  *         description: user exists.

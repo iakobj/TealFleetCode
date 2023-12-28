@@ -6,34 +6,21 @@ const {
   navigationSubGetByName,
 } = require("../services/navigationServices");
 
-// Get all navigation items
-module.exports.cNavigationGetAll = async (req, res) => {
+// Get navigation item by id
+module.exports.cNavigationGetById = async (req, res) => {
+  const id = req.params.id;
   try {
-    const mainNavData = await navigationMainGetAll();
-    const subNavData = await navigationSubGetAll();
-
-    const sortedData = [];
-
-    // Iterate through mainNavData
-    mainNavData.forEach((mainNavItem) => {
-      const mainNavId = mainNavItem.main_nav_id;
-
-      // Find related subNavItems for the current mainNavItem
-      const relatedSubNavItems = subNavData.filter(
-        (subNavItem) => subNavItem.main_nav_id === mainNavId
-      );
-
-      // Add mainNavItem to the sortedData
-      sortedData.push(mainNavItem);
-
-      // Add related subNavItems to the sortedData
-      sortedData.push(...relatedSubNavItems);
-    });
-
-    res.status(200).send({ data: sortedData });
+    const result1 = await navigationMainGetById(id);
+    const result2 = await navigationSubGetById(id);
+    result1.push(result2);
+    res.status(200).send({"data": result1});
   } catch (err) {
     console.log(err);
-    res.status(404).send("No navigation found");
+    res
+      .status(404)
+      .send(
+        `The navigation item was not found, invalid input syntax for type uuid ${id}`
+      );
   }
 };
 
@@ -42,18 +29,18 @@ module.exports.cNavigationMainGetAll = async (req, res) => {
   try {
     const result = await navigationMainGetAll();
     console.log(req.sessionID, req.session.user);
-    res.status(200).send({ data: result });
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
   }
 };
 
-// Get main navigation item by id
+// Get  main navigation item by id
 module.exports.cNavigationMainGetById = async (req, res) => {
   try {
     const result = await navigationMainGetById(id);
-    res.status(200).send({ data: result });
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -64,7 +51,7 @@ module.exports.cNavigationMainGetById = async (req, res) => {
 module.exports.cNavigationSubGetAll = async (req, res) => {
   try {
     const result = await navigationSubGetAll();
-    res.status(200).send({ data: result });
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -75,7 +62,7 @@ module.exports.cNavigationSubGetAll = async (req, res) => {
 module.exports.cNavigationSubGetById = async (req, res) => {
   try {
     const result = await navigationSubGetById(id);
-    res.status(200).send({ data: result });
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");
@@ -87,7 +74,7 @@ module.exports.cNavigationSubGetByName = async (req, res) => {
   const name = req.params.name;
   try {
     const result = await navigationSubGetByName(name);
-    res.status(200).send({ data: result });
+    res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
     res.status(404).send("No navigation found");

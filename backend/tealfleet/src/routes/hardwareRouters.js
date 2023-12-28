@@ -2,8 +2,8 @@
  * @swagger
  * components:
  *   schemas:
- *     hardware_200:
-  *       type: object
+ *     catalogs_200:
+ *       type: object
  *       properties:
  *        data:
  *         type: array
@@ -21,6 +21,22 @@
  *            "hardware_end_of_support": "2024-12-30T23:00:00.000Z"
  *            "hardware_catalog_changed_at": "2023-11-08T19:14:14.590Z"
  *            "hardware_catalog_created_at": "2023-11-08T19:14:14.590Z"
+ *     assets_200:
+ *       type: object
+ *       properties:
+ *        data:
+ *         type: array
+ *         items:
+ *          type: object 
+ *          example:
+ *            "hardware_asset_id": "1a2b3c4d-3333-7777-3c80-012345678903"
+ *            "hardware_catalog_id": "1e21e21c-8a1d-4f79-9d3a-a11122678901"
+ *            "hardware_asset_name": "superbigcimc02.acme.com"
+ *            "tenant_id": "112d675e-6f8c-41a7-bc2a-012345678902"
+ *            "site_id": "1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa"
+ *            "hardware_serial_no": "SN12343"
+ *            "hardware_changed_at": "2023-11-08T19:14:14.590Z"
+ *            "hardware_created_at": "2023-11-08T19:14:14.590Z"
  *     hardware_404:
  *       type: string
  *       example: No hardware found
@@ -38,7 +54,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/hardware_200'
+ *               $ref: '#/components/schemas/catalogs_200'
  *       404:
  *         description: Hardware does not exist.
  *         content:
@@ -56,7 +72,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/hardware_200'
+ *               $ref: '#/components/schemas/catalogs_200'
  *       404:
  *         description: Hardware does not exist.
  *         content:
@@ -66,7 +82,7 @@
  * 
  * /hardware/catalogs/names/:name:
  *   get:
- *     summary: Get hardware by id from catalog
+ *     summary: Get hardware by model name from catalog
  *     tags: [hardware]
  *     responses:
  *       200:
@@ -74,7 +90,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/hardware_200'
+ *               $ref: '#/components/schemas/catalogs_200'
  *       404:
  *         description: Hardware does not exist.
  *         content:
@@ -82,9 +98,9 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  * 
- * /hardware/catalogs//vendors/:vendor:
+ * /hardware/catalogs/vendors/:vendor:
  *   get:
- *     summary: Get hardware by id from catalog
+ *     summary: Get hardware by vendor name from catalog
  *     tags: [hardware]
  *     responses:
  *       200:
@@ -92,7 +108,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/hardware_200'
+ *               $ref: '#/components/schemas/catalogs_200'
  *       404:
  *         description: Hardware does not exist.
  *         content:
@@ -100,13 +116,211 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  *
+ * /hardware/catalogs/partnumbers:partnumber:
+ *   get:
+ *     summary: Get hardware by vendor name from catalog
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/catalogs_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ *
+ * /hardware/catalogs/categories/:category:
+ *   get:
+ *     summary: Get hardware by vendor name from catalog
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/catalogs_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ *
+ * /hardware/catalogs/models/names:
+ *   get:
+ *     summary: Get hardware by vendor name from catalog
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/catalogs_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ * 
+ * 
+ * 
+ * /hardware/assets:
+ *   get:
+ *     summary: Get all hardware from assets
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/assets_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ * 
+ * /hardware/assets/id/:id:
+ *   get:
+ *     summary: Get hardware by id from assets
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/assets_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ * 
+ * /hardware/assets/names/:name:
+ *   get:
+ *     summary: Get hardware by model name from assets
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/assets_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ * 
+ * /hardware/assets/vendors/:vendor:
+ *   get:
+ *     summary: Get hardware by vendor name from assets
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/assets_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ *
+ * /hardware/assets/partnumbers:partnumber:
+ *   get:
+ *     summary: Get hardware by vendor name from assets
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/assets_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ *
+ * /hardware/assets/serialnumbers/:serialnumber:
+ *   get:
+ *     summary: Get hardware by vendor name from assets
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/assets_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ *
+ * /hardware/assets/tenants/:tenant:
+ *   get:
+ *     summary: Get hardware by vendor name from assets
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/assets_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
+ *
+ * /hardware/assets/sites/:site:
+ *   get:
+ *     summary: Get hardware by vendor name from assets
+ *     tags: [hardware]
+ *     responses:
+ *       200:
+ *         description: Hardware catalogs exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/assets_200'
+ *       404:
+ *         description: Hardware does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/hardware_404'
  *
  */
 
 const express = require("express");
 const hardwareRouters = express.Router();
 
-// Import Controllers
 const {
   cHardwareCatGetAll,
   cHardwareCatGetById,
@@ -126,24 +340,22 @@ const {
   cHardwareAssGetBySite,
 } = require("../controllers/hardwareControllers");
 
-// Hardware catalog
-hardwareRouters.get("/catalogs", cHardwareCatGetAll); // Get all Hardware from catalog
-hardwareRouters.get("/catalogs/id/:id", cHardwareCatGetById); // Get Hardware by id from catalog
-hardwareRouters.get("/catalogs/names/:name", cHardwareCatGetByName); // Get Hardware by model name from catalog
-hardwareRouters.get("/catalogs/vendors/:vendor", cHardwareCatGetByVendor); // Get Hardware by vendor from catalog
-hardwareRouters.get("/catalogs/partnumbers:partnumber", cHardwareCatGetByPartnumber); // Get Hardware by version from part number
-hardwareRouters.get("/catalogs/categories/:category", cHardwareCatGetByCategory); // Get Hardware by version from category
-hardwareRouters.get("/catalogs/models/names", cHardwareCatGetHWModelName); // Get all unique Hardware model names from category
+hardwareRouters.get("/catalogs", cHardwareCatGetAll);
+hardwareRouters.get("/catalogs/id/:id", cHardwareCatGetById);
+hardwareRouters.get("/catalogs/names/:name", cHardwareCatGetByName);
+hardwareRouters.get("/catalogs/vendors/:vendor", cHardwareCatGetByVendor);
+hardwareRouters.get("/catalogs/partnumbers:partnumber", cHardwareCatGetByPartnumber);
+hardwareRouters.get("/catalogs/categories/:category", cHardwareCatGetByCategory);
+hardwareRouters.get("/catalogs/models/names", cHardwareCatGetHWModelName);
 
-// Hardware assets
-hardwareRouters.get("/assets/", cHardwareAssGetAll); // Get all Hardware from assets
-hardwareRouters.get("/assets/id/:id", cHardwareAssGetById); // Get Hardware by id from assets
-hardwareRouters.get("/assets/names/:name", cHardwareAssGetByName); // Get Hardware by model name from assets
-hardwareRouters.get("/assets/vendors/:vendor", cHardwareAssGetByVendor); // Get Hardware by vendor from assets
-hardwareRouters.get("/assets/partnumbers/:partnumber", cHardwareAssGetByPartnumber); // Get Hardware by part number from assets
-hardwareRouters.get("/assets/serialnumbers/:serialnumber", cHardwareAssGetBySerialnumber); // Get Hardware by serial number from assets
-hardwareRouters.get("/assets/tenants/:tenant", cHardwareAssGetByTenant); // Get Hardware by tenant from assets
-hardwareRouters.get("/assets/sites/:site", cHardwareAssGetBySite); // Get Hardware by site from assets
+hardwareRouters.get("/assets/", cHardwareAssGetAll);
+hardwareRouters.get("/assets/id/:id", cHardwareAssGetById);
+hardwareRouters.get("/assets/names/:name", cHardwareAssGetByName);
+hardwareRouters.get("/assets/vendors/:vendor", cHardwareAssGetByVendor);
+hardwareRouters.get("/assets/partnumbers/:partnumber", cHardwareAssGetByPartnumber);
+hardwareRouters.get("/assets/serialnumbers/:serialnumber", cHardwareAssGetBySerialnumber);
+hardwareRouters.get("/assets/tenants/:tenant", cHardwareAssGetByTenant);
+hardwareRouters.get("/assets/sites/:site", cHardwareAssGetBySite);
 
 module.exports = hardwareRouters;
 
