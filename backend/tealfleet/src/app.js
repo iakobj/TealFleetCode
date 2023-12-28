@@ -29,14 +29,27 @@ const port = process.env.SERVER_PORT;
 
 const options = {
   definition: {
-    openapi: "3.1.0",
-    info: {
-      title: "TealFleet API",
-      version: "0.1.0",
+    "openapi": "3.1.0",
+    "info": {
+      "title": "TealFleet API",
+      "summary": "Self-hosted a web app for insight into physical and virtual assets in small to mid size data-centers.",
+      "description": "This is documentation for TealFleet backend API NodeJS server.",
+      "contact": {
+        "name": "API Support",
+        "email": "support@tealfleet.com",
+        "url": "https://www.tealfleet.com"
+      },
+      "license": {
+        "name": "GNU GPLv3",
+        "identifier": "GPL-3.0-or-later",
+        "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
+      },
+      "version": "0.1.0",
     },
     servers: [
       {
-        url: process.env.SWAGGER_DOC,
+        "url": process.env.SWAGGER_DOC,
+        "description": "TealFleet server"
       },
     ],
   },
