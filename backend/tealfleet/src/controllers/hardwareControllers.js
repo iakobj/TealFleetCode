@@ -5,7 +5,7 @@ const {
   hardwareCatGetByVendor,
   hardwareCatGetByPartnumber,
   hardwareCatGetByCategory,
-  hardwareCatGetSWModelName,
+  hardwareCatGetHWModelName,
 
   hardwareAssGetAll,
   hardwareAssGetById,
@@ -127,9 +127,9 @@ module.exports.cHardwareCatGetByCategory = async (req, res) => {
 };
 
 // Get all unique hardware model names from catalog
-module.exports.cHardwareCatGetSWModelName = async (req, res) => {
+module.exports.cHardwareCatGetHWModelName = async (req, res) => {
   try {
-    const result = await hardwareCatGetSWModelName();
+    const result = await hardwareCatGetHWModelName();
     res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);

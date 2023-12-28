@@ -60,7 +60,7 @@ module.exports.hardwareCatGetByCategory = async (category) => {
   return result.rows;
 };
 
-module.exports.hardwareCatGetSWModelName = async () => {
+module.exports.hardwareCatGetHWModelName = async () => {
   const result = await query("SELECT DISTINCT hardware_model_name FROM hardware_catalog");
   return result.rows;
 };
