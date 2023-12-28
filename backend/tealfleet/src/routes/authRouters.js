@@ -18,7 +18,7 @@
  *          "firstname": "John"
  *          "lastname": "Doe"
  *          "phone": "555-123-4567"
- *          "email": "john.doe@corpo.com"
+ *          "email": "john.doe@example.com"
  *          "title": "Manager"
  *         "authenticated": true
  *     auth_403:
@@ -33,17 +33,20 @@
  *       example: The user was not found, invalid input syntax for type name ACMEs
 
  * tags:
- *   name: auth
+ *   name: Auth
  *   description: Authentication
  * /auth/login:
  *   get:
- *     tags: [auth]
+ *     summary: Log in an user
+ *     tags: [Auth]
  *     parameters:
- *       type: object
- *       example:
- *       name: email
- *       password: password
- *     summary: Authenticate an user with email and password
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           example:
+ *             email: example@example.com
+ *             password: password
  *     responses:
  *       200:
  *         description: Email and password exists and are correct.
@@ -61,7 +64,7 @@
  * /auth/logout:
  *   get:
  *     summary: Log out an user
- *     tags: [auth]
+ *     tags: [Auth]
  *     responses:
  *       200:
  *         description: user exists.
@@ -79,7 +82,7 @@
  * /auth/register:
  *   get:
  *     summary: Register the user (for successeful login the user has to be approved by tenant admin)
- *     tags: [auth]
+ *     tags: [Auth]
  *     responses:
  *       200:
  *         description: user exists.
@@ -111,7 +114,7 @@ const {
   cAuthRegister,
 } = require("../controllers/authControllers");
 
-authRouters.post("/login", cAuthLogin); // Login user
+authRouters.post("/login", cAuthLogin); // Log in user
 authRouters.post("/logout", cAuthLogout); // Log out user
 authRouters.post("/register", cAuthRegister); // Register new user
 
