@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS "users" (
   "view_dashboard" boolean NOT NULL,
   "view_fleet" boolean NOT NULL,
   "view_support" boolean NOT NULL,
-  "view_marketplace" boolean NOT NULL,
   "view_administration" boolean NOT NULL,
   "created_at" timestamp DEFAULT (now())
 );
@@ -40,7 +39,7 @@ CREATE TABLE IF NOT EXISTS "sub_navigation" (
 
 CREATE TABLE IF NOT EXISTS "roles" (
   "role_id" uuid PRIMARY KEY,
-  "role" varchar NOT NULL,
+  "role_type" varchar NOT NULL,
   "role_name" varchar NOT NULL
 );
 
@@ -183,7 +182,7 @@ CREATE TABLE IF NOT EXISTS "sites" (
   "site_id" uuid PRIMARY KEY,
   "tenant_id" uuid NOT NULL,
   "site_name" varchar NOT NULL,
-  "site_address1" varchar NOT NULL,
+  "site_address" varchar NOT NULL,
   "site_city" varchar NOT NULL,
   "site_postcode" integer NOT NULL,
   "site_country" varchar NOT NULL,

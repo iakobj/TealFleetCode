@@ -1,6 +1,6 @@
 module.exports.tfdbSeed = `
 
-INSERT INTO "roles" ("role_id", "role", "role_name")
+INSERT INTO "roles" ("role_id", "role_type", "role_name")
 VALUES
   ('1e2c561c-aaaa-4f79-9d3a-012345678901', 'rwd', 'user'),
   ('3b4d675e-aaaa-41a7-bc2a-012345678902', 'rw', 'limited-user'),
@@ -12,7 +12,7 @@ VALUES
   ('112d675e-6f8c-41a7-bc2a-012345678902', false, 'Demo Tenant 1'),
   ('113f7b8d-4c3e-2a1d-1f9a-012345678903', false, 'Demo Tenant 2');
 
-INSERT INTO "sites" ("site_id", "tenant_id", "site_name", "site_address1", "site_city", "site_postcode", "site_country", "site_changed_at")
+INSERT INTO "sites" ("site_id", "tenant_id", "site_name", "site_address", "site_city", "site_postcode", "site_country", "site_changed_at")
 VALUES
   ('1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', '111c561c-8a1d-4f79-9d3a-012345678901', 'Site 1', '123 Main St', 'City 1', 12345, 'Country 1', NOW()),
   ('2b3c4d5e-6f7a-8b9c-0d1e-0123456aaaab', '111c561c-8a1d-4f79-9d3a-012345678901', 'Site 2', '456 Elm St', 'City 2', 56789, 'Country 2', NOW());
