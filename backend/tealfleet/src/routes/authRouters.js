@@ -106,15 +106,14 @@ const bodyParser = require('body-parser');
 authRouters.use(express.urlencoded({extended: false}));
 authRouters.use(bodyParser.json());
 
-// Import Controllers
 const {
   cAuthLogin,
   cAuthLogout,
   cAuthRegister,
 } = require("../controllers/authControllers");
 
-authRouters.post("/login", cAuthLogin); // Log in user
-authRouters.post("/logout", cAuthLogout); // Log out user
-authRouters.post("/register", cAuthRegister); // Register new user
+authRouters.post("/login", cAuthLogin);
+authRouters.post("/logout", cAuthLogout);
+authRouters.post("/register", cAuthRegister);
 
 module.exports = authRouters;

@@ -2,79 +2,101 @@
  * @swagger
  * components:
  *   schemas:
- *     Roles_200:
+ *     roles_200:
  *       type: object
- *       example:
- *         Role_id: 20ae5464-e9dc-496f-b8ba-d674a2a47bba,
- *         is_root: false,
- *         Role_name: ACME,
- *         created_at: 2023-09-16T17:44:22.623Z
- *     Roles_404:
+ *       properties:
+ *        data:
+ *         type: array
+ *         items:
+ *          type: object 
+ *          example:
+ *            "role_id": "20ae5464-e9dc-496f-b8ba-d674a2a47bba"
+ *            "role": "rwd"
+ *            "role_name": "user"
+ *     roles_404:
  *       type: string
- *       example: No Roles found
- *     Roles_id_404:
+ *       example: No roles found
+ *     roles_id_404:
  *       type: string
- *       example: The Role was not found, invalid input syntax for type uuid 3a019320-0e16-4cfa-83de-45475b100730d
- *     Roles_name_404:
+ *       example: The role was not found, invalid input syntax for type uuid 3a019320-0e16-4cfa-83de-45475b100730d
+ *     roles_name_404:
  *       type: string
- *       example: The Role was not found, invalid input syntax for type name ACMEs
+ *       example: The role was not found, invalid input syntax for type name ACMEs
 
  * tags:
- *   name: Roles
- *   description: The Tealfleet managing API
- * /Roles:
+ *   name: roles
+ *   description: Get roles by id or name
+ * /roles:
  *   get:
- *     summary: Get all Roles
- *     tags: [Roles]
+ *     summary: Get all roles
+ *     tags: [roles]
  *     responses:
  *       200:
  *         description: Role exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Roles_200'
+ *               $ref: '#/components/schemas/roles_200'
  *       404:
  *         description: Role does not exist.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Roles_404'
+ *               $ref: '#/components/schemas/roles_404'
  * 
- * /Roles/id/{id}:
+ * /roles/id/{id}:
  *   get:
- *     summary: Get Role by id
- *     tags: [Roles]
+ *     summary: Get role by id
+ *     tags: [roles]
  *     responses:
  *       200:
  *         description: Role exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Roles_200'
+ *               $ref: '#/components/schemas/roles_200'
  *       404:
  *         description: Role does not exist.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Roles_id_404'
+ *               $ref: '#/components/schemas/roles_id_404'
  * 
- * /Roles/name/{name}:
+ * /roles/types/{type}:
  *   get:
- *     summary: Get Role by name
- *     tags: [Roles]
+ *     summary: Get role by name
+ *     tags: [roles]
  *     responses:
  *       200:
  *         description: Role exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Roles_200'
+ *               $ref: '#/components/schemas/roles_200'
  *       404:
  *         description: Role does not exist.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Roles_name_404'
+ *               $ref: '#/components/schemas/roles_404'
+ *
+ * /roles/names/{name}:
+ *   get:
+ *     summary: Get role by name
+ *     tags: [roles]
+ *     responses:
+ *       200:
+ *         description: Role exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/roles_200'
+ *       404:
+ *         description: Role does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/roles_name_404'
  *
  *
  */
@@ -82,7 +104,6 @@
 const express = require("express");
 const rolesRouters = express.Router();
 
-// Import Controllers
 const {
   cRolesGetAll,
   cRolesGetById,
@@ -90,9 +111,9 @@ const {
   cRolesGetByName,
 } = require("../controllers/rolesControllers");
 
-rolesRouters.get("/", cRolesGetAll); // Get all Roles
-rolesRouters.get("/id/:id", cRolesGetById); // Get Role by id
-rolesRouters.get("/roles/:role", cRolesGetByRole); // Get Role by role
-rolesRouters.get("/names/:name", cRolesGetByName); // Get Role by role name
+rolesRouters.get("/", cRolesGetAll);
+rolesRouters.get("/id/:id", cRolesGetById);
+rolesRouters.get("/types/:type", cRolesGetByRole);
+rolesRouters.get("/names/:name", cRolesGetByName);
 
 module.exports = rolesRouters;

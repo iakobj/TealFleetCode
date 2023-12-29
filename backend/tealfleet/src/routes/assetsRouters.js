@@ -91,12 +91,12 @@
  *       example: The asset was not found, invalid input syntax for type name ACMEs
  *
  * tags:
- *   name: Assets
+ *   name: assets
  *   description: Hardware and appliance suits assets
  * /assets/fleet/cards/all:
  *   get:
  *     summary: Get all assets and their relevant information
- *     tags: [Assets]
+ *     tags: [assets]
  *     responses:
  *       200:
  *         description: assets exists.
@@ -114,7 +114,7 @@
  * /assets/fleet/cards/all/sw:
  *   get:
  *     summary: Get all appliance suits assets
- *     tags: [Assets]
+ *     tags: [assets]
  *     responses:
  *       200:
  *         description: appliance suits exists.
@@ -132,7 +132,7 @@
  * /assets/fleet/cards/all/hw:
  *   get:
  *     summary: Get all hardware assets
- *     tags: [Assets]
+ *     tags: [assets]
  *     responses:
  *       200:
  *         description: hardware exists.
@@ -157,7 +157,6 @@ const bodyParser = require("body-parser");
 assetsRouters.use(express.urlencoded({ extended: false }));
 assetsRouters.use(bodyParser.json());
 
-// Import Controllers
 const {
   cAssetsGetAllSW,
   cAssetsGetAllHW,
@@ -165,12 +164,10 @@ const {
   cAssetsGetStatusCardData
 } = require("../controllers/assetsControllers");
 
-// asset catalog
-assetsRouters.get("/fleet/cards/all", cAssetsGetAll); // Get all asset from catalog
-assetsRouters.get("/fleet/cards/all/sw", cAssetsGetAllSW); // Get all asset from catalog
-assetsRouters.get("/fleet/cards/all/hw", cAssetsGetAllHW); // Get all asset from catalog
+assetsRouters.get("/fleet/cards/all", cAssetsGetAll);
+assetsRouters.get("/fleet/cards/all/sw", cAssetsGetAllSW);
+assetsRouters.get("/fleet/cards/all/hw", cAssetsGetAllHW);
 
-assetsRouters.get("/dashboard/widgets/status", cAssetsGetStatusCardData); // dashboard widgets
-
+assetsRouters.get("/dashboard/widgets/status", cAssetsGetStatusCardData);
 
 module.exports = assetsRouters;

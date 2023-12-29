@@ -4,11 +4,16 @@
  *   schemas:
  *     vendors_200:
  *       type: object
- *       example:
- *         vendor_id: 20ae5464-e9dc-496f-b8ba-d674a2a47bba,
- *         is_root: false,
- *         vendor_name: ACME,
- *         created_at: 2023-09-16T17:44:22.623Z
+ *       properties:
+ *        data:
+ *         type: array
+ *         items:
+ *          type: object
+ *          example:
+ *           "vendor_id": "1a2b3c4d-8b8b-8b8b-8b8b-012345678901"
+ *           "vendor_name": "vmware"
+ *           "vendor_image": "vendor1.jpg"
+ *           "vendor_created_at": "2023-11-08T19:14:14.590Z"
  *     vendors_404:
  *       type: string
  *       example: No vendors found
@@ -58,7 +63,7 @@
  *             schema:
  *               $ref: '#/components/schemas/vendors_id_404'
  * 
- * /vendors/name/{name}:
+ * /vendors/names/{name}:
  *   get:
  *     summary: Get vendor by name
  *     tags: [vendors]
@@ -82,15 +87,14 @@
 const express = require("express");
 const vendorsRouters = express.Router();
 
-// Import Controllers
 const {
   cVendorsGetAll,
   cVendorsGetById,
   cVendorsGetByName,
 } = require("../controllers/vendorsControllers");
 
-vendorsRouters.get("/", cVendorsGetAll); // Get all vendors
-vendorsRouters.get("/id/:id", cVendorsGetById); // Get vendor by id
-vendorsRouters.get("/names/:name", cVendorsGetByName); // Get vendor by name
+vendorsRouters.get("/", cVendorsGetAll);
+vendorsRouters.get("/id/:id", cVendorsGetById);
+vendorsRouters.get("/names/:name", cVendorsGetByName);
 
 module.exports = vendorsRouters;

@@ -4,11 +4,21 @@
  *   schemas:
  *     sites_200:
  *       type: object
- *       example:
- *         site_id: 20ae5464-e9dc-496f-b8ba-d674a2a47bba,
- *         is_root: false,
- *         site_name: ACME,
- *         created_at: 2023-09-16T17:44:22.623Z
+ *       properties:
+ *        data:
+ *         type: array
+ *         items:
+ *          type: object 
+ *          example:
+ *            "site_id": "1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa"
+ *            "tenant_id": "111c561c-8a1d-4f79-9d3a-012345678901"
+ *            "site_name": "Site 1"
+ *            "site_address1": "123 Main St"
+ *            "site_city": "City 1"
+ *            "site_postcode": 12345
+ *            "site_country": "Country 1"
+ *            "site_changed_at": "2023-11-08T19:14:14.590Z"
+ *            "site_created_at": "2023-11-08T19:14:14.590Z"
  *     sites_404:
  *       type: string
  *       example: No sites found
@@ -21,7 +31,7 @@
 
  * tags:
  *   name: sites
- *   description: The Tealfleet managing API
+ *   description: Loctions for assets, tenants and users
  * /sites:
  *   get:
  *     summary: Get all sites
@@ -42,7 +52,7 @@
  * 
  * /sites/id/{id}:
  *   get:
- *     summary: Get site by id
+ *     summary: Get site by site id
  *     tags: [sites]
  *     responses:
  *       200:
@@ -58,9 +68,9 @@
  *             schema:
  *               $ref: '#/components/schemas/sites_id_404'
  * 
- * /sites/name/{name}:
+ * /sites/names/{name}:
  *   get:
- *     summary: Get site by name
+ *     summary: Get site by site name
  *     tags: [sites]
  *     responses:
  *       200:
@@ -76,13 +86,100 @@
  *             schema:
  *               $ref: '#/components/schemas/sites_name_404'
  *
+ * /sites/addresses/{address}:
+ *   get:
+ *     summary: Get site by address
+ *     tags: [sites]
+ *     responses:
+ *       200:
+ *         description: site exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_200'
+ *       404:
+ *         description: site does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_name_404'
  *
+ * /sites/cities/{city}:
+ *   get:
+ *     summary: Get site by city
+ *     tags: [sites]
+ *     responses:
+ *       200:
+ *         description: site exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_200'
+ *       404:
+ *         description: site does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_name_404'
+ * 
+ * /sites/postcodes/{postcode}:
+ *   get:
+ *     summary: Get site by postcode
+ *     tags: [sites]
+ *     responses:
+ *       200:
+ *         description: site exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_200'
+ *       404:
+ *         description: site does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_name_404'
+ * 
+ * /sites//countries/{country}:
+ *   get:
+ *     summary: Get site by country
+ *     tags: [sites]
+ *     responses:
+ *       200:
+ *         description: site exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_200'
+ *       404:
+ *         description: site does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_name_404'
+ * 
+ * /sites/tenants/{tenant}:
+ *   get:
+ *     summary: Get site by tenant id
+ *     tags: [sites]
+ *     responses:
+ *       200:
+ *         description: site exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_200'
+ *       404:
+ *         description: site does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sites_id_404'
  */
 
 const express = require("express");
 const sitesRouters = express.Router();
 
-// Import Controllers
 const {
   cSitesGetAll,
   cSitesGetById,
@@ -94,13 +191,13 @@ const {
   cSitesGetByTenant,
 } = require("../controllers/sitesControllers");
 
-sitesRouters.get("/", cSitesGetAll); // Get all sites
-sitesRouters.get("/id/:id", cSitesGetById); // Get site by id
-sitesRouters.get("/names/:name", cSitesGetByName); // Get site by name
-sitesRouters.get("/addresses/:address", cSitesGetByAddress); // Get site by address
-sitesRouters.get("/cities/:city", cSitesGetByCity); // Get site by city
-sitesRouters.get("/postcodes/:postcode", cSitesGetByPostcode); // Get site by post code
-sitesRouters.get("/countries/:country", cSitesGetByCountry); // Get site by country
-sitesRouters.get("/tenants/:tenant", cSitesGetByTenant); // Get site by tenant
+sitesRouters.get("/", cSitesGetAll);
+sitesRouters.get("/id/:id", cSitesGetById);
+sitesRouters.get("/names/:name", cSitesGetByName);
+sitesRouters.get("/addresses/:address", cSitesGetByAddress);
+sitesRouters.get("/cities/:city", cSitesGetByCity);
+sitesRouters.get("/postcodes/:postcode", cSitesGetByPostcode);
+sitesRouters.get("/countries/:country", cSitesGetByCountry);
+sitesRouters.get("/tenants/:tenant", cSitesGetByTenant);
 
 module.exports = sitesRouters;

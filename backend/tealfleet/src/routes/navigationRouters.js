@@ -20,25 +20,21 @@
  *         items:
  *          type: object 
  *          example:    
- *           "main_nav_id": "1a2b3c4d-7a8b-7a8b-9c0d-012345678881"
- *           "main_nav_item": "dashboard"
+ *           "sub_nav_id": "2b3c4d5e-ffff-8b9c-0d3e-012345678884"
+ *           "main_nav_id": "1a2b3c4d-7a8b-8b9c-0d1e-012345678882"
+ *           "sub_nav_item": "Cisco"
+ *           "sub_nav_path": "/fleet/cisco"
  *     navigation_404:
  *       type: string
- *       example: No Navigation found
- *     navigation_id_404:
- *       type: string
- *       example: The navigation element was not found, invalid input syntax for type uuid 3a019320-0e16-4cfa-83de-45475b100730d
- *     navigation_name_404:
- *       type: string
- *       example: The navigation element was not found, invalid input syntax for type name ACMEs
-
+ *       example: "No Navigation found"
+ *
  * tags:
- *   name: Navigation
- *   description: The Tealfleet managing API
- * /Navigation/main:
+ *   name: navigation
+ *   description: Main and sub navigational elements
+ * /navigation/main:
  *   get:
- *     summary: Get all main navigation items
- *     tags: [Navigation]
+ *     summary: Get all main navigation elements
+ *     tags: [navigation]
  *     responses:
  *       200:
  *         description: navigation element exists.
@@ -53,31 +49,83 @@
  *             schema:
  *               $ref: '#/components/schemas/navigation_404'
  * 
- * /Navigation/id/{id}:
+ * /navigation/main/id/{id}:
  *   get:
- *     summary: Get navigation element by id
- *     tags: [Navigation]
+ *     summary: Get main navigation element by id
+ *     tags: [navigation]
  *     responses:
  *       200:
  *         description: navigation element exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/navigation_200'
+ *               $ref: '#/components/schemas/navigation_main_200'
  *       404:
  *         description: navigation element does not exist.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Navigation_id_404'
+ *               $ref: '#/components/schemas/navigation_404'
  * 
+ * /navigation/sub:
+ *   get:
+ *     summary: Get sub navigation element by id
+ *     tags: [navigation]
+ *     responses:
+ *       200:
+ *         description: navigation element exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/navigation_sub_200'
+ *       404:
+ *         description: navigation element does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/navigation_404'
+ * 
+ * /navigation/sub/id/{id}:
+ *   get:
+ *     summary: Get sub navigation elements where main navigation id matches
+ *     tags: [navigation]
+ *     responses:
+ *       200:
+ *         description: navigation element exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/navigation_sub_200'
+ *       404:
+ *         description: navigation element does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/navigation_404'
+ * 
+ * /navigation/sub/names/{name}:
+ *   get:
+ *     summary: Get sub navigation elements where main navigation name matches
+ *     tags: [navigation]
+ *     responses:
+ *       200:
+ *         description: navigation element exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/navigation_sub_200'
+ *       404:
+ *         description: navigation element does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/navigation_404'
  *
  */
 
 const express = require("express");
 const navigationRouters = express.Router();
 
-// Import Controllers
 const {
   cNavigationMainGetAll,
   cNavigationMainGetById,
@@ -86,10 +134,10 @@ const {
   cNavigationSubGetByName,
 } = require("../controllers/navigationControllers");
 
-navigationRouters.get("/main", cNavigationMainGetAll); // Get main navigation elements
-navigationRouters.get("/main/id/:id", cNavigationMainGetById); // Get main navigation elements by id
-navigationRouters.get("/sub", cNavigationSubGetAll); // Get main navigation elements
-navigationRouters.get("/sub/id/:id", cNavigationSubGetById); // Get sub navigation elements where main nav id matches
-navigationRouters.get("/sub/names/:name", cNavigationSubGetByName); // Get sub navigation elements where main nav name matches
+navigationRouters.get("/main", cNavigationMainGetAll);
+navigationRouters.get("/main/id/:id", cNavigationMainGetById);
+navigationRouters.get("/sub", cNavigationSubGetAll);
+navigationRouters.get("/sub/id/:id", cNavigationSubGetById);
+navigationRouters.get("/sub/names/:name", cNavigationSubGetByName);
 
 module.exports = navigationRouters;

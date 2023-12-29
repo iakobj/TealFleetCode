@@ -21,6 +21,15 @@
  *            "hardware_end_of_support": "2024-12-30T23:00:00.000Z"
  *            "hardware_catalog_changed_at": "2023-11-08T19:14:14.590Z"
  *            "hardware_catalog_created_at": "2023-11-08T19:14:14.590Z"
+ *     catalogs_hw_model_names_200:
+ *       type: object
+ *       properties:
+ *        data:
+ *         type: array
+ *         items:
+ *          type: object 
+ *          example:
+ *            "hardware_model_name": "UCS-C220-M6-SFF"
  *     assets_200:
  *       type: object
  *       properties:
@@ -62,7 +71,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  * 
- * /hardware/catalogs/id/:id:
+ * /hardware/catalogs/id/{id}:
  *   get:
  *     summary: Get hardware by id from catalog
  *     tags: [hardware]
@@ -80,7 +89,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  * 
- * /hardware/catalogs/names/:name:
+ * /hardware/catalogs/names/{name}:
  *   get:
  *     summary: Get hardware by model name from catalog
  *     tags: [hardware]
@@ -98,7 +107,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  * 
- * /hardware/catalogs/vendors/:vendor:
+ * /hardware/catalogs/vendors/{vendor}:
  *   get:
  *     summary: Get hardware by vendor name from catalog
  *     tags: [hardware]
@@ -116,7 +125,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  *
- * /hardware/catalogs/partnumbers:partnumber:
+ * /hardware/catalogs/partnumbers/{partnumber}:
  *   get:
  *     summary: Get hardware by vendor name from catalog
  *     tags: [hardware]
@@ -134,7 +143,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  *
- * /hardware/catalogs/categories/:category:
+ * /hardware/catalogs/categories/{category}:
  *   get:
  *     summary: Get hardware by vendor name from catalog
  *     tags: [hardware]
@@ -154,7 +163,7 @@
  *
  * /hardware/catalogs/models/names:
  *   get:
- *     summary: Get hardware by vendor name from catalog
+ *     summary: Get hardware model names from catalog
  *     tags: [hardware]
  *     responses:
  *       200:
@@ -162,7 +171,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/catalogs_200'
+ *               $ref: '#/components/schemas/catalogs_hw_model_names_200'
  *       404:
  *         description: Hardware does not exist.
  *         content:
@@ -190,7 +199,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  * 
- * /hardware/assets/id/:id:
+ * /hardware/assets/id/{id}:
  *   get:
  *     summary: Get hardware by id from assets
  *     tags: [hardware]
@@ -208,7 +217,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  * 
- * /hardware/assets/names/:name:
+ * /hardware/assets/names/{name}:
  *   get:
  *     summary: Get hardware by model name from assets
  *     tags: [hardware]
@@ -226,7 +235,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  * 
- * /hardware/assets/vendors/:vendor:
+ * /hardware/assets/vendors/{vendor}:
  *   get:
  *     summary: Get hardware by vendor name from assets
  *     tags: [hardware]
@@ -244,7 +253,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  *
- * /hardware/assets/partnumbers:partnumber:
+ * /hardware/assets/partnumbers/{partnumber}:
  *   get:
  *     summary: Get hardware by vendor name from assets
  *     tags: [hardware]
@@ -262,7 +271,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  *
- * /hardware/assets/serialnumbers/:serialnumber:
+ * /hardware/assets/serialnumbers/{serialnumber}:
  *   get:
  *     summary: Get hardware by vendor name from assets
  *     tags: [hardware]
@@ -280,7 +289,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  *
- * /hardware/assets/tenants/:tenant:
+ * /hardware/assets/tenants/{tenant}:
  *   get:
  *     summary: Get hardware by vendor name from assets
  *     tags: [hardware]
@@ -298,7 +307,7 @@
  *             schema:
  *               $ref: '#/components/schemas/hardware_404'
  *
- * /hardware/assets/sites/:site:
+ * /hardware/assets/sites/{site}:
  *   get:
  *     summary: Get hardware by vendor name from assets
  *     tags: [hardware]

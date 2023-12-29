@@ -2,79 +2,84 @@
  * @swagger
  * components:
  *   schemas:
- *     Tenants_200:
+ *     tenants_200:
  *       type: object
- *       example:
- *         tenant_id: 20ae5464-e9dc-496f-b8ba-d674a2a47bba,
- *         is_root: false,
- *         tenant_name: ACME,
- *         created_at: 2023-09-16T17:44:22.623Z
- *     Tenants_404:
+ *       properties:
+ *        data:
+ *         type: array
+ *         items:
+ *          type: object
+ *          example:
+ *            "tenant_id": "20ae5464-e9dc-496f-b8ba-d674a2a47bba"
+ *            "is_root": "false"
+ *            "tenant_name": "ACME"
+ *            "created_at": "2023-09-16T17:44:22.623Z"
+ *     tenants_404:
  *       type: string
  *       example: No tenants found
- *     Tenants_id_404:
+ *     tenants_id_404:
  *       type: string
  *       example: The tenant was not found, invalid input syntax for type uuid 3a019320-0e16-4cfa-83de-45475b100730d
- *     Tenants_name_404:
+ *     tenants_name_404:
  *       type: string
  *       example: The tenant was not found, invalid input syntax for type name ACMEs
 
  * tags:
- *   name: Tenants
- *   description: The Tealfleet managing API
+ *   name: tenants
+ *   description: Tenants or organizations 
  * /tenants:
  *   get:
  *     summary: Get all tenants
- *     tags: [Tenants]
+ *     tags: [tenants]
  *     responses:
  *       200:
  *         description: Tenant exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Tenants_200'
+ *               $ref: '#/components/schemas/tenants_200'
  *       404:
  *         description: Tenant does not exist.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Tenants_404'
+ *               $ref: '#/components/schemas/tenants_404'
  * 
  * /tenants/id/{id}:
  *   get:
  *     summary: Get tenant by id
- *     tags: [Tenants]
+ *     tags: [tenants]
  *     responses:
  *       200:
  *         description: Tenant exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Tenants_200'
+ *               $ref: '#/components/schemas/tenants_200'
  *       404:
  *         description: Tenant does not exist.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Tenants_id_404'
+ *               $ref: '#/components/schemas/tenants_id_404'
  * 
  * /tenants/name/{name}:
  *   get:
  *     summary: Get tenant by name
- *     tags: [Tenants]
+ *     tags: [tenants]
  *     responses:
  *       200:
  *         description: Tenant exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Tenants_200'
+ *               $ref: '#/components/schemas/tenants_200'
  *       404:
  *         description: Tenant does not exist.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Tenants_name_404'
+ *               $ref: '#/components/schemas/tenants_name_404'
  *
  *
  */
@@ -82,15 +87,14 @@
 const express = require("express");
 const tenantsRouters = express.Router();
 
-// Import Controllers
 const {
   cTenantsGetAll,
   cTenantsGetById,
   cTenantsGetByName,
 } = require("../controllers/tenantsControllers");
 
-tenantsRouters.get("/", cTenantsGetAll); // Get all tenants
-tenantsRouters.get("/id/:id", cTenantsGetById); // Get tenant by id
-tenantsRouters.get("/names/:name", cTenantsGetByName); // Get tenant by name
+tenantsRouters.get("/", cTenantsGetAll);
+tenantsRouters.get("/id/:id", cTenantsGetById);
+tenantsRouters.get("/names/:name", cTenantsGetByName);
 
 module.exports = tenantsRouters;
