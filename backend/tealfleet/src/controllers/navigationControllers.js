@@ -38,6 +38,7 @@ module.exports.cNavigationMainGetAll = async (req, res) => {
 
 // Get  main navigation item by id
 module.exports.cNavigationMainGetById = async (req, res) => {
+  const id = req.params.id;
   try {
     const result = await navigationMainGetById(id);
     res.status(200).send({"data": result});
@@ -60,6 +61,7 @@ module.exports.cNavigationSubGetAll = async (req, res) => {
 
 // Get all sub navigation items with maching main nav items id
 module.exports.cNavigationSubGetById = async (req, res) => {
+  const id = req.params.id;
   try {
     const result = await navigationSubGetById(id);
     res.status(200).send({"data": result});

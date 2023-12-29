@@ -30,16 +30,16 @@ module.exports.cRolesGetById = async (req, res) => {
   }
 };
 
-// Get role by role
+// Get role by role type
 module.exports.cRolesGetByRole = async (req, res) => {
-  const role = req.params.role;
+  const type = req.params.type;
   try {
-    const result = await rolesGetByRole(role);
+    const result = await rolesGetByRole(type);
     if (result.length === 0) {
       res
         .status(404)
         .send(
-          `The role was not found, invalid input syntax for type role ${role}`
+          `The role type was not found, invalid input syntax for type role ${type}`
         );
     } else {
       res.status(200).send({"data": result});

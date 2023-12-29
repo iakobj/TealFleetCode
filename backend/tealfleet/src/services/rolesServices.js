@@ -10,8 +10,8 @@ module.exports.rolesGetById = async (id) => {
   return result.rows;
 };
 
-module.exports.rolesGetByRole = async (role) => {
-  const result = await query("SELECT * FROM roles WHERE role = $1", [role]);
+module.exports.rolesGetByRole = async (type) => {
+  const result = await query("SELECT * FROM roles WHERE role_type = $1", [type]);
   return result.rows;
 };
 

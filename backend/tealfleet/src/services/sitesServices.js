@@ -11,31 +11,31 @@ module.exports.sitesGetById = async (id) => {
 };
 
 module.exports.sitesGetByName = async (name) => {
-  const result = await query("SELECT * FROM sites WHERE name = $1", [name]);
+  const result = await query("SELECT * FROM sites WHERE site_name = $1", [name]);
   return result.rows;
 };
 
 module.exports.sitesGetByAddress = async (address) => {
-  const result = await query("SELECT * FROM sites WHERE address1 = $1", [
+  const result = await query("SELECT * FROM sites WHERE site_address = $1", [
     address,
   ]);
   return result.rows;
 };
 
 module.exports.sitesGetByCity = async (city) => {
-  const result = await query("SELECT * FROM sites WHERE city = $1", [city]);
+  const result = await query("SELECT * FROM sites WHERE site_city = $1", [city]);
   return result.rows;
 };
 
 module.exports.sitesGetByPostcode = async (postcode) => {
-  const result = await query("SELECT * FROM sites WHERE postcode = $1", [
+  const result = await query("SELECT * FROM sites WHERE site_postcode = $1", [
     postcode,
   ]);
   return result.rows;
 };
 
 module.exports.sitesGetByCountry = async (country) => {
-  const result = await query("SELECT * FROM sites WHERE country = $1", [
+  const result = await query("SELECT * FROM sites WHERE site_country = $1", [
     country,
   ]);
   return result.rows;

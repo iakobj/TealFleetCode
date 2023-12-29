@@ -11,6 +11,6 @@ module.exports.vendorsGetById = async (id) => {
 };
 
 module.exports.vendorsGetByName = async (name) => {
-  const result = await query("SELECT * FROM vendors WHERE name = $1", [name]);
+  const result = await query("SELECT * FROM vendors WHERE vendor_name = $1", [name]);
   return result.rows;
 };

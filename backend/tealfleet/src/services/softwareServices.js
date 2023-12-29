@@ -17,7 +17,7 @@ module.exports.softwareCatGetById = async (id) => {
 
 module.exports.softwareCatGetByName = async (name) => {
   const result = await query(
-    "SELECT * FROM software_catalog WHERE model_name = $1",
+    "SELECT * FROM software_catalog WHERE software_model_name = $1",
     [name]
   );
   return result.rows;
@@ -47,7 +47,7 @@ module.exports.softwareCatGetByVersion = async (version) => {
 
 module.exports.softwareCatGetByCategory = async (category) => {
   const get_category_id = await query(
-    "SELECT sw_category_id FROM sw_categories WHERE category = $1",
+    "SELECT sw_category_id FROM sw_categories WHERE sw_category = $1",
     [category]
   );
 
@@ -82,10 +82,10 @@ module.exports.softwareAssGetById = async (id) => {
 
 module.exports.softwareAssGetByName = async (name) => {
   const get_software_catalog_id = await query(
-    "SELECT software_catalog_id FROM software_catalog WHERE model_name = $1",
+    "SELECT software_catalog_id FROM software_catalog WHERE software_model_name = $1",
     [name]
   );
-  software_catalog_id = get_software_catalog_id.rows[0].software_catalog_id;
+  const software_catalog_id = get_software_catalog_id.rows[0].software_catalog_id;
   console.log(software_catalog_id);
 
   const result = await query(
