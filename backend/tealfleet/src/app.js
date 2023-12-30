@@ -154,6 +154,7 @@ const rolesRouters = require("./routes/rolesRouters");
 const sitesRouters = require("./routes/sitesRouters");
 const assetsRouters = require("./routes/assetsRouters");
 const authRouters = require("./routes/authRouters");
+const contractsRouters = require("./routes/contractsRouters");
 
 app.use("/tenants", tenantsRouters);
 app.use("/users", usersRouters);
@@ -165,6 +166,7 @@ app.use("/roles", rolesRouters);
 app.use("/sites", sitesRouters);
 app.use("/assets", assetsRouters);
 app.use("/auth", authRouters);
+app.use("/contracts", contractsRouters);
 
 app.listen(port, () => {
   console.log(
