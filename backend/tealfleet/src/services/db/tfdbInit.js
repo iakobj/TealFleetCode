@@ -81,11 +81,11 @@ CREATE TABLE IF NOT EXISTS "contracts" (
   "contract_type_id" uuid NOT NULL,
   "contractor_name" text NOT NULL,
   "contract_no" varchar NOT NULL,
-  "description" text NOT NULL,
-  "valid_from" date NOT NULL,
-  "valid_to" date NOT NULL,
-  "changed_at" timestamp NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "contract_description" text NOT NULL,
+  "contract_valid_from" date NOT NULL,
+  "contract_valid_to" date NOT NULL,
+  "contract_changed_at" timestamp NOT NULL,
+  "contract_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "contract_types" (
