@@ -93,7 +93,7 @@
  * tags:
  *   name: assets
  *   description: Hardware and appliance suits assets
- * /assets/fleet/cards/all:
+ * /assets/fleet/all:
  *   get:
  *     summary: Get all assets and their relevant information
  *     tags: [assets]
@@ -111,7 +111,7 @@
  *             schema:
  *               $ref: '#/components/schemas/assets_404'
  * 
- * /assets/fleet/cards/all/sw:
+ * /assets/fleet/all/sw:
  *   get:
  *     summary: Get all appliance suits assets
  *     tags: [assets]
@@ -129,7 +129,7 @@
  *             schema:
  *               $ref: '#/components/schemas/assets_404'
  * 
- * /assets/fleet/cards/all/hw:
+ * /assets/fleet/all/hw:
  *   get:
  *     summary: Get all hardware assets
  *     tags: [assets]
@@ -164,9 +164,9 @@ const {
   cAssetsGetStatusCardData
 } = require("../controllers/assetsControllers");
 
-assetsRouters.get("/fleet/cards/all", cAssetsGetAll);
-assetsRouters.get("/fleet/cards/all/sw", cAssetsGetAllSW);
-assetsRouters.get("/fleet/cards/all/hw", cAssetsGetAllHW);
+assetsRouters.get("/fleet/all", cAssetsGetAll);
+assetsRouters.get("/fleet/all/sw", cAssetsGetAllSW);
+assetsRouters.get("/fleet/all/hw", cAssetsGetAllHW);
 
 assetsRouters.get("/dashboard/widgets/status", cAssetsGetStatusCardData);
 

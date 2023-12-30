@@ -29,14 +29,3 @@ module.exports.assetsGetAllSW = async () => {
 
   return result.rows;
 };
-
-// Returns a number of all appliance suits
-module.exports.assetsGetAllSWNum = async () => {
-  const result = await query(
-    `
-    SELECT COUNT(*) FROM software_assets;
-`
-  );
-
-  return result.rows;
-};
