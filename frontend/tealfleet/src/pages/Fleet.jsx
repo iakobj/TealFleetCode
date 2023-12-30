@@ -35,7 +35,7 @@ export const FleetDataLoader = async () => {
   const siteItems = await fetch(`http://${API_ENDPOINT}/sites/`);
 
   // Fetch Fleet card information
-  const fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/cards/all/`);
+  const fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/all/`);
 
   return {
     tItems: await tItems.json(),
