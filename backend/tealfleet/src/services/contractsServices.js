@@ -1,14 +1,24 @@
 const { query } = require("./db/index");
 
 module.exports.contractsGetAll = async () => {
-  const result = await query("SELECT * FROM contracts");
+  const result = await query(`
+  SELECT * 
+  FROM contracts
+  JOIN tenants ON contracts.tenant_id = tenants.tenant_id
+  JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id;
+  `);
   return result.rows;
 };
 
 module.exports.contractsGetByTenant = async (tenant) => {
-  const result = await query("SELECT * FROM contracts WHERE tenant_id = $1", [
-    tenant,
-  ]);
+  const result = await query(`
+  SELECT * 
+  FROM contracts
+  JOIN tenants ON contracts.tenant_id = tenants.tenant_id
+  JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
+  WHERE contracts.tenant_id = $1
+  `, [tenant]
+  );
 
   return result.rows;
 };

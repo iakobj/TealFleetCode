@@ -112,7 +112,7 @@
  } = require("../controllers/contractsControllers");
  
  contractsRouters.get("/", cContractsGetAll);
- contractsRouters.get("/tenant/:tenant", cContractsGetByTenant);
+ contractsRouters.get("/tenants/id/:tenant", cContractsGetByTenant);
  contractsRouters.get("/all/hw", cHwContractsGetAll);
  contractsRouters.get("/all/sw", cSwContractsGetAll);
  

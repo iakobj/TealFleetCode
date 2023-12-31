@@ -9,7 +9,22 @@ const {
 module.exports.cContractsGetAll = async (req, res) => {
   try {
     const result = await contractsGetAll();
-    res.status(200).send({ data: result });
+
+    const today = new Date();
+
+    const updatedContracts = result.map((result) => {
+      const validFrom = new Date(result.contract_valid_from);
+      const validTo = new Date(result.contract_valid_to);
+
+      const isValid = today >= validFrom && today <= validTo;
+
+      return {
+        ...result,
+        contract_valid: isValid ? "TRUE" : "FALSE",
+      };
+    });
+
+    res.status(200).send({ data: updatedContracts });
   } catch (err) {
     console.log(err);
     res.status(404).send("No contracts found");
