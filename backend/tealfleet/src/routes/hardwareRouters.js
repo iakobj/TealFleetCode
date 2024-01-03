@@ -55,7 +55,7 @@
  *   description: Hardware catalogs and assets
  * /hardware/catalogs:
  *   get:
- *     summary: Get all hardware from catalog
+ *     summary: Get all hardware from hardware catalog
  *     tags: [hardware]
  *     responses:
  *       200:
@@ -73,8 +73,14 @@
  * 
  * /hardware/catalogs/id/{id}:
  *   get:
- *     summary: Get hardware by id from catalog
+ *     summary: Get hardware by id from hardware catalog
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: hardware_catalog_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -91,8 +97,14 @@
  * 
  * /hardware/catalogs/names/{name}:
  *   get:
- *     summary: Get hardware by model name from catalog
+ *     summary: Get hardware by hardware model name from hardware catalog
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: hardware_model_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -109,8 +121,14 @@
  * 
  * /hardware/catalogs/vendors/{vendor}:
  *   get:
- *     summary: Get hardware by vendor name from catalog
+ *     summary: Get hardware by vendor name from hardware catalog
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: vendor_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -127,8 +145,14 @@
  *
  * /hardware/catalogs/partnumbers/{partnumber}:
  *   get:
- *     summary: Get hardware by vendor name from catalog
+ *     summary: Get hardware by part number from hardware catalog
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: hardware_part_number
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -145,8 +169,14 @@
  *
  * /hardware/catalogs/categories/{category}:
  *   get:
- *     summary: Get hardware by vendor name from catalog
+ *     summary: Get hardware by its category name from catalog
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: hw_category
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -163,7 +193,7 @@
  *
  * /hardware/catalogs/models/names:
  *   get:
- *     summary: Get hardware model names from catalog
+ *     summary: Get distinct hardware model names from catalog
  *     tags: [hardware]
  *     responses:
  *       200:
@@ -183,7 +213,7 @@
  * 
  * /hardware/assets:
  *   get:
- *     summary: Get all hardware from assets
+ *     summary: Get all hardware assets from hardware assets
  *     tags: [hardware]
  *     responses:
  *       200:
@@ -201,8 +231,14 @@
  * 
  * /hardware/assets/id/{id}:
  *   get:
- *     summary: Get hardware by id from assets
+ *     summary: Get hardware asset by hardware asset id from hardware assets
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: hardware_asset_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -219,8 +255,14 @@
  * 
  * /hardware/assets/names/{name}:
  *   get:
- *     summary: Get hardware by model name from assets
+ *     summary: Get hardware asset by hardware model name from hardware assets
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: hardware_model_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -237,8 +279,14 @@
  * 
  * /hardware/assets/vendors/{vendor}:
  *   get:
- *     summary: Get hardware by vendor name from assets
+ *     summary: Get hardware asset by vendor name from hardware assets
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: vendor_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -255,8 +303,14 @@
  *
  * /hardware/assets/partnumbers/{partnumber}:
  *   get:
- *     summary: Get hardware by vendor name from assets
+ *     summary: Get hardware asset by hardware asset part number from hardware assets
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: hardware_part_number
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -273,8 +327,14 @@
  *
  * /hardware/assets/serialnumbers/{serialnumber}:
  *   get:
- *     summary: Get hardware by vendor name from assets
+ *     summary: Get hardware asset by hardware asset serial number from hardware assets
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: hardware_serial_no
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -291,8 +351,14 @@
  *
  * /hardware/assets/tenants/{tenant}:
  *   get:
- *     summary: Get hardware by vendor name from assets
+ *     summary: Get hardware assets by tenant name from hardware assets
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: tenant_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -309,8 +375,14 @@
  *
  * /hardware/assets/sites/{site}:
  *   get:
- *     summary: Get hardware by vendor name from assets
+ *     summary: Get hardware assets by site name from hardware assets
  *     tags: [hardware]
+ *     parameters:
+ *     - in: path
+ *       name: site_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Hardware catalogs exists.
@@ -353,7 +425,7 @@ hardwareRouters.get("/catalogs", cHardwareCatGetAll);
 hardwareRouters.get("/catalogs/id/:id", cHardwareCatGetById);
 hardwareRouters.get("/catalogs/names/:name", cHardwareCatGetByName);
 hardwareRouters.get("/catalogs/vendors/:vendor", cHardwareCatGetByVendor);
-hardwareRouters.get("/catalogs/partnumbers:partnumber", cHardwareCatGetByPartnumber);
+hardwareRouters.get("/catalogs/partnumbers/:partnumber", cHardwareCatGetByPartnumber);
 hardwareRouters.get("/catalogs/categories/:category", cHardwareCatGetByCategory);
 hardwareRouters.get("/catalogs/models/names", cHardwareCatGetHWModelName);
 

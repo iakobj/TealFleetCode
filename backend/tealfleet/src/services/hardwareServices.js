@@ -17,7 +17,7 @@ module.exports.hardwareCatGetById = async (id) => {
 
 module.exports.hardwareCatGetByName = async (name) => {
   const result = await query(
-    "SELECT * FROM hardware_catalog WHERE model_name = $1",
+    "SELECT * FROM hardware_catalog WHERE hardware_model_name = $1",
     [name]
   );
   return result.rows;
@@ -25,7 +25,7 @@ module.exports.hardwareCatGetByName = async (name) => {
 
 module.exports.hardwareCatGetByVendor = async (vendor) => {
   const get_vendor_id = await query(
-    "SELECT vendor_id FROM vendors WHERE name = $1",
+    "SELECT vendor_id FROM vendors WHERE vendor_name = $1",
     [vendor]
   );
   vendor_id = get_vendor_id.rows[0].vendor_id;
@@ -39,7 +39,7 @@ module.exports.hardwareCatGetByVendor = async (vendor) => {
 
 module.exports.hardwareCatGetByPartnumber = async (partnumber) => {
   const result = await query(
-    "SELECT * FROM hardware_catalog WHERE part_number = $1",
+    "SELECT * FROM hardware_catalog WHERE hardware_part_number = $1",
     [partnumber]
   );
   return result.rows;
@@ -82,7 +82,7 @@ module.exports.hardwareAssGetById = async (id) => {
 
 module.exports.hardwareAssGetByName = async (name) => {
   const get_hardware_catalog_id = await query(
-    "SELECT hardware_catalog_id FROM hardware_catalog WHERE model_name = $1",
+    "SELECT hardware_catalog_id FROM hardware_catalog WHERE hardware_model_name = $1",
     [name]
   );
   hardware_catalog_id = get_hardware_catalog_id.rows[0].hardware_catalog_id;
@@ -96,7 +96,7 @@ module.exports.hardwareAssGetByName = async (name) => {
 
 module.exports.hardwareAssGetByVendor = async (vendor) => {
   const get_vendor_id = await query(
-    "SELECT vendor_id FROM vendors WHERE name = $1",
+    "SELECT vendor_id FROM vendors WHERE vendor_name = $1",
     [vendor]
   );
   vendor_id = get_vendor_id.rows[0].vendor_id;
@@ -123,7 +123,7 @@ module.exports.hardwareAssGetByPartnumber = async (partnumber) => {
     FROM hardware_assets
     JOIN hardware_catalog
     ON hardware_catalog.hardware_catalog_id = hardware_assets.hardware_catalog_id
-    WHERE part_number = $1;
+    WHERE hardware_part_number = $1;
   `,
     [partnumber]
   );
@@ -133,7 +133,7 @@ module.exports.hardwareAssGetByPartnumber = async (partnumber) => {
 
 module.exports.hardwareAssGetBySerialnumber = async (serialnumber) => {
   const result = await query(
-    "SELECT * FROM hardware_assets WHERE serial_no = $1",
+    "SELECT * FROM hardware_assets WHERE hardware_serial_no = $1",
     [serialnumber]
   );
   return result.rows;
@@ -162,7 +162,7 @@ module.exports.hardwareAssGetByTenant = async (tenant) => {
 };
 
 module.exports.hardwareAssGetBySite = async (site) => {
-  const get_site_id = await query("SELECT site_id FROM sites WHERE name = $1", [
+  const get_site_id = await query("SELECT site_id FROM sites WHERE site_name = $1", [
     site,
   ]);
   site_id = get_site_id.rows[0].site_id;

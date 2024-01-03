@@ -95,7 +95,7 @@ const { utilTfdbSeed } = require("./utils/utilTfdbSeed");
 // function that resets the tfdb to an empty state
 const { utilTfdbReset } = require("./utils/utilTfdbReset");
 
-// When starting the app it goes trogh this logic to determine starting options
+// When starting the app it goes trough this logic to determine starting options
 const args = process.argv;
 
 if (args[2] == "seed") {
