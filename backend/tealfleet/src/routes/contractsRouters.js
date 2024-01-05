@@ -37,7 +37,7 @@
 
  * tags:
  *   name: contracts
- *   description: Get contracts by id or name
+ *   description: Contracts and related contract information
  * /contracts:
  *   get:
  *     summary: Get all contracts
@@ -58,7 +58,7 @@
  * 
  * /contracts/id/{id}:
  *   get:
- *     summary: Get contracts by contractid
+ *     summary: Get contracts by contract id
  *     tags: [contracts]
  *     parameters:
  *     - in: path

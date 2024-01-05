@@ -47,8 +47,14 @@
  * 
  * /vendors/id/{id}:
  *   get:
- *     summary: Get vendor by id
+ *     summary: Get vendor by vendor id
  *     tags: [vendors]
+ *     parameters:
+ *     - in: path
+ *       name: vendor_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: vendor exists.
@@ -65,8 +71,14 @@
  * 
  * /vendors/names/{name}:
  *   get:
- *     summary: Get vendor by name
+ *     summary: Get vendor by vendor name
  *     tags: [vendors]
+ *     parameters:
+ *     - in: path
+ *       name: vendor_name
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: vendor exists.

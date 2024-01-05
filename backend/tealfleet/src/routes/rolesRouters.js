@@ -25,7 +25,7 @@
 
  * tags:
  *   name: roles
- *   description: Get roles by id or name
+ *   description: Roles assigned to tenants
  * /roles:
  *   get:
  *     summary: Get all roles
@@ -46,8 +46,14 @@
  * 
  * /roles/id/{id}:
  *   get:
- *     summary: Get role by id
+ *     summary: Get role by role id
  *     tags: [roles]
+ *     parameters:
+ *     - in: path
+ *       name: role_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: Role exists.
@@ -64,8 +70,14 @@
  * 
  * /roles/types/{type}:
  *   get:
- *     summary: Get role by name
+ *     summary: Get role by role type
  *     tags: [roles]
+ *     parameters:
+ *     - in: path
+ *       name: role_type
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Role exists.
@@ -82,8 +94,14 @@
  *
  * /roles/names/{name}:
  *   get:
- *     summary: Get role by name
+ *     summary: Get role by role name
  *     tags: [roles]
+ *     parameters:
+ *     - in: path
+ *       name: role_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Role exists.

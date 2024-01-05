@@ -47,8 +47,14 @@
  * 
  * /tenants/id/{id}:
  *   get:
- *     summary: Get tenant by id
+ *     summary: Get tenant by tenant id
  *     tags: [tenants]
+ *     parameters:
+ *     - in: path
+ *       name: tenant_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: Tenant exists.
@@ -65,8 +71,14 @@
  * 
  * /tenants/name/{name}:
  *   get:
- *     summary: Get tenant by name
+ *     summary: Get tenant by tenant name
  *     tags: [tenants]
+ *     parameters:
+ *     - in: path
+ *       name: tenant_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: Tenant exists.

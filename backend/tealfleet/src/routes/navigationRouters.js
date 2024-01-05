@@ -51,8 +51,14 @@
  * 
  * /navigation/main/id/{id}:
  *   get:
- *     summary: Get main navigation element by id
+ *     summary: Get main navigation element by main nav id
  *     tags: [navigation]
+ *     parameters:
+ *     - in: path
+ *       name: main_nav_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: navigation element exists.
@@ -69,7 +75,7 @@
  * 
  * /navigation/sub:
  *   get:
- *     summary: Get sub navigation element by id
+ *     summary: Get all sub navigation elements
  *     tags: [navigation]
  *     responses:
  *       200:
@@ -89,6 +95,12 @@
  *   get:
  *     summary: Get sub navigation elements where main navigation id matches
  *     tags: [navigation]
+ *     parameters:
+ *     - in: path
+ *       name: main_nav_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: navigation element exists.
@@ -107,6 +119,12 @@
  *   get:
  *     summary: Get sub navigation elements where main navigation name matches
  *     tags: [navigation]
+ *     parameters:
+ *     - in: path
+ *       name: main_nav_item
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: navigation element exists.

@@ -21,7 +21,7 @@
  *            "software_end_of_support": "2024-12-30T23:00:00.000Z"
  *            "software_catalog_changed_at": "2023-11-08T19:14:14.590Z"
  *            "software_catalog_created_at": "2023-11-08T19:14:14.590Z"
- *     assets_200:
+ *     sw_assets_200:
  *       type: object
  *       properties:
  *        data:
@@ -29,7 +29,14 @@
  *         items:
  *          type: object
  *          example:
+ *            "software_asset_id": "1a2b3c4d-b8b8-a8a8-a1a8-012345678901"
  *            "software_catalog_id": "1a2b3c4d-5e6f-caca-caca-000045678901"
+ *            "hardware_asset_id": null
+ *            "software_asset_name": "hq-vbr01.acme.com"
+ *            "tenant_id": "111c561c-8a1d-4f79-9d3a-012345678901"
+ *            "site_id": "1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa"
+ *            "software_changed_at": "2023-11-08T19:14:14.590Z"
+ *            "software_created_at": "2023-11-08T19:14:14.590Z"
  *            "vendor_id": "2b3c4d5e-8b8b-8b8b-8b8b-012345678902"
  *            "sw_category_id": "1e2c561c-1234-1234-1234-012345678901"
  *            "software_model_name": "Veeam backup & replication"
@@ -82,8 +89,14 @@
  * 
  * /software/catalogs/id/{id}:
  *   get:
- *     summary: Get appliance suits by id
+ *     summary: Get appliance suits by software catalog id
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: software_catalog_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suits exists.
@@ -100,8 +113,14 @@
  * 
  * /software/catalogs/names/{name}:
  *   get:
- *     summary: Get appliance suits by name
+ *     summary: Get appliance suits by model name
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: software_model_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suits exists.
@@ -118,8 +137,14 @@
  *
  * /software/catalogs/vendors/{vendor}:
  *   get:
- *     summary: Get appliance suits by vendor
+ *     summary: Get appliance suits by vendor name
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: vendor_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suits exists.
@@ -136,8 +161,14 @@
  * 
  * /software/catalogs/versions/{version}:
  *   get:
- *     summary: Get appliance suits by version
+ *     summary: Get appliance suits by software version number
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: software_version_number
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suits exists.
@@ -154,8 +185,14 @@
  * 
  * /software/catalogs/categories/{category}:
  *   get:
- *     summary: Get appliance suits by category
+ *     summary: Get appliance suits by software category name
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: sw_category
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suits exists.
@@ -199,7 +236,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/assets_200'
+ *               $ref: '#/components/schemas/sw_assets_200'
  *       404:
  *         description: appliance suits does not exist.
  *         content:
@@ -209,15 +246,21 @@
  * 
  * /software/assets/id/{id}:
  *   get:
- *     summary: Get appliance suits by id from assets
+ *     summary: Get appliance suits by asset id from assets
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: software_asset_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suite exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/assets_200'
+ *               $ref: '#/components/schemas/sw_assets_200'
  *       404:
  *         description: appliance suits does not exist.
  *         content:
@@ -229,13 +272,19 @@
  *   get:
  *     summary: Get appliance suits by model name from assets
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: software_model_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suite exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/assets_200'
+ *               $ref: '#/components/schemas/sw_assets_200'
  *       404:
  *         description: appliance suits does not exist.
  *         content:
@@ -245,15 +294,21 @@
  * 
  * /software/assets/vendors/{vendor}:
  *   get:
- *     summary: Get appliance suits by name from assets
+ *     summary: Get appliance suits by vendor name from assets
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: vendor_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suite exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/assets_200'
+ *               $ref: '#/components/schemas/sw_assets_200'
  *       404:
  *         description: appliance suits does not exist.
  *         content:
@@ -263,15 +318,21 @@
  * 
  * /software/assets/versions/{version}:
  *   get:
- *     summary: Get appliance suits by name from assets
+ *     summary: Get appliance suits by software version number from assets
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: software_version_number
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suite exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/assets_200'
+ *               $ref: '#/components/schemas/sw_assets_200'
  *       404:
  *         description: appliance suits does not exist.
  *         content:
@@ -281,15 +342,21 @@
  * 
  * /software/assets/tenants/{tenant}:
  *   get:
- *     summary: Get appliance suits by name from assets
+ *     summary: Get appliance suits by tenant name from assets
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: tenant_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suite exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/assets_200'
+ *               $ref: '#/components/schemas/sw_assets_200'
  *       404:
  *         description: appliance suits does not exist.
  *         content:
@@ -299,15 +366,21 @@
  * 
  * /software/assets/sites/{site}:
  *   get:
- *     summary: Get appliance suits by name from assets
+ *     summary: Get appliance suits by site name from assets
  *     tags: [software]
+ *     parameters:
+ *     - in: path
+ *       name: site_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: appliance suite exists.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/assets_200'
+ *               $ref: '#/components/schemas/sw_assets_200'
  *       404:
  *         description: appliance suits does not exist.
  *         content:

@@ -25,10 +25,10 @@ module.exports.softwareCatGetByName = async (name) => {
 
 module.exports.softwareCatGetByVendor = async (vendor) => {
   const get_vendor_id = await query(
-    "SELECT vendor_id FROM vendors WHERE name = $1",
+    "SELECT vendor_id FROM vendors WHERE vendor_name = $1",
     [vendor]
   );
-  vendor_id = get_vendor_id.rows[0].vendor_id;
+  const vendor_id = get_vendor_id.rows[0].vendor_id;
   const result = await query(
     "SELECT * FROM software_catalog WHERE vendor_id = $1",
     [vendor_id]
@@ -39,7 +39,7 @@ module.exports.softwareCatGetByVendor = async (vendor) => {
 
 module.exports.softwareCatGetByVersion = async (version) => {
   const result = await query(
-    "SELECT * FROM software_catalog WHERE version_number = $1",
+    "SELECT * FROM software_catalog WHERE software_version_number = $1",
     [version]
   );
   return result.rows;
@@ -97,11 +97,11 @@ module.exports.softwareAssGetByName = async (name) => {
 
 module.exports.softwareAssGetByVendor = async (vendor) => {
   const get_vendor_id = await query(
-    "SELECT vendor_id FROM vendors WHERE name = $1",
+    "SELECT vendor_id FROM vendors WHERE vendor_name = $1",
     [vendor]
   );
-  vendor_id = get_vendor_id.rows[0].vendor_id;
-  // Create the temporary table
+  const vendor_id = get_vendor_id.rows[0].vendor_id;
+
   const result = await query(
     `
     SELECT *
@@ -117,14 +117,13 @@ module.exports.softwareAssGetByVendor = async (vendor) => {
 };
 
 module.exports.softwareAssGetByVersion = async (version) => {
-  // Create the temporary table
   const result = await query(
     `
     SELECT *
     FROM software_assets
     JOIN software_catalog
     ON software_catalog.software_catalog_id = software_assets.software_catalog_id
-    WHERE version_number = $1;
+    WHERE software_version_number = $1;
   `,
     [version]
   );
@@ -155,12 +154,11 @@ module.exports.softwareAssGetByTenant = async (tenant) => {
 };
 
 module.exports.softwareAssGetBySite = async (site) => {
-  const get_site_id = await query("SELECT site_id FROM sites WHERE name = $1", [
+  const get_site_id = await query("SELECT site_id FROM sites WHERE site_name = $1", [
     site,
   ]);
   site_id = get_site_id.rows[0].site_id;
 
-  // Create the temporary table
   const result = await query(
     `
     SELECT *

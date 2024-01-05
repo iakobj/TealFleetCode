@@ -54,6 +54,12 @@
  *   get:
  *     summary: Get site by site id
  *     tags: [sites]
+ *     parameters:
+ *     - in: path
+ *       name: site_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: site exists.
@@ -72,6 +78,12 @@
  *   get:
  *     summary: Get site by site name
  *     tags: [sites]
+ *     parameters:
+ *     - in: path
+ *       name: site_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: site exists.
@@ -88,8 +100,14 @@
  *
  * /sites/addresses/{address}:
  *   get:
- *     summary: Get site by address
+ *     summary: Get site by site address
  *     tags: [sites]
+ *     parameters:
+ *     - in: path
+ *       name: site_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: site exists.
@@ -106,8 +124,14 @@
  *
  * /sites/cities/{city}:
  *   get:
- *     summary: Get site by city
+ *     summary: Get site by site city
  *     tags: [sites]
+ *     parameters:
+ *     - in: path
+ *       name: site_city
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: site exists.
@@ -124,8 +148,14 @@
  * 
  * /sites/postcodes/{postcode}:
  *   get:
- *     summary: Get site by postcode
+ *     summary: Get site by site postcode
  *     tags: [sites]
+ *     parameters:
+ *     - in: path
+ *       name: site_city
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: site exists.
@@ -142,8 +172,14 @@
  * 
  * /sites//countries/{country}:
  *   get:
- *     summary: Get site by country
+ *     summary: Get site by site country
  *     tags: [sites]
+ *     parameters:
+ *     - in: path
+ *       name: site_country
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: site exists.
@@ -160,8 +196,14 @@
  * 
  * /sites/tenants/{tenant}:
  *   get:
- *     summary: Get site by tenant id
+ *     summary: Get sites by tenant id
  *     tags: [sites]
+ *     parameters:
+ *     - in: path
+ *       name: tenant_id
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: site exists.

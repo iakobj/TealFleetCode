@@ -57,8 +57,14 @@
  * 
  * /users/id/{id}:
  *   get:
- *     summary: Get user by id
+ *     summary: Get user by user id
  *     tags: [users]
+ *     parameters:
+ *     - in: path
+ *       name: user_id
+ *       schema:
+ *         type: uuid
+ *       required: true
  *     responses:
  *       200:
  *         description: user exists.
@@ -75,8 +81,14 @@
  * 
  * /users/names/{name}:
  *   get:
- *     summary: Get user by name
+ *     summary: Get user by users first name
  *     tags: [users]
+ *     parameters:
+ *     - in: path
+ *       name: first_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: user exists.
@@ -93,8 +105,14 @@
  *
  * /users/emails/{email}:
  *   get:
- *     summary: Get user by email
+ *     summary: Get user by user email
  *     tags: [users]
+ *     parameters:
+ *     - in: path
+ *       name: email
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: user exists.
@@ -111,8 +129,14 @@
  * 
  * /users/phones/{phone}:
  *   get:
- *     summary: Get user by phone number
+ *     summary: Get user by user phone number
  *     tags: [users]
+ *     parameters:
+ *     - in: path
+ *       name: phone
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: user exists.
@@ -129,8 +153,14 @@
  * 
  * /users/titles/{title}:
  *   get:
- *     summary: Get user by title
+ *     summary: Get user by user title
  *     tags: [users]
+ *     parameters:
+ *     - in: path
+ *       name: title
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: user exists.
@@ -147,8 +177,14 @@
  * 
  * /users/roles/{role}:
  *   get:
- *     summary: Get user by role name
+ *     summary: Get user by user role name
  *     tags: [users]
+ *     parameters:
+ *     - in: path
+ *       name: role_name
+ *       schema:
+ *         type: string
+ *       required: true
  *     responses:
  *       200:
  *         description: user exists.
