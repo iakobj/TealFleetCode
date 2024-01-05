@@ -1,7 +1,8 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 
 // import location of the API server
-import { API_ENDPOINT } from '../../constants/apiEndpoint';
+import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 import {
   Modal,
@@ -12,19 +13,34 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td
 } from "@chakra-ui/react";
 
 function ContractsAssetsListModal({ isOpen, onClose, btnRef, contract }) {
-    const AssetsDataLoader = async () => {
-        // Fetch Contracts info for contracts table
-        const cItems = await fetch(`http://${API_ENDPOINT}/contracts/`);
-      
-        return {
-          items: await cItems.json(),
-        };
-      };
+  const [contractData, setContractData] = useState([]);
 
-      const AssetData = AssetsDataLoader();
+  const AssetsDataLoader = async (contractNo) => {
+    try {
+      // Fetch Contracts info for contracts table
+      const cItems = await fetch(
+        `http://${API_ENDPOINT}/contracts/numbers/${contractNo}`
+      );
+      const data = await cItems.json();
+      setContractData(data);
+    } catch (error) {
+      console.error("Error loading asset data:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Call the asynchronous function when the component mounts
+    AssetsDataLoader(contract);
+  }, [contract]); // Trigger the effect when the contract changes
 
   return (
     <Modal
@@ -32,14 +48,44 @@ function ContractsAssetsListModal({ isOpen, onClose, btnRef, contract }) {
       finalFocusRef={btnRef}
       isOpen={isOpen}
       scrollBehavior="inside"
+      size="lg"
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Assets covered in {contract}</ModalHeader>
+        <ModalHeader>{contract}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody></ModalBody>
+        <ModalBody>
+          <Table
+            variant="simple"
+            size={{
+              base: "sm",
+              sm: "sm",
+              md: "sm",
+              lg: "sm",
+              xl: "md",
+            }}
+          >
+            <Thead>
+              <Tr>
+                <Th>ASSET NAME</Th>
+                <Th>SERIAL NUMBER</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {contractData.data &&
+                contractData.data.map((data) => (
+                  <Tr key={data.hardware_asset_id || data.software_asset_id}>
+                    <Td>
+                      {data.software_asset_name || data.hardware_asset_name}
+                    </Td>
+                    <Td>{data.hardware_serial_no}</Td>
+                  </Tr>
+                ))}
+            </Tbody>
+          </Table>
+        </ModalBody>
         <ModalFooter>
-          <Button colorScheme="teal" onClick={onClose}>
+          <Button colorScheme="teal" size="sm" onClick={onClose}>
             Close
           </Button>
         </ModalFooter>

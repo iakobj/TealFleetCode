@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { useDisclosure } from '@chakra-ui/hooks';
+import { useDisclosure } from "@chakra-ui/hooks";
 import ContractsAssetsListModal from "./ContractsAssetsListModal";
 
 // Chakra-UI components
@@ -20,15 +20,19 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-import { ChevronLeftIcon, ChevronRightIcon, CheckCircleIcon, WarningTwoIcon } from "@chakra-ui/icons";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CheckCircleIcon,
+  WarningTwoIcon,
+} from "@chakra-ui/icons";
 
 function ContractsListCard() {
-  const btnRef = useRef(null);
-  const [selectedContract, setSelectedContract] = useState(null);
+  const btnRef = useRef();
+  const [selectedContract, setSelectedContract] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const loaderData = useLoaderData();
-
   const contractsItems = loaderData.cItems.data;
 
   const openModal = (contractNo) => {
@@ -66,7 +70,13 @@ function ContractsListCard() {
               {contractsItems.map((data) => (
                 <Tr key={data.contract_id}>
                   <Td>{data.contract_no}</Td>
-                  <Td>{data.contract_valid === 'true' ? <CheckCircleIcon color="teal"/> : <WarningTwoIcon color="red.600"/>}</Td>
+                  <Td>
+                    {data.contract_valid === "true" ? (
+                      <CheckCircleIcon color="teal" />
+                    ) : (
+                      <WarningTwoIcon color="red.600" />
+                    )}
+                  </Td>
                   <Td>{data.type}</Td>
                   <Td>{data.tenant_name}</Td>
                   <Td>{data.contractor_name}</Td>
@@ -89,7 +99,12 @@ function ContractsListCard() {
                     >
                       Assets
                     </Button>
-                    <ContractsAssetsListModal isOpen={isOpen} onClose={onClose} btnRef={btnRef} contract={selectedContract}/>
+                    <ContractsAssetsListModal
+                      isOpen={isOpen}
+                      onClose={onClose}
+                      btnRef={btnRef}
+                      contract={selectedContract}
+                    />
                   </Td>
                 </Tr>
               ))}

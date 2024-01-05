@@ -3,8 +3,8 @@ const {
   contractsGetByTenant,
   hwContractsGetAll,
   swContractsGetAll,
-  swContractsGetByContractId,
-  hwContractsGetByContractId,
+  swContractsGetByContractNo,
+  hwContractsGetByContractNo,
 } = require("../services/contractsServices");
 
 // Get (almost) all contract information
@@ -80,12 +80,13 @@ module.exports.cSwContractsGetAll = async (req, res) => {
 };
 
 // Get (almost) all asset contract information from Contract Id
-module.exports.cContractsGetByContractId = async (req, res) => {
-  const id = req.params.id;
+module.exports.cContractsGetByContractNo = async (req, res) => {
+  const contract_no = req.params.contract_no;
   try {
-    const sw_result = await swContractsGetByContractId(id);
-    const hw_result = await hwContractsGetByContractId(id);
+    const result_sw = await swContractsGetByContractNo(contract_no);
+    const result_hw = await hwContractsGetByContractNo(contract_no);
 
+    const result = result_sw.concat(result_hw);
 
     res.status(200).send({ data: result });
   } catch (err) {
