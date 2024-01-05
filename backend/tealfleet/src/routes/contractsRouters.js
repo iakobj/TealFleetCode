@@ -56,9 +56,9 @@
  *             schema:
  *               $ref: '#/components/schemas/contracts_404'
  * 
- * /contracts/id/{id}:
+ * /contracts/tenant/{tenant}:
  *   get:
- *     summary: Get contracts by contract id
+ *     summary: Get contracts by tenant id
  *     tags: [contracts]
  *     parameters:
  *     - in: path
@@ -127,10 +127,12 @@
     cContractsGetByTenant,
     cHwContractsGetAll,
     cSwContractsGetAll,
+    cContractsGetByContractId
  } = require("../controllers/contractsControllers");
  
  contractsRouters.get("/", cContractsGetAll);
- contractsRouters.get("/id/:tenant", cContractsGetByTenant);
+ contractsRouters.get("/tenant/:tenant", cContractsGetByTenant);
+ contractsRouters.get("/id/:id", cContractsGetByContractId);
  contractsRouters.get("/all/hardware", cHwContractsGetAll);
  contractsRouters.get("/all/software", cSwContractsGetAll);
  

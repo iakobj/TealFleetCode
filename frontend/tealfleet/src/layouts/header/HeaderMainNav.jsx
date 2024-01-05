@@ -71,7 +71,7 @@ function HeaderMainNav() {
           <HeaderLogo />
           <Spacer />
 
-          <Box margin={{ base: "0.6em", sm: "0.6em", md: "0.6em" }}>
+          <Box margin={{ base: "1.0em", sm: "0.6em", md: "0.6em" }}>
             <HStack
               spacing={{
                 base: "0.3em",

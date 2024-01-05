@@ -43,7 +43,25 @@ module.exports.swContractsGetAll = async () => {
     return result.rows;
 };
 
+module.exports.swContractsGetByContractId = async (id) => {
+  const result = await query(`
+  SELECT software_asset_id
+  FROM sw_asset_contracts
+  JOIN contracts ON sw_asset_contracts.contract_id = contracts.contract_id
+  JOIN software_assets ON sw_asset_contracts.software_asset_id = software_assets.software_asset_id
+  `, [id]);
+  return result.rows;
+};
 
+module.exports.hwContractsGetByContractId = async (id) => {
+  const result = await query(`
+  SELECT hardware_asset_id
+  FROM hw_asset_contracts
+  JOIN contracts ON hw_asset_contracts.contract_id = contracts.contract_id
+  JOIN hardware_assets ON hw_asset_contracts.hardware_asset_id = hardware_assets.hardware_asset_id
+  `, [id]);
+  return result.rows;
+};
 
 
 

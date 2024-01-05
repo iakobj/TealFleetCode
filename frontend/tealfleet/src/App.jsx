@@ -22,7 +22,7 @@ import Fleet, {FleetDataLoader} from "./pages/Fleet";
 
 // Support
 import Support from "./pages/Support";
-import Contracts from "./pages/support/Contracts";
+import Contracts, {ContractsDataLoader} from "./pages/support/Contracts";
 
 import Administration from "./pages/Administration";
 
@@ -81,6 +81,7 @@ const router = createBrowserRouter([
       {
         path: "support/contracts",
         element: <Contracts/>,
+        loader: ContractsDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
