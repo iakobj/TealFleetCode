@@ -15,7 +15,7 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-function AssetsSupportCard({ AssetsSupportCardData }) {
+function SwAssetsSupportCard({ SwAssetsSupportCardData }) {
   return (
     <Card boxShadow="md">
       <CardBody>
@@ -40,7 +40,7 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
               </Tr>
             </Thead>
             <Tbody>
-              {AssetsSupportCardData.map((data) => (
+              {SwAssetsSupportCardData.map((data) => (
                 <Tr key={data.vendor}>
                   <Td>{data.vendor}</Td>
                   <Td>{data.supported}</Td>
@@ -55,4 +55,4 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
   );
 }
 
-export default AssetsSupportCard;
+export default SwAssetsSupportCard;

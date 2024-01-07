@@ -16,7 +16,7 @@ import {
   Progress,
 } from "@chakra-ui/react";
 
-function AssetsTotalCard({ AssetsTotalCardData }) {
+function SwAssetsTotalCard({ SwAssetsTotalCardData }) {
   return (
     <Card boxShadow="md">
       <CardBody>
@@ -39,7 +39,7 @@ function AssetsTotalCard({ AssetsTotalCardData }) {
               </Tr>
             </Thead>
             <Tbody>
-              {AssetsTotalCardData.map((data) => (
+              {SwAssetsTotalCardData.map((data) => (
                 <Tr key={data.vendor}>
                   <Td>{data.vendor}</Td>
                   <Td>{data.total}</Td>
@@ -61,4 +61,4 @@ function AssetsTotalCard({ AssetsTotalCardData }) {
   );
 }
 
-export default AssetsTotalCard;
+export default SwAssetsTotalCard;

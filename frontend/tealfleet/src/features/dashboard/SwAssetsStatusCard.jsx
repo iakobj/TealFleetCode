@@ -15,7 +15,7 @@ import {
   CircularProgressLabel,
 } from "@chakra-ui/react";
 
-function AssetsStatusCard({ AssetsStatusCardData }) {
+function SwAssetsStatusCard({ SwAssetsStatusCardData }) {
   return (
     <Card boxShadow="md">
       <CardHeader
@@ -24,23 +24,23 @@ function AssetsStatusCard({ AssetsStatusCardData }) {
         paddingBottom="0.3em"
         bg="gray.50"
       >
-        <Text size="md"> {AssetsStatusCardData.title} </Text>
+        <Text size="md"> {SwAssetsStatusCardData.title} </Text>
       </CardHeader>
       <CardBody>
         <Flex>
           <Box>
-            <Heading size="xl">{AssetsStatusCardData.total}</Heading>
+            <Heading size="xl">{SwAssetsStatusCardData.total}</Heading>
           </Box>
           <Spacer />
           <Box marginTop="-0.6em">
             <CircularProgress
-              value={AssetsStatusCardData.percent}
+              value={SwAssetsStatusCardData.percent}
               color="teal"
               size="80px"
               thickness="10px"
             >
               <CircularProgressLabel>
-                {AssetsStatusCardData.percent}%
+                {SwAssetsStatusCardData.percent}%
               </CircularProgressLabel>
             </CircularProgress>
           </Box>
@@ -50,4 +50,4 @@ function AssetsStatusCard({ AssetsStatusCardData }) {
   );
 }
 
-export default AssetsStatusCard;
+export default SwAssetsStatusCard;

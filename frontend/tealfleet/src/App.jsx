@@ -16,7 +16,7 @@ import ErrorBoundary from "./pages/ErrorBoundary";
 
 // Dashboard
 import Dashboard from "./pages/Dashboard";
-import ApplianceSuits from "./pages/dashboard/ApplianceSuits";
+import ApplianceSuits, {ApplianceSuitsDataLoader} from "./pages/dashboard/ApplianceSuits";
 
 import Fleet, {FleetDataLoader} from "./pages/Fleet";
 
@@ -49,11 +49,13 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <ApplianceSuits/>,
+        loader: ApplianceSuitsDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
         path: "dashboard/appliance-suits",
         element: <ApplianceSuits/>,
+        loader: ApplianceSuitsDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {

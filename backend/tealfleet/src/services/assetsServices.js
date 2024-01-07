@@ -29,3 +29,23 @@ module.exports.assetsGetAllSW = async () => {
 
   return result.rows;
 };
+
+module.exports.assetsGetNoHW = async () => {
+  const result = await query(
+    `
+    SELECT COUNT(*) FROM hardware_assets;
+  `
+  );
+
+  return result.rows;
+};
+
+module.exports.assetsGetNoSW = async () => {
+  const result = await query(
+    `
+    SELECT COUNT(*) FROM software_assets;
+  `
+  );
+
+  return result.rows;
+};

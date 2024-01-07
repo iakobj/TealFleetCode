@@ -1,58 +1,27 @@
 // React components
 import * as React from "react";
+import { useLoaderData } from "react-router-dom";
+
+// import location of the API server
+import { API_ENDPOINT } from '../../constants/apiEndpoint';
 
 // Chakra-UI components
 import { Box, SimpleGrid } from "@chakra-ui/react";
 
-import AssetsStatusCard from "../../components/dashboard/AssetsStatusCard";
-import AssetsTotalCard from "../../components/dashboard/AssetsTotalCard";
-import AssetsSupportCard from "../../components/dashboard/AssetsSupportCard";
+import SwAssetsStatusCard from "../../features/dashboard/SwAssetsStatusCard";
+import SwAssetsTotalCard from "../../features/dashboard/SwAssetsTotalCard";
+import SwAssetsSupportCard from "../../features/dashboard/SwAssetsSupportCard";
 
 function ApplianceSuits() {
-  const AssetsStatusCardData = [
-    {
-      title: "All appliance suits",
-      total: 100,
-      percent: 100,
-    },
-    {
-      title: "Appliances with support",
-      total: 76,
-      percent: 76,
-    },
-    {
-      title: "Appliances without support",
-      total: 24,
-      percent: 24,
-    },
-    {
-      title: "Support expires in 3 months",
-      total: 10,
-      percent: 10,
-    },
-    {
-      title: "Support expires in 6 months",
-      total: 20,
-      percent: 20,
-    },
-    {
-      title: "Support expires in 12 months",
-      total: 15,
-      percent: 15,
-    },
-    {
-      title: "All active Contracts",
-      total: 7,
-      percent: 70,
-    },
-    {
-      title: "All inactive Contracts",
-      total: 3,
-      percent: 30,
-    },
-  ];
 
-  const AssetsTotalCardData = [
+  const loaderData = useLoaderData();
+
+  console.log(loaderData);
+  const SwAssetsStatusCardData = loaderData.SwAssetsStatus.data;
+
+  console.log(SwAssetsStatusCardData);
+
+  const SwAssetsTotalCardData = [
     {
       vendor: "Cisco",
       total: 32,
@@ -75,7 +44,7 @@ function ApplianceSuits() {
     },
   ];
 
-  const AssetsSupportCardData = [
+  const SwAssetsSupportCardData = [
     {
       vendor: "Cisco",
       supported: 20,
@@ -104,10 +73,10 @@ function ApplianceSuits() {
         spacing="1em"
         columns={{ base: "1", sm: "2", md: "4", lg: "4", xl: "4", "2xl": "4" }}
       >
-        {AssetsStatusCardData.map((AssetsStatusCardData) => (
-          <AssetsStatusCard
-            AssetsStatusCardData={AssetsStatusCardData}
-            key={AssetsStatusCardData.title}
+        {SwAssetsStatusCardData.map((SwAssetsStatusCardData) => (
+          <SwAssetsStatusCard
+          SwAssetsStatusCardData={SwAssetsStatusCardData}
+            key={SwAssetsStatusCardData.title}
           />
         ))}
       </SimpleGrid>
@@ -117,11 +86,25 @@ function ApplianceSuits() {
         spacing="1em"
         columns={{ base: "1", sm: "1", md: "2", lg: "2" }}
       >
-        <AssetsTotalCard AssetsTotalCardData={AssetsTotalCardData} />
-        <AssetsSupportCard AssetsSupportCardData={AssetsSupportCardData} />
+        <SwAssetsTotalCard SwAssetsTotalCardData={SwAssetsTotalCardData} />
+        <SwAssetsSupportCard SwAssetsSupportCardData={SwAssetsSupportCardData} />
       </SimpleGrid>
     </Box>
   );
 }
 
 export default ApplianceSuits;
+
+
+export const ApplianceSuitsDataLoader = async () => {
+   
+  const SwAssetsStatus = await fetch(`http://${API_ENDPOINT}/assets/dashboard/assets/status/sw`);
+  const SwAssetsTotal = await fetch(`http://${API_ENDPOINT}/tenants/`);
+  const SwAssetsSupport = await fetch(`http://${API_ENDPOINT}/tenants/`);
+
+  return {
+    SwAssetsStatus: await SwAssetsStatus.json(),
+    SwAssetsTotal: await SwAssetsTotal.json(),
+    SwAssetsSupport: await SwAssetsSupport.json(),
+  };
+};
