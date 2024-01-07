@@ -80,6 +80,30 @@
  *             schema:
  *               $ref: '#/components/schemas/contracts_id_404'
  * 
+ * /contracts/numbers/{contract_no}:
+ *   get:
+ *     summary: Get all contracts by contract number
+ *     tags: [contracts]
+ *     parameters:
+ *     - in: path
+ *       name: contract_no
+ *       schema:
+ *         type: string
+ *       required: true
+ *     responses:
+ *       200:
+ *         description: Role exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/contracts_200'
+ *       404:
+ *         description: Role does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/contracts_name_404'
+ * 
  * /contracts/all/hardware:
  *   get:
  *     summary: Get all hardware contracts

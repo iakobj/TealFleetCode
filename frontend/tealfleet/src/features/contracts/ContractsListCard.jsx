@@ -97,7 +97,7 @@ function ContractsListCard() {
                       variant="outline"
                       rightIcon={<ChevronRightIcon />}
                     >
-                      Assets
+                      More
                     </Button>
                     <ContractsAssetsListModal
                       isOpen={isOpen}

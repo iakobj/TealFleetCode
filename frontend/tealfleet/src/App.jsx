@@ -75,7 +75,8 @@ const router = createBrowserRouter([
       },
       {
         path: "support",
-        element: <Support/>,
+        element: <Contracts/>,
+        loader: ContractsDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
