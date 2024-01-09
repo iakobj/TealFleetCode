@@ -12,6 +12,12 @@ const {
 module.exports.cUsersGetAll = async (req, res) => {
   try {
     const result = await usersGetAll();
+
+    if (req.sessionID && req.session.user && req.session.authenticated == true) {
+      console.log("Athenticated");
+    }
+
+
     res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);

@@ -11,7 +11,6 @@ const {
 salt = "saltymcsaltface";
 
 // Login
-// Login
 module.exports.mLogin = async (email, password) => {
   return new Promise(async (resolve, reject) => {
     const userEmail = email;

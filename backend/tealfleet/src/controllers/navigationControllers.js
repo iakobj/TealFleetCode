@@ -28,7 +28,6 @@ module.exports.cNavigationGetById = async (req, res) => {
 module.exports.cNavigationMainGetAll = async (req, res) => {
   try {
     const result = await navigationMainGetAll();
-    console.log(req.sessionID, req.session.user);
     res.status(200).send({"data": result});
   } catch (err) {
     console.log(err);
