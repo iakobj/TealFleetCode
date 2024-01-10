@@ -1,8 +1,22 @@
 const { query } = require("../services/db/index");
 
-module.exports.usersGetAll = async () => {
-  const result = await query("SELECT * FROM users");
-  return result.rows;
+const { checkIdentity } = require("../middlewares/identity");
+
+module.exports.usersGetAll = async (req) => {
+  const identityCheck = await checkIdentity(req);
+  const { tenant_id, tenant_name, tenant_root } = identityCheck.data;
+
+  console.log(tenant_id);
+  console.log(tenant_name);
+  console.log(tenant_root);
+
+  if (tenant_root == true) {
+    const result = await query("SELECT * FROM users");
+    return result.rows;
+  }else {
+    const result = await query("SELECT * FROM users WHERE tenant_id = $1", [tenant_id]);
+    return result.rows;
+  }
 };
 
 module.exports.usersGetById = async (id) => {

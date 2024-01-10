@@ -29,7 +29,6 @@ module.exports = { pool };
 */
 
 module.exports.query = async (text, params, callback) => {
-  console.log("Running TealFleet Database Querry...");
   try {
     const result = await pool.query(text, params, callback);
     return result;
