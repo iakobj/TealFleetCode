@@ -12,7 +12,12 @@ const {
 module.exports.cUsersGetAll = async (req, res) => {
   try {
     const result = await usersGetAll(req);
-    res.status(200).send({"data": result});
+    if(result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
+      res.status(200).send({"data": result});
+    }
+
   } catch (err) {
     console.log(err);
     res.status(404).send("No users found");

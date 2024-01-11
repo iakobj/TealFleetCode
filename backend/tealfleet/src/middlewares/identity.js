@@ -6,23 +6,28 @@ const {
 
 module.exports.checkIdentity = async (req) => {
   return new Promise(async (resolve, reject) => {
-    const userSessionID = req.sessionID;
-    const userSession = req.session.user;
-    const userAuthenticated = req.session.authenticated;
-
     try {
-      const userTenant = await tenantsGetById(userSession.tenant_id);
+      if (
+        req.session.user === undefined ||
+        req.session.authenticated == false
+      ) {
+        reject("User session is undefined.");
+      } else {
+        console.log("User session is defined and authentication is true.")
+        const userSession = req.session.user;
 
-      if (userSessionID && userSession && userAuthenticated == true) {
+        const userTenant = await tenantsGetById(userSession.tenant_id);
+        console.log(userSession);
         const identity = {
+          user_id: userSession.id,
+          user_email: userSession.email,
           tenant_id: userTenant[0].tenant_id,
           tenant_name: userTenant[0].tenant_name,
           tenant_root: userTenant[0].is_root,
         };
-        console.log("Athenticated");
-        resolve({data: identity});
-      } else {
-        resolve("Identity resolver error.");
+        console.log("Identity check passed.");
+        console.log(identity);
+        resolve({ data: identity });
       }
     } catch (err) {
       console.log(err);

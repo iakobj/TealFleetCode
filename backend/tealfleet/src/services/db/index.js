@@ -34,6 +34,6 @@ module.exports.query = async (text, params, callback) => {
     return result;
   } catch (error) {
     // Handle any errors that occur during the query
-    throw error;
+    return [{error: `Error during database query.`}];
   }
 };
