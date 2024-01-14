@@ -1,8 +1,4 @@
-const {
-  tenantsGetAll,
-  tenantsGetById,
-  tenantsGetByName,
-} = require("../services/tenantsServices");
+const { query } = require("../services/db/index");
 
 module.exports.checkIdentity = async (req) => {
   return new Promise(async (resolve, reject) => {
@@ -11,14 +7,15 @@ module.exports.checkIdentity = async (req) => {
         req.session.user === undefined ||
         req.session.authenticated == false
       ) {
-        console.log("User session not valid.")
         reject("User session is undefined.");
       } else {
-        console.log("User session is defined and authentication is true.")
         const userSession = req.session.user;
+        const result = await query(
+          "SELECT * FROM tenants WHERE tenant_id = $1",
+          [userSession.tenant_id]
+        );
+        const userTenant = result.rows;
 
-        const userTenant = await tenantsGetById(userSession.tenant_id);
-        console.log(`userSession`);
         const identity = {
           user_id: userSession.id,
           user_email: userSession.email,
@@ -26,8 +23,6 @@ module.exports.checkIdentity = async (req) => {
           tenant_name: userTenant[0].tenant_name,
           tenant_root: userTenant[0].is_root,
         };
-        console.log("Identity check passed.");
-        console.log(identity);
         resolve({ data: identity });
       }
     } catch (err) {
