@@ -8,132 +8,106 @@ const {
   usersGetByRole
 } = require("../services/usersServices");
 
-// Get all users
 module.exports.cUsersGetAll = async (req, res) => {
   try {
     const result = await usersGetAll(req);
-    if(result[0].error) {
+    if(result[0] && result[0].error) {
       res.status(401).send({"data": result});
     }else {
       res.status(200).send({"data": result});
     }
-
   } catch (err) {
     console.log(err);
-    res.status(404).send("No users found");
+    res.status(404).send("Users not found");
   }
 };
 
-// Get user by id
 module.exports.cUsersGetById = async (req, res) => {
-  const id = req.params.id;
+  const user_id = req.params.id;
   try {
-    const result = await usersGetById(id);
-    res.status(200).send({"data": result});
+    const result = await usersGetById(req, user_id);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
+      res.status(200).send({"data": result});
+    }
   } catch (err) {
     console.log(err);
-    res
-      .status(404)
-      .send(`The user was not found, invalid input syntax for type uuid ${id}`);
+    res.status(404).send("User was not found");
   }
 };
 
-// Get users by name
 module.exports.cUsersGetByName = async (req, res) => {
   const name = req.params.name;
   try {
-    const result = await usersGetByName(name);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The user was not found, invalid input syntax for type name ${name}`
-        );
-    } else {
+    const result = await usersGetByName(req, name);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
       res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send("500 Internal Server Error");
+    res.status(404).send("User was not found");
   }
 };
 
-// Get user by email
 module.exports.cUsersGetByEmail = async (req, res) => {
   const email = req.params.email;
   try {
-    const result = await usersGetByEmail(email);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The user was not found, invalid input syntax for type email ${email}`
-        );
-    } else {
+    const result = await usersGetByEmail(req, email);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
       res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send("500 Internal Server Error");
+    res.status(404).send("User was not found");
   }
 };
 
-// Get user by phone
 module.exports.cUsersGetByPhone = async (req, res) => {
   const phone = req.params.phone;
   try {
-    const result = await usersGetByPhone(phone);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The user was not found, invalid input syntax for type phone ${phone}`
-        );
-    } else {
+    const result = await usersGetByPhone(req, phone);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
       res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send("500 Internal Server Error");
+    res.status(404).send("User was not found");
   }
 };
 
-// Get users by title
 module.exports.cUsersGetByTitle = async (req, res) => {
   const title = req.params.title;
   try {
-    const result = await usersGetByTitle(title);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The user was not found, invalid input syntax for type title ${title}`
-        );
-    } else {
+    const result = await usersGetByTitle(req, title);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
       res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send("500 Internal Server Error");
+    res.status(404).send("User was not found");
   }
 };
 
-// Get users by role
 module.exports.cUsersGetByRole = async (req, res) => {
   const role = req.params.role;
   try {
-    const result = await usersGetByRole(role);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The user was not found, invalid input syntax for type role ${role}`
-        );
-    } else {
+    const result = await usersGetByRole(req, role);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
       res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send("500 Internal Server Error");
+    res.status(404).send("User was not found");
   }
 };

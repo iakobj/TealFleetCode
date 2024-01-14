@@ -11,13 +11,14 @@ module.exports.checkIdentity = async (req) => {
         req.session.user === undefined ||
         req.session.authenticated == false
       ) {
+        console.log("User session not valid.")
         reject("User session is undefined.");
       } else {
         console.log("User session is defined and authentication is true.")
         const userSession = req.session.user;
 
         const userTenant = await tenantsGetById(userSession.tenant_id);
-        console.log(userSession);
+        console.log(`userSession`);
         const identity = {
           user_id: userSession.id,
           user_email: userSession.email,
