@@ -38,9 +38,9 @@ module.exports.cUsersGetById = async (req, res) => {
 };
 
 module.exports.cUsersGetByName = async (req, res) => {
-  const name = req.params.name;
+  const first_name = req.params.name;
   try {
-    const result = await usersGetByName(req, name);
+    const result = await usersGetByName(req, first_name);
     if(result[0] && result[0].error) {
       res.status(401).send({"data": result});
     }else {

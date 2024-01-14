@@ -1,5 +1,4 @@
 const { query } = require("../services/db/index");
-
 const { checkIdentity } = require("../middlewares/identity");
 
 module.exports.usersGetAll = async (req) => {
@@ -40,17 +39,17 @@ module.exports.usersGetById = async (req, user_id) => {
   }
 };
 
-module.exports.usersGetByName = async (req, name) => {
+module.exports.usersGetByName = async (req, first_name) => {
   try {
     const identityCheck = await checkIdentity(req);
     const { tenant_id, tenant_root } = await identityCheck.data;
 
     if (tenant_root == true) {
-      const result = await query("SELECT * FROM users WHERE first_name = $1", [name]);
+      const result = await query("SELECT * FROM users WHERE first_name = $1", [first_name]);
       return result.rows;
     } else {
       const result = await query("SELECT * FROM users WHERE first_name = $1 AND tenant_id = $2", [
-        name, tenant_id
+        first_name, tenant_id
       ]);
       return result.rows;
     }
