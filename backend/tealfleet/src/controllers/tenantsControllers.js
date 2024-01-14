@@ -4,49 +4,46 @@ const {
   tenantsGetByName,
 } = require("../services/tenantsServices");
 
-// Get all tenants
 module.exports.cTenantsGetAll = async (req, res) => {
   try {
-    const result = await tenantsGetAll();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No tenants found");
-  }
-};
-
-// Get tenant by id
-module.exports.cTenantsGetById = async (req, res) => {
-  const id = req.params.id;
-  try {
-    const result = await tenantsGetById(id);
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res
-      .status(404)
-      .send(
-        `The tenant was not found, invalid input syntax for type uuid ${id}`
-      );
-  }
-};
-
-// Get tenant by name
-module.exports.cTenantsGetByName = async (req, res) => {
-  const name = req.params.name;
-  try {
-    const result = await tenantsGetByName(name);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The tenant was not found, invalid input syntax for type name ${name}`
-        );
-    } else {
+    const result = await tenantsGetAll(req);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
       res.status(200).send({"data": result});
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send("500 Internal Server Error");
+    res.status(404).send("Tenants not found");
+  }
+};
+
+module.exports.cTenantsGetById = async (req, res) => {
+  const ten_id = req.params.id;
+  try {
+    const result = await tenantsGetById(req, ten_id);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
+      res.status(200).send({"data": result});
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("Tenant not found");
+  }
+};
+
+module.exports.cTenantsGetByName = async (req, res) => {
+  const tenant_name = req.params.name;
+  try {
+    const result = await tenantsGetByName(req, tenant_name);
+    if(result[0] && result[0].error) {
+      res.status(401).send({"data": result});
+    }else {
+      res.status(200).send({"data": result});
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("Tenant not found");
   }
 };
