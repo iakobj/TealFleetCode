@@ -19,7 +19,10 @@ export default Fleet;
 
 export const FleetDataLoader = async () => {
   // Fetch Tenant info for filter
-  const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`);
+  const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
+  method: 'GET',
+  credentials: 'include',
+});
 
   // Fetch SW Model info for filter
   const swItems = await fetch(

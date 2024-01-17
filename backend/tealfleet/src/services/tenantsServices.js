@@ -31,9 +31,10 @@ module.exports.tenantsGetById = async (req, ten_id) => {
       ]);
       return result.rows;
     } else {
-      const result = await query("SELECT * FROM tenants WHERE tenant_id = $1 AND tenant_id = $2", [
-        ten_id, tenant_id
-      ]);
+      const result = await query(
+        "SELECT * FROM tenants WHERE tenant_id = $1 AND tenant_id = $2",
+        [ten_id, tenant_id]
+      );
       return result.rows;
     }
   } catch (error) {
@@ -47,14 +48,16 @@ module.exports.tenantsGetByName = async (req, tenant_name) => {
     const { tenant_id, tenant_root } = await identityCheck.data;
 
     if (tenant_root == true) {
-      const result = await query("SELECT * FROM tenants WHERE tenant_name = $1", [
-        tenant_name,
-      ]);
+      const result = await query(
+        "SELECT * FROM tenants WHERE tenant_name = $1",
+        [tenant_name]
+      );
       return result.rows;
     } else {
-      const result = await query("SELECT * FROM tenants WHERE tenant_name = $1 AND tenant_id = $2", [
-        tenant_name, tenant_id
-      ]);
+      const result = await query(
+        "SELECT * FROM tenants WHERE tenant_name = $1 AND tenant_id = $2",
+        [tenant_name, tenant_id]
+      );
       return result.rows;
     }
   } catch (error) {

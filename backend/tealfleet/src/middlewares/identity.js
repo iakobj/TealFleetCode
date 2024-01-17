@@ -7,7 +7,7 @@ module.exports.checkIdentity = async (req) => {
         req.session.user === undefined ||
         req.session.authenticated == false
       ) {
-        reject("User session is undefined.");
+        reject("User session is not defined.");
       } else {
         const userSession = req.session.user;
         const result = await query(
@@ -25,9 +25,9 @@ module.exports.checkIdentity = async (req) => {
         };
         resolve({ data: identity });
       }
-    } catch (err) {
-      console.log(err);
-      reject(err);
+    } catch (error) {
+      console.log(error);
+      reject({ data: error });
     }
   });
 };

@@ -1,10 +1,9 @@
 const { query } = require("../services/db/index");
-const { checkIdentity } = require("../middlewares/identity");
 
-module.exports.usersGetAll = async (req) => {
+
+module.exports.usersGetAll = async (identity) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query("SELECT * FROM users");
@@ -16,14 +15,13 @@ module.exports.usersGetAll = async (req) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ "error": error }];
   }
 };
 
-module.exports.usersGetById = async (req, user_id) => {
+module.exports.usersGetById = async (identity, user_id) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query("SELECT * FROM users WHERE user_id = $1", [user_id]);
@@ -39,10 +37,9 @@ module.exports.usersGetById = async (req, user_id) => {
   }
 };
 
-module.exports.usersGetByName = async (req, first_name) => {
+module.exports.usersGetByName = async (identity, first_name) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query("SELECT * FROM users WHERE first_name = $1", [first_name]);
@@ -58,10 +55,9 @@ module.exports.usersGetByName = async (req, first_name) => {
   }
 };
 
-module.exports.usersGetByEmail = async (req, email) => {
+module.exports.usersGetByEmail = async (identity, email) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query("SELECT * FROM users WHERE email = $1", [email]);
@@ -77,9 +73,8 @@ module.exports.usersGetByEmail = async (req, email) => {
   }
 };
 
-module.exports.usersGetByPhone = async (req, phone) => {
+module.exports.usersGetByPhone = async (identity, phone) => {
   try {
-    const identityCheck = await checkIdentity(req);
     const { tenant_id, tenant_root } = await identityCheck.data;
 
     if (tenant_root == true) {
@@ -96,10 +91,9 @@ module.exports.usersGetByPhone = async (req, phone) => {
   }
 };
 
-module.exports.usersGetByTitle = async (req, title) => {
+module.exports.usersGetByTitle = async (identity, title) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query("SELECT * FROM users WHERE title = $1", [title]);
@@ -115,10 +109,9 @@ module.exports.usersGetByTitle = async (req, title) => {
   }
 };
 
-module.exports.usersGetByRole = async (req, role) => {
+module.exports.usersGetByRole = async (identity, role) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     const get_role_id = await query("SELECT role_id FROM roles WHERE role_name = $1",[role]);
     const role_id = get_role_id.rows[0].role_id;
