@@ -9,147 +9,131 @@ const {
   sitesGetByTenant,
 } = require("../services/sitesServices");
 
-// Get all sites
+const { checkIdentity } = require("../middlewares/identity");
+
 module.exports.cSitesGetAll = async (req, res) => {
   try {
-    const result = await sitesGetAll();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No sites found");
+    const identity = await checkIdentity(req);
+    const result = await sitesGetAll(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get site by id
 module.exports.cSitesGetById = async (req, res) => {
-  const id = req.params.id;
+  const site_id = req.params.id;
   try {
-    const result = await sitesGetById(id);
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res
-      .status(404)
-      .send(`The site was not found, invalid input syntax for type uuid ${id}`);
+    const identity = await checkIdentity(req);
+    const result = await sitesGetById(identity, site_id);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get site by name
 module.exports.cSitesGetByName = async (req, res) => {
-  const name = req.params.name;
+  const site_name = req.params.name;
   try {
-    const result = await sitesGetByName(name);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The site was not found, invalid input syntax for type name ${name}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await sitesGetByName(identity, site_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get site by address
 module.exports.cSitesGetByAddress = async (req, res) => {
-  const address = req.params.address;
+  const site_address = req.params.address;
   try {
-    const result = await sitesGetByAddress(address);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The site was not found, invalid input syntax for type address ${address}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await sitesGetByAddress(identity, site_address);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get site by city
 module.exports.cSitesGetByCity = async (req, res) => {
-  const city = req.params.city;
+  const site_city = req.params.city;
   try {
-    const result = await sitesGetByCity(city);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The site was not found, invalid input syntax for type city ${city}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await sitesGetByCity(identity, site_city);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get site by post code
 module.exports.cSitesGetByPostcode = async (req, res) => {
-  const postcode = req.params.postcode;
+  const site_postcode = req.params.postcode;
   try {
-    const result = await sitesGetByPostcode(postcode);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The site was not found, invalid input syntax for type post code ${postcode}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await sitesGetByPostcode(identity, site_postcode);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get site by country
 module.exports.cSitesGetByCountry = async (req, res) => {
-  const country = req.params.country;
+  const site_country = req.params.country;
   try {
-    const result = await sitesGetByCountry(country);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The site was not found, invalid input syntax for type country ${country}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await sitesGetByCountry(identity, site_country);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get site by tenant
 module.exports.cSitesGetByTenant = async (req, res) => {
-  const tenant = req.params.tenant;
+  const ten_id = req.params.tenant;
   try {
-    const result = await sitesGetByTenant(tenant);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The site was not found, invalid input syntax for type tenant ${tenant}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await sitesGetByTenant(identity, ten_id);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
