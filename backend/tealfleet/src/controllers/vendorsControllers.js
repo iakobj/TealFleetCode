@@ -4,46 +4,51 @@ const {
   vendorsGetByName,
 } = require("../services/vendorsServices");
 
+const { checkIdentity } = require("../middlewares/identity");
+
 module.exports.cVendorsGetAll = async (req, res) => {
   try {
-    const result = await vendorsGetAll(req);
+    const identity = await checkIdentity(req);
+    const result = await vendorsGetAll(identity);
     if(result[0] && result[0].error) {
       res.status(401).send({"data": result});
     }else {
       res.status(200).send({"data": result});
     }
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("Vendors not found");
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({data: [{error}]});
   }
 };
 
 module.exports.cVendorsGetById = async (req, res) => {
   const vendor_id = req.params.id;
   try {
-    const result = await vendorsGetById(req, vendor_id);
+    const identity = await checkIdentity(req);
+    const result = await vendorsGetById(identity, vendor_id);
     if(result[0] && result[0].error) {
       res.status(401).send({"data": result});
     }else {
       res.status(200).send({"data": result});
     }
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("Vendor not found");
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({data: [{error}]});
   }
 };
 
 module.exports.cVendorsGetByName = async (req, res) => {
   const vendor_name = req.params.name;
   try {
-    const result = await vendorsGetByName(req, vendor_name);
+    const identity = await checkIdentity(req);
+    const result = await vendorsGetByName(identity, vendor_name);
     if(result[0] && result[0].error) {
       res.status(401).send({"data": result});
     }else {
       res.status(200).send({"data": result});
     }
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("Vendor not found");
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({data: [{error}]});
   }
 };

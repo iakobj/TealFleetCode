@@ -1,10 +1,8 @@
 const { query } = require("../services/db/index");
-const { checkIdentity } = require("../middlewares/identity");
 
-module.exports.tenantsGetAll = async (req) => {
+module.exports.tenantsGetAll = async (identity) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query("SELECT * FROM tenants");
@@ -16,14 +14,13 @@ module.exports.tenantsGetAll = async (req) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
 
-module.exports.tenantsGetById = async (req, ten_id) => {
+module.exports.tenantsGetById = async (identity, ten_id) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query("SELECT * FROM tenants WHERE tenant_id = $1", [
@@ -38,14 +35,13 @@ module.exports.tenantsGetById = async (req, ten_id) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
 
-module.exports.tenantsGetByName = async (req, tenant_name) => {
+module.exports.tenantsGetByName = async (identity, tenant_name) => {
   try {
-    const identityCheck = await checkIdentity(req);
-    const { tenant_id, tenant_root } = await identityCheck.data;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query(
@@ -61,6 +57,6 @@ module.exports.tenantsGetByName = async (req, tenant_name) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
