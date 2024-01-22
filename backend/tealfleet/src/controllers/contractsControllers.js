@@ -10,10 +10,12 @@ const {
   swContractsGetNo,
 } = require("../services/contractsServices");
 
-// Get (almost) all contract information
+const { checkIdentity } = require("../middlewares/identity");
+
 module.exports.cContractsGetAll = async (req, res) => {
   try {
-    const result = await contractsGetAll();
+    const identity = await checkIdentity(req);
+    const result = await contractsGetAll(identity);
 
     const today = new Date();
 
@@ -39,18 +41,21 @@ module.exports.cContractsGetAll = async (req, res) => {
       };
     });
 
-    res.status(200).send({ data: updatedContracts });
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No contracts found");
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: updatedContracts });
+    } else {
+      res.status(200).send({ data: updatedContracts });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get (almost) all contract information by tenant
 module.exports.cContractsGetByTenant = async (req, res) => {
-  const tenant = req.params.tenant;
+  const ten_id = req.params.tenant;
   try {
-    const result = await contractsGetByTenant(tenant);
+    const identity = await checkIdentity(req);
+    const result = await contractsGetByTenant(identity, ten_id);
 
     const today = new Date();
 
@@ -76,17 +81,20 @@ module.exports.cContractsGetByTenant = async (req, res) => {
       };
     });
 
-    res.status(200).send({ data: updatedContracts });
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No contracts found");
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: updatedContracts });
+    } else {
+      res.status(200).send({ data: updatedContracts });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get (almost) all hardware asset contract information
 module.exports.cHwContractsGetAll = async (req, res) => {
   try {
-    const result = await hwContractsGetAll();
+    const identity = await checkIdentity(req);
+    const result = await hwContractsGetAll(identity);
     const today = new Date();
 
     const updatedContracts = result.map((result) => {
@@ -111,17 +119,20 @@ module.exports.cHwContractsGetAll = async (req, res) => {
       };
     });
 
-    res.status(200).send({ data: updatedContracts });
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    if (updatedContracts[0] && updatedContracts[0].error) {
+      res.status(401).send({ data: updatedContracts });
+    } else {
+      res.status(200).send({ data: updatedContracts });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get (almost) all software asset contract information
 module.exports.cSwContractsGetAll = async (req, res) => {
   try {
-    const result = await swContractsGetAll();
+    const identity = await checkIdentity(req);
+    const result = await swContractsGetAll(identity);
     const today = new Date();
 
     const updatedContracts = result.map((result) => {
@@ -146,19 +157,23 @@ module.exports.cSwContractsGetAll = async (req, res) => {
       };
     });
 
-    res.status(200).send({ data: updatedContracts });
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: updatedContracts });
+    } else {
+      res.status(200).send({ data: updatedContracts });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get (almost) all asset contract information from Contract Id
 module.exports.cContractsGetByContractNo = async (req, res) => {
   const contract_no = req.params.contract_no;
   try {
-    const result_sw = await swContractsGetByContractNo(contract_no);
-    const result_hw = await hwContractsGetByContractNo(contract_no);
+    const identity = await checkIdentity(req);
+
+    const result_sw = await swContractsGetByContractNo(identity, contract_no);
+    const result_hw = await hwContractsGetByContractNo(identity, contract_no);
 
     const result = result_sw.concat(result_hw);
 
@@ -186,29 +201,42 @@ module.exports.cContractsGetByContractNo = async (req, res) => {
       };
     });
 
-    res.status(200).send({ data: updatedContracts });
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: updatedContracts });
+    } else {
+      res.status(200).send({ data: updatedContracts });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 module.exports.cHwContractsGetNo = async (req, res) => {
   try {
-    const result = await hwContractsGetNo();
-    res.status(200).send({ data: result });
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await hwContractsGetNo(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 module.exports.cSwContractsGetNo = async (req, res) => {
   try {
-    const result = await swContractsGetNo();
-    res.status(200).send({ data: result });
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await swContractsGetNo(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
