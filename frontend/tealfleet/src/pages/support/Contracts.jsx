@@ -2,7 +2,7 @@
 import * as React from "react";
 
 // import location of the API server
-import { API_ENDPOINT } from '../../constants/apiEndpoint';
+import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 // Chakra-UI components
 import { Text, Box, SimpleGrid } from "@chakra-ui/react";
@@ -27,7 +27,10 @@ export default Contracts;
 
 export const ContractsDataLoader = async () => {
   // Fetch Contracts info for contracts table
-  const cItems = await fetch(`http://${API_ENDPOINT}/contracts/`);
+  const cItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
+    method: "GET",
+    credentials: "include",
+  });
 
   return {
     cItems: await cItems.json(),

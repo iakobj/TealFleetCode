@@ -2,7 +2,7 @@
 import * as React from "react";
 
 // import location of the API server
-import { API_ENDPOINT } from '../constants/apiEndpoint';
+import { API_ENDPOINT } from "../constants/apiEndpoint";
 
 // Components
 import FleetFilter from "../features/fleet/FleetFilter.jsx";
@@ -20,25 +20,39 @@ export default Fleet;
 export const FleetDataLoader = async () => {
   // Fetch Tenant info for filter
   const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
-  method: 'GET',
-  credentials: 'include',
-});
+    method: "GET",
+    credentials: "include",
+  });
 
   // Fetch SW Model info for filter
   const swItems = await fetch(
-    `http://${API_ENDPOINT}/software/catalogs/models/names`
+    `http://${API_ENDPOINT}/software/catalogs/models/names`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
   );
 
   // Fetch HW Model info for filter
   const hwItems = await fetch(
-    `http://${API_ENDPOINT}/hardware/catalogs/models/names`
+    `http://${API_ENDPOINT}/hardware/catalogs/models/names`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
   );
 
   // Fetch Site name info for filter
-  const siteItems = await fetch(`http://${API_ENDPOINT}/sites/`);
+  const siteItems = await fetch(`http://${API_ENDPOINT}/sites/`, {
+    method: "GET",
+    credentials: "include",
+  });
 
   // Fetch Fleet card information
-  const fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/all/`);
+  const fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/all/`, {
+    method: "GET",
+    credentials: "include",
+  });
 
   return {
     tItems: await tItems.json(),

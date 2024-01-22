@@ -18,7 +18,7 @@ import {
   Tbody,
   Tr,
   Th,
-  Td
+  Td,
 } from "@chakra-ui/react";
 
 function ContractsAssetsListModal({ isOpen, onClose, btnRef, contract }) {
@@ -28,7 +28,11 @@ function ContractsAssetsListModal({ isOpen, onClose, btnRef, contract }) {
     try {
       // Fetch Contracts info for contracts table
       const cItems = await fetch(
-        `http://${API_ENDPOINT}/contracts/numbers/${contractNo}`
+        `http://${API_ENDPOINT}/contracts/numbers/${contractNo}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       const data = await cItems.json();
       setContractData(data);
