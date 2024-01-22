@@ -5,67 +5,67 @@ const {
   rolesGetByName,
 } = require("../services/rolesServices");
 
-// Get all roles
+const { checkIdentity } = require("../middlewares/identity");
+
 module.exports.cRolesGetAll = async (req, res) => {
   try {
-    const result = await rolesGetAll();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No roles found");
+    const identity = await checkIdentity(req);
+    const result = await rolesGetAll(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get role by id
 module.exports.cRolesGetById = async (req, res) => {
-  const id = req.params.id;
+  const role_id = req.params.id;
   try {
-    const result = await rolesGetById(id);
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res
-      .status(404)
-      .send(`The role was not found, invalid input syntax for type uuid ${id}`);
+    const identity = await checkIdentity(req);
+    const result = await rolesGetById(identity, role_id);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get role by role type
 module.exports.cRolesGetByRole = async (req, res) => {
-  const type = req.params.type;
+  const role_type = req.params.type;
   try {
-    const result = await rolesGetByRole(type);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The role type was not found, invalid input syntax for type role ${type}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await rolesGetByRole(identity, role_type);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
-// Get role by name
 module.exports.cRolesGetByName = async (req, res) => {
-  const name = req.params.name;
+  const role_name = req.params.name;
   try {
-    const result = await rolesGetByName(name);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The role was not found, invalid input syntax for type name ${name}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await rolesGetByName(identity, role_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
