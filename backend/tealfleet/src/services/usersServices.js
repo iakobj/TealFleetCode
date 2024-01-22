@@ -35,7 +35,7 @@ module.exports.usersGetById = async (identity, user_id) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
 
@@ -56,7 +56,7 @@ module.exports.usersGetByName = async (identity, first_name) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
 
@@ -77,7 +77,7 @@ module.exports.usersGetByEmail = async (identity, email) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
 
@@ -98,7 +98,7 @@ module.exports.usersGetByPhone = async (identity, phone) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
 
@@ -119,7 +119,7 @@ module.exports.usersGetByTitle = async (identity, title) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
 
@@ -146,6 +146,6 @@ module.exports.usersGetByRole = async (identity, role) => {
       return result.rows;
     }
   } catch (error) {
-    return [{ error: `${error}` }];
+    return [{ error: error }];
   }
 };
