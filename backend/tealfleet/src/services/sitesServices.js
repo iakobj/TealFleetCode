@@ -8,7 +8,7 @@ module.exports.sitesGetAll = async (identity) => {
       return result.rows;
     } else {
       const result = await query("SELECT * FROM sites WHERE tenant_id = $1", [
-        site_id,
+        tenant_id,
       ]);
       return result.rows;
     }

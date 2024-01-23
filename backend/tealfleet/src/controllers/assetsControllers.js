@@ -13,45 +13,65 @@ const {
   hwContractsGetAll,
 } = require("../services/contractsServices");
 
+const { checkIdentity } = require("../middlewares/identity");
+
 module.exports.cAssetsGetAll = async (req, res) => {
   try {
-    const result_sw = await assetsGetAllSW();
-    const result_hw = await assetsGetAllHW();
+    const identity = await checkIdentity(req);
+    const result_sw = await assetsGetAllSW(identity);
+    const result_hw = await assetsGetAllHW(identity);
 
     const result = result_sw.concat(result_hw);
 
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 module.exports.cAssetsGetAllHW = async (req, res) => {
   try {
-    const result = await assetsGetAllHW();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await assetsGetAllHW(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 module.exports.cAssetsGetAllSW = async (req, res) => {
   try {
-    const result = await assetsGetAllSW();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await assetsGetAllSW(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 // TODO SW 1
 module.exports.cAssetsGetStatusCardDataSW = async (req, res) => {
   try {
-    const resultArray = await Promise.all([assetsGetNoSW(), swContractsGetNo(), swContractsGetAll()]);
-
+    const identity = await checkIdentity(req);
+    const resultArray = await Promise.all([
+      assetsGetNoSW(identity),
+      swContractsGetNo(identity),
+      swContractsGetAll(identity),
+    ]);
     const allSw = resultArray[0][0].count;
     const allSupportedSw = resultArray[1][0].count;
     const allSwContracts = resultArray[2];
@@ -70,101 +90,140 @@ module.exports.cAssetsGetStatusCardDataSW = async (req, res) => {
     });
 
     // Counting valid contracts
-    const validContractsCount = updatedAllSwContracts.filter(contract => contract.contract_valid === "true").length;
+    const validContractsCount = updatedAllSwContracts.filter(
+      (contract) => contract.contract_valid === "true"
+    ).length;
     // Counting all contracts
     const totalContractsCount = updatedAllSwContracts.length;
 
     const allSW = {
       title: "All appliance suits",
       total: parseInt(allSw),
-      percent: 100
+      percent: 100,
     };
     const supportedSW = {
       title: "Appliances with support",
       total: parseInt(allSupportedSw),
-      percent: parseInt(((allSupportedSw / allSw ) * 100)),
+      percent: parseInt((allSupportedSw / allSw) * 100),
     };
     const unSupportedSW = {
       title: "Appliances without support",
-      total: (allSw - allSupportedSw),
-      percent: parseInt((100 - ((allSupportedSw / allSw ) * 100))),
+      total: allSw - allSupportedSw,
+      percent: parseInt(100 - (allSupportedSw / allSw) * 100),
     };
-    const allContracts =     {
+    const allContracts = {
       title: "All Contracts",
       total: totalContractsCount,
       percent: 100,
     };
-    const activeContracts =     {
+    const activeContracts = {
       title: "All active Contracts",
       total: validContractsCount,
-      percent: parseInt((validContractsCount / totalContractsCount) * 100 ),
+      percent: parseInt((validContractsCount / totalContractsCount) * 100),
     };
-    const inActiveContracts =     {
+    const inActiveContracts = {
       title: "All inactive Contracts",
-      total: (totalContractsCount - validContractsCount),
-      percent: parseInt((100 - ((validContractsCount / totalContractsCount ) * 100))),
+      total: totalContractsCount - validContractsCount,
+      percent: parseInt(
+        100 - (validContractsCount / totalContractsCount) * 100
+      ),
     };
 
-    const result = [allSW, supportedSW, unSupportedSW, allContracts, activeContracts, inActiveContracts]
+    const result = [
+      allSW,
+      supportedSW,
+      unSupportedSW,
+      allContracts,
+      activeContracts,
+      inActiveContracts,
+    ];
 
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 // TODO SW 2
 module.exports.cAssetsGetSupportCardDataSW = async (req, res) => {
   try {
-    const result = await assetsGetlNoHW();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await assetsGetNoHW(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 // TODO SW 3
 module.exports.cAssetsGetTotalsCardDataSW = async (req, res) => {
   try {
-    const result = await assetsGetAllSW();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await assetsGetAllSW(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 // TODO HW 1
 module.exports.cAssetsGetStatusCardDataHW = async (req, res) => {
   try {
-    const result = await assetsGetNoHW();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await assetsGetNoHW(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 // TODO HW 2
 module.exports.cAssetsGetSupportCardDataHW = async (req, res) => {
   try {
-    const result = await assetsGetAllHW();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await assetsGetAllHW(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };
 
 // TODO HW 3
 module.exports.cAssetsGetTotalsCardDataHW = async (req, res) => {
   try {
-    const result = await assetsGetNoSW();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No assets found");
+    const identity = await checkIdentity(req);
+    const result = await assetsGetNoSW(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
   }
 };

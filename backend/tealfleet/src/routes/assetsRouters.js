@@ -180,7 +180,7 @@ assetsRouters.get("/dashboard/assets/support/sw", cAssetsGetSupportCardDataSW);
 assetsRouters.get("/dashboard/assets/totals/sw", cAssetsGetTotalsCardDataSW);
 
 assetsRouters.get("/dashboard/assets/status/hw", cAssetsGetStatusCardDataHW);
-assetsRouters.get("/dashboard/assets/support/sw", cAssetsGetSupportCardDataHW);
-assetsRouters.get("/dashboard/assets/totals/sw", cAssetsGetTotalsCardDataHW);
+assetsRouters.get("/dashboard/assets/support/hw", cAssetsGetSupportCardDataHW);
+assetsRouters.get("/dashboard/assets/totals/hw", cAssetsGetTotalsCardDataHW);
 
 module.exports = assetsRouters;
