@@ -98,9 +98,21 @@ export default ApplianceSuits;
 
 export const ApplianceSuitsDataLoader = async () => {
    
-  const SwAssetsStatus = await fetch(`http://${API_ENDPOINT}/assets/dashboard/assets/status/sw`);
-  const SwAssetsTotal = await fetch(`http://${API_ENDPOINT}/tenants/`);
-  const SwAssetsSupport = await fetch(`http://${API_ENDPOINT}/tenants/`);
+  const SwAssetsStatus = await fetch(`http://${API_ENDPOINT}/assets/dashboard/assets/status/sw`,
+  {
+    method: "GET",
+    credentials: "include",
+  });
+  const SwAssetsTotal = await fetch(`http://${API_ENDPOINT}/tenants/`,
+  {
+    method: "GET",
+    credentials: "include",
+  });
+  const SwAssetsSupport = await fetch(`http://${API_ENDPOINT}/tenants/`,
+  {
+    method: "GET",
+    credentials: "include",
+  });
 
   return {
     SwAssetsStatus: await SwAssetsStatus.json(),
