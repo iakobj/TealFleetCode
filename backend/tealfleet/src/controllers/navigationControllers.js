@@ -6,78 +6,88 @@ const {
   navigationSubGetByName,
 } = require("../services/navigationServices");
 
-// Get navigation item by id
-module.exports.cNavigationGetById = async (req, res) => {
-  const id = req.params.id;
-  try {
-    const result1 = await navigationMainGetById(id);
-    const result2 = await navigationSubGetById(id);
-    result1.push(result2);
-    res.status(200).send({"data": result1});
-  } catch (err) {
-    console.log(err);
-    res
-      .status(404)
-      .send(
-        `The navigation item was not found, invalid input syntax for type uuid ${id}`
-      );
-  }
-};
+const { checkIdentity } = require("../middlewares/identity");
 
-// Get all main navigation items
 module.exports.cNavigationMainGetAll = async (req, res) => {
   try {
+    //const identity = await checkIdentity(req);  
+    // commented out otherwise the navigation does not appear on login, 
+    //you have to refresh the website to fetch the data agin with credentials
+
+    // This is because the fetch is run on load and not just when the main header is rendered 
+
+
     const result = await navigationMainGetAll();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No navigation found");
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get  main navigation item by id
 module.exports.cNavigationMainGetById = async (req, res) => {
-  const id = req.params.id;
+  const main_nav_id = req.params.id;
   try {
-    const result = await navigationMainGetById(id);
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No navigation found");
+    const identity = await checkIdentity(req);
+    const result = await navigationMainGetById(identity, main_nav_id);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get all sub navigation items
 module.exports.cNavigationSubGetAll = async (req, res) => {
   try {
-    const result = await navigationSubGetAll();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No navigation found");
+    const identity = await checkIdentity(req);
+    const result = await navigationSubGetAll(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get all sub navigation items with maching main nav items id
 module.exports.cNavigationSubGetById = async (req, res) => {
-  const id = req.params.id;
+  const main_nav_id = req.params.id;
   try {
-    const result = await navigationSubGetById(id);
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No navigation found");
+    const identity = await checkIdentity(req);
+    const result = await navigationSubGetById(identity, main_nav_id);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get all sub navigation items with maching main nav items id
 module.exports.cNavigationSubGetByName = async (req, res) => {
-  const name = req.params.name;
+  const main_nav_item = req.params.name;
   try {
-    const result = await navigationSubGetByName(name);
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No navigation found");
+    const identity = await checkIdentity(req);
+    const result = await navigationSubGetByName(identity, main_nav_item);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };

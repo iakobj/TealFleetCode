@@ -10,7 +10,11 @@ function HeaderSubNav({ link }) {
   const fetchData = async () => {
     const subname = link.split("/")[0] === "" ? link.split("/")[1] : link.split("/")[0];
     const data = await fetch(
-      `http://localhost:3000/navigation/sub/names/${subname}`
+      `http://localhost:3000/navigation/sub/names/${subname}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
     );
     return { subNavData: await data.json() };
   };

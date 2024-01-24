@@ -16,10 +16,7 @@ function ApplianceSuits() {
 
   const loaderData = useLoaderData();
 
-  console.log(loaderData);
   const SwAssetsStatusCardData = loaderData.SwAssetsStatus.data;
-
-  console.log(SwAssetsStatusCardData);
 
   const SwAssetsTotalCardData = [
     {

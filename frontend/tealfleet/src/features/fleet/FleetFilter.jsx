@@ -38,9 +38,8 @@ function FleetFilter() {
   // From URL it gets the last word, then it updates the array of card data and displays only the ones that include the vendor name
   useEffect(() => {
     var inputLocation = location;
-    console.log(`inputLocation:  ${inputLocation}`);
     var vendorName = inputLocation.split("/");
-    console.log(`vendorName:  ${vendorName}`);
+    
     if (vendorName.length > 1) {
       const vendor = vendorName[1];
       const originalArray = fItems;
