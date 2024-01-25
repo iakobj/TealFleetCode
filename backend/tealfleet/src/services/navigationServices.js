@@ -10,7 +10,7 @@ module.exports.navigationMainGetAll = async () => {
       const result = await query("SELECT * FROM main_navigation");
       return result.rows;
     } else {
-      const result = await qquery("SELECT * FROM main_navigation");
+      const result = await query("SELECT * FROM main_navigation");
       return result.rows;
     }
   } catch (error) {
