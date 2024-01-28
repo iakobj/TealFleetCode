@@ -1,24 +1,22 @@
 // React components
 import * as React from "react";
+import { useLoaderData } from "react-router-dom";
 
 // import location of the API server
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 // Chakra-UI components
-import { Text, Box, SimpleGrid } from "@chakra-ui/react";
+import { Text, Box, SimpleGrid, Grid, GridItem } from "@chakra-ui/react";
 
 import ContractsListCard from "../../features/contracts/ContractsListCard";
 
 function Contracts() {
+  const loaderData = useLoaderData();
+  const contractsData = loaderData.contractsItems.data;
+
   return (
     <Box>
-      <SimpleGrid
-        marginTop={{ base: "1em", sm: "1em", md: "0em" }}
-        spacing="1em"
-        columns={{ base: "1", sm: "1", md: "1", lg: "1" }}
-      >
-        <ContractsListCard />
-      </SimpleGrid>
+      <ContractsListCard contractsData={contractsData} />
     </Box>
   );
 }
@@ -27,12 +25,12 @@ export default Contracts;
 
 export const ContractsDataLoader = async () => {
   // Fetch Contracts info for contracts table
-  const cItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
+  const contractsItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
     method: "GET",
     credentials: "include",
   });
 
   return {
-    cItems: await cItems.json(),
+    contractsItems: await contractsItems.json(),
   };
 };

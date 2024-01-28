@@ -1,136 +1,102 @@
 // React components
 import * as React from "react";
-import { useRef, useState } from "react";
-import { useLoaderData } from "react-router-dom";
-import { useDisclosure } from "@chakra-ui/hooks";
-import ContractsAssetsListModal from "./ContractsAssetsListModal";
+import { useState } from "react";
+
+import ContractsAssetsList from "./ContractsAssetsList";
 
 // Chakra-UI components
 import {
   Stack,
-  Button,
   Card,
+  CardHeader,
   CardBody,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
+  Box,
+  Grid,
+  GridItem,
+  SimpleGrid,
+  Text,
+  Heading,
+  Flex,
+  Spacer,
+  Divider,
 } from "@chakra-ui/react";
 
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
   CheckCircleIcon,
   WarningTwoIcon,
 } from "@chakra-ui/icons";
 
-function ContractsListCard() {
-  const btnRef = useRef();
-  const [selectedContract, setSelectedContract] = useState();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+function ContractsListCard({ contractsData }) {
+  const [selectedContract, setSelectedContract] = useState(
+    contractsData[0].contract_no
+  );
 
-  const loaderData = useLoaderData();
-  const contractsItems = loaderData.cItems.data;
-
-  const openModal = (contractNo) => {
-    setSelectedContract(contractNo);
-    onOpen();
+  const handleCardClick = (contract_no) => {
+    setSelectedContract(contract_no);
   };
 
+  const selectedContractData = contractsData.find(
+    (contract) => contract.contract_no === selectedContract
+  );
+
   return (
-    <Card boxShadow="md">
-      <CardBody>
-        <TableContainer>
-          <Table
-            variant="simple"
-            size={{
-              base: "sm",
-              sm: "sm",
-              md: "sm",
-              lg: "sm",
-              xl: "md",
-            }}
-          >
-            <Thead>
-              <Tr>
-                <Th>CONTRACT No.</Th>
-                <Th>VALID</Th>
-                <Th>CONTRACT TYPE</Th>
-                <Th>TENANT</Th>
-                <Th>CONTRACTOR</Th>
-                <Th>VALID FROM</Th>
-                <Th>VALID UNTIL</Th>
-                <Th>ASSETS</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {contractsItems.map((data) => (
-                <Tr key={data.contract_id}>
-                  <Td>{data.contract_no}</Td>
-                  <Td>
-                    {data.contract_valid === "true" ? (
-                      <CheckCircleIcon color="teal" />
+    <Box>
+      <Grid templateColumns="repeat(10, 1fr)" templateRows="1" gap={4}>
+        <GridItem colSpan={3} marginRight="-1em">
+          <SimpleGrid spacing="1em" paddingRight="1em">
+            {contractsData.map((contractsData) => (
+              <Card
+                borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}
+                boxShadow="md"
+                key={contractsData.contract_no}
+                onClick={() => handleCardClick(contractsData.contract_no)}
+                bg={selectedContract === contractsData.contract_no ? "gray.50" : "white"}
+                _hover={{ cursor: "pointer" }}
+              >
+                <CardHeader paddingTop="0.6em" paddingBottom="0.6em">
+                  <Flex>
+                    <Heading size="sm" color="teal.700" textTransform="uppercase">
+                      {contractsData.contract_no}
+                    </Heading>
+                    <Spacer />
+                    {contractsData.contract_valid === "true" ? (
+                      <CheckCircleIcon boxSize={5} color="teal" />
                     ) : (
-                      <WarningTwoIcon color="red.600" />
+                      <WarningTwoIcon boxSize={5} color="red.600" />
                     )}
-                  </Td>
-                  <Td>{data.type}</Td>
-                  <Td>{data.tenant_name}</Td>
-                  <Td>{data.contractor_name}</Td>
-                  <Td>{data.contract_valid_from}</Td>
-                  <Td>{data.contract_valid_to}</Td>
-                  <Td>
-                    <Button
-                      size={{
-                        base: "xs",
-                        sm: "xs",
-                        md: "xs",
-                        lg: "sm",
-                        xl: "sm",
-                      }}
-                      ref={btnRef}
-                      onClick={() => openModal(data.contract_no)}
-                      colorScheme="teal"
-                      variant="outline"
-                      rightIcon={<ChevronRightIcon />}
-                    >
-                      More
-                    </Button>
-                    <ContractsAssetsListModal
-                      isOpen={isOpen}
-                      onClose={onClose}
-                      btnRef={btnRef}
-                      contract={selectedContract}
-                    />
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-        <Stack marginTop="1em" direction="row" spacing={4} align="center">
-          <Button
-            size="sm"
-            colorScheme="teal"
-            variant="solid"
-            leftIcon={<ChevronLeftIcon />}
-          >
-            Back
-          </Button>
-          <Button
-            size="sm"
-            colorScheme="teal"
-            variant="solid"
-            rightIcon={<ChevronRightIcon />}
-          >
-            Next
-          </Button>
-        </Stack>
-      </CardBody>
-    </Card>
+                  </Flex>
+                </CardHeader>
+                <Stack>
+                  <CardBody paddingTop="0.6em" paddingBottom="0.6em">
+                    <Text color="gray.800">{contractsData.contractor_name}</Text>
+                    <Text color="gray.800">{contractsData.type}</Text>
+                  </CardBody>
+                  <Divider orientation="horizontal" />
+
+                  <Box marginLeft="1em" marginRight="1em" marginBottom="0.5em">
+                    <Flex>
+                      <Box>
+                        <Text color="gray.800">{contractsData.contract_valid_from}</Text>
+                      </Box>
+                      <Spacer />
+                      <Box>
+                        <Text color="gray.800">{contractsData.contract_valid_to}</Text>
+                      </Box>
+                    </Flex>
+                  </Box>
+                </Stack>
+              </Card>
+            ))}
+          </SimpleGrid>
+        </GridItem>
+        <GridItem colSpan={7} marginLeft="0.6em">
+        <Box position="sticky" top="6.5em">
+          <ContractsAssetsList selectedContractData={selectedContractData}/>
+          </Box>
+
+        </GridItem>
+      </Grid>
+    </Box>
   );
 }
 
