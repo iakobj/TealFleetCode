@@ -17,271 +17,245 @@ const {
   hardwareAssGetBySite,
 } = require("../services/hardwareServices");
 
+const { checkIdentity } = require("../middlewares/identity");
+
 // Hardware Asset Controllers
 
-// Get all hardware from catalog
 module.exports.cHardwareCatGetAll = async (req, res) => {
   try {
-    const result = await hardwareCatGetAll();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No Hardware found");
+    const identity = await checkIdentity(req);
+    const result = await hardwareCatGetAll(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from catalog by id
 module.exports.cHardwareCatGetById = async (req, res) => {
-  const id = req.params.id;
+  const hardware_catalog_id = req.params.id;
   try {
-    const result = await hardwareCatGetById(id);
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res
-      .status(404)
-      .send(
-        `The Hardware was not found, invalid input syntax for type uuid ${id}`
-      );
+    const identity = await checkIdentity(req);
+    const result = await hardwareCatGetById(identity, hardware_catalog_id);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from cataloge by name
 module.exports.cHardwareCatGetByName = async (req, res) => {
-  const name = req.params.name;
+  const hardware_model_name = req.params.name;
   try {
-    const result = await hardwareCatGetByName(name);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type name ${name}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareCatGetByName(identity, hardware_model_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from cataloge by vendor
 module.exports.cHardwareCatGetByVendor = async (req, res) => {
-  const vendor = req.params.vendor;
+  const vendor_name = req.params.vendor;
   try {
-    const result = await hardwareCatGetByVendor(vendor);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type vendor ${vendor}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareCatGetByVendor(identity, vendor_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from cataloge by part number
 module.exports.cHardwareCatGetByPartnumber = async (req, res) => {
-  const partnumber = req.params.partnumber;
+  const hardware_part_number = req.params.partnumber;
   try {
-    const result = await hardwareCatGetByPartnumber(partnumber);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type part number ${partnumber}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareCatGetByPartnumber(identity, hardware_part_number);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from cataloge by category
 module.exports.cHardwareCatGetByCategory = async (req, res) => {
-  const category = req.params.category;
+  const hw_category = req.params.category;
   try {
-    const result = await hardwareCatGetByCategory(category);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type category ${category}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareCatGetByCategory(identity, hw_category);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get all unique hardware model names from catalog
 module.exports.cHardwareCatGetHWModelName = async (req, res) => {
   try {
-    const result = await hardwareCatGetHWModelName();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No Hardware found");
+    const identity = await checkIdentity(req);
+    const result = await hardwareCatGetHWModelName(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
 // Hardware Assets Controllers
 
-// Get all hardware from assets
 module.exports.cHardwareAssGetAll = async (req, res) => {
   try {
-    const result = await hardwareAssGetAll();
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("No Hardware found");
+    const identity = await checkIdentity(req);
+    const result = await hardwareAssGetAll(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from assets by id
 module.exports.cHardwareAssGetById = async (req, res) => {
-  const id = req.params.id;
+  const hardware_asset_id = req.params.id;
   try {
-    const result = await hardwareAssGetById(id);
-    res.status(200).send({"data": result});
-  } catch (err) {
-    console.log(err);
-    res
-      .status(404)
-      .send(
-        `The Hardware was not found, invalid input syntax for type uuid ${id}`
-      );
+    const identity = await checkIdentity(req);
+    const result = await hardwareAssGetById(identity, hardware_asset_id);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from assets by name
 module.exports.cHardwareAssGetByName = async (req, res) => {
-  const name = req.params.name;
+  const hardware_model_name = req.params.name;
   try {
-    const result = await hardwareAssGetByName(name);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type name ${name}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareAssGetByName(identity, hardware_model_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware infromation from assets by vendor
 module.exports.cHardwareAssGetByVendor = async (req, res) => {
-  const vendor = req.params.vendor;
+  const vendor_name = req.params.vendor;
   try {
-    const result = await hardwareAssGetByVendor(vendor);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type vendor ${vendor}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareAssGetByVendor(identity, vendor_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from assets by part number
 module.exports.cHardwareAssGetByPartnumber = async (req, res) => {
-  const partnumber = req.params.partnumber;
+  const hardware_part_number = req.params.partnumber;
   try {
-    const result = await hardwareAssGetByPartnumber(partnumber);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type part number ${partnumber}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareAssGetByPartnumber(identity, hardware_part_number);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from assets by part number
 module.exports.cHardwareAssGetBySerialnumber = async (req, res) => {
-  const serialnumber = req.params.serialnumber;
+  const hardware_serial_no = req.params.serialnumber;
   try {
-    const result = await hardwareAssGetBySerialnumber(serialnumber);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type serial number ${serialnumber}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareAssGetBySerialnumber(identity, hardware_serial_no);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from assets by tenant
 module.exports.cHardwareAssGetByTenant = async (req, res) => {
-  const tenant = req.params.tenant;
+  const tenant_name = req.params.tenant;
   try {
-    const result = await hardwareAssGetByTenant(tenant);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type tenant ${tenant}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareAssGetByTenant(identity, tenant_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
 
-// Get hardware from assets by site
 module.exports.cHardwareAssGetBySite = async (req, res) => {
-  const site = req.params.site;
+  const site_name = req.params.site;
   try {
-    const result = await hardwareAssGetBySite(site);
-    if (result.length === 0) {
-      res
-        .status(404)
-        .send(
-          `The Hardware was not found, invalid input syntax for type site ${site}`
-        );
+    const identity = await checkIdentity(req);
+    const result = await hardwareAssGetBySite(identity, site_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
     } else {
-      res.status(200).send({"data": result});
+      res.status(200).send({ data: result });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("500 Internal Server Error");
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
   }
 };
