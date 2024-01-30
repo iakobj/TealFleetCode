@@ -9,6 +9,7 @@ import { API_ENDPOINT } from "../../constants/apiEndpoint";
 import { Text, Box, SimpleGrid, Grid, GridItem } from "@chakra-ui/react";
 
 import ContractsListCard from "../../features/contracts/ContractsListCard";
+import ContractsFilter from "../../features/contracts/contractsFilter";
 
 function Contracts() {
   const loaderData = useLoaderData();
@@ -16,7 +17,7 @@ function Contracts() {
 
   return (
     <Box>
-      <ContractsListCard contractsData={contractsData} />
+      <ContractsFilter contractsData={contractsData} />
     </Box>
   );
 }
