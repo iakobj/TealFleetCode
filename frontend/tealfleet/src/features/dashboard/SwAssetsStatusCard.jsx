@@ -22,7 +22,7 @@ function SwAssetsStatusCard({ SwAssetsStatusCardData }) {
         borderRadius={{ md: "0.6em 0.6em 0em 0em" }}
         paddingTop="0.3em"
         paddingBottom="0.3em"
-        bg="gray.50"
+        bg="#F4F7F4"
       >
         <Text size="md"> {SwAssetsStatusCardData.title} </Text>
       </CardHeader>
