@@ -40,7 +40,7 @@ function ContractsListCard({ contractsData }) {
   );
 
   return (
-    <Box>
+    <Box marginTop="1.25em">
       <Grid templateColumns="repeat(10, 1fr)" templateRows="1" gap={4}>
         <GridItem colSpan={3} marginRight="-1em">
           <SimpleGrid spacing="1em" paddingRight="1em">
@@ -50,7 +50,7 @@ function ContractsListCard({ contractsData }) {
                 boxShadow="md"
                 key={contractsData.contract_no}
                 onClick={() => handleCardClick(contractsData.contract_no)}
-                bg={selectedContract === contractsData.contract_no ? "gray.50" : "white"}
+                bg={selectedContract === contractsData.contract_no ? "#F4F7F4" : "#fdfdfd"}
                 _hover={{ cursor: "pointer" }}
               >
                 <CardHeader paddingTop="0.6em" paddingBottom="0.6em">
@@ -90,7 +90,7 @@ function ContractsListCard({ contractsData }) {
           </SimpleGrid>
         </GridItem>
         <GridItem colSpan={7} marginLeft="0.6em">
-        <Box position="sticky" top="6.5em">
+        <Box position="sticky" top="11em">
           <ContractsAssetsList selectedContractData={selectedContractData}/>
           </Box>
 

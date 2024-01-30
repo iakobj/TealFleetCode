@@ -58,7 +58,7 @@ function ContractsAssetsList({ selectedContractData }) {
   return (
     <Box>
       <Card boxShadow="md" borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}>
-        <CardHeader bgColor="gray.50" borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}>
+        <CardHeader bgColor="#F4F7F4" borderRadius={{ md: "0.6em 0.6em 0em 0em" }}>
           <Flex>
             <Heading color="teal.700" size="md">{selectedContractData.contract_no}</Heading>
             <Spacer/>
@@ -68,7 +68,7 @@ function ContractsAssetsList({ selectedContractData }) {
           </Flex>
         </CardHeader>
 
-        <CardBody>
+        <CardBody bg="#fdfdfd">
           <Text color="gray.800" paddingBottom="0.4em">
             <b>Description: </b>
             {selectedContractData.contract_description}
@@ -101,6 +101,7 @@ function ContractsAssetsList({ selectedContractData }) {
       <Card
         boxShadow="md"
         marginTop="1em"
+        bg="#fdfdfd"
         borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}
       >
         <CardBody>
