@@ -14,6 +14,7 @@ import {
   SimpleGrid,
   Wrap,
   WrapItem,
+  Card,
   Select,
   Hide,
   IconButton,
@@ -121,14 +122,16 @@ function FleetFilter() {
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Hide breakpoint="(max-width: 17em)">
+      <Card marginBottom="1em" paddingTop="0.6em" paddingBottom="0.6em" bg="#fdfdfd">
         <form onSubmit={handleSubmit}>
-          <Wrap marginBottom={"0.8em"}>
+          <Wrap>
             <WrapItem>
               <Button
                 type="submit"
                 leftIcon={<Search2Icon />}
                 size={"sm"}
                 colorScheme={"teal"}
+                marginLeft="0.6em"
               >
                 Filter
               </Button>
@@ -227,15 +230,13 @@ function FleetFilter() {
             <Spacer />
             <WrapItem>
               <Spacer />
-              <Button size={"sm"} colorScheme={"teal"}>
-                Card
-              </Button>
-              <Button marginLeft="0.6em" size={"sm"} colorScheme={"teal"}>
-                List
+              <Button marginRight="0.6em" size={"sm"} colorScheme={"teal"}>
+                New Asset
               </Button>
             </WrapItem>
           </Wrap>
         </form>
+        </Card>
       </Hide>
       <SimpleGrid
         spacing="1em"
