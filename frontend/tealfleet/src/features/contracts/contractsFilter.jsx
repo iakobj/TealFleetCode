@@ -25,7 +25,7 @@ function ContractsFilter({contractsData}) {
   return (
     <Box>
       <Hide breakpoint="(max-width: 17em)">
-        <Card marginBottom="1em" paddingTop="0.6em" paddingBottom="0.6em" bg="#fdfdfd" position="sticky" top="6.5em" zIndex="10">
+        <Card variant="outline" marginBottom="1em" paddingTop="0.6em" paddingBottom="0.6em" bg="#fdfdfd" position="sticky" top="6.5em" zIndex="10">
           <Wrap>
             <WrapItem>
               <NavLink to={"#"}>

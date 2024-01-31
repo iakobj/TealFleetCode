@@ -47,11 +47,11 @@ function ContractsListCard({ contractsData }) {
             {contractsData.map((contractsData) => (
               <Card
                 borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}
-                boxShadow="md"
                 key={contractsData.contract_no}
                 onClick={() => handleCardClick(contractsData.contract_no)}
                 bg={selectedContract === contractsData.contract_no ? "#F4F7F4" : "#fdfdfd"}
                 _hover={{ cursor: "pointer" }}
+                variant="outline"
               >
                 <CardHeader paddingTop="0.6em" paddingBottom="0.6em">
                   <Flex>

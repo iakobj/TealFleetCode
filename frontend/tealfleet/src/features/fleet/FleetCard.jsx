@@ -24,7 +24,7 @@ import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 function FleetCard({ fleetCardItems }) {
   return (
-    <Card boxShadow="md" overflow="hidden" height={"23em"} variant="outline" bg="#fdfdfd">
+    <Card overflow="hidden" height={"23em"} variant="outline" bg="#fdfdfd">
       <CardHeader
               flex="1"
               style={{ overflow: "hidden" }}

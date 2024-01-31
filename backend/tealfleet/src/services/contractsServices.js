@@ -195,7 +195,6 @@ module.exports.hwContractsGetByContractNo = async (identity, contract_no) => {
   }
 };
 
-// TODO sw 1
 module.exports.swContractsGetNo = async (identity) => {
   try {
     const { tenant_id, tenant_root } = await identity.data;
@@ -220,7 +219,6 @@ module.exports.swContractsGetNo = async (identity) => {
   }
 };
 
-// TODO hw 1
 module.exports.hwContractsGetNo = async (identity) => {
   try {
     const { tenant_id, tenant_root } = await identity.data;

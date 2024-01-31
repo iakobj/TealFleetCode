@@ -122,7 +122,7 @@ function FleetFilter() {
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Hide breakpoint="(max-width: 17em)">
-      <Card marginBottom="1em" paddingTop="0.6em" paddingBottom="0.6em" bg="#fdfdfd">
+      <Card marginBottom="1em" paddingTop="0.6em" paddingBottom="0.6em" variant="outline" bg="#fdfdfd" borderRadius={"0.6em 0.6em 0.6em 0.6em"}>
         <form onSubmit={handleSubmit}>
           <Wrap>
             <WrapItem>
