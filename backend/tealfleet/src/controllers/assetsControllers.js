@@ -63,18 +63,21 @@ module.exports.cAssetsGetAllSW = async (req, res) => {
   }
 };
 
-// TODO SW 1
-module.exports.cAssetsGetStatusCardDataSW = async (req, res) => {
+module.exports.cAssetsGetStatusCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
     const resultArray = await Promise.all([
       assetsGetNoSW(identity),
+      assetsGetNoHW(identity),
       swContractsGetNo(identity),
       swContractsGetAll(identity),
     ]);
     const allSw = resultArray[0][0].count;
-    const allSupportedSw = resultArray[1][0].count;
-    const allSwContracts = resultArray[2];
+    const allHw = resultArray[1][0].count;
+    const allcoveredAssets = resultArray[2][0].count;
+    const allSwContracts = resultArray[3];
+
+    console.log(resultArray);
 
     const today = new Date();
     const updatedAllSwContracts = allSwContracts.map((allSwContracts) => {
@@ -96,33 +99,45 @@ module.exports.cAssetsGetStatusCardDataSW = async (req, res) => {
     // Counting all contracts
     const totalContractsCount = updatedAllSwContracts.length;
 
-    const allSW = {
-      title: "All appliance suits",
-      total: parseInt(allSw),
+    const allAssets = {
+      title: "All assets",
+      total: parseInt(allSw) + parseInt(allHw),
       percent: 100,
     };
-    const supportedSW = {
-      title: "Appliances with support",
-      total: parseInt(allSupportedSw),
-      percent: parseInt((allSupportedSw / allSw) * 100),
+    const coveredAssets = {
+      title: "Covered assets",
+      total: parseInt(allcoveredAssets),
+      percent: parseInt((allcoveredAssets / allSw) * 100),
     };
-    const unSupportedSW = {
-      title: "Appliances without support",
-      total: allSw - allSupportedSw,
-      percent: parseInt(100 - (allSupportedSw / allSw) * 100),
+    const uncoveredAssets = {
+      title: "Uncovered assets",
+      total: 5,
+      percent: parseInt(100 - (allcoveredAssets / allSw) * 100),
+    };
+    const newAssets = {
+      title: "New assets",
+      total: 11,
+      percent: parseInt(100 - (allcoveredAssets / allSw) * 100),
     };
     const allContracts = {
-      title: "All Contracts",
+      title: "All contracts",
       total: totalContractsCount,
       percent: 100,
     };
     const activeContracts = {
-      title: "All active Contracts",
+      title: "Active contracts",
       total: validContractsCount,
       percent: parseInt((validContractsCount / totalContractsCount) * 100),
     };
-    const inActiveContracts = {
-      title: "All inactive Contracts",
+    const expiredContracts = {
+      title: "Expired contracts",
+      total: totalContractsCount - validContractsCount,
+      percent: parseInt(
+        100 - (validContractsCount / totalContractsCount) * 100
+      ),
+    };
+    const soonExpired = {
+      title: "Contracts ends soon",
       total: totalContractsCount - validContractsCount,
       percent: parseInt(
         100 - (validContractsCount / totalContractsCount) * 100
@@ -130,26 +145,31 @@ module.exports.cAssetsGetStatusCardDataSW = async (req, res) => {
     };
 
     const result = [
-      allSW,
-      supportedSW,
-      unSupportedSW,
+      allAssets,
+      coveredAssets,
+      uncoveredAssets,
+      newAssets,
       allContracts,
       activeContracts,
-      inActiveContracts,
+      expiredContracts,
+      soonExpired,
     ];
 
     if (result[0] && result[0].error) {
+      console.log(result);
       res.status(401).send({ data: result });
     } else {
+      console.log(result);
       res.status(200).send({ data: result });
     }
   } catch (error) {
+    console.log(error);
     res.status(404).send({ data: [{ error }] });
   }
 };
 
 // TODO SW 2
-module.exports.cAssetsGetSupportCardDataSW = async (req, res) => {
+module.exports.cAssetsGetSupportCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
     const result = await assetsGetNoHW(identity);
@@ -165,58 +185,10 @@ module.exports.cAssetsGetSupportCardDataSW = async (req, res) => {
 };
 
 // TODO SW 3
-module.exports.cAssetsGetTotalsCardDataSW = async (req, res) => {
+module.exports.cAssetsGetTotalsCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
-    const result = await assetsGetAllSW(identity);
-
-    if (result[0] && result[0].error) {
-      res.status(401).send({ data: result });
-    } else {
-      res.status(200).send({ data: result });
-    }
-  } catch (error) {
-    res.status(404).send({ data: [{ error }] });
-  }
-};
-
-// TODO HW 1
-module.exports.cAssetsGetStatusCardDataHW = async (req, res) => {
-  try {
-    const identity = await checkIdentity(req);
-    const result = await assetsGetNoHW(identity);
-
-    if (result[0] && result[0].error) {
-      res.status(401).send({ data: result });
-    } else {
-      res.status(200).send({ data: result });
-    }
-  } catch (error) {
-    res.status(404).send({ data: [{ error }] });
-  }
-};
-
-// TODO HW 2
-module.exports.cAssetsGetSupportCardDataHW = async (req, res) => {
-  try {
-    const identity = await checkIdentity(req);
-    const result = await assetsGetAllHW(identity);
-
-    if (result[0] && result[0].error) {
-      res.status(401).send({ data: result });
-    } else {
-      res.status(200).send({ data: result });
-    }
-  } catch (error) {
-    res.status(404).send({ data: [{ error }] });
-  }
-};
-
-// TODO HW 3
-module.exports.cAssetsGetTotalsCardDataHW = async (req, res) => {
-  try {
-    const identity = await checkIdentity(req);
-    const result = await assetsGetNoSW(identity);
+    const result = await assetsGetallAssets(identity);
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });

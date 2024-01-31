@@ -162,25 +162,18 @@ const {
   cAssetsGetAllHW,
   cAssetsGetAll,
 
-  cAssetsGetStatusCardDataSW,
-  cAssetsGetSupportCardDataSW,
-  cAssetsGetTotalsCardDataSW,
+  cAssetsGetStatusCardData,
+  cAssetsGetSupportCardData,
+  cAssetsGetTotalsCardData,
 
-  cAssetsGetStatusCardDataHW,
-  cAssetsGetSupportCardDataHW,
-  cAssetsGetTotalsCardDataHW,
 } = require("../controllers/assetsControllers");
 
 assetsRouters.get("/fleet/all", cAssetsGetAll);
 assetsRouters.get("/fleet/all/sw", cAssetsGetAllSW);
 assetsRouters.get("/fleet/all/hw", cAssetsGetAllHW);
 
-assetsRouters.get("/dashboard/assets/status/sw", cAssetsGetStatusCardDataSW);
-assetsRouters.get("/dashboard/assets/support/sw", cAssetsGetSupportCardDataSW);
-assetsRouters.get("/dashboard/assets/totals/sw", cAssetsGetTotalsCardDataSW);
-
-assetsRouters.get("/dashboard/assets/status/hw", cAssetsGetStatusCardDataHW);
-assetsRouters.get("/dashboard/assets/support/hw", cAssetsGetSupportCardDataHW);
-assetsRouters.get("/dashboard/assets/totals/hw", cAssetsGetTotalsCardDataHW);
+assetsRouters.get("/dashboard/assets/status/sw", cAssetsGetStatusCardData);
+assetsRouters.get("/dashboard/assets/support/sw", cAssetsGetSupportCardData);
+assetsRouters.get("/dashboard/assets/totals/sw", cAssetsGetTotalsCardData);
 
 module.exports = assetsRouters;
