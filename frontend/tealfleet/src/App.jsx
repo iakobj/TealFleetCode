@@ -15,8 +15,7 @@ import ErrorBoundary from "./pages/ErrorBoundary";
 // Pages
 
 // Dashboard
-import Dashboard from "./pages/Dashboard";
-import ApplianceSuits, {ApplianceSuitsDataLoader} from "./pages/dashboard/ApplianceSuits";
+import Dashboard, {DashboardDataLoader} from "./pages/Dashboard";
 
 import Fleet, {FleetDataLoader} from "./pages/Fleet";
 
@@ -30,7 +29,6 @@ import Administration from "./pages/Administration";
 import Login from "./pages/login";
 import Register from "./pages/register";
 
-import Hardware from "./pages/dashboard/Hardware";
 
 // ChakraProvider component
 import { ChakraProvider } from "@chakra-ui/react";
@@ -48,19 +46,8 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <ApplianceSuits/>,
-        loader: ApplianceSuitsDataLoader,
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "dashboard/appliance-suits",
-        element: <ApplianceSuits/>,
-        loader: ApplianceSuitsDataLoader,
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "dashboard/hardware",
-        element: <Hardware/>,
+        element: <Dashboard/>,
+        loader: DashboardDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
