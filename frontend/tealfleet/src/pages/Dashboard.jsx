@@ -3,7 +3,7 @@ import * as React from "react";
 import { useLoaderData } from "react-router-dom";
 
 // import location of the API server
-import { API_ENDPOINT } from '../constants/apiEndpoint';
+import { API_ENDPOINT } from "../constants/apiEndpoint";
 
 // Chakra-UI components
 import { Box, SimpleGrid, Card } from "@chakra-ui/react";
@@ -13,7 +13,6 @@ import AssetsTotalCard from "../features/dashboard/AssetsTotalCard";
 import AssetsSupportCard from "../features/dashboard/AssetsSupportCard";
 
 function Dashboard() {
-
   const loaderData = useLoaderData();
 
   const AssetsStatusCardData = loaderData.AssetsStatus.data;
@@ -66,20 +65,25 @@ function Dashboard() {
 
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
-      <Card padding="1.5em">
-      <SimpleGrid
-        spacing="1.2em"
-        columns={{ base: "1", sm: "2", md: "4", lg: "4", xl: "4", "2xl": "4" }}
-      >
-        
-        {AssetsStatusCardData.map((AssetsStatusCardData) => (
-          <AssetsStatusCard
-          AssetsStatusCardData={AssetsStatusCardData}
-            key={AssetsStatusCardData.title}
-          />
-        ))}
-        
-      </SimpleGrid>
+      <Card variant="outline" padding="1.5em">
+        <SimpleGrid
+          spacing="1.2em"
+          columns={{
+            base: "1",
+            sm: "2",
+            md: "4",
+            lg: "4",
+            xl: "4",
+            "2xl": "4",
+          }}
+        >
+          {AssetsStatusCardData.map((AssetsStatusCardData) => (
+            <AssetsStatusCard
+              AssetsStatusCardData={AssetsStatusCardData}
+              key={AssetsStatusCardData.title}
+            />
+          ))}
+        </SimpleGrid>
       </Card>
       <SimpleGrid
         marginTop="1.5em"
@@ -95,21 +99,19 @@ function Dashboard() {
 
 export default Dashboard;
 
-
 export const DashboardDataLoader = async () => {
-   
-  const AssetsStatus = await fetch(`http://${API_ENDPOINT}/assets/dashboard/assets/status/sw`,
-  {
+  const AssetsStatus = await fetch(
+    `http://${API_ENDPOINT}/assets/dashboard/assets/status/sw`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
+  const AssetsTotal = await fetch(`http://${API_ENDPOINT}/tenants/`, {
     method: "GET",
     credentials: "include",
   });
-  const AssetsTotal = await fetch(`http://${API_ENDPOINT}/tenants/`,
-  {
-    method: "GET",
-    credentials: "include",
-  });
-  const AssetsSupport = await fetch(`http://${API_ENDPOINT}/tenants/`,
-  {
+  const AssetsSupport = await fetch(`http://${API_ENDPOINT}/tenants/`, {
     method: "GET",
     credentials: "include",
   });

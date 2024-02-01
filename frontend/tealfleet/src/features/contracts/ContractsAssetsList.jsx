@@ -44,7 +44,6 @@ function ContractsAssetsList({ selectedContractData }) {
       );
 
       const assets = await contractAssets.json();
-      console.log(assets);
       setContractAssets(assets);
     } catch (error) {
       console.error("Error loading asset data:", error);

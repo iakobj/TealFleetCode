@@ -63,7 +63,6 @@ function HeaderMainNav() {
         rowSpan={{ base: 1, sm: 1, md: 1 }}
         rowStart={{ base: 1, sm: 1, md: 1 }}
         bg="teal.600"
-        boxShadow="md"
         marginTop={{ md: "0.5em" }}
         borderRadius={{ md: "0.6em 0.6em 0em 0em" }}
       >
@@ -110,8 +109,9 @@ function HeaderMainNav() {
         colStart={{ base: 1, sm: 1, md: 1 }}
         rowSpan={{ base: 1, sm: 1, md: 1 }}
         rowStart={{ base: 2, sm: 2, md: 2 }}
-        bg="gray.50"
-        boxShadow="md"
+        bg="#fdfdfd"
+        border="1px"
+        borderColor="gray.200"
         marginBottom={{ md: "1.1em" }}
         borderRadius={{ md: "0em 0em 0em 0em" }}
       >

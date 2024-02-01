@@ -17,7 +17,7 @@ import {
 
 function AssetsStatusCard({ AssetsStatusCardData }) {
   return (
-    <Card boxShadow="sm" variant="outline" bg="#fdfdfd" borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}>
+    <Card variant="outline" bg="#fdfdfd" borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}>
       <CardHeader marginTop="-0.6em">
         <Text fontSize="md" color="gray.800"> {AssetsStatusCardData.title} </Text>
       </CardHeader>
@@ -31,8 +31,8 @@ function AssetsStatusCard({ AssetsStatusCardData }) {
             <CircularProgress
               value={AssetsStatusCardData.percent}
               color="teal"
-              size="60px"
-              thickness="8px"
+              size="65px"
+              thickness="9px"
             >
               <CircularProgressLabel>
                 {AssetsStatusCardData.percent}%
