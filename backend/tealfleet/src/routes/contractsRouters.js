@@ -39,10 +39,31 @@
  *     contracts_name_404:
  *       type: string
  *       example: The role was not found, invalid input syntax for type name ACMEs
-
+ * 
  * tags:
  *   name: contracts
  *   description: Contracts and related contract information
+ * 
+ * /contracts/numbers:
+ *   get:
+ *     summary: Get number of all contracts
+ *     tags: [contracts]
+ *     responses:
+ *       200:
+ *         description: Role exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/contracts_200'
+ *       404:
+ *         description: Role does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/contracts_404'
+ *
+ *
+ *
  * /contracts:
  *   get:
  *     summary: Get all contracts
@@ -153,6 +174,7 @@
  
  const {
     cContractsGetAll,
+    cContractsGetAllNo,
     cContractsGetByTenant,
     cHwContractsGetAll,
     cSwContractsGetAll,
@@ -162,6 +184,7 @@
  } = require("../controllers/contractsControllers");
  
  contractsRouters.get("/", cContractsGetAll);
+ contractsRouters.get("/numbers", cContractsGetAllNo);
  contractsRouters.get("/tenant/:tenant", cContractsGetByTenant);
  contractsRouters.get("/all/hardware", cHwContractsGetAll);
  contractsRouters.get("/all/software", cSwContractsGetAll);

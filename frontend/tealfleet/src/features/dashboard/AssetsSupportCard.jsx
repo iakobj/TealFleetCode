@@ -30,7 +30,7 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
             }}
           >
             <TableCaption>
-              Support status of appliance suits by vendor
+              Support status of assets by vendor
             </TableCaption>
             <Thead>
               <Tr>

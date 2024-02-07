@@ -1,5 +1,6 @@
 const {
   contractsGetAll,
+  contractsGetAllNo,
   contractsGetByTenant,
 
   hwContractsGetAll,
@@ -45,6 +46,21 @@ module.exports.cContractsGetAll = async (req, res) => {
       res.status(401).send({ data: updatedContracts });
     } else {
       res.status(200).send({ data: updatedContracts });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
+  }
+};
+
+module.exports.cContractsGetAllNo = async (req, res) => {
+  try {
+    const identity = await checkIdentity(req);
+    const result = await contractsGetAllNo(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
     }
   } catch (error) {
     res.status(404).send({ data: [{ error }] });

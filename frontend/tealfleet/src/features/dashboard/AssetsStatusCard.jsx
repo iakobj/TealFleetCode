@@ -10,7 +10,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Heading,
   CircularProgress,
   CircularProgressLabel,
 } from "@chakra-ui/react";

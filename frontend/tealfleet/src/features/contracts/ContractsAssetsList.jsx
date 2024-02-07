@@ -31,6 +31,9 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
+import { InfoOutlineIcon } from '@chakra-ui/icons'
+
+
 function ContractsAssetsList({ selectedContractData }) {
   const [contractAssets, setContractAssets] = useState([]);
   const AssetsDataLoader = async (selectedContractData) => {
@@ -120,7 +123,7 @@ function ContractsAssetsList({ selectedContractData }) {
                 <Th>VENDOR</Th>
                 <Th>MODEL</Th>
                 <Th>SERIAL NUMBER</Th>
-                <Th>SITE</Th>
+                <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -137,7 +140,7 @@ function ContractsAssetsList({ selectedContractData }) {
                       <Text color="gray.800">{data.software_model_name || data.hardware_model_name}</Text>
                     </Td>
                     <Td><Text color="gray.800">{data.hardware_serial_no}</Text></Td>
-                    <Td><Text color="gray.800">{data.site_name}</Text></Td>
+                    <Td><Text color="gray.800"><InfoOutlineIcon color="teal" /></Text></Td>
                   </Tr>
                 ))}
             </Tbody>

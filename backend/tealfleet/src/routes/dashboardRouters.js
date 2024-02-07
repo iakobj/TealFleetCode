@@ -158,14 +158,14 @@ assetsRouters.use(express.urlencoded({ extended: false }));
 assetsRouters.use(bodyParser.json());
 
 const {
-  cAssetsGetAllSW,
-  cAssetsGetAllHW,
-  cAssetsGetAll,
+  cDashboardGetStatusCardData,
+  cDashboardGetSupportCardData,
+  cDashboardGetTotalsCardData,
 
-} = require("../controllers/assetsControllers");
+} = require("../controllers/dashboardControllers");
 
-assetsRouters.get("/fleet/all", cAssetsGetAll);
-assetsRouters.get("/fleet/all/sw", cAssetsGetAllSW);
-assetsRouters.get("/fleet/all/hw", cAssetsGetAllHW);
+assetsRouters.get("/assets/status/", cDashboardGetStatusCardData);
+assetsRouters.get("/assets/support/", cDashboardGetSupportCardData);
+assetsRouters.get("/assets/totals/", cDashboardGetTotalsCardData);
 
 module.exports = assetsRouters;

@@ -29,6 +29,29 @@ module.exports.contractsGetAll = async (identity) => {
   }
 };
 
+module.exports.contractsGetAllNo = async (identity) => {
+  try {
+    const { tenant_id, tenant_root } = await identity.data;
+
+    if (tenant_root == true) {
+      const result = await query(
+        "SELECT COUNT(DISTINCT contract_id) FROM contracts;"
+      );
+      return result.rows;
+    } else {
+      const result = await query(
+        `SELECT COUNT(DISTINCT contracts.contract_id)
+        FROM contracts
+        WHERE contracts.tenant_id = $1;`,
+        [tenant_id]
+      );
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
+
 module.exports.contractsGetByTenant = async (identity, ten_id) => {
   try {
     const { tenant_id, tenant_root } = await identity.data;
@@ -206,7 +229,7 @@ module.exports.swContractsGetNo = async (identity) => {
       return result.rows;
     } else {
       const result = await query(
-        `SELECT COUNT(DISTINCT sw_asset_contracts.software_asset_id) AS distinct_count
+        `SELECT COUNT(DISTINCT sw_asset_contracts.software_asset_id)
         FROM sw_asset_contracts
         JOIN contracts ON sw_asset_contracts.contract_id = contracts.contract_id
         WHERE contracts.tenant_id = $1;`,
@@ -230,7 +253,7 @@ module.exports.hwContractsGetNo = async (identity) => {
       return result.rows;
     } else {
       const result = await query(
-        `SELECT COUNT(DISTINCT hw_asset_contracts.hardware_asset_id) AS distinct_count
+        `SELECT COUNT(DISTINCT hw_asset_contracts.hardware_asset_id)
         FROM hw_asset_contracts
         JOIN contracts ON hw_asset_contracts.contract_id = contracts.contract_id
         WHERE contracts.tenant_id = $1;`,

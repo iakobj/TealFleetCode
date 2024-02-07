@@ -30,7 +30,7 @@ function SwAssetsTotalCard({ AssetsTotalCardData }) {
               lg: "md",
             }}
           >
-            <TableCaption>Total appliance suits by vendor</TableCaption>
+            <TableCaption>Total assets by vendor</TableCaption>
             <Thead>
               <Tr>
                 <Th>VENDOR</Th>

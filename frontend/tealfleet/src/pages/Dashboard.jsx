@@ -101,7 +101,7 @@ export default Dashboard;
 
 export const DashboardDataLoader = async () => {
   const AssetsStatus = await fetch(
-    `http://${API_ENDPOINT}/assets/dashboard/assets/status/sw`,
+    `http://${API_ENDPOINT}/dashboard/assets/status/`,
     {
       method: "GET",
       credentials: "include",
