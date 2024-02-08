@@ -41,7 +41,7 @@ function SwAssetsTotalCard({ AssetsTotalCardData }) {
             <Tbody>
               {AssetsTotalCardData.map((data) => (
                 <Tr key={data.vendor}>
-                  <Td>{data.vendor}</Td>
+                  <Td textTransform="capitalize">{data.vendor}</Td>
                   <Td>{data.total}</Td>
                   <Td>
                     <Progress

@@ -16,52 +16,8 @@ function Dashboard() {
   const loaderData = useLoaderData();
 
   const AssetsStatusCardData = loaderData.AssetsStatus.data;
-
-  const AssetsTotalCardData = [
-    {
-      vendor: "Cisco",
-      total: 32,
-      percent: 32,
-    },
-    {
-      vendor: "Dell",
-      total: 3,
-      percent: 3,
-    },
-    {
-      vendor: "VMware",
-      total: 28,
-      percent: 28,
-    },
-    {
-      vendor: "Palo Alto",
-      total: 37,
-      percent: 37,
-    },
-  ];
-
-  const AssetsSupportCardData = [
-    {
-      vendor: "Cisco",
-      supported: 20,
-      unsupported: 12,
-    },
-    {
-      vendor: "Dell",
-      supported: 2,
-      unsupported: 1,
-    },
-    {
-      vendor: "VMware",
-      supported: 25,
-      unsupported: 3,
-    },
-    {
-      vendor: "Palo Alto",
-      supported: 37,
-      unsupported: 0,
-    },
-  ];
+  const AssetsTotalCardData = loaderData.AssetsTotal.data;
+  const AssetsSupportCardData = loaderData.AssetsSupport.data;
 
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
@@ -107,11 +63,11 @@ export const DashboardDataLoader = async () => {
       credentials: "include",
     }
   );
-  const AssetsTotal = await fetch(`http://${API_ENDPOINT}/tenants/`, {
+  const AssetsTotal = await fetch(`http://${API_ENDPOINT}/dashboard/assets/totals/`, {
     method: "GET",
     credentials: "include",
   });
-  const AssetsSupport = await fetch(`http://${API_ENDPOINT}/tenants/`, {
+  const AssetsSupport = await fetch(`http://${API_ENDPOINT}/dashboard/assets/support/`, {
     method: "GET",
     credentials: "include",
   });

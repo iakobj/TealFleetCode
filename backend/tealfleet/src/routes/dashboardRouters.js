@@ -165,7 +165,7 @@ const {
 } = require("../controllers/dashboardControllers");
 
 assetsRouters.get("/assets/status/", cDashboardGetStatusCardData);
-assetsRouters.get("/assets/support/", cDashboardGetSupportCardData);
 assetsRouters.get("/assets/totals/", cDashboardGetTotalsCardData);
+assetsRouters.get("/assets/support/", cDashboardGetSupportCardData);
 
 module.exports = assetsRouters;

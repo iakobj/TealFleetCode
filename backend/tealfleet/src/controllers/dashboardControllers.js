@@ -16,6 +16,8 @@ const {
   hwContractsGetAll,
 } = require("../services/contractsServices");
 
+const { vendorsGetAll } = require("../services/vendorsServices");
+
 const { checkIdentity } = require("../middlewares/identity");
 
 module.exports.cDashboardGetStatusCardData = async (req, res) => {
@@ -29,13 +31,6 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       contractsGetAllNo(identity),
       contractsGetAll(identity),
     ]);
-
-    console.log(resultArray);
-
-    const result_sw = await assetsGetAllSW(identity);
-    const result_hw = await assetsGetAllHW(identity);
-
-    const assetsAll = result_sw.concat(result_hw);
 
     const assetsNoSW = resultArray[0][0].count;
     const assetsNoHW = resultArray[1][0].count;
@@ -53,7 +48,6 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
     const validContractsCount = contractsAll.reduce((count, contract) => {
       const validFrom = new Date(contract.contract_valid_from);
       const validTo = new Date(contract.contract_valid_to);
-      // Add a day to validTo so the comparison works correctly
       validTo.setDate(validTo.getDate() + 1);
       const isValid = today >= validFrom && today <= validTo;
       return isValid ? count + 1 : count;
@@ -69,18 +63,19 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
 
     const contractsWithinFourMonthsCount = contractsWithinFourMonths.length;
 
-    // Calculate the start date of the last month
-    const lastMonthStartDate = new Date();
+    const result_sw = await assetsGetAllSW(identity);
+    const result_hw = await assetsGetAllHW(identity);
+    const assetsAll = result_sw.concat(result_hw);
+
+    const lastMonthStartDate = today;
     lastMonthStartDate.setMonth(lastMonthStartDate.getMonth() - 1);
     lastMonthStartDate.setDate(1);
     lastMonthStartDate.setHours(0, 0, 0, 0);
 
-    // Calculate the end date of the last month
     const lastMonthEndDate = new Date();
     lastMonthEndDate.setDate(0); // Move to the last day of the previous month
     lastMonthEndDate.setHours(23, 59, 59, 999);
 
-    // Count the number of hardware assets created in the last month
     const hardwareCreatedLastMonthCount = assetsAll.reduce((count, asset) => {
       const hardwareCreatedAt = new Date(asset.hardware_created_at);
       if (
@@ -110,7 +105,9 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
     const newAssets = {
       title: "New assets",
       total: hardwareCreatedLastMonthCount,
-      percent: ((100 / noOfAllAssets) * hardwareCreatedLastMonthCount).toFixed(0),
+      percent: ((100 / noOfAllAssets) * hardwareCreatedLastMonthCount).toFixed(
+        0
+      ),
     };
     const allContracts = {
       title: "All contracts",
@@ -151,23 +148,57 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
     ];
 
     if (result[0] && result[0].error) {
-      console.log(result);
       res.status(401).send({ data: result });
     } else {
-      console.log(result);
       res.status(200).send({ data: result });
     }
   } catch (error) {
-    console.log(error);
     res.status(404).send({ data: [{ error }] });
   }
 };
 
-// TODO 2
-module.exports.cDashboardGetSupportCardData = async (req, res) => {
+// TODO
+module.exports.cDashboardGetTotalsCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
-    const result = await assetsGetNoHW(identity);
+
+    const resultArray = await Promise.all([
+      assetsGetAllHW(identity),
+      assetsGetAllSW(identity),
+      vendorsGetAll(identity),
+    ]);
+
+    const assetsAllHW = resultArray[0];
+    const assetsAllSW = resultArray[1];
+    const vendorsAll = resultArray[2];
+
+    // Count occurrences of vendors in hardware and software arrays
+    const vendorCounts = vendorsAll.map((vendor) => {
+      const countHW = assetsAllHW.filter(
+        (asset) => asset.vendor_name === vendor.vendor_name
+      ).length;
+      const countSW = assetsAllSW.filter(
+        (asset) => asset.vendor_name === vendor.vendor_name
+      ).length;
+      const total = countHW + countSW;
+      return {
+        vendor: vendor.vendor_name,
+        total,
+        percent:
+          total > 0
+            ? (
+                (total / (assetsAllHW.length + assetsAllSW.length)) *
+                100
+              ).toFixed(2)
+            : 0,
+      };
+    });
+
+    // Sort by vendor name
+    vendorCounts.sort((a, b) => a.vendor.localeCompare(b.vendor));
+
+    // filter out vendors with zero total
+    const result = vendorCounts.filter((vendor) => vendor.total > 0);
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });
@@ -179,11 +210,25 @@ module.exports.cDashboardGetSupportCardData = async (req, res) => {
   }
 };
 
-// TODO 3
-module.exports.cDashboardGetTotalsCardData = async (req, res) => {
+// TODO
+module.exports.cDashboardGetSupportCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
-    const result = await assetsGetallAssets(identity);
+
+    const resultArray = await Promise.all([
+      contractsGetAll(identity),
+    ]);
+
+    const contractsAll = resultArray[0];
+
+    const result = contractsAll.map(obj => ({
+        contract_no: obj.contract_no,
+        contractor_name: obj.contractor_name,
+        contract_valid: new Date(obj.contract_valid_to) > new Date(), // Check if contract is still valid
+      }));
+      
+      console.log(result);
+
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });

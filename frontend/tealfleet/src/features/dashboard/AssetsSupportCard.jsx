@@ -15,6 +15,11 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
+import {
+  CheckCircleIcon,
+  WarningTwoIcon,
+} from "@chakra-ui/icons";
+
 function AssetsSupportCard({ AssetsSupportCardData }) {
   return (
     <Card variant="outline" bg="#fdfdfd" borderRadius={"0.6em 0.6em 0.6em 0.6em"}>
@@ -34,17 +39,21 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
             </TableCaption>
             <Thead>
               <Tr>
-                <Th>VENDOR</Th>
-                <Th>SUPPORTED</Th>
-                <Th>UNSUPPORTED</Th>
+                <Th>CONTRACT</Th>
+                <Th>SUPPORTED BY</Th>
+                <Th>STATUS</Th>
               </Tr>
             </Thead>
             <Tbody>
               {AssetsSupportCardData.map((data) => (
-                <Tr key={data.vendor}>
-                  <Td>{data.vendor}</Td>
-                  <Td>{data.supported}</Td>
-                  <Td>{data.unsupported}</Td>
+                <Tr key={data.contract_no}>
+                  <Td>{data.contract_no}</Td>
+                  <Td>{data.contractor_name}</Td>
+                  <Td>{data.contract_valid === true ? (
+                      <CheckCircleIcon boxSize={5} color="teal" />
+                    ) : (
+                      <WarningTwoIcon boxSize={5} color="red.600" />
+                    )}</Td>
                 </Tr>
               ))}
             </Tbody>
