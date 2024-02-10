@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 // import location of the API server
@@ -20,28 +20,63 @@ import HeaderLogo from "./HeaderLogo";
 import HeaderSubNav from "./HeaderSubNav";
 import HeaderProfileMenu from "./HeaderProfileMenu";
 
-const fetchData = async () => {
-  const data = await fetch(`http://${API_ENDPOINT}/navigation/main`, {
-    method: "GET",
-    credentials: "include",
-  });
-  return { mainNavData: await data.json() };
-};
-
-const items = await fetchData();
-const mainNavItems = items.mainNavData.data;
-
 function HeaderMainNav() {
   const { pathname: location = "dashboard" } = useLocation();
 
   const [clickedIndex, setClickedIndex] = useState(-1);
-  const [selectedLink, setSelectedLink] = useState(location);
+  const linkForSubNav = location.split("/")[0] === "" ? location.split("/")[1] : location.split("/")[0];
 
   const handleLinkClick = (index) => {
-    const link = items.mainNavData.data[index].main_nav_item;
     setClickedIndex(index);
-    setSelectedLink(link);
   };
+
+   // Fetch navgation data
+  const [mainNavItems, setMainNavItems] = useState([]);
+
+  const fetchData = async () => {
+    const data = await fetch(`http://${API_ENDPOINT}/navigation/main`, {
+      method: "GET",
+      credentials: "include",
+    });
+    return { 
+      mainNavData: await data.json(),
+    };
+  };
+
+  const fetchMainNavData = async () => {
+    const items = await fetchData();
+    return items.mainNavData.data;
+  };
+
+  useEffect(() => {
+    fetchMainNavData().then((items) => {
+      setMainNavItems(items);
+    });
+  }, [location]);
+
+   // Fetch user data
+  const [user, setUser] = useState(["null"]);
+
+  const fetchUser = async () => {
+    const userData = await fetch(`http://${API_ENDPOINT}/users/me`, {
+      method: "GET",
+      credentials: "include",
+    });
+    return { 
+      logedInUserData: await userData.json(),
+    };
+  };
+
+  const fetchUserData = async () => {
+    const items = await fetchUser();
+    return items.logedInUserData.data;
+  };
+
+  useEffect(() => {
+    fetchUserData().then((user) => {
+      setUser(user);
+    });
+  }, [location]);
 
   return (
     <Grid
@@ -83,24 +118,27 @@ function HeaderMainNav() {
               {mainNavItems &&
                 mainNavItems.map &&
                 mainNavItems.map((mainNavItem, index) => (
-                  <Text
-                    color="white"
-                    fontSize={{ base: "sm", sm: "sm", md: "lg" }}
+                  <NavLink
+                    to={mainNavItem.main_nav_item}
                     key={mainNavItem.main_nav_id}
-                    onClick={() => handleLinkClick(index)}
-                    fontWeight={index === clickedIndex ? "bold" : "500"}
                   >
-                    <NavLink to={mainNavItem.main_nav_item}>
+                    <Text
+                      color="white"
+                      fontSize={{ base: "sm", sm: "sm", md: "lg" }}
+                      key={mainNavItem.main_nav_id}
+                      onClick={() => handleLinkClick(index)}
+                      fontWeight={index === clickedIndex ? "bold" : "500"}
+                    >
                       {mainNavItem.main_nav_item.toUpperCase()}
-                    </NavLink>
-                  </Text>
+                    </Text>
+                  </NavLink>
                 ))}
             </HStack>
           </Box>
           <Spacer />
 
           <Box margin={{ base: "0.7em", sm: "0.7em", md: "0.5em" }}>
-            <HeaderProfileMenu />
+            <HeaderProfileMenu user={user}/>
           </Box>
         </Flex>
       </GridItem>
@@ -116,7 +154,7 @@ function HeaderMainNav() {
         borderRadius={{ md: "0em 0em 0em 0em" }}
       >
         <Center margin={{ base: "0.7em", sm: "0.7em", md: "0.2em" }}>
-          <HeaderSubNav link={selectedLink} />
+          <HeaderSubNav link={linkForSubNav} />
         </Center>
       </GridItem>
     </Grid>

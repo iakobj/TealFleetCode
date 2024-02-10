@@ -4,12 +4,12 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Chakra-UI components
-import { Flex, Text, HStack, Card } from "@chakra-ui/react";
+import { Flex, Text, HStack } from "@chakra-ui/react";
 
 function HeaderSubNav({ link }) {
-
   const fetchData = async () => {
-    const subname = link.split("/")[0] === "" ? link.split("/")[1] : link.split("/")[0];
+    const subname =
+      link.split("/")[0] === "" ? link.split("/")[1] : link.split("/")[0];
     const data = await fetch(
       `http://localhost:3000/navigation/sub/names/${subname}`,
       {
@@ -25,14 +25,13 @@ function HeaderSubNav({ link }) {
     return items.subNavData.data;
   };
 
+  const [subNavItems, setSubNavItems] = useState([]);
+
   const fetchTenants = async () => {
-    const data = await fetch(
-      `http://localhost:3000/tenants`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const data = await fetch(`http://localhost:3000/tenants`, {
+      method: "GET",
+      credentials: "include",
+    });
     return { subNavData: await data.json() };
   };
 
@@ -40,9 +39,6 @@ function HeaderSubNav({ link }) {
     const items = await fetchTenants();
     return items.subNavData.data;
   };
-
-
-  const [subNavItems, setSubNavItems] = useState([]);
 
   useEffect(() => {
     if (link == "dashboard") {
@@ -73,7 +69,7 @@ function HeaderSubNav({ link }) {
             <Text
               color="blackAlpha.700"
               fontSize={{ base: "sm", sm: "sm", md: "md" }}
-              key={subNavItems.sub_nav_id || subNavItems.tenant_name }
+              key={subNavItems.sub_nav_id || subNavItems.tenant_name}
               fontWeight={
                 location.pathname === subNavItems.sub_nav_path
                   ? "bold"
@@ -83,7 +79,6 @@ function HeaderSubNav({ link }) {
               <NavLink to={subNavItems.sub_nav_path}>
                 {subNavItems.tenant_name || subNavItems.sub_nav_item}
               </NavLink>
-            
             </Text>
           ))}
       </HStack>

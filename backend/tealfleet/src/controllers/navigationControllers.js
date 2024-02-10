@@ -10,14 +10,8 @@ const { checkIdentity } = require("../middlewares/identity");
 
 module.exports.cNavigationMainGetAll = async (req, res) => {
   try {
-    //const identity = await checkIdentity(req);  
-    // commented out otherwise the navigation does not appear on login, 
-    //you have to refresh the website to fetch the data agin with credentials
-
-    // This is because the fetch is run on load and not just when the main header is rendered 
-
-
-    const result = await navigationMainGetAll();
+    const identity = await checkIdentity(req);
+    const result = await navigationMainGetAll(identity);
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });

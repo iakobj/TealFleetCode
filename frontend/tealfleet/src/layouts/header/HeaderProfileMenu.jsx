@@ -11,7 +11,6 @@ import {
   HStack,
   Button,
   Menu,
-  IconButton,
   MenuButton,
   MenuList,
   MenuItem,
@@ -22,7 +21,7 @@ import {
 // Chakra-UI icons
 import { HamburgerIcon } from "@chakra-ui/icons";
 
-function HeaderProfileMenu() {
+function HeaderProfileMenu({user}) {
   return (
     <Flex>
       <HStack w={{base: "3em", sm: "5em", md: "10em"}}>
@@ -39,7 +38,7 @@ function HeaderProfileMenu() {
                 color="white"
                 fontSize={{ base: "sm", sm: "sm", md: "md" }}
               >
-                Jakob
+                {user[0].first_name}
               </Text>
             </Hide>
             <Show breakpoint="(max-width: 980px)">

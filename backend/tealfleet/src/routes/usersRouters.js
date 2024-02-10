@@ -199,6 +199,24 @@
  *             schema:
  *               $ref: '#/components/schemas/users_name_404'
  * 
+ * /users/me:
+ *   get:
+ *     summary: Get information about the loged in user
+ *     tags: [users]
+ *     responses:
+ *       200:
+ *         description: user exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/users_200'
+ *       404:
+ *         description: user does not exist.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/users_404'
+ * 
  */
 
 const express = require("express");
@@ -212,6 +230,7 @@ const {
   cUsersGetByPhone,
   cUsersGetByTitle,
   cUsersGetByRole,
+  cUsersGetMe,
 } = require("../controllers/usersControllers");
 
 usersRouters.get("/", cUsersGetAll);
@@ -221,5 +240,6 @@ usersRouters.get("/emails/:email", cUsersGetByEmail);
 usersRouters.get("/phones/:phone", cUsersGetByPhone);
 usersRouters.get("/titles/:title", cUsersGetByTitle);
 usersRouters.get("/roles/:role", cUsersGetByRole);
+usersRouters.get("/me", cUsersGetMe);
 
 module.exports = usersRouters;

@@ -1,10 +1,8 @@
 const { query } = require("../services/db/index");
 
-module.exports.navigationMainGetAll = async () => {
+module.exports.navigationMainGetAll = async (identity) => {
   try {
-    //const { tenant_id, tenant_root } = await identity.data;
-    // this is a temp workaround
-    const tenant_root = true;
+    const { tenant_id, tenant_root } = await identity.data;
 
     if (tenant_root == true) {
       const result = await query("SELECT * FROM main_navigation");

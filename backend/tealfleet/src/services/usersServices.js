@@ -149,3 +149,23 @@ module.exports.usersGetByRole = async (identity, role) => {
     return [{ error: error }];
   }
 };
+
+module.exports.usersGetMe = async (identity) => {
+  try {
+    const { user_id, tenant_id, tenant_root } = await identity.data;
+
+    if (tenant_root == true) {
+      const result = await query("SELECT * FROM users WHERE user_id = $1", [
+        user_id,
+      ]);
+      return result.rows;
+    } else {
+      const result = await query("SELECT * FROM users WHERE tenant_id = $1 AND user_id = $2", [
+        tenant_id, user_id
+      ]);
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
