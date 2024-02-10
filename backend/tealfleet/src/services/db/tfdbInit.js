@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS "contracts" (
   "tenant_id" uuid NOT NULL,
   "contract_type_id" uuid NOT NULL,
   "contractor_name" text NOT NULL,
+  "contract_sla" varchar
   "contract_no" varchar NOT NULL,
   "contract_description" text NOT NULL,
   "contract_valid_from" date NOT NULL,

@@ -39,17 +39,17 @@ function ErrorBoundary() {
               </Center>
             </Box>
             <Center>
-              <Heading as="h1" size="2xl">
+              <Heading as="h1" size="2xl" color="gray.600">
                 Oopsie!
               </Heading>
             </Center>
             <Center>
-              <Text fontSize={{ base: "md", sm: "xl", md: "2xl" }}>
+              <Text fontSize={{ base: "md", sm: "xl", md: "2xl" }} color="gray.600">
                 Sorry, an unexpected error has occured.
               </Text>
             </Center>
             <Center>
-              <Text fontSize="xl">Not Found</Text>
+              <Text fontSize="xl" color="gray.600">Not Found</Text>
             </Center>
           </Stack>
         </GridItem>

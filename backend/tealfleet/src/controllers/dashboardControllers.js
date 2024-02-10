@@ -8,12 +8,8 @@ const {
 const {
   contractsGetAll,
   contractsGetAllNo,
-
   swContractsGetNo,
-  swContractsGetAll,
-
   hwContractsGetNo,
-  hwContractsGetAll,
 } = require("../services/contractsServices");
 
 const { vendorsGetAll } = require("../services/vendorsServices");
@@ -157,7 +153,6 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
   }
 };
 
-// TODO
 module.exports.cDashboardGetTotalsCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
@@ -210,7 +205,6 @@ module.exports.cDashboardGetTotalsCardData = async (req, res) => {
   }
 };
 
-// TODO
 module.exports.cDashboardGetSupportCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
@@ -226,9 +220,6 @@ module.exports.cDashboardGetSupportCardData = async (req, res) => {
         contractor_name: obj.contractor_name,
         contract_valid: new Date(obj.contract_valid_to) > new Date(), // Check if contract is still valid
       }));
-      
-      console.log(result);
-
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });

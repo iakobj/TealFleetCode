@@ -16,7 +16,7 @@ import {
   Progress,
 } from "@chakra-ui/react";
 
-function SwAssetsTotalCard({ AssetsTotalCardData }) {
+function AssetsTotalCard({ AssetsTotalCardData }) {
   return (
     <Card variant="outline" bg="#fdfdfd" borderRadius={"0.6em 0.6em 0.6em 0.6em"}>
       <CardBody>
@@ -61,4 +61,4 @@ function SwAssetsTotalCard({ AssetsTotalCardData }) {
   );
 }
 
-export default SwAssetsTotalCard;
+export default AssetsTotalCard;

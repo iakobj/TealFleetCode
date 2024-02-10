@@ -92,10 +92,10 @@ VALUES
   ('2b3c4444-6f7a-8b9c-0d1e-012345678902', '1a2b3c4d-1111-7a8b-9c0d-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', 'Log Type 2', 'Title Log 2', 'Description of Log 2');
 
 
-INSERT INTO "contracts" ("contract_id", "tenant_id", "contract_type_id", "contractor_name", "contract_no", "contract_description", "contract_valid_from", "contract_valid_to", "contract_changed_at")
+INSERT INTO "contracts" ("contract_id", "tenant_id", "contract_type_id", "contractor_name", "contract_sla", "contract_no", "contract_description", "contract_valid_from", "contract_valid_to", "contract_changed_at")
 VALUES
-  ('1a2b3c4d-cccc-cccc-cccc-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-cccc-1111-cc11-012345678901', 'VMware', 'Contract123', 'Contract Description 1', '2023-01-01', '2023-12-31', NOW()),
-  ('2b3c4d5e-cccc-cccc-cccc-012345678902', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-cccc-1111-cc11-012345678901', 'MSP Guys', 'Contract456', 'Contract Description 2', '2023-02-01', '2023-11-30', NOW());
+  ('1a2b3c4d-cccc-cccc-cccc-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-cccc-1111-cc11-012345678901', 'VMware', '8x5', 'Contract123', 'Contract Description 1', '2023-01-01', '2023-12-31', NOW()),
+  ('2b3c4d5e-cccc-cccc-cccc-012345678902', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-cccc-1111-cc11-012345678901', 'MSP Guys', 'Non-stop' 'Contract123', 'Contract456', 'Contract Description 2', '2023-02-01', '2023-11-30', NOW());
 
 INSERT INTO "software_catalog" ("software_catalog_id", "vendor_id", "sw_category_id", "software_model_name", "software_version_number", "software_image", "software_release_date", "software_end_of_life", "software_end_of_support", "software_catalog_changed_at")
 VALUES

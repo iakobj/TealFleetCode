@@ -7,6 +7,7 @@ import {
   Text,
   Flex,
   Spacer,
+  HStack,
   Card,
   CardBody,
   CardHeader,
@@ -14,16 +15,21 @@ import {
   CircularProgressLabel,
 } from "@chakra-ui/react";
 
+import { InfoOutlineIcon } from "@chakra-ui/icons";
+
 function AssetsStatusCard({ AssetsStatusCardData }) {
   return (
-    <Card variant="outline" bg="#fdfdfd" borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}>
+    <Card variant="outline" bg="#fdfdfd" borderRadius="0.6em 0.6em 0.6em 0.6em">
       <CardHeader marginTop="-0.6em">
-        <Text fontSize="md" color="gray.800"> {AssetsStatusCardData.title} </Text>
+        <HStack>
+        <Text fontSize={{ md: "xs", xl: "sm" }} as="b" textTransform="uppercase" color="gray.600"> {AssetsStatusCardData.title} </Text>
+        <InfoOutlineIcon boxSize="3.5" color="gray.400"/>
+        </HStack>
       </CardHeader>
       <CardBody>
         <Flex>
           <Box marginTop="-0.8em">
-            <Text fontSize="2xl" color="gray.800">{AssetsStatusCardData.total}</Text>
+            <Text fontSize="2xl" as="b" color="gray.600">{AssetsStatusCardData.total}</Text>
           </Box>
           <Spacer />
           <Box marginTop="-1.8em">

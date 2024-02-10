@@ -49,7 +49,7 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
                 <Tr key={data.contract_no}>
                   <Td>{data.contract_no}</Td>
                   <Td>{data.contractor_name}</Td>
-                  <Td>{data.contract_valid === true ? (
+                  <Td textAlign="center">{data.contract_valid === true ? (
                       <CheckCircleIcon boxSize={5} color="teal" />
                     ) : (
                       <WarningTwoIcon boxSize={5} color="red.600" />

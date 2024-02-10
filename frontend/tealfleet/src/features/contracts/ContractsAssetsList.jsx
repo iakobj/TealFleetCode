@@ -5,22 +5,17 @@ import { useState, useEffect } from "react";
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 import {
-  Stack,
-  Button,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Box,
-  Grid,
-  GridItem,
-  SimpleGrid,
   Text,
   Heading,
   HStack,
   Flex,
   Spacer,
   Divider,
+  TableContainer,
   TableCaption,
   Table,
   Thead,
@@ -28,11 +23,10 @@ import {
   Tr,
   Th,
   Td,
-  TableContainer,
+  CardFooter,
 } from "@chakra-ui/react";
 
-import { InfoOutlineIcon } from '@chakra-ui/icons'
-
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 function ContractsAssetsList({ selectedContractData }) {
   const [contractAssets, setContractAssets] = useState([]);
@@ -59,53 +53,61 @@ function ContractsAssetsList({ selectedContractData }) {
 
   return (
     <Box>
-      <Card bg="#fdfdfd" variant="outline" borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}>
+      <Card
+        bg="#fdfdfd"
+        variant="outline"
+        borderRadius="0.6em 0.6em 0.6em 0.6em"
+      >
         <CardHeader>
           <Flex>
-            <Heading color="teal.700" size="md">{selectedContractData.contract_no}</Heading>
-            <Spacer/>
-            <Text color="teal.700"> <b>{selectedContractData.type}</b></Text>
-            <Spacer/>
-            <Text color="teal.700"> <b>{selectedContractData.tenant_name}</b></Text>
+            <Heading color="gray.600" size="md">
+              {selectedContractData.contract_no}
+            </Heading>
+            <Spacer />
+            <Text color="gray.600">
+              {" "}
+              <b>{selectedContractData.tenant_name}</b>
+            </Text>
           </Flex>
         </CardHeader>
 
         <CardBody>
-          <Text color="gray.800" paddingBottom="0.4em">
-            <b>Description: </b>
+          <Text color="gray.600" paddingBottom="0.4em">
             {selectedContractData.contract_description}
           </Text>
-
-          <Box marginBottom="-0.2em"> 
+          <Text color="gray.600" paddingBottom="0.4em">
+            {selectedContractData.type}
+          </Text>
+          <HStack>
+            <Text as="b" fontSize="md" color="gray.600">
+              SLA:
+            </Text>
+            <Text> {selectedContractData.contract_sla}</Text>
+          </HStack>
+          <Box marginBottom="-0.2em">
             <Flex>
               <Box paddingTop="0.35em" marginBottom="-0.3em">
-                <Text color="gray.800">
+                <Text color="gray.600">
                   <b>Supported by:</b> {selectedContractData.contractor_name}{" "}
                 </Text>
               </Box>
               <Spacer />
               <Box paddingTop="0.35em" marginBottom="-0.3em">
                 <HStack>
-                  <Text color="gray.800" marginRight="1em">
+                  <Text color="gray.600" marginRight="1em">
                     <b>From:</b> {selectedContractData.contract_valid_from}
                   </Text>
-                  <Text color="gray.800">
+                  <Text color="gray.600">
                     <b>Until:</b> {selectedContractData.contract_valid_to}
                   </Text>
                 </HStack>
               </Box>
             </Flex>
           </Box>
-        </CardBody>
-      </Card>
-
-      <Card
-        marginTop="1em"
-        bg="#fdfdfd"
-        borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}
-        variant="outline"
-      >
-        <CardBody>
+          </CardBody>
+          <Divider />
+          <CardBody>
+          <TableContainer>
           <Table
             variant="simple"
             size={{
@@ -116,7 +118,9 @@ function ContractsAssetsList({ selectedContractData }) {
               xl: "md",
             }}
           >
-            <TableCaption>Assets covered in {selectedContractData.contract_no}</TableCaption>
+            <TableCaption>
+              Assets covered in {selectedContractData.contract_no}
+            </TableCaption>
             <Thead>
               <Tr>
                 <Th>ASSET NAME</Th>
@@ -131,21 +135,32 @@ function ContractsAssetsList({ selectedContractData }) {
                 contractAssets.data.map((data) => (
                   <Tr key={data.hardware_asset_id || data.software_asset_id}>
                     <Td>
-                      <Text color="gray.800">{data.software_asset_name || data.hardware_asset_name}</Text>
+                      <Text color="gray.800">
+                        {data.software_asset_name || data.hardware_asset_name}
+                      </Text>
                     </Td>
                     <Td textTransform="capitalize">
                       <Text color="gray.800">{data.vendor_name}</Text>
                     </Td>
                     <Td>
-                      <Text color="gray.800">{data.software_model_name || data.hardware_model_name}</Text>
+                      <Text color="gray.800">
+                        {data.software_model_name || data.hardware_model_name}
+                      </Text>
                     </Td>
-                    <Td><Text color="gray.800">{data.hardware_serial_no}</Text></Td>
-                    <Td><Text color="gray.800"><InfoOutlineIcon color="teal" /></Text></Td>
+                    <Td>
+                      <Text color="gray.800">{data.hardware_serial_no}</Text>
+                    </Td>
+                    <Td>
+                      <Text color="gray.800">
+                        <InfoOutlineIcon color="teal" />
+                      </Text>
+                    </Td>
                   </Tr>
                 ))}
             </Tbody>
           </Table>
-        </CardBody>
+          </TableContainer>
+          </CardBody>
       </Card>
     </Box>
   );
