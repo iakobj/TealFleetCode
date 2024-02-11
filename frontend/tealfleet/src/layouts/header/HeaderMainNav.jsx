@@ -7,6 +7,7 @@ import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 import {
   Flex,
+  Button,
   Text,
   HStack,
   Box,
@@ -24,13 +25,16 @@ function HeaderMainNav() {
   const { pathname: location = "dashboard" } = useLocation();
 
   const [clickedIndex, setClickedIndex] = useState(-1);
-  const linkForSubNav = location.split("/")[0] === "" ? location.split("/")[1] : location.split("/")[0];
+  const linkForSubNav =
+    location.split("/")[0] === ""
+      ? location.split("/")[1]
+      : location.split("/")[0];
 
   const handleLinkClick = (index) => {
     setClickedIndex(index);
   };
 
-   // Fetch navgation data
+  // Fetch navgation data
   const [mainNavItems, setMainNavItems] = useState([]);
 
   const fetchData = async () => {
@@ -38,7 +42,7 @@ function HeaderMainNav() {
       method: "GET",
       credentials: "include",
     });
-    return { 
+    return {
       mainNavData: await data.json(),
     };
   };
@@ -54,7 +58,7 @@ function HeaderMainNav() {
     });
   }, [location]);
 
-   // Fetch user data
+  // Fetch user data
   const [user, setUser] = useState(["null"]);
 
   const fetchUser = async () => {
@@ -62,7 +66,7 @@ function HeaderMainNav() {
       method: "GET",
       credentials: "include",
     });
-    return { 
+    return {
       logedInUserData: await userData.json(),
     };
   };
@@ -98,23 +102,15 @@ function HeaderMainNav() {
         rowSpan={{ base: 1, sm: 1, md: 1 }}
         rowStart={{ base: 1, sm: 1, md: 1 }}
         bg="teal.600"
-        marginTop={{ md: "0.5em" }}
+        marginTop={{ md: "0.3em" }}
         borderRadius={{ md: "0.6em 0.6em 0em 0em" }}
       >
         <Flex>
           <HeaderLogo />
           <Spacer />
 
-          <Box margin={{ base: "1.0em", sm: "0.6em", md: "0.6em" }}>
-            <HStack
-              spacing={{
-                base: "0.3em",
-                sm: "0.6em",
-                md: "1.8em",
-                lg: "1.8em",
-                xl: "1.8em",
-              }}
-            >
+          <Box margin={{ base: "1.0em", sm: "0.5em", md: "0.5em" }}>
+            <HStack>
               {mainNavItems &&
                 mainNavItems.map &&
                 mainNavItems.map((mainNavItem, index) => (
@@ -122,15 +118,22 @@ function HeaderMainNav() {
                     to={mainNavItem.main_nav_item}
                     key={mainNavItem.main_nav_id}
                   >
-                    <Text
-                      color="white"
-                      fontSize={{ base: "sm", sm: "sm", md: "lg" }}
-                      key={mainNavItem.main_nav_id}
+                    {" "}
+                    <Button
+                      size="sm"
+                      colorScheme="blackAlpha"
+                      variant="ghost"
                       onClick={() => handleLinkClick(index)}
-                      fontWeight={index === clickedIndex ? "bold" : "500"}
                     >
-                      {mainNavItem.main_nav_item.toUpperCase()}
-                    </Text>
+                      <Text
+                        color="white"
+                        fontSize={{ base: "sm", sm: "sm", md: "lg" }}
+                        key={mainNavItem.main_nav_id}
+                        fontWeight={index === clickedIndex ? "bold" : "500"}
+                      >
+                        {mainNavItem.main_nav_item.toUpperCase()}
+                      </Text>
+                    </Button>
                   </NavLink>
                 ))}
             </HStack>
@@ -138,7 +141,7 @@ function HeaderMainNav() {
           <Spacer />
 
           <Box margin={{ base: "0.7em", sm: "0.7em", md: "0.5em" }}>
-            <HeaderProfileMenu user={user}/>
+            <HeaderProfileMenu user={user} />
           </Box>
         </Flex>
       </GridItem>

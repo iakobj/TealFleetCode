@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Chakra-UI components
-import { Flex, Text, HStack } from "@chakra-ui/react";
+import { Flex, Text, HStack, Button } from "@chakra-ui/react";
 
 function HeaderSubNav({ link }) {
   const fetchData = async () => {
@@ -54,32 +54,28 @@ function HeaderSubNav({ link }) {
 
   return (
     <Flex>
-      <HStack
-        spacing={{
-          base: "0.3em",
-          sm: "0.6em",
-          md: "0.8em",
-          lg: "1.0em",
-          xl: "1.8em",
-        }}
-      >
+      <HStack>
         {subNavItems &&
           subNavItems.map &&
           subNavItems.map((subNavItems) => (
-            <Text
-              color="blackAlpha.700"
-              fontSize={{ base: "sm", sm: "sm", md: "md" }}
+            <NavLink
+              to={subNavItems.sub_nav_path}
               key={subNavItems.sub_nav_id || subNavItems.tenant_name}
-              fontWeight={
-                location.pathname === subNavItems.sub_nav_path
-                  ? "bold"
-                  : "normal"
-              }
             >
-              <NavLink to={subNavItems.sub_nav_path}>
-                {subNavItems.tenant_name || subNavItems.sub_nav_item}
-              </NavLink>
-            </Text>
+              <Button size="sm" colorScheme="blackAlpha" variant="ghost">
+                <Text
+                  color="blackAlpha.700"
+                  fontSize={{ base: "sm", sm: "sm", md: "md" }}
+                  fontWeight={
+                    location.pathname === subNavItems.sub_nav_path
+                      ? "bold"
+                      : "normal"
+                  }
+                >
+                  {subNavItems.tenant_name || subNavItems.sub_nav_item}
+                </Text>
+              </Button>
+            </NavLink>
           ))}
       </HStack>
     </Flex>

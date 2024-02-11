@@ -25,6 +25,7 @@ function HeaderLogo() {
             color="white"
             fontSize="1.5em"
             marginLeft={{ base: "0.15em", sm: "0.15em", md: "0.15em" }}
+            fontFamily="sans-serif"
           >
             TealFleet
           </Text>
