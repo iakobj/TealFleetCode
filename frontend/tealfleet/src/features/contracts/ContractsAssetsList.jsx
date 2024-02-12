@@ -12,6 +12,8 @@ import {
   Text,
   Heading,
   HStack,
+  Stack,
+  Badge,
   Flex,
   Spacer,
   Divider,
@@ -23,7 +25,6 @@ import {
   Tr,
   Th,
   Td,
-  CardFooter,
 } from "@chakra-ui/react";
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
@@ -54,11 +55,11 @@ function ContractsAssetsList({ selectedContractData }) {
   return (
     <Box>
       <Card
-        bg="#fdfdfd"
+        bg="#FDFDFD"
         variant="outline"
         borderRadius="0.6em 0.6em 0.6em 0.6em"
       >
-        <CardHeader>
+        <CardHeader bg="#F4F7F4">
           <Flex>
             <Heading color="gray.600" size="md">
               {selectedContractData.contract_no}
@@ -71,19 +72,24 @@ function ContractsAssetsList({ selectedContractData }) {
           </Flex>
         </CardHeader>
 
-        <CardBody>
+        <CardBody bg="#F4F7F4" paddingBottom="1.2em">
           <Text color="gray.600" paddingBottom="0.4em">
             {selectedContractData.contract_description}
           </Text>
-          <Text color="gray.600" paddingBottom="0.4em">
-            {selectedContractData.type}
-          </Text>
-          <HStack>
-            <Text as="b" fontSize="md" color="gray.600">
-              SLA:
-            </Text>
-            <Text> {selectedContractData.contract_sla}</Text>
-          </HStack>
+
+          <Stack direction="row" marginTop="0.2em" marginBottom="0.2em">
+            {selectedContractData.type ? (
+              <Badge variant="outline" colorScheme="teal">
+                {selectedContractData.type}
+              </Badge>
+            ) : null}
+            {selectedContractData.contract_sla ? (
+              <Badge variant="solid" colorScheme="teal">
+                {selectedContractData.contract_sla}
+              </Badge>
+            ) : null}
+          </Stack>
+
           <Box marginBottom="-0.2em">
             <Flex>
               <Box paddingTop="0.35em" marginBottom="-0.3em">
@@ -104,63 +110,63 @@ function ContractsAssetsList({ selectedContractData }) {
               </Box>
             </Flex>
           </Box>
-          </CardBody>
-          <Divider />
-          <CardBody>
+        </CardBody>
+        <Divider />
+        <CardBody>
           <TableContainer>
-          <Table
-            variant="simple"
-            size={{
-              base: "sm",
-              sm: "sm",
-              md: "sm",
-              lg: "sm",
-              xl: "md",
-            }}
-          >
-            <TableCaption>
-              Assets covered in {selectedContractData.contract_no}
-            </TableCaption>
-            <Thead>
-              <Tr>
-                <Th>ASSET NAME</Th>
-                <Th>VENDOR</Th>
-                <Th>MODEL</Th>
-                <Th>SERIAL NUMBER</Th>
-                <Th></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {contractAssets.data &&
-                contractAssets.data.map((data) => (
-                  <Tr key={data.hardware_asset_id || data.software_asset_id}>
-                    <Td>
-                      <Text color="gray.800">
-                        {data.software_asset_name || data.hardware_asset_name}
-                      </Text>
-                    </Td>
-                    <Td textTransform="capitalize">
-                      <Text color="gray.800">{data.vendor_name}</Text>
-                    </Td>
-                    <Td>
-                      <Text color="gray.800">
-                        {data.software_model_name || data.hardware_model_name}
-                      </Text>
-                    </Td>
-                    <Td>
-                      <Text color="gray.800">{data.hardware_serial_no}</Text>
-                    </Td>
-                    <Td>
-                      <Text color="gray.800">
-                        <InfoOutlineIcon color="teal" />
-                      </Text>
-                    </Td>
-                  </Tr>
-                ))}
-            </Tbody>
-          </Table>
+            <Table
+              variant="simple"
+              size={{
+                base: "sm",
+                sm: "sm",
+                md: "sm",
+                lg: "sm",
+                xl: "md",
+              }}
+            >
+              <TableCaption>
+                Assets covered in {selectedContractData.contract_no}
+              </TableCaption>
+              <Thead>
+                <Tr>
+                  <Th>ASSET NAME</Th>
+                  <Th>VENDOR</Th>
+                  <Th>MODEL</Th>
+                  <Th>SERIAL NUMBER</Th>
+                  <Th></Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {contractAssets.data &&
+                  contractAssets.data.map((data) => (
+                    <Tr key={data.hardware_asset_id || data.software_asset_id}>
+                      <Td>
+                        <Text color="gray.800">
+                          {data.software_asset_name || data.hardware_asset_name}
+                        </Text>
+                      </Td>
+                      <Td textTransform="capitalize">
+                        <Text color="gray.800">{data.vendor_name}</Text>
+                      </Td>
+                      <Td>
+                        <Text color="gray.800">
+                          {data.software_model_name || data.hardware_model_name}
+                        </Text>
+                      </Td>
+                      <Td>
+                        <Text color="gray.800">{data.hardware_serial_no}</Text>
+                      </Td>
+                      <Td>
+                        <Text color="gray.800">
+                          <InfoOutlineIcon color="teal" />
+                        </Text>
+                      </Td>
+                    </Tr>
+                  ))}
+              </Tbody>
+            </Table>
           </TableContainer>
-          </CardBody>
+        </CardBody>
       </Card>
     </Box>
   );

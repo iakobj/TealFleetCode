@@ -1,8 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { useLoaderData } from "react-router-dom";
 
 import ContractsListCard from "../../features/contracts/ContractsListCard";
 

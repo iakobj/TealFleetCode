@@ -49,7 +49,7 @@ function ContractsListCard({ contractsData }) {
                 bg={
                   selectedContract === contractsData.contract_no
                     ? "#F4F7F4"
-                    : "#fdfdfd"
+                    : "#FDFDFD"
                 }
                 _hover={{ cursor: "pointer" }}
                 variant="outline"

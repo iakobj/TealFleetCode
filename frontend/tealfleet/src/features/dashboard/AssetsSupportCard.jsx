@@ -30,7 +30,7 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
             size={{
               base: "sm",
               sm: "sm",
-              md: "md",
+              md: "sm",
               lg: "md",
             }}
           >
@@ -50,9 +50,9 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
                   <Td>{data.contract_no}</Td>
                   <Td>{data.contractor_name}</Td>
                   <Td textAlign="center">{data.contract_valid === true ? (
-                      <CheckCircleIcon boxSize={5} color="teal" />
+                      <CheckCircleIcon boxSize={{sm: 3, md: 4, lg: 5}} color="teal" />
                     ) : (
-                      <WarningTwoIcon boxSize={5} color="red.600" />
+                      <WarningTwoIcon boxSize={{sm: 3, md: 4, lg: 5}} color="red.600" />
                     )}</Td>
                 </Tr>
               ))}

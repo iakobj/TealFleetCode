@@ -40,13 +40,13 @@ function FleetCard({ fleetCardItems }) {
             alignItems="center"
             textAlign="center"
           >
-            <Center>
+            <Center color="gray.600">
               <Heading size="sm">{fleetCardItems.tenant_name}</Heading>
             </Center>
           </Box>
           <Box marginTop={"-0.5em"}>
             <Center>
-              <Text fontSize="md">
+              <Text color="gray.600" fontSize="md">
                 {" "}
                 {fleetCardItems.software_asset_name &&
                   fleetCardItems.software_asset_name}
@@ -84,7 +84,7 @@ function FleetCard({ fleetCardItems }) {
         <VStack height="50%">
           <Box>
             <Center>
-              <Text size="md">
+              <Text color="gray.600" size="md">
                 {fleetCardItems.vendor_name
                   ? fleetCardItems.vendor_name + " "
                   : ""}
@@ -92,7 +92,7 @@ function FleetCard({ fleetCardItems }) {
             </Center>
             <Divider orientation="horizontal" />
             <Center>
-              <Text size="md">
+              <Text color="gray.600" size="md">
                 {fleetCardItems.hardware_model_name
                   ? fleetCardItems.hardware_model_name + " "
                   : ""}
@@ -102,7 +102,7 @@ function FleetCard({ fleetCardItems }) {
               </Text>
             </Center>
             <Center>
-              <Text size="md">{fleetCardItems.software_version_number}</Text>
+              <Text color="gray.600" size="md">{fleetCardItems.software_version_number}</Text>
             </Center>
           </Box>
         </VStack>

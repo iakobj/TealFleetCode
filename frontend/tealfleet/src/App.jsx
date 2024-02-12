@@ -20,7 +20,6 @@ import Dashboard, {DashboardDataLoader} from "./pages/Dashboard";
 import Fleet, {FleetDataLoader} from "./pages/Fleet";
 
 // Support
-import Support from "./pages/Support";
 import Contracts, {ContractsDataLoader} from "./pages/support/Contracts";
 
 import Administration from "./pages/Administration";

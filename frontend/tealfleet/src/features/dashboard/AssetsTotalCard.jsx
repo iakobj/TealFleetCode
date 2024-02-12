@@ -26,7 +26,7 @@ function AssetsTotalCard({ AssetsTotalCardData }) {
             size={{
               base: "sm",
               sm: "sm",
-              md: "md",
+              md: "sm",
               lg: "md",
             }}
           >
@@ -47,7 +47,12 @@ function AssetsTotalCard({ AssetsTotalCardData }) {
                     <Progress
                       marginLeft="-4em"
                       colorScheme="teal"
-                      size="md"
+                      size={{
+                        base: "sm",
+                        sm: "sm",
+                        md: "sm",
+                        lg: "md",
+                      }}
                       value={data.percent}
                     />
                   </Td>
