@@ -38,11 +38,12 @@ function ContractsListCard({ contractsData }) {
 
   return (
     <Box marginTop="1em">
-      <Grid templateColumns="repeat(10, 1fr)" templateRows="1" gap="1em">
+      <Grid templateColumns="repeat(10, 1fr)" templateRows="1" gap="0em">
         <GridItem colSpan={3}>
           <SimpleGrid spacing="1em">
             {contractsData.map((contractsData) => (
               <Card
+                marginRight="1em"
                 borderRadius="0.6em 0.6em 0.6em 0.6em"
                 key={contractsData.contract_no}
                 onClick={() => handleCardClick(contractsData.contract_no)}
@@ -97,8 +98,8 @@ function ContractsListCard({ contractsData }) {
             ))}
           </SimpleGrid>
         </GridItem>
-        <GridItem colSpan={7}>
-          <Box position="sticky" top="10em">
+        <GridItem colSpan={7} position="sticky" top="11em">
+          <Box>
             <ContractsAssetsList selectedContractData={selectedContractData} />
           </Box>
         </GridItem>

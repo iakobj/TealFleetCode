@@ -118,18 +118,18 @@ function HeaderMainNav() {
                     to={mainNavItem.main_nav_item}
                     key={mainNavItem.main_nav_id}
                   >
-                    {" "}
                     <Button
                       size="sm"
-                      colorScheme="blackAlpha"
-                      variant="ghost"
+                      colorScheme="teal"
+                      variant="hgost"
                       onClick={() => handleLinkClick(index)}
+                      fontWeight={index === clickedIndex ? "bold" : "300"}
                     >
                       <Text
                         color="white"
                         fontSize={{ base: "sm", sm: "sm", md: "lg" }}
                         key={mainNavItem.main_nav_id}
-                        fontWeight={index === clickedIndex ? "bold" : "500"}
+                        fontWeight={index === clickedIndex ? "bold" : "400"}
                       >
                         {mainNavItem.main_nav_item.toUpperCase()}
                       </Text>
@@ -156,8 +156,8 @@ function HeaderMainNav() {
         marginBottom={{ md: "1.1em" }}
         borderRadius={{ md: "0em 0em 0em 0em" }}
       >
-        <Center margin={{ base: "0.7em", sm: "0.7em", md: "0.2em" }}>
-          <HeaderSubNav link={linkForSubNav} />
+        <Center margin={{ base: "0.7em", sm: "0.7em", md: "0.2em" }} >
+          <HeaderSubNav link={linkForSubNav}/>
         </Center>
       </GridItem>
     </Grid>

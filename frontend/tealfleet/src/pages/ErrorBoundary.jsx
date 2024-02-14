@@ -31,7 +31,7 @@ function ErrorBoundary() {
             <Box>
               <Center>
                 <Image
-                  src="/images/ErrorHamster.png"
+                  src="/images/TealFleet-Teal.png"
                   alt="Error Hamster"
                   boxSize={{ base: "4em", sm: "6em", md: "8em" }}
                   objectFit="cover"

@@ -33,16 +33,16 @@ function AssetsTotalCard({ AssetsTotalCardData }) {
             <TableCaption>Total assets by vendor</TableCaption>
             <Thead>
               <Tr>
-                <Th>VENDOR</Th>
-                <Th>AMOUNT</Th>
-                <Th>TOTAL %</Th>
+                <Th color="gray.600">VENDOR</Th>
+                <Th color="gray.600">AMOUNT</Th>
+                <Th color="gray.600">TOTAL %</Th>
               </Tr>
             </Thead>
             <Tbody>
               {AssetsTotalCardData.map((data) => (
                 <Tr key={data.vendor}>
-                  <Td textTransform="capitalize">{data.vendor}</Td>
-                  <Td>{data.total}</Td>
+                  <Td textTransform="capitalize" color="gray.600">{data.vendor}</Td>
+                  <Td color="gray.600">{data.total}</Td>
                   <Td>
                     <Progress
                       marginLeft="-4em"

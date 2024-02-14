@@ -59,7 +59,7 @@ function ContractsAssetsList({ selectedContractData }) {
         variant="outline"
         borderRadius="0.6em 0.6em 0.6em 0.6em"
       >
-        <CardHeader bg="#F4F7F4">
+        <CardHeader borderRadius="0.55em 0.55em 0em 0em" bg="#F4F7F4">
           <Flex>
             <Heading color="gray.600" size="md">
               {selectedContractData.contract_no}

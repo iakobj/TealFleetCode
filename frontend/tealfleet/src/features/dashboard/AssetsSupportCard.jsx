@@ -47,12 +47,12 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
             <Tbody>
               {AssetsSupportCardData.map((data) => (
                 <Tr key={data.contract_no}>
-                  <Td>{data.contract_no}</Td>
-                  <Td>{data.contractor_name}</Td>
-                  <Td textAlign="center">{data.contract_valid === true ? (
-                      <CheckCircleIcon boxSize={{sm: 3, md: 4, lg: 5}} color="teal" />
+                  <Td color="gray.600">{data.contract_no}</Td>
+                  <Td color="gray.600">{data.contractor_name}</Td>
+                  <Td color="gray.600" textAlign="center">{data.contract_valid === true ? (
+                      <CheckCircleIcon boxSize={{base: 4, sm: 4, md: 4, lg: 4}} color="teal" />
                     ) : (
-                      <WarningTwoIcon boxSize={{sm: 3, md: 4, lg: 5}} color="red.600" />
+                      <WarningTwoIcon boxSize={{base: 4, sm: 4, md: 4, lg: 4}} color="red.600" />
                     )}</Td>
                 </Tr>
               ))}

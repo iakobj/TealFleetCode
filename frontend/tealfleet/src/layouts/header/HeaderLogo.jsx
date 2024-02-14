@@ -12,7 +12,7 @@ function HeaderLogo() {
           <Image
             src="/images/TealFleet-White.png"
             alt="TealFleet Logo"
-            boxSize={{ base: "2.5em", sm: "2.5em", md: "2.3em" }}
+            boxSize={{ base: "2.3em", sm: "2.3em", md: "2.1em" }}
             marginLeft={{ base: "0.35em", sm: "0.35em", md: "0.35em" }}
             objectFit="cover"
           />
@@ -25,7 +25,6 @@ function HeaderLogo() {
             color="white"
             fontSize="1.5em"
             marginLeft={{ base: "0.15em", sm: "0.15em", md: "0.15em" }}
-            fontFamily="sans-serif"
           >
             TealFleet
           </Text>

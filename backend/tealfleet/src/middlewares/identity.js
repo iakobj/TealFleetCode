@@ -26,7 +26,6 @@ module.exports.checkIdentity = async (req) => {
         resolve({ data: identity });
       }
     } catch (error) {
-      console.log(error);
       reject({ data: error });
     }
   });

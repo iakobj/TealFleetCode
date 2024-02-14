@@ -12,7 +12,6 @@ import RootLayout from "./layouts/RootLayout";
 import FallbackPage from "./pages/FallbackPage";
 import ErrorBoundary from "./pages/ErrorBoundary";
 
-// Pages
 
 // Dashboard
 import Dashboard, {DashboardDataLoader} from "./pages/Dashboard";
@@ -28,9 +27,9 @@ import Administration from "./pages/Administration";
 import Login from "./pages/login";
 import Register from "./pages/register";
 
-
-// ChakraProvider component
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import Fonts from '../public/fonts/Fonts';
+import theme from '../public/theme';
 
 const router = createBrowserRouter([
   {      
@@ -93,9 +92,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  // Wrap ChakraProvider at the root of your app
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
+      <Fonts />
       <RouterProvider router={router} fallbackElement={<FallbackPage/>} />
     </ChakraProvider>
   );

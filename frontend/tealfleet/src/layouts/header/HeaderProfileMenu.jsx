@@ -49,7 +49,7 @@ function HeaderProfileMenu({user}) {
 
           </MenuButton>
           <MenuList>
-            <MenuItem as="a" href="#">
+            <MenuItem zIndex="50" as="a" href="#">
               Profile
             </MenuItem>
             <MenuItem as="a" href="#">

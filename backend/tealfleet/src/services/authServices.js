@@ -28,13 +28,7 @@ module.exports.authLogout = async () => {
   return result.rows;
 };
 
-module.exports.authRegister = async () => {
-  const result = await query(
-    `
-    SELECT *
-    FROM users;
-  `
-  );
-
+module.exports.authAuthorization = async (sessionID) => {
+  const result = await query("SELECT sid FROM session WHERE sid = $1", [sessionID]);
   return result.rows;
 };

@@ -18,11 +18,20 @@ import {
 
 import { Search2Icon, RepeatIcon } from "@chakra-ui/icons";
 
-function ContractsFilter({contractsData}) {
+function ContractsFilter({ contractsData }) {
   return (
     <Box>
       <Hide breakpoint="(max-width: 17em)">
-        <Card variant="outline" marginBottom="1em" paddingTop="0.6em" paddingBottom="0.6em" bg="#fdfdfd" position="sticky" top="6.5em" zIndex="10">
+        <Card
+          variant="outline"
+          marginBottom="1em"
+          paddingTop="0.6em"
+          paddingBottom="0.6em"
+          bg="#fdfdfd"
+          position="sticky"
+          top="6.5em"
+          zIndex="1"
+        >
           <Wrap>
             <WrapItem>
               <NavLink to={"#"}>
@@ -45,8 +54,8 @@ function ContractsFilter({contractsData}) {
                 size="sm"
                 w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
               >
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
+                <option value="true">Tenant name 1</option>
+                <option value="false">Tenant name 2</option>
               </Select>
             </WrapItem>
             <WrapItem marginRight={"0.5em"}>
@@ -69,7 +78,10 @@ function ContractsFilter({contractsData}) {
                 w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
                 id="contractor"
                 name="contractor"
-              ></Select>
+              >
+                <option value="true">Contractor 1</option>
+                <option value="false">Contractor 2</option>
+              </Select>
             </WrapItem>
             <Spacer />
             <WrapItem>
@@ -79,7 +91,7 @@ function ContractsFilter({contractsData}) {
               </Button>
             </WrapItem>
           </Wrap>
-          </Card>
+        </Card>
       </Hide>
       <Box>
         <ContractsListCard contractsData={contractsData} />

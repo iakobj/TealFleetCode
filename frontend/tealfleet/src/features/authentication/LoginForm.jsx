@@ -75,10 +75,10 @@ function LoginForm() {
       width={{
         base: "22em",
         sm: "25em",
-        md: "32em",
-        lg: "32em",
-        xl: "32em",
-        "2xl": "32em",
+        md: "28em",
+        lg: "28em",
+        xl: "28em",
+        "2xl": "28em",
       }}
     >
       <CardHeader
@@ -88,7 +88,7 @@ function LoginForm() {
         height="100%"
       >
         <Center>
-          <Heading margin={"0.5em"} size="xl" color={"teal.600"}>
+          <Heading fontWeight="extrabold" margin={"0.5em"} size="xl" color={"teal.600"}>
             Login
           </Heading>
         </Center>

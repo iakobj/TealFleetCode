@@ -3,6 +3,7 @@ const {
   authGetUserByEmail,
   authLogout,
   authRegister,
+  authAuthorization,
 } = require("../services/authServices");
 
 const { mLogin } = require("../middlewares/authMiddleware");
@@ -10,7 +11,6 @@ const { mLogin } = require("../middlewares/authMiddleware");
 // Login
 module.exports.cAuthLogin = async (req, res) => {
   try {
-    console.log(req.body);
     const { email, password } = req.body;
 
     if (email == null || password == null) {
@@ -23,11 +23,9 @@ module.exports.cAuthLogin = async (req, res) => {
         return res.json({ user: req.session.user });
       })
       .catch((err) => {
-        console.log(err);
-        res.status(403).send({ message: "Login failed" });
+        res.status(403).send({ message: err });
       });
   } catch (err) {
-    console.log(err);
     res.status(403).send("Login failed");
   }
 };
@@ -39,8 +37,7 @@ module.exports.cAuthLogout = async (req, res) => {
 
     res.status(200).send({ data: result });
   } catch (err) {
-    console.log(err);
-    res.status(404).send("Logout failed");
+    res.status(404).send(err);
   }
 };
 
@@ -51,7 +48,30 @@ module.exports.cAuthRegister = async (req, res) => {
 
     res.status(200).send({ data: result });
   } catch (err) {
-    console.log(err);
     res.status(404).send("Register failed");
+  }
+};
+
+// Authorization
+module.exports.cAuthAuthorization = async (req, res) => {
+  try {
+    const sessionID = req.sessionID;
+    const result = await authAuthorization(sessionID);
+    if (
+      result[0] &&
+      typeof result[0].sid !== "undefined" &&
+      result[0].sid === sessionID
+    ) {
+      res.status(200).send({ data: "true" });
+    } else {
+      res
+        .status(403)
+        .send({
+          data: [{ error: "sessionID is not defined or does not match sid" }],
+        });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(403).send(err);
   }
 };

@@ -12,7 +12,7 @@ import HeaderMainNav from "./HeaderMainNav";
 function Header() {
   return (
     <Box>
-      <HeaderMainNav />
+      <HeaderMainNav/>
     </Box>
   );
 }

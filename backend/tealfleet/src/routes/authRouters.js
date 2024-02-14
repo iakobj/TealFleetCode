@@ -110,10 +110,13 @@ const {
   cAuthLogin,
   cAuthLogout,
   cAuthRegister,
+  cAuthAuthorization,
 } = require("../controllers/authControllers");
 
 authRouters.post("/login", cAuthLogin);
-authRouters.post("/logout", cAuthLogout);
 authRouters.post("/register", cAuthRegister);
+
+authRouters.get("/logout", cAuthLogout);
+authRouters.get("/me", cAuthAuthorization);
 
 module.exports = authRouters;

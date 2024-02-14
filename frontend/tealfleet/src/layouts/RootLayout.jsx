@@ -21,7 +21,7 @@ function RootLayout() {
           as="header"
           colSpan={{ base: 12, sm: 12, md: 12 }}
           colStart={{ base: 1, sm: 1, md: 1 }}
-          position="sticky" zIndex="1" top="0"
+          position="sticky" zIndex="100" top="0"
         >
           <Header/>
         </GridItem>

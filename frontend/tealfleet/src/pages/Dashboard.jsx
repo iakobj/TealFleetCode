@@ -21,7 +21,7 @@ function Dashboard() {
 
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
-      <Card variant="outline" padding="1.5em">
+      <Card variant="outline" padding="1.5em" borderRadius="0.6em 0.6em 0.6em 0.6em">
         <SimpleGrid
           spacing="1.2em"
           columns={{
