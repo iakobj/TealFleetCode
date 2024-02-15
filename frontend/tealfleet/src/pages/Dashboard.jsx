@@ -1,6 +1,7 @@
 // React components
 import * as React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useEffect } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 // import location of the API server
 import { API_ENDPOINT } from "../constants/apiEndpoint";
@@ -14,14 +15,26 @@ import AssetsSupportCard from "../features/dashboard/AssetsSupportCard";
 
 function Dashboard() {
   const loaderData = useLoaderData();
+  const navigate = useNavigate();
 
   const AssetsStatusCardData = loaderData.AssetsStatus.data;
   const AssetsTotalCardData = loaderData.AssetsTotal.data;
   const AssetsSupportCardData = loaderData.AssetsSupport.data;
+  const AuthMe = loaderData.AuthMe.data;
+
+  useEffect(() => {
+    if (AuthMe[0].error == "sid is not defined or does not match sessionID") {
+      navigate("/Login");
+    }
+  }, []);
 
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
-      <Card variant="outline" padding="1.5em" borderRadius="0.6em 0.6em 0.6em 0.6em">
+      <Card
+        variant="outline"
+        padding="1.5em"
+        borderRadius="0.6em 0.6em 0.6em 0.6em"
+      >
         <SimpleGrid
           spacing="1.2em"
           columns={{
@@ -63,11 +76,21 @@ export const DashboardDataLoader = async () => {
       credentials: "include",
     }
   );
-  const AssetsTotal = await fetch(`http://${API_ENDPOINT}/dashboard/assets/totals/`, {
-    method: "GET",
-    credentials: "include",
-  });
-  const AssetsSupport = await fetch(`http://${API_ENDPOINT}/dashboard/assets/support/`, {
+  const AssetsTotal = await fetch(
+    `http://${API_ENDPOINT}/dashboard/assets/totals/`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
+  const AssetsSupport = await fetch(
+    `http://${API_ENDPOINT}/dashboard/assets/support/`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
+  const AuthMe = await fetch(`http://${API_ENDPOINT}/auth/me/`, {
     method: "GET",
     credentials: "include",
   });
@@ -76,5 +99,6 @@ export const DashboardDataLoader = async () => {
     AssetsStatus: await AssetsStatus.json(),
     AssetsTotal: await AssetsTotal.json(),
     AssetsSupport: await AssetsSupport.json(),
+    AuthMe: await AuthMe.json(),
   };
 };

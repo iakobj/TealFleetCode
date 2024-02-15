@@ -19,6 +19,7 @@ import {
   Flex,
   Spacer,
   Divider,
+  calc,
 } from "@chakra-ui/react";
 
 import { CheckCircleIcon, WarningTwoIcon } from "@chakra-ui/icons";
@@ -98,7 +99,7 @@ function ContractsListCard({ contractsData }) {
             ))}
           </SimpleGrid>
         </GridItem>
-        <GridItem colSpan={7} position="sticky" top="11em">
+        <GridItem colSpan={7}>
           <Box>
             <ContractsAssetsList selectedContractData={selectedContractData} />
           </Box>

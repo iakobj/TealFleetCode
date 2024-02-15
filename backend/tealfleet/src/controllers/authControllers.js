@@ -62,7 +62,9 @@ module.exports.cAuthAuthorization = async (req, res) => {
       typeof result[0].sid !== "undefined" &&
       result[0].sid === sessionID
     ) {
-      res.status(200).send({ data: "true" });
+      res.status(200).send({
+        data: [{ authorized: "true" }],
+      });
     } else {
       res
         .status(403)
