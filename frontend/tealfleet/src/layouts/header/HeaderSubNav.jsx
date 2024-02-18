@@ -55,8 +55,8 @@ function HeaderSubNav({ link }) {
   return (
     <Flex
       sx={{
-        "msOverflowStyle": "none",
-        "scrollbarWidth": "none",
+        msOverflowStyle: "none",
+        scrollbarWidth: "none",
 
         "&::-webkit-scrollbar": {
           height: "16px",
@@ -71,27 +71,30 @@ function HeaderSubNav({ link }) {
     >
       <HStack>
         {subNavItems &&
-          subNavItems.map &&
-          subNavItems.map((subNavItems) => (
-            <NavLink
-              to={subNavItems.sub_nav_path}
-              key={subNavItems.sub_nav_id || subNavItems.tenant_name}
-            >
-              <Button size="sm" colorScheme="blackAlpha" variant="ghost">
-                <Text
-                  color="blackAlpha.700"
-                  fontSize={{ base: "sm", sm: "sm", md: "md" }}
-                  fontWeight={
-                    location.pathname === subNavItems.sub_nav_path
-                      ? "bold"
-                      : "normal"
-                  }
-                >
-                  {subNavItems.tenant_name || subNavItems.sub_nav_item}
-                </Text>
-              </Button>
-            </NavLink>
-          ))}
+          subNavItems
+            .filter(
+              (item) => item.sub_nav_path || item.sub_nav_id || item.tenant_name
+            )
+            .map((subNavItems) => (
+              <NavLink
+                to={link + "/" + subNavItems.sub_nav_item.toLowerCase()}
+                key={subNavItems.sub_nav_id || subNavItems.tenant_name}
+              >
+                <Button size="sm" colorScheme="blackAlpha" variant="ghost">
+                  <Text
+                    color="blackAlpha.700"
+                    fontSize={{ base: "sm", sm: "sm", md: "md" }}
+                    fontWeight={
+                      location.pathname === subNavItems.sub_nav_path
+                        ? "bold"
+                        : "normal"
+                    }
+                  >
+                    {subNavItems.tenant_name || subNavItems.sub_nav_item}
+                  </Text>
+                </Button>
+              </NavLink>
+            ))}
       </HStack>
     </Flex>
   );

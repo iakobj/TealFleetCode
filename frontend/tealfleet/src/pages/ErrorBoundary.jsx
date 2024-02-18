@@ -27,7 +27,7 @@ function ErrorBoundary() {
           colSpan={{ base: 12, sm: 12, md: 12 }}
           colStart={{ base: 1, sm: 1, md: 1 }}
         >
-          <Stack spacing={6} marginTop={{ base: "6em", sm: "6em", md: "6em" }}>
+          <Stack spacing={6} marginTop={{ base: "3em", sm: "3em", md: "4em" }}>
             <Box>
               <Center>
                 <Image

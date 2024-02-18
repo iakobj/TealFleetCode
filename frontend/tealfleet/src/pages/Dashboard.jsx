@@ -1,6 +1,7 @@
 // React components
 import * as React from "react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 // import location of the API server
@@ -15,19 +16,18 @@ import AssetsSupportCard from "../features/dashboard/AssetsSupportCard";
 
 function Dashboard() {
   const loaderData = useLoaderData();
-  const navigate = useNavigate();
+  
+  const loc = useLocation();
+  const location = loc.pathname.slice(1);
+
+  
+
+
 
   const AssetsStatusCardData = loaderData.AssetsStatus.data;
   const AssetsTotalCardData = loaderData.AssetsTotal.data;
   const AssetsSupportCardData = loaderData.AssetsSupport.data;
-  const AuthMe = loaderData.AuthMe.data;
-
-  useEffect(() => {
-    if (AuthMe[0].error == "sid is not defined or does not match sessionID") {
-      navigate("/Login");
-    }
-  }, []);
-
+ 
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Card
@@ -46,7 +46,7 @@ function Dashboard() {
             "2xl": "4",
           }}
         >
-          {AssetsStatusCardData.map((AssetsStatusCardData) => (
+          {AssetsStatusCardData && AssetsStatusCardData.map((AssetsStatusCardData) => (
             <AssetsStatusCard
               AssetsStatusCardData={AssetsStatusCardData}
               key={AssetsStatusCardData.title}
@@ -90,15 +90,10 @@ export const DashboardDataLoader = async () => {
       credentials: "include",
     }
   );
-  const AuthMe = await fetch(`http://${API_ENDPOINT}/auth/me/`, {
-    method: "GET",
-    credentials: "include",
-  });
 
   return {
     AssetsStatus: await AssetsStatus.json(),
     AssetsTotal: await AssetsTotal.json(),
     AssetsSupport: await AssetsSupport.json(),
-    AuthMe: await AuthMe.json(),
   };
 };

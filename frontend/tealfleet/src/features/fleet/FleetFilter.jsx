@@ -40,7 +40,7 @@ function FleetFilter() {
   useEffect(() => {
     var inputLocation = location;
     var vendorName = inputLocation.split("/");
-    
+
     if (vendorName.length > 1) {
       const vendor = vendorName[1];
       const originalArray = fItems;
@@ -122,130 +122,130 @@ function FleetFilter() {
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Hide breakpoint="(max-width: 17em)">
-      <Card marginBottom="1em" paddingTop="0.6em" paddingBottom="0.6em" variant="outline" bg="#fdfdfd" borderRadius={"0.6em 0.6em 0.6em 0.6em"}>
-        <form onSubmit={handleSubmit}>
-          <Wrap>
-            <WrapItem>
-              <Button
-                type="submit"
-                leftIcon={<Search2Icon />}
-                size={"sm"}
-                colorScheme={"teal"}
-                marginLeft="0.6em"
-              >
-                Filter
-              </Button>
-              <NavLink to={"/fleet"}>
-                <IconButton
-                  marginRight={"0.6em"}
-                  aria-label="Reset filter"
-                  icon={<RepeatIcon />}
+        <Card
+          marginBottom="1em"
+          paddingTop="0.6em"
+          paddingBottom="0.6em"
+          variant="outline"
+          bg="#fdfdfd"
+          borderRadius={"0.6em 0.6em 0.6em 0.6em"}
+        >
+          <form onSubmit={handleSubmit}>
+            <Wrap>
+              <WrapItem>
+                <Button
+                  type="submit"
+                  leftIcon={<Search2Icon />}
                   size={"sm"}
                   colorScheme={"teal"}
-                  marginLeft={"0.6em"}
-                  onClick={handleReset}
-                />
-              </NavLink>
-            </WrapItem>
+                  marginLeft="0.6em"
+                >
+                  Filter
+                </Button>
+                <NavLink to={"/fleet"}>
+                  <IconButton
+                    marginRight={"0.6em"}
+                    aria-label="Reset filter"
+                    icon={<RepeatIcon />}
+                    size={"sm"}
+                    colorScheme={"teal"}
+                    marginLeft={"0.6em"}
+                    onClick={handleReset}
+                  />
+                </NavLink>
+              </WrapItem>
 
-            <WrapItem marginRight={"0.5em"}>
-              <Select
-                placeholder="Tenant"
-                id="tenant"
-                name="tenant"
-                size="sm"
-                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                onChange={handleChange}
-                value={selectedTenant}
-              >
-                {tenantItems &&
-                  tenantItems.map &&
-                  tenantItems.map((tenantItems) => (
-                    <option
-                      key={tenantItems.tenant_id}
-                      value={tenantItems.tenant_name}
-                    >
-                      {tenantItems.tenant_name}
-                    </option>
-                  ))}
-              </Select>
-            </WrapItem>
-            <WrapItem marginRight={"0.5em"}>
-              <Select
-                placeholder="Software"
-                size="sm"
-                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                id="swmodel"
-                name="swmodel"
-                onChange={handleChange}
-                value={selectedSwModel}
-              >
-                {swModelItems &&
-                  swModelItems.map &&
-                  swModelItems.map((swModelItems) => (
-                    <option key={swModelItems.software_model_name}>
-                      {swModelItems.software_model_name}
-                    </option>
-                  ))}
-              </Select>
-            </WrapItem>
-            <WrapItem marginRight={"0.5em"}>
-              <Select
-                placeholder="Hardware"
-                size="sm"
-                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                id="hwmodel"
-                name="hwmodel"
-                onChange={handleChange}
-                value={selectedHwModel}
-              >
-                {hwModelItems &&
-                  hwModelItems.map &&
-                  hwModelItems.map((hwModelItems) => (
-                    <option key={hwModelItems.hardware_model_name}>
-                      {hwModelItems.hardware_model_name}
-                    </option>
-                  ))}
-              </Select>
-            </WrapItem>
-            <WrapItem>
-              <Select
-                placeholder="Site"
-                size="sm"
-                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                id="sitename"
-                name="sitename"
-                onChange={handleChange}
-                value={selectedSiteName}
-              >
-                {siteNameItems &&
-                  siteNameItems.map &&
-                  siteNameItems.map((siteNameItems) => (
-                    <option key={siteNameItems.site_id}>
-                      {siteNameItems.site_name}
-                    </option>
-                  ))}
-              </Select>
-            </WrapItem>
-            <Spacer />
-            <WrapItem>
+              <WrapItem marginRight={"0.5em"}>
+                <Select
+                  placeholder="Tenant"
+                  id="tenant"
+                  name="tenant"
+                  size="sm"
+                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                  onChange={handleChange}
+                  value={selectedTenant}
+                >
+                  {tenantItems && tenantItems.filter(item => item.tenant_id ).map((tenantItems) => ( 
+                      <option
+                        key={tenantItems.tenant_id}
+                        value={tenantItems.tenant_name}
+                      >
+                        {tenantItems.tenant_name}
+                      </option>
+                    ))}
+                </Select>
+              </WrapItem>
+              <WrapItem marginRight={"0.5em"}>
+                <Select
+                  placeholder="Software"
+                  size="sm"
+                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                  id="swmodel"
+                  name="swmodel"
+                  onChange={handleChange}
+                  value={selectedSwModel}
+                >
+                      {swModelItems && swModelItems.filter(item => item.software_model_name ).map((swModelItems) => ( 
+                      <option key={swModelItems.software_model_name}>
+                        {swModelItems.software_model_name}
+                      </option>
+                    ))}
+                </Select>
+              </WrapItem>
+              <WrapItem marginRight={"0.5em"}>
+                <Select
+                  placeholder="Hardware"
+                  size="sm"
+                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                  id="hwmodel"
+                  name="hwmodel"
+                  onChange={handleChange}
+                  value={selectedHwModel}
+                >
+                      {hwModelItems && hwModelItems.filter(item => item.hardware_model_name ).map((hwModelItems) => ( 
+
+                      <option key={hwModelItems.hardware_model_name}>
+                        {hwModelItems.hardware_model_name}
+                      </option>
+                    ))}
+                </Select>
+              </WrapItem>
+              <WrapItem>
+                <Select
+                  placeholder="Site"
+                  size="sm"
+                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                  id="sitename"
+                  name="sitename"
+                  onChange={handleChange}
+                  value={selectedSiteName}
+                >
+                      {siteNameItems && siteNameItems.filter(item => item.site_name ).map((siteNameItems) => ( 
+
+                      <option key={siteNameItems.site_id}>
+                        {siteNameItems.site_name}
+                      </option>
+                    ))}
+                </Select>
+              </WrapItem>
               <Spacer />
-              <Button marginRight="0.6em" size={"sm"} colorScheme={"teal"}>
-                New Asset
-              </Button>
-            </WrapItem>
-          </Wrap>
-        </form>
+              <WrapItem>
+                <Spacer />
+                <Button marginRight="0.6em" size={"sm"} colorScheme={"teal"}>
+                  New Asset
+                </Button>
+              </WrapItem>
+            </Wrap>
+          </form>
         </Card>
       </Hide>
       <SimpleGrid
         spacing="1em"
         columns={{ base: "1", sm: "2", md: "3", lg: "3", xl: "4", "2xl": "5" }}
       >
-        {fleetCardItems &&
-          fleetCardItems.map &&
-          fleetCardItems.map((fleetCardItems) => (
-            <FleetCard
+  {fleetCardItems &&
+    fleetCardItems.filter(item => item.hardware_asset_id || item.software_asset_id).map((fleetCardItems) => (
+      <FleetCard
               fleetCardItems={fleetCardItems}
               key={
                 fleetCardItems.hardware_asset_id

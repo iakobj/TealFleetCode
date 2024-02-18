@@ -111,9 +111,8 @@ function HeaderMainNav() {
 
           <Box marginTop={{ base: "1.0em", sm: "0.5em", md: "0.5em" }}>
             <HStack>
-              {mainNavItems &&
-                mainNavItems.map &&
-                mainNavItems.map((mainNavItem, index) => (
+              {mainNavItems && 
+                mainNavItems.filter(item => item.main_nav_item && item.main_nav_id).map((mainNavItem, index) => (
                   <NavLink
                     to={mainNavItem.main_nav_item}
                     key={mainNavItem.main_nav_id}
