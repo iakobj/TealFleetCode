@@ -8,15 +8,10 @@ import { Flex, Text, HStack, Button } from "@chakra-ui/react";
 
 function HeaderSubNav({ link }) {
   const fetchData = async () => {
-    const subname =
-      link.split("/")[0] === "" ? link.split("/")[1] : link.split("/")[0];
-    const data = await fetch(
-      `http://localhost:3000/navigation/sub/names/${subname}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const data = await fetch(`http://localhost:3000/vendors`, {
+      method: "GET",
+      credentials: "include",
+    });
     return { subNavData: await data.json() };
   };
 
@@ -40,15 +35,30 @@ function HeaderSubNav({ link }) {
     return items.subNavData.data;
   };
 
+  const support = [
+    { support: "Contracts" },
+    { support: "Tickets" },
+    { support: "Alerts" },
+  ];
+
+  const administration = [
+    { administration: "Users" },
+    { administration: "Tenants" },
+  ];
+
   useEffect(() => {
     if (link == "dashboard") {
       fetchSubNavTenants().then((items) => {
         setSubNavItems(items);
       });
-    } else {
+    } else if (link == "fleet") {
       fetchSubNavItems().then((items) => {
         setSubNavItems(items);
       });
+    } else if (link == "support") {
+      setSubNavItems(support);
+    } else if (link == "administration") {
+      setSubNavItems(administration);
     }
   }, [link]);
 
@@ -73,24 +83,47 @@ function HeaderSubNav({ link }) {
         {subNavItems &&
           subNavItems
             .filter(
-              (item) => item.sub_nav_path || item.sub_nav_id || item.tenant_name
+              (item) =>
+                item.vendor_name ||
+                item.tenant_name ||
+                item.support ||
+                item.administration
             )
-            .map((subNavItems) => (
+            .map((subNavItem) => (
               <NavLink
-                to={link + "/" + subNavItems.sub_nav_item.toLowerCase()}
-                key={subNavItems.sub_nav_id || subNavItems.tenant_name}
+                to={
+                  link +
+                  "/" +
+                  (subNavItem.vendor_name ||
+                    subNavItem.tenant_name ||
+                    (typeof subNavItem.support === "string"
+                      ? subNavItem.support.toLowerCase()
+                      : "") ||
+                    (typeof subNavItem.administration === "string"
+                      ? subNavItem.administration.toLowerCase()
+                      : ""))
+                }
+                key={
+                  subNavItem.vendor_name ||
+                  subNavItem.tenant_name ||
+                  subNavItem.support ||
+                  subNavItem.administration
+                }
               >
                 <Button size="sm" colorScheme="blackAlpha" variant="ghost">
                   <Text
                     color="blackAlpha.700"
                     fontSize={{ base: "sm", sm: "sm", md: "md" }}
                     fontWeight={
-                      location.pathname === subNavItems.sub_nav_path
+                      location.pathname === subNavItem.sub_nav_path
                         ? "bold"
                         : "normal"
                     }
                   >
-                    {subNavItems.tenant_name || subNavItems.sub_nav_item}
+                    {subNavItem.tenant_name ||
+                      subNavItem.vendor_name ||
+                      subNavItem.support ||
+                      subNavItem.administration}
                   </Text>
                 </Button>
               </NavLink>

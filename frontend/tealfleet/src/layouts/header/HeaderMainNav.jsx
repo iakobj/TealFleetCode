@@ -34,30 +34,6 @@ function HeaderMainNav() {
     setClickedIndex(index);
   };
 
-  // Fetch navgation data
-  const [mainNavItems, setMainNavItems] = useState([]);
-
-  const fetchData = async () => {
-    const data = await fetch(`http://${API_ENDPOINT}/navigation/main`, {
-      method: "GET",
-      credentials: "include",
-    });
-    return {
-      mainNavData: await data.json(),
-    };
-  };
-
-  const fetchMainNavData = async () => {
-    const items = await fetchData();
-    return items.mainNavData.data;
-  };
-
-  useEffect(() => {
-    fetchMainNavData().then((items) => {
-      setMainNavItems(items);
-    });
-  }, [location]);
-
   // Fetch user data
   const [user, setUser] = useState(["null"]);
 
@@ -81,6 +57,8 @@ function HeaderMainNav() {
       setUser(user);
     });
   }, [location]);
+
+  const mainNavItems = ["dashboard", "fleet", "support", "administration"];
 
   return (
     <Grid
@@ -108,33 +86,28 @@ function HeaderMainNav() {
         <Flex>
           <HeaderLogo />
           <Spacer />
-
           <Box marginTop={{ base: "1.0em", sm: "0.5em", md: "0.5em" }}>
             <HStack>
-              {mainNavItems && 
-                mainNavItems.filter(item => item.main_nav_item && item.main_nav_id).map((mainNavItem, index) => (
-                  <NavLink
-                    to={mainNavItem.main_nav_item}
-                    key={mainNavItem.main_nav_id}
+              {mainNavItems.map((mainNavItem, index) => (
+                <NavLink to={mainNavItem} key={mainNavItem}>
+                  <Button
+                    size="sm"
+                    colorScheme="teal"
+                    variant="hgost"
+                    onClick={() => handleLinkClick(index)}
+                    fontWeight={index === clickedIndex ? "bold" : "300"}
                   >
-                    <Button
-                      size="sm"
-                      colorScheme="teal"
-                      variant="hgost"
-                      onClick={() => handleLinkClick(index)}
-                      fontWeight={index === clickedIndex ? "bold" : "300"}
+                    <Text
+                      color="white"
+                      fontSize={{ base: "sm", sm: "sm", md: "lg" }}
+                      key={mainNavItem}
+                      fontWeight={index === clickedIndex ? "bold" : "400"}
                     >
-                      <Text
-                        color="white"
-                        fontSize={{ base: "sm", sm: "sm", md: "lg" }}
-                        key={mainNavItem.main_nav_id}
-                        fontWeight={index === clickedIndex ? "bold" : "400"}
-                      >
-                        {mainNavItem.main_nav_item.toUpperCase()}
-                      </Text>
-                    </Button>
-                  </NavLink>
-                ))}
+                      {mainNavItem.toUpperCase()}
+                    </Text>
+                  </Button>
+                </NavLink>
+              ))}
             </HStack>
           </Box>
           <Spacer />
@@ -155,8 +128,8 @@ function HeaderMainNav() {
         marginBottom={{ md: "1.1em" }}
         borderRadius={{ md: "0em 0em 0em 0em" }}
       >
-        <Center margin={{ base: "0.7em", sm: "0.7em", md: "0.2em" }} >
-          <HeaderSubNav link={linkForSubNav}/>
+        <Center margin={{ base: "0.7em", sm: "0.7em", md: "0.2em" }}>
+          <HeaderSubNav link={linkForSubNav} />
         </Center>
       </GridItem>
     </Grid>
