@@ -22,21 +22,6 @@ VALUES
   ('1a2b3c4d-1111-7a8b-9c0d-012345678901', '1e2c561c-aaaa-4f79-9d3a-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'John', 'Doe', 'john@example.com', 'password123', '555-123-4567', 'Manager', true, true, true, true, true),
   ('2b3c4d5e-1112-8b9c-0d1e-012345678902', '1e2c561c-aaaa-4f79-9d3a-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', 'Jane', 'Smith', 'jane@example.com', 'password456', '555-987-6543', 'Employee', true, true, true, true, true);
 
-
-INSERT INTO "main_navigation" ("main_nav_id", "main_nav_item")
-VALUES
-  ('1a2b3c4d-7a8b-7a8b-9c0d-012345678881', 'Dashboard'),
-  ('1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'Fleet'),
-  ('1a2b3c4d-7a8b-9c0d-1e2a-012345678883', 'Support'),
-  ('1a2b3c4d-7a8b-9c0d-1e2a-012345678885', 'Administration');
-
-
-INSERT INTO "sub_navigation" ("sub_nav_id", "main_nav_id", "sub_nav_item", "sub_nav_path")
-VALUES
-  ('2b3c4d5e-ffff-8b9c-0d3e-012345678884', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'Cisco', '/Fleet/Cisco'),
-  ('2b3c4d5e-ffff-8b9c-0d4e-012345678885', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'Dell', '/Fleet/Dell'),
-  ('2b3c4d5e-ffff-8b9c-0d5e-012345678886', '1a2b3c4d-7a8b-8b9c-0d1e-012345678882', 'VMware', '/Fleet/VMware');
-
 INSERT INTO "alerts_type" ("alert_type_id", "type")
 VALUES
   ('1e2c561c-8a1d-4f79-9d3a-aaa345678901', 'Alert Type 1'),
@@ -52,12 +37,10 @@ VALUES
   ('1e2c561c-1234-1234-1234-012345678901', 'SW Category 1'),
   ('3b4d675e-1234-1234-1234-012345678902', 'SW Category 2');
 
-
 INSERT INTO "hw_categories" ("hw_category_id", "hw_category")
 VALUES
   ('3b4d675e-4321-4321-4321-012345678902', 'Category 1'),
   ('5a6f7b8d-4321-4321-4321-012345678903', 'Category 2');
-
 
 INSERT INTO "vendors" ("vendor_id", "vendor_name", "vendor_image")
 VALUES
@@ -91,7 +74,6 @@ VALUES
   ('1a2b4444-5e6f-7a8b-9c0d-012345678901', '1a2b3c4d-1111-7a8b-9c0d-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', 'Log Type 1', 'Title Log 1', 'Description of Log 1'),
   ('2b3c4444-6f7a-8b9c-0d1e-012345678902', '1a2b3c4d-1111-7a8b-9c0d-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', 'Log Type 2', 'Title Log 2', 'Description of Log 2');
 
-
 INSERT INTO "contracts" ("contract_id", "tenant_id", "contract_type_id", "contractor_name", "contract_sla", "contract_no", "contract_description", "contract_valid_from", "contract_valid_to", "contract_changed_at")
 VALUES
   ('1a2b3c4d-cccc-cccc-cccc-012345678901', '111c561c-8a1d-4f79-9d3a-012345678901', '1e2c561c-cccc-1111-cc11-012345678901', 'VMware', '8x5', 'Contract123', 'Contract Description 1', '2023-01-01', '2023-12-31', NOW()),
@@ -103,7 +85,6 @@ VALUES
   ('2b3c4d5e-6f7a-caca-caca-000045678902', '1a2b3c4d-8b8b-8b8b-8b8b-012345678901', '1e2c561c-1234-1234-1234-012345678901', 'Software Model 2', '2.0', 'software2.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW()),
   ('2b3c4d5e-6f7a-caca-caca-000045678903', '1a2b3c4d-8b8b-8b8b-8b8b-012345678901', '1e2c561c-1234-1234-1234-012345678901', 'Software Model 3', '3.0', 'software3.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW());
 
-
 INSERT INTO "software_assets" ("software_asset_id", "software_catalog_id", "hardware_asset_id", "software_asset_name", "tenant_id", "site_id", "software_changed_at")
 VALUES
   ('1a2b3c4d-b8b8-a8a8-a1a8-012345678901', '1a2b3c4d-5e6f-caca-caca-000045678901', '1a2b3c4d-3333-7777-3c80-012345678901', 'hq-vrb01.acme.com', '111c561c-8a1d-4f79-9d3a-012345678901', '1a2b3c4d-5e6f-7a8b-9c0d-0123456aaaaa', NOW()),
@@ -114,7 +95,6 @@ INSERT INTO "sw_asset_contracts" ("sw_asset_contract_id", "software_asset_id", "
 VALUES
   ('1a2b3c4d-5e6f-7a8b-9c0d-012345678901', '1a2b3c4d-b8b8-a8a8-a1a8-012345678901', '1a2b3c4d-cccc-cccc-cccc-012345678901'),
   ('2b3c4d5e-6f7a-8b9c-0d1e-012345678902', '1a2b3c4d-b8b8-a8a8-a1a8-012345678901', '1a2b3c4d-cccc-cccc-cccc-012345678901');
-
 
 INSERT INTO "hw_asset_contracts" ("hw_asset_contract_id", "hardware_asset_id", "contract_id")
 VALUES
