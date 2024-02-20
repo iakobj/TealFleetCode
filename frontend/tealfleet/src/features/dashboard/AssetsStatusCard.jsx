@@ -17,30 +17,30 @@ import {
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
-function AssetsStatusCard({ AssetsStatusCardData }) {
+function AssetsStatusCard({ assetsStatusCardData }) {
   return (
     <Card variant="outline" bg="#fdfdfd" borderRadius="0.6em 0.6em 0.6em 0.6em">
       <CardHeader marginTop="-0.6em">
         <HStack>
-        <Text fontSize={{ md: "xs", xl: "sm" }} as="b" textTransform="uppercase" color="gray.600"> {AssetsStatusCardData.title} </Text>
+        <Text fontSize={{ md: "xs", xl: "sm" }} as="b" textTransform="uppercase" color="gray.600"> {assetsStatusCardData.title} </Text>
         <InfoOutlineIcon boxSize="3.5" color="gray.400"/>
         </HStack>
       </CardHeader>
       <CardBody>
         <Flex>
           <Box marginTop="-0.8em">
-            <Text fontSize="2xl" as="b" color="gray.600">{AssetsStatusCardData.total}</Text>
+            <Text fontSize="2xl" as="b" color="gray.600">{assetsStatusCardData.total}</Text>
           </Box>
           <Spacer />
           <Box marginTop="-1.8em">
             <CircularProgress
-              value={AssetsStatusCardData.percent}
+              value={assetsStatusCardData.percent}
               color="teal"
               size="65px"
               thickness="9px"
             >
               <CircularProgressLabel>
-                {AssetsStatusCardData.percent}%
+                {assetsStatusCardData.percent}%
               </CircularProgressLabel>
             </CircularProgress>
           </Box>

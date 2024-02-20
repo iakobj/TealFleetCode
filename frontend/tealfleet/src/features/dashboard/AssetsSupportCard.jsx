@@ -20,9 +20,9 @@ import {
   WarningTwoIcon,
 } from "@chakra-ui/icons";
 
-function AssetsSupportCard({ AssetsSupportCardData }) {
+function AssetsSupportCard({ assetsSupportCardData }) {
   return (
-    <Card variant="outline" bg="#fdfdfd" borderRadius={"0.6em 0.6em 0.6em 0.6em"}>
+    <Card key="AssetsSupportCard" variant="outline" bg="#fdfdfd" borderRadius={"0.6em 0.6em 0.6em 0.6em"}>
       <CardBody>
         <TableContainer>
           <Table
@@ -45,7 +45,7 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
               </Tr>
             </Thead>
             <Tbody>
-              {AssetsSupportCardData.map((data) => (
+              {assetsSupportCardData.map((data) => (
                 <Tr key={data.contract_no}>
                   <Td color="gray.600">{data.contract_no}</Td>
                   <Td color="gray.600">{data.contractor_name}</Td>

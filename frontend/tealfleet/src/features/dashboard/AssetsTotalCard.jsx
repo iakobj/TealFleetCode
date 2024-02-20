@@ -16,9 +16,9 @@ import {
   Progress,
 } from "@chakra-ui/react";
 
-function AssetsTotalCard({ AssetsTotalCardData }) {
+function AssetsTotalCard({ assetsTotalCardData }) {
   return (
-    <Card variant="outline" bg="#fdfdfd" borderRadius={"0.6em 0.6em 0.6em 0.6em"}>
+    <Card key="AssetsTotalCard" variant="outline" bg="#fdfdfd" borderRadius={"0.6em 0.6em 0.6em 0.6em"}>
       <CardBody>
         <TableContainer>
           <Table
@@ -39,7 +39,7 @@ function AssetsTotalCard({ AssetsTotalCardData }) {
               </Tr>
             </Thead>
             <Tbody>
-              {AssetsTotalCardData.map((data) => (
+              {assetsTotalCardData.map((data) => (
                 <Tr key={data.vendor}>
                   <Td textTransform="capitalize" color="gray.600">{data.vendor}</Td>
                   <Td color="gray.600">{data.total}</Td>

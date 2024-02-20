@@ -1,8 +1,7 @@
 // React components
 import * as React from "react";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 // import location of the API server
 import { API_ENDPOINT } from "../constants/apiEndpoint";
@@ -15,19 +14,88 @@ import AssetsTotalCard from "../features/dashboard/AssetsTotalCard";
 import AssetsSupportCard from "../features/dashboard/AssetsSupportCard";
 
 function Dashboard() {
-  const loaderData = useLoaderData();
-  
-  const loc = useLocation();
-  const location = loc.pathname.slice(1);
+  const { pathname } = useLocation();
+  const location = pathname.match(/\/([^/]+)\/?$/)[1];
+  console.log(location);
 
-  
+  const [assetsStatusCardData, setAssetsStatusCardData] = useState(["null"]);
 
+  const fetchAssetsStatus = async () => {
+    const AssetsStatus = await fetch(
+      `http://${API_ENDPOINT}/dashboard/assets/status/`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    return {
+      AssetsStatusData: await AssetsStatus.json(),
+    };
+  };
 
+  const fetchAssetsStatusData = async () => {
+    const items = await fetchAssetsStatus();
+    return items.AssetsStatusData.data;
+  };
 
-  const AssetsStatusCardData = loaderData.AssetsStatus.data;
-  const AssetsTotalCardData = loaderData.AssetsTotal.data;
-  const AssetsSupportCardData = loaderData.AssetsSupport.data;
- 
+  useEffect(() => {
+    fetchAssetsStatusData().then((assetsStatusCardData) => {
+      setAssetsStatusCardData(assetsStatusCardData);
+    });
+  }, [location]);
+
+  const [assetsTotalCardData, setAssetsTotalCardData] = useState(["null"]);
+
+  const fetchAssetsTotal = async () => {
+    const AssetsTotal = await fetch(
+      `http://${API_ENDPOINT}/dashboard/assets/totals/`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    return {
+      AssetsTotalData: await AssetsTotal.json(),
+    };
+  };
+
+  const fetchAssetsTotalData = async () => {
+    const items = await fetchAssetsTotal();
+    return items.AssetsTotalData.data;
+  };
+
+  useEffect(() => {
+    fetchAssetsTotalData().then((assetsTotalCardData) => {
+      setAssetsTotalCardData(assetsTotalCardData);
+    });
+  }, [location]);
+
+  const [assetsSupportCardData, setAssetsSupportCardData] = useState(["null"]);
+
+  const fetchAssetsSupport = async () => {
+    const AssetsSupport = await fetch(
+      `http://${API_ENDPOINT}/dashboard/assets/support/`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    return {
+      AssetsSupportData: await AssetsSupport.json(),
+    };
+  };
+
+  const fetchAssetsSupportData = async () => {
+    const items = await fetchAssetsSupport();
+    return items.AssetsSupportData.data;
+  };
+
+  useEffect(() => {
+    fetchAssetsSupportData().then((assetsSupportCardData) => {
+      setAssetsSupportCardData(assetsSupportCardData);
+    });
+  }, [location]);
+
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Card
@@ -46,12 +114,13 @@ function Dashboard() {
             "2xl": "4",
           }}
         >
-          {AssetsStatusCardData && AssetsStatusCardData.map((AssetsStatusCardData) => (
-            <AssetsStatusCard
-              AssetsStatusCardData={AssetsStatusCardData}
-              key={AssetsStatusCardData.title}
-            />
-          ))}
+          {assetsStatusCardData &&
+            assetsStatusCardData.map((assetsStatusCardData) => (
+              <AssetsStatusCard
+                assetsStatusCardData={assetsStatusCardData}
+                key={assetsStatusCardData.title}
+              />
+            ))}
         </SimpleGrid>
       </Card>
       <SimpleGrid
@@ -59,41 +128,17 @@ function Dashboard() {
         spacing="1.2em"
         columns={{ base: "1", sm: "1", md: "2", lg: "2" }}
       >
-        <AssetsTotalCard AssetsTotalCardData={AssetsTotalCardData} />
-        <AssetsSupportCard AssetsSupportCardData={AssetsSupportCardData} />
+        <AssetsTotalCard
+          key="AssetsTotal"
+          assetsTotalCardData={assetsTotalCardData}
+        />
+        <AssetsSupportCard
+          key="AssetsSupport"
+          assetsSupportCardData={assetsSupportCardData}
+        />
       </SimpleGrid>
     </Box>
   );
 }
 
 export default Dashboard;
-
-export const DashboardDataLoader = async () => {
-  const AssetsStatus = await fetch(
-    `http://${API_ENDPOINT}/dashboard/assets/status/`,
-    {
-      method: "GET",
-      credentials: "include",
-    }
-  );
-  const AssetsTotal = await fetch(
-    `http://${API_ENDPOINT}/dashboard/assets/totals/`,
-    {
-      method: "GET",
-      credentials: "include",
-    }
-  );
-  const AssetsSupport = await fetch(
-    `http://${API_ENDPOINT}/dashboard/assets/support/`,
-    {
-      method: "GET",
-      credentials: "include",
-    }
-  );
-
-  return {
-    AssetsStatus: await AssetsStatus.json(),
-    AssetsTotal: await AssetsTotal.json(),
-    AssetsSupport: await AssetsSupport.json(),
-  };
-};
