@@ -26,6 +26,8 @@ It will offer users an interface designed for simplicity, ensuring easy navigati
 - Etc…
 
 
+## Screenshots from the dev version of the app
+
 ### **Dashboard**
 <img src="./screenshots/Screenshot1.png"/>
 
