@@ -25,12 +25,17 @@ It will offer users an interface designed for simplicity, ensuring easy navigati
 - Support contracts information
 - Etc…
 
-### **Fleet overview**  
-<img src="./screenshots/Screenshot1.png"/>  
-
 
 ### **Dashboard**
-<img src="./screenshots/Screenshot2.png"/>
+<img src="./screenshots/Screenshot1.png"/>
+
+
+### **Fleet overview**  
+<img src="./screenshots/Screenshot2.png"/>  
+
+
+### **Support/contracts overview**  
+<img src="./screenshots/Screenshot3.png"/> 
 
 The 'Cards' design would serve as the primary means to display this information.
 
