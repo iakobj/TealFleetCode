@@ -7,7 +7,6 @@ import {
   Text,
   Flex,
   Spacer,
-  HStack,
   Card,
   CardBody,
   CardHeader,
@@ -15,32 +14,27 @@ import {
   CircularProgressLabel,
 } from "@chakra-ui/react";
 
-import { InfoOutlineIcon } from "@chakra-ui/icons";
-
-function AssetsStatusCard({ assetsStatusCardData }) {
+function AssetsStatusCard({ AssetsStatusCardData }) {
   return (
-    <Card variant="outline" bg="#fdfdfd" borderRadius="0.6em 0.6em 0.6em 0.6em">
+    <Card variant="outline" bg="#fdfdfd" borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}>
       <CardHeader marginTop="-0.6em">
-        <HStack>
-        <Text fontSize={{ md: "xs", xl: "sm" }} as="b" textTransform="uppercase" color="gray.600"> {assetsStatusCardData.title} </Text>
-        <InfoOutlineIcon boxSize="3.5" color="gray.400"/>
-        </HStack>
+        <Text fontSize="md" color="gray.800"> {AssetsStatusCardData.title} </Text>
       </CardHeader>
       <CardBody>
         <Flex>
           <Box marginTop="-0.8em">
-            <Text fontSize="2xl" as="b" color="gray.600">{assetsStatusCardData.total}</Text>
+            <Text fontSize="2xl" color="gray.800">{AssetsStatusCardData.total}</Text>
           </Box>
           <Spacer />
           <Box marginTop="-1.8em">
             <CircularProgress
-              value={assetsStatusCardData.percent}
+              value={AssetsStatusCardData.percent}
               color="teal"
               size="65px"
               thickness="9px"
             >
               <CircularProgressLabel>
-                {assetsStatusCardData.percent}%
+                {AssetsStatusCardData.percent}%
               </CircularProgressLabel>
             </CircularProgress>
           </Box>

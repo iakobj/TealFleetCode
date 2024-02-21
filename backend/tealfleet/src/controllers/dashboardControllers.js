@@ -19,6 +19,7 @@ const { checkIdentity } = require("../middlewares/identity");
 module.exports.cDashboardGetStatusCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
+    
     const resultArray = await Promise.all([
       assetsGetNoSW(identity),
       assetsGetNoHW(identity),
