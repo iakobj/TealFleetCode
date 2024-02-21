@@ -1,7 +1,7 @@
 
 <img
-width="312px"
-height="166px"
+width="375px"
+height="188px"
 src="./screenshots/TealFleet-Teal.png"/>
 
 # TealFleet - Is an idea in the making.
