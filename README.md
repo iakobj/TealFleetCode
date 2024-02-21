@@ -1,8 +1,5 @@
 
-<img
-width="100px"
-height="100px"
-src="./screenshots/TealFleet-Teal.png"/>
+<img src="./screenshots/TealFleet-Teal.png"/>
 
 # TealFleet - Is an idea in the making.
 
