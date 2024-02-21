@@ -17,9 +17,6 @@ import AssetsSupportCard from "../features/dashboard/AssetsSupportCard";
 function Dashboard() {
   const loaderData = useLoaderData();
 
-  const loc = useLocation();
-  const location = loc.pathname.slice(1);
-
   const AssetsStatusCardData = loaderData.AssetsStatus.data;
   const AssetsTotalCardData = loaderData.AssetsTotal.data;
   const AssetsSupportCardData = loaderData.AssetsSupport.data;
