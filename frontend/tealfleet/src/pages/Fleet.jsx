@@ -14,7 +14,9 @@ function Fleet() {
 
 export default Fleet;
 
-export const FleetDataLoader = async () => {
+export const FleetDataLoader = async ({ params }) => {
+
+  console.log(params);
 
   const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
     method: "GET",

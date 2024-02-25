@@ -44,6 +44,7 @@ function HeaderSubNav({ link }) {
   const administration = [
     { administration: "Users" },
     { administration: "Tenants" },
+    { administration: "Audit Log" },
   ];
 
   useEffect(() => {

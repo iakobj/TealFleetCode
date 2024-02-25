@@ -1,8 +1,6 @@
 // React components
 import * as React from "react";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 // import location of the API server
 import { API_ENDPOINT } from "../constants/apiEndpoint";

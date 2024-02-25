@@ -130,6 +130,7 @@ function ContractsAssetsList({ selectedContractData }) {
               <Thead>
                 <Tr>
                   <Th>ASSET NAME</Th>
+                  <Th>TENANT</Th>
                   <Th>VENDOR</Th>
                   <Th>MODEL</Th>
                   <Th>SERIAL NUMBER</Th>
@@ -145,6 +146,11 @@ function ContractsAssetsList({ selectedContractData }) {
                           {data.software_asset_name || data.hardware_asset_name}
                         </Text>
                       </Td>
+                      <Td>
+                        <Text color="gray.800">
+                        {data.tenant_name}
+                        </Text>
+                      </Td>
                       <Td textTransform="capitalize">
                         <Text color="gray.800">{data.vendor_name}</Text>
                       </Td>
@@ -155,11 +161,6 @@ function ContractsAssetsList({ selectedContractData }) {
                       </Td>
                       <Td>
                         <Text color="gray.800">{data.hardware_serial_no}</Text>
-                      </Td>
-                      <Td>
-                        <Text color="gray.800">
-                          <InfoOutlineIcon color="teal" />
-                        </Text>
                       </Td>
                     </Tr>
                   ))}

@@ -170,7 +170,9 @@ function FleetFilter() {
                         key={tenantItems.tenant_id}
                         value={tenantItems.tenant_name}
                       >
+                        
                         {tenantItems.tenant_name}
+                        
                       </option>
                     ))}
                 </Select>

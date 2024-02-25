@@ -19,7 +19,7 @@ const { checkIdentity } = require("../middlewares/identity");
 module.exports.cDashboardGetStatusCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
-    
+
     const resultArray = await Promise.all([
       assetsGetNoSW(identity),
       assetsGetNoHW(identity),
@@ -87,50 +87,68 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
     const allAssets = {
       title: "All assets",
       total: noOfAllAssets,
-      percent: 100,
+      percent: noOfAllAssets ? 0 : 0,
     };
     const coveredAssets = {
       title: "Covered assets",
       total: noOfAllCoveredAssets,
-      percent: ((100 / noOfAllAssets) * noOfAllCoveredAssets).toFixed(0),
+      percent: isNaN(((100 / noOfAllAssets) * noOfAllCoveredAssets).toFixed(0))
+        ? 0
+        : ((100 / noOfAllAssets) * noOfAllCoveredAssets).toFixed(0),
     };
     const uncoveredAssets = {
       title: "Uncovered assets",
       total: noOfAllUncoveredAssets,
-      percent: 69,
+      percent: isNaN(
+        ((100 / noOfAllAssets) * noOfAllUncoveredAssets).toFixed(0)
+      )
+        ? 0
+        : ((100 / noOfAllAssets) * noOfAllUncoveredAssets).toFixed(0),
     };
     const newAssets = {
       title: "New assets",
       total: hardwareCreatedLastMonthCount,
-      percent: ((100 / noOfAllAssets) * hardwareCreatedLastMonthCount).toFixed(
-        0
-      ),
+      percent: isNaN(
+        ((100 / noOfAllAssets) * hardwareCreatedLastMonthCount).toFixed(0)
+      )
+        ? 0
+        : ((100 / noOfAllAssets) * hardwareCreatedLastMonthCount).toFixed(0),
     };
     const allContracts = {
       title: "All contracts",
       total: contractsAllNo,
-      percent: 100,
+      percent: contractsAllNo ? 0 : 0,
     };
     const activeContracts = {
       title: "Active contracts",
       total: validContractsCount,
-      percent: ((100 / contractsAllNo) * validContractsCount).toFixed(0),
+      percent: isNaN(((100 / contractsAllNo) * validContractsCount).toFixed(0))
+        ? 0
+        : ((100 / contractsAllNo) * validContractsCount).toFixed(0),
     };
     const expiredContracts = {
       title: "Expired contracts",
       total: contractsAllNo - validContractsCount,
-      percent: (
-        (100 / contractsAllNo) *
-        (contractsAllNo - validContractsCount)
-      ).toFixed(0),
+      percent: isNaN(
+        (
+          (100 / contractsAllNo) *
+          (contractsAllNo - validContractsCount)
+        ).toFixed(0)
+      )
+        ? 0
+        : (
+            (100 / contractsAllNo) *
+            (contractsAllNo - validContractsCount)
+          ).toFixed(0),
     };
     const soonExpired = {
       title: "Contracts ends soon",
       total: contractsWithinFourMonthsCount,
-      percent: (
-        (100 / contractsAllNo) *
-        contractsWithinFourMonthsCount
-      ).toFixed(0),
+      percent: isNaN(
+        ((100 / contractsAllNo) * contractsWithinFourMonthsCount).toFixed(0)
+      )
+        ? 0
+        : ((100 / contractsAllNo) * contractsWithinFourMonthsCount).toFixed(0),
     };
 
     const result = [
@@ -210,17 +228,15 @@ module.exports.cDashboardGetSupportCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
 
-    const resultArray = await Promise.all([
-      contractsGetAll(identity),
-    ]);
+    const resultArray = await Promise.all([contractsGetAll(identity)]);
 
     const contractsAll = resultArray[0];
 
-    const result = contractsAll.map(obj => ({
-        contract_no: obj.contract_no,
-        contractor_name: obj.contractor_name,
-        contract_valid: new Date(obj.contract_valid_to) > new Date(), // Check if contract is still valid
-      }));
+    const result = contractsAll.map((obj) => ({
+      contract_no: obj.contract_no,
+      contractor_name: obj.contractor_name,
+      contract_valid: new Date(obj.contract_valid_to) > new Date(), // Check if contract is still valid
+    }));
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });
