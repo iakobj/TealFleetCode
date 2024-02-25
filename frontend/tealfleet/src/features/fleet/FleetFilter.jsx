@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-import { useLoaderData } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { useLoaderData, useSearchParams } from "react-router-dom";
 
 import FleetCard from "./FleetCard.jsx";
 
@@ -20,104 +19,64 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 
-import { Search2Icon, RepeatIcon } from "@chakra-ui/icons";
+import { RepeatIcon } from "@chakra-ui/icons";
 
-// FleetFilter Component
 function FleetFilter() {
-  // Get the location of the url, and if it is empty use "Fleet"
-  const loc = useLocation();
-  const location = loc.pathname.slice(1) || "Fleet";
-
   const loaderData = useLoaderData();
 
-  const fItems = loaderData.fItems.data;
+  const fleetCardItems = loaderData.fItems.data;
   const tenantItems = loaderData.tItems.data;
   const swModelItems = loaderData.swItems.data;
   const hwModelItems = loaderData.hwItems.data;
   const siteNameItems = loaderData.siteItems.data;
 
-  // From URL it gets the last word, then it updates the array of card data and displays only the ones that include the vendor name
+  const [tenant, setTenant] = useState();
+  const [swmodel, setSwmodel] = useState();
+  const [hwmodel, setHwmodel] = useState();
+  const [sitename, setSitename] = useState();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Reset the select forms when URL changes to /fleet
   useEffect(() => {
-    var inputLocation = location;
-    var vendorName = inputLocation.split("/");
+    const resetFilters = () => {
+      setTenant("");
+      setSwmodel("");
+      setHwmodel("");
+      setSitename("");
+    };
 
-    if (vendorName.length > 1) {
-      const vendor = vendorName[1];
-      const originalArray = fItems;
-      // if the vendor is all it will display unchanged array of all asset fleet cards
-      if (vendor === "All") {
-        setFleetCardItems(originalArray);
-      } else {
-        const filteredArray = originalArray.filter((item) => {
-          return item.vendor_name == vendor;
-        });
-        setFleetCardItems(filteredArray);
-      }
+    if (location.pathname.startsWith("/fleet/")) {
+      resetFilters();
     }
-  }, [location]);
+  }, [location.pathname]);
 
-  const [formData, setFormData] = useState();
-  const [fleetCardItems, setFleetCardItems] = useState(fItems);
-
-  // Add state for selected values
-  const [selectedTenant, setSelectedTenant] = useState("");
-  const [selectedSwModel, setSelectedSwModel] = useState("");
-  const [selectedHwModel, setSelectedHwModel] = useState("");
-  const [selectedSiteName, setSelectedSiteName] = useState("");
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-
-    switch (name) {
+  function handleChange(selected, filterName) {
+    // Update the state based on the selected filter
+    switch (filterName) {
       case "tenant":
-        setSelectedTenant(value);
+        setTenant(selected);
         break;
       case "swmodel":
-        setSelectedSwModel(value);
+        setSwmodel(selected);
         break;
       case "hwmodel":
-        setSelectedHwModel(value);
+        setHwmodel(selected);
         break;
       case "sitename":
-        setSelectedSiteName(value);
+        setSitename(selected);
         break;
       default:
         break;
     }
-  };
-
-  const handleSubmit = (event) => {
-    var inputLocation = location;
-    var vendorName = inputLocation.split("/");
-
-    if (vendorName.length > 1) {
-      var vendor = vendorName[1];
-    }
-
-    event.preventDefault();
-    const originalArray = fItems;
-    const filteredArray = originalArray.filter((item) => {
-      return (
-        (!formData.tenant || item.tenant_name == formData.tenant) &&
-        (!formData.swmodel || item.software_model_name == formData.swmodel) &&
-        (!formData.hwmodel || item.hardware_model_name == formData.hwmodel) &&
-        (!vendor || item.vendor_name == vendor)
-      );
-    });
-    setFleetCardItems(filteredArray);
-  };
-
-  const handleReset = () => {
-    // Reset selected values
-    setSelectedTenant("");
-    setSelectedSwModel("");
-    setSelectedHwModel("");
-    setSelectedSiteName("");
-
-    const originalArray = fItems;
-    setFleetCardItems(originalArray);
-  };
+    let params = {
+      tenant: filterName === "tenant" ? selected : tenant,
+      swmodel: filterName === "swmodel" ? selected : swmodel,
+      hwmodel: filterName === "hwmodel" ? selected : hwmodel,
+      sitename: filterName === "sitename" ? selected : sitename,
+    };
+    setSearchParams(params);
+  }
 
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
@@ -130,132 +89,130 @@ function FleetFilter() {
           bg="#fdfdfd"
           borderRadius={"0.6em 0.6em 0.6em 0.6em"}
         >
-          <form onSubmit={handleSubmit}>
-            <Wrap>
-              <WrapItem>
-                <Button
-                  type="submit"
-                  leftIcon={<Search2Icon />}
+          <Wrap>
+            <WrapItem>
+              <NavLink to={"/fleet"}>
+                <IconButton
+                  marginRight={"0.6em"}
+                  aria-label="Reset filter"
+                  icon={<RepeatIcon />}
                   size={"sm"}
                   colorScheme={"teal"}
-                  marginLeft="0.6em"
-                >
-                  Filter
-                </Button>
-                <NavLink to={"/fleet"}>
-                  <IconButton
-                    marginRight={"0.6em"}
-                    aria-label="Reset filter"
-                    icon={<RepeatIcon />}
-                    size={"sm"}
-                    colorScheme={"teal"}
-                    marginLeft={"0.6em"}
-                    onClick={handleReset}
-                  />
-                </NavLink>
-              </WrapItem>
+                  marginLeft={"0.6em"}
+                />
+              </NavLink>
+            </WrapItem>
 
-              <WrapItem marginRight={"0.5em"}>
-                <Select
-                  placeholder="Tenant"
-                  id="tenant"
-                  name="tenant"
-                  size="sm"
-                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                  onChange={handleChange}
-                  value={selectedTenant}
-                >
-                  {tenantItems && tenantItems.filter(item => item.tenant_id ).map((tenantItems) => ( 
+            <WrapItem marginRight={"0.5em"}>
+              <Select
+                placeholder="Tenant"
+                id="tenant"
+                name="tenant"
+                size="sm"
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                value={tenant}
+                onChange={(e) => handleChange(e.target.value, "tenant")}
+              >
+                {tenantItems &&
+                  tenantItems
+                    .filter((item) => item.tenant_id)
+                    .map((tenantItems) => (
                       <option
                         key={tenantItems.tenant_id}
                         value={tenantItems.tenant_name}
                       >
-                        
                         {tenantItems.tenant_name}
-                        
                       </option>
                     ))}
-                </Select>
-              </WrapItem>
-              <WrapItem marginRight={"0.5em"}>
-                <Select
-                  placeholder="Software"
-                  size="sm"
-                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                  id="swmodel"
-                  name="swmodel"
-                  onChange={handleChange}
-                  value={selectedSwModel}
-                >
-                      {swModelItems && swModelItems.filter(item => item.software_model_name ).map((swModelItems) => ( 
+              </Select>
+            </WrapItem>
+            <WrapItem marginRight={"0.5em"}>
+              <Select
+                placeholder="Software"
+                size="sm"
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                id="swmodel"
+                name="swmodel"
+                value={swmodel}
+                onChange={(e) => handleChange(e.target.value, "swmodel")}
+              >
+                {swModelItems &&
+                  swModelItems
+                    .filter((item) => item.software_model_name)
+                    .map((swModelItems) => (
                       <option key={swModelItems.software_model_name}>
                         {swModelItems.software_model_name}
                       </option>
                     ))}
-                </Select>
-              </WrapItem>
-              <WrapItem marginRight={"0.5em"}>
-                <Select
-                  placeholder="Hardware"
-                  size="sm"
-                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                  id="hwmodel"
-                  name="hwmodel"
-                  onChange={handleChange}
-                  value={selectedHwModel}
-                >
-                      {hwModelItems && hwModelItems.filter(item => item.hardware_model_name ).map((hwModelItems) => ( 
-
+              </Select>
+            </WrapItem>
+            <WrapItem marginRight={"0.5em"}>
+              <Select
+                placeholder="Hardware"
+                size="sm"
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                id="hwmodel"
+                name="hwmodel"
+                value={hwmodel}
+                onChange={(e) => handleChange(e.target.value, "hwmodel")}
+              >
+                {hwModelItems &&
+                  hwModelItems
+                    .filter((item) => item.hardware_model_name)
+                    .map((hwModelItems) => (
                       <option key={hwModelItems.hardware_model_name}>
                         {hwModelItems.hardware_model_name}
                       </option>
                     ))}
-                </Select>
-              </WrapItem>
-              <WrapItem>
-                <Select
-                  placeholder="Site"
-                  size="sm"
-                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                  id="sitename"
-                  name="sitename"
-                  onChange={handleChange}
-                  value={selectedSiteName}
-                >
-                      {siteNameItems && siteNameItems.filter(item => item.site_name ).map((siteNameItems) => ( 
-
+              </Select>
+            </WrapItem>
+            <WrapItem>
+              <Select
+                placeholder="Site"
+                size="sm"
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                id="sitename"
+                name="sitename"
+                value={sitename}
+                onChange={(e) => handleChange(e.target.value, "sitename")}
+              >
+                {siteNameItems &&
+                  siteNameItems
+                    .filter((item) => item.site_name)
+                    .map((siteNameItems) => (
                       <option key={siteNameItems.site_id}>
                         {siteNameItems.site_name}
                       </option>
                     ))}
-                </Select>
-              </WrapItem>
+              </Select>
+            </WrapItem>
+            <Spacer />
+            <WrapItem>
               <Spacer />
-              <WrapItem>
-                <Spacer />
-                <Button marginRight="0.6em" size={"sm"} colorScheme={"teal"}>
-                  New Asset
-                </Button>
-              </WrapItem>
-            </Wrap>
-          </form>
+              <Button marginRight="0.6em" size={"sm"} colorScheme={"teal"}>
+                New Asset
+              </Button>
+            </WrapItem>
+          </Wrap>
         </Card>
       </Hide>
       <SimpleGrid
         spacing="1em"
         columns={{ base: "1", sm: "2", md: "3", lg: "3", xl: "4", "2xl": "5" }}
       >
-  {fleetCardItems &&
-    fleetCardItems.filter(item => item.hardware_asset_id || item.software_asset_id).map((fleetCardItems) => (
-      <FleetCard
-              fleetCardItems={fleetCardItems}
-              key={
-                fleetCardItems.hardware_asset_id
-                  ? fleetCardItems.hardware_asset_id
-                  : fleetCardItems.software_asset_id
-              }
-            />
-          ))}
+        {fleetCardItems &&
+          fleetCardItems
+            .filter((item) => item.hardware_asset_id || item.software_asset_id)
+            .map((fleetCardItems) => (
+              <FleetCard
+                fleetCardItems={fleetCardItems}
+                key={
+                  fleetCardItems.hardware_asset_id
+                    ? fleetCardItems.hardware_asset_id
+                    : fleetCardItems.software_asset_id
+                }
+              />
+            ))}
       </SimpleGrid>
     </Box>
   );

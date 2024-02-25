@@ -7,6 +7,14 @@ import { useState, useEffect } from "react";
 import { Flex, Text, HStack, Button } from "@chakra-ui/react";
 
 function HeaderSubNav({ link }) {
+  const [selectedButton, setSelectedButton] = useState(null);
+
+  useEffect(() => {
+    if (link != "fleet") {
+      setSelectedButton(null);
+    }
+  }, [location.pathname]);
+
   const fetchData = async () => {
     const data = await fetch(`http://localhost:3000/vendors`, {
       method: "GET",
@@ -111,15 +119,31 @@ function HeaderSubNav({ link }) {
                   subNavItem.administration
                 }
               >
-                <Button size="sm" colorScheme="blackAlpha" variant="ghost">
+                <Button
+                  size="sm"
+                  colorScheme="blackAlpha"
+                  variant="ghost"
+                  onClick={() =>
+                    setSelectedButton(
+                      subNavItem.tenant_name ||
+                        subNavItem.vendor_name ||
+                        subNavItem.support ||
+                        subNavItem.administration
+                    )
+                  }
+                  fontWeight={
+                    selectedButton ===
+                    (subNavItem.tenant_name ||
+                      subNavItem.vendor_name ||
+                      subNavItem.support ||
+                      subNavItem.administration)
+                      ? "600"
+                      : "normal"
+                  }
+                >
                   <Text
                     color="blackAlpha.700"
                     fontSize={{ base: "sm", sm: "sm", md: "md" }}
-                    fontWeight={
-                      location.pathname === subNavItem.sub_nav_path
-                        ? "bold"
-                        : "normal"
-                    }
                   >
                     {subNavItem.tenant_name ||
                       subNavItem.vendor_name ||

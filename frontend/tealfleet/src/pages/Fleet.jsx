@@ -14,9 +14,17 @@ function Fleet() {
 
 export default Fleet;
 
-export const FleetDataLoader = async ({ params }) => {
+export const FleetDataLoader = async ({ params, request }) => {
 
-  console.log(params);
+  const url = new URL(request.url);
+  const searchTenant = url.searchParams.get("tenant");
+  const searchSwmodel = url.searchParams.get("swmodel");
+  const searchHwmodel = url.searchParams.get("hwmodel");
+  const searchSitename = url.searchParams.get("sitename");
+  const searchVendor = params.vendor
+
+  console.log(searchVendor, searchTenant, searchSwmodel, searchHwmodel, searchSitename)
+ 
 
   const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
     method: "GET",

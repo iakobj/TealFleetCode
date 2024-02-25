@@ -95,13 +95,12 @@ function HeaderMainNav() {
                     colorScheme="teal"
                     variant="hgost"
                     onClick={() => handleLinkClick(index)}
-                    fontWeight={index === clickedIndex ? "bold" : "300"}
                   >
                     <Text
                       color="white"
                       fontSize={{ base: "sm", sm: "sm", md: "lg" }}
                       key={mainNavItem}
-                      fontWeight={index === clickedIndex ? "bold" : "400"}
+                      fontWeight={index === clickedIndex ? "600" : "400"}
                     >
                       {mainNavItem.toUpperCase()}
                     </Text>

@@ -7,7 +7,6 @@ const Fonts = () => (
         font-family: 'Rubik';
         font-stretch: 0;
         src: url('../public/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
-        font-weight: normal;
       }
       `}
   />

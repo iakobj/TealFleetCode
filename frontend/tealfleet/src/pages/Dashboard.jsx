@@ -61,13 +61,17 @@ function Dashboard() {
 export default Dashboard;
 
 export const DashboardDataLoader = async ({ params }) => {
-  const tenant = params.tenant;
+
+  let tenant;
+  if (params.tenant) {
+    tenant = params.tenant;
+  }
 
   let AssetsStatus;
   let AssetsTotal;
   let AssetsSupport;
 
-  if (tenant == "dashboard") {
+  if (!tenant) {
     AssetsStatus = await fetch(
       `http://${API_ENDPOINT}/dashboard/assets/status/`,
       {

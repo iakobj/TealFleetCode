@@ -38,19 +38,13 @@ const router = createBrowserRouter([
   errorElement: <ErrorBoundary />,
     children: [
       {
-        path: "dashboard?/:tenant",
+        path: "dashboard/:tenant?",
         element: <Dashboard/>,
         loader: DashboardDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
-        path: "fleet",
-        element: <Fleet/>,
-        loader: FleetDataLoader,
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "fleet/:vendor",
+        path: "fleet/:vendor?",
         element: <Fleet/>,
         loader: FleetDataLoader,
         errorElement: <ErrorBoundary />,
