@@ -15,16 +15,28 @@ function Fleet() {
 export default Fleet;
 
 export const FleetDataLoader = async ({ params, request }) => {
-
   const url = new URL(request.url);
   const searchTenant = url.searchParams.get("tenant");
   const searchSwmodel = url.searchParams.get("swmodel");
   const searchHwmodel = url.searchParams.get("hwmodel");
   const searchSitename = url.searchParams.get("sitename");
-  const searchVendor = params.vendor
+  const searchVendor = params.vendor;
 
-  console.log(searchVendor, searchTenant, searchSwmodel, searchHwmodel, searchSitename)
- 
+  // Construct the URL with search parameters
+  const queryParams = new URLSearchParams({
+    tenant: searchTenant,
+    swmodel: searchSwmodel,
+    hwmodel: searchHwmodel,
+    sitename: searchSitename,
+    vendor: searchVendor,
+  });
+
+  const apiUrl = `http://${API_ENDPOINT}/assets/fleet/filter/?${queryParams.toString()}`;
+
+  const tItemsx = await fetch(apiUrl, {
+    method: "GET",
+    credentials: "include",
+  });
 
   const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
     method: "GET",
