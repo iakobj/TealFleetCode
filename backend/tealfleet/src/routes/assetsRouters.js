@@ -161,10 +161,9 @@ const {
   cAssetsGetAllSW,
   cAssetsGetAllHW,
   cAssetsGetAll,
-
 } = require("../controllers/assetsControllers");
 
-assetsRouters.get("/fleet/all", cAssetsGetAll);
+assetsRouters.get("/fleet/all/:filter?", cAssetsGetAll);
 assetsRouters.get("/fleet/all/sw", cAssetsGetAllSW);
 assetsRouters.get("/fleet/all/hw", cAssetsGetAllHW);
 

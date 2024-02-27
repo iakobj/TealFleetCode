@@ -15,6 +15,8 @@ function Fleet() {
 export default Fleet;
 
 export const FleetDataLoader = async ({ params, request }) => {
+  let fItems;
+
   const url = new URL(request.url);
   const searchTenant = url.searchParams.get("tenant");
   const searchSwmodel = url.searchParams.get("swmodel");
@@ -29,13 +31,6 @@ export const FleetDataLoader = async ({ params, request }) => {
     hwmodel: searchHwmodel,
     sitename: searchSitename,
     vendor: searchVendor,
-  });
-
-  const apiUrl = `http://${API_ENDPOINT}/assets/fleet/filter/?${queryParams.toString()}`;
-
-  const tItemsx = await fetch(apiUrl, {
-    method: "GET",
-    credentials: "include",
   });
 
   const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
@@ -64,10 +59,19 @@ export const FleetDataLoader = async ({ params, request }) => {
     credentials: "include",
   });
 
-  const fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/all/`, {
+  fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/all/`, {
     method: "GET",
     credentials: "include",
   });
+
+  const apiUrl = `http://${API_ENDPOINT}/assets/fleet/all/filter/?${queryParams.toString()}`;
+
+  if (searchTenant || searchSwmodel || searchHwmodel || searchSitename || searchVendor) {
+    fItems = await fetch(apiUrl, {
+      method: "GET",
+      credentials: "include",
+    });
+  }
 
   return {
     tItems: await tItems.json(),

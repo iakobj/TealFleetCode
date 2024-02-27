@@ -87,8 +87,10 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
     const allAssets = {
       title: "All assets",
       total: noOfAllAssets,
-      percent: noOfAllAssets ? 0 : 0,
-    };
+      percent: isNaN(((100 / noOfAllAssets) * noOfAllAssets).toFixed(0))
+      ? 0
+      : ((100 / noOfAllAssets) * noOfAllAssets).toFixed(0),
+  };
     const coveredAssets = {
       title: "Covered assets",
       total: noOfAllCoveredAssets,
@@ -117,8 +119,10 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
     const allContracts = {
       title: "All contracts",
       total: contractsAllNo,
-      percent: contractsAllNo ? 0 : 0,
-    };
+      percent: isNaN(((100 / contractsAllNo) * contractsAllNo).toFixed(0))
+      ? 0
+      : ((100 / contractsAllNo) * contractsAllNo).toFixed(0),
+  };
     const activeContracts = {
       title: "Active contracts",
       total: validContractsCount,

@@ -53,6 +53,7 @@ function HeaderSubNav({ link }) {
     { administration: "Users" },
     { administration: "Tenants" },
     { administration: "Audit Log" },
+    { administration: "Catalogs" },
   ];
 
   useEffect(() => {
