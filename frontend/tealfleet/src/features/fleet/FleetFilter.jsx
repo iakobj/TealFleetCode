@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 
 import FleetCard from "./FleetCard.jsx";
@@ -17,6 +17,10 @@ import {
   Select,
   Hide,
   IconButton,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
 } from "@chakra-ui/react";
 
 import { RepeatIcon } from "@chakra-ui/icons";
@@ -36,20 +40,6 @@ function FleetFilter() {
   const [sitename, setSitename] = useState();
 
   const [searchParams, setSearchParams] = useSearchParams();
-
-  // Reset the select forms when URL changes to /fleet
-  useEffect(() => {
-    const resetFilters = () => {
-      setTenant("");
-      setSwmodel("");
-      setHwmodel("");
-      setSitename("");
-    };
-
-    if (location.pathname.startsWith("/fleet/")) {
-      resetFilters();
-    }
-  }, [location.pathname]);
 
   function handleChange(selected, filterName) {
     // Update the state based on the selected filter
@@ -78,6 +68,13 @@ function FleetFilter() {
     setSearchParams(params);
   }
 
+  function resetForm() {
+    setTenant("");
+    setSwmodel("");
+    setHwmodel("");
+    setSitename("");
+  }
+
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Hide breakpoint="(max-width: 17em)">
@@ -91,7 +88,7 @@ function FleetFilter() {
         >
           <Wrap>
             <WrapItem>
-              <NavLink to={"/fleet"}>
+              <NavLink to={"/fleet" }>
                 <IconButton
                   marginRight={"0.6em"}
                   aria-label="Reset filter"
@@ -99,11 +96,13 @@ function FleetFilter() {
                   size={"sm"}
                   colorScheme={"teal"}
                   marginLeft={"0.6em"}
+                  onClick={resetForm}
                 />
               </NavLink>
             </WrapItem>
 
             <WrapItem marginRight={"0.5em"}>
+            <FormControl>
               <Select
                 placeholder="Tenant"
                 id="tenant"
@@ -125,8 +124,10 @@ function FleetFilter() {
                       </option>
                     ))}
               </Select>
+            </FormControl>
             </WrapItem>
             <WrapItem marginRight={"0.5em"}>
+            <FormControl>
               <Select
                 placeholder="Software"
                 size="sm"
@@ -145,8 +146,10 @@ function FleetFilter() {
                       </option>
                     ))}
               </Select>
+              </FormControl>
             </WrapItem>
             <WrapItem marginRight={"0.5em"}>
+            <FormControl>
               <Select
                 placeholder="Hardware"
                 size="sm"
@@ -165,8 +168,10 @@ function FleetFilter() {
                       </option>
                     ))}
               </Select>
+              </FormControl>
             </WrapItem>
             <WrapItem>
+            <FormControl>
               <Select
                 placeholder="Site"
                 size="sm"
@@ -185,6 +190,7 @@ function FleetFilter() {
                       </option>
                     ))}
               </Select>
+              </FormControl>
             </WrapItem>
             <Spacer />
             <WrapItem>

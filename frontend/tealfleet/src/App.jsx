@@ -62,7 +62,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />,
       },
       {
-        path: "administration",
+        path: "administration/:something?",
         element: <Administration/>,
         errorElement: <ErrorBoundary />,
       },

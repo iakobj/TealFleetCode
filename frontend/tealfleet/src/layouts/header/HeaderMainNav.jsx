@@ -23,12 +23,7 @@ import HeaderProfileMenu from "./HeaderProfileMenu";
 
 function HeaderMainNav() {
   const { pathname: location = "dashboard" } = useLocation();
-
   const [clickedIndex, setClickedIndex] = useState(-1);
-  const linkForSubNav =
-    location.split("/")[0] === ""
-      ? location.split("/")[1]
-      : location.split("/")[0];
 
   const handleLinkClick = (index) => {
     setClickedIndex(index);
@@ -128,7 +123,7 @@ function HeaderMainNav() {
         borderRadius={{ md: "0em 0em 0em 0em" }}
       >
         <Center margin={{ base: "0.7em", sm: "0.7em", md: "0.2em" }}>
-          <HeaderSubNav link={linkForSubNav} />
+          <HeaderSubNav location={location} />
         </Center>
       </GridItem>
     </Grid>

@@ -1,22 +1,36 @@
 // React components
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+
+import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 // Chakra-UI components
 import { Flex, Text, HStack, Button } from "@chakra-ui/react";
 
-function HeaderSubNav({ link }) {
-  const [selectedButton, setSelectedButton] = useState(null);
+function HeaderSubNav({ location }) {
+  const [subNavItems, setSubNavItems] = useState();
+  const [clickedIndex, setClickedIndex] = useState(null);
+
+  let link =
+    location.split("/")[0] === ""
+      ? location.split("/")[1]
+      : location.split("/")[0];
+
+  const handleLinkClick = (index) => {
+    const delay = 100; // Adjust delay time in milliseconds as needed
+    const timer = setTimeout(() => {
+      setClickedIndex(index);
+    }, delay);
+    return () => clearTimeout(timer);
+  };
 
   useEffect(() => {
-    if (link != "fleet") {
-      setSelectedButton(null);
-    }
-  }, [location.pathname]);
+    setClickedIndex(null);
+  }, [location]);
 
   const fetchData = async () => {
-    const data = await fetch(`http://localhost:3000/vendors`, {
+    const data = await fetch(`http://${API_ENDPOINT}/vendors`, {
       method: "GET",
       credentials: "include",
     });
@@ -27,8 +41,6 @@ function HeaderSubNav({ link }) {
     const items = await fetchData();
     return items.subNavData.data;
   };
-
-  const [subNavItems, setSubNavItems] = useState([]);
 
   const fetchTenants = async () => {
     const data = await fetch(`http://localhost:3000/tenants`, {
@@ -94,18 +106,18 @@ function HeaderSubNav({ link }) {
           subNavItems
             .filter(
               (item) =>
-                item.vendor_name ||
                 item.tenant_name ||
+                item.vendor_name ||
                 item.support ||
                 item.administration
             )
-            .map((subNavItem) => (
+            .map((subNavItem, index) => (
               <NavLink
                 to={
                   link +
                   "/" +
-                  (subNavItem.vendor_name ||
-                    subNavItem.tenant_name ||
+                  (subNavItem.tenant_name ||
+                    subNavItem.vendor_name ||
                     (typeof subNavItem.support === "string"
                       ? subNavItem.support.toLowerCase()
                       : "") ||
@@ -114,8 +126,8 @@ function HeaderSubNav({ link }) {
                       : ""))
                 }
                 key={
-                  subNavItem.vendor_name ||
                   subNavItem.tenant_name ||
+                  subNavItem.vendor_name ||
                   subNavItem.support ||
                   subNavItem.administration
                 }
@@ -124,27 +136,12 @@ function HeaderSubNav({ link }) {
                   size="sm"
                   colorScheme="blackAlpha"
                   variant="ghost"
-                  onClick={() =>
-                    setSelectedButton(
-                      subNavItem.tenant_name ||
-                        subNavItem.vendor_name ||
-                        subNavItem.support ||
-                        subNavItem.administration
-                    )
-                  }
-                  fontWeight={
-                    selectedButton ===
-                    (subNavItem.tenant_name ||
-                      subNavItem.vendor_name ||
-                      subNavItem.support ||
-                      subNavItem.administration)
-                      ? "600"
-                      : "normal"
-                  }
+                  onClick={() => handleLinkClick(index)}
                 >
                   <Text
                     color="blackAlpha.700"
                     fontSize={{ base: "sm", sm: "sm", md: "md" }}
+                    fontWeight={index === clickedIndex ? "600" : "400"}
                   >
                     {subNavItem.tenant_name ||
                       subNavItem.vendor_name ||
