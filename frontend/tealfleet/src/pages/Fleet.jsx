@@ -18,19 +18,25 @@ export const FleetDataLoader = async ({ params, request }) => {
   let fItems;
 
   const url = new URL(request.url);
+  const searchVendor = url.searchParams.get("vendor");
   const searchTenant = url.searchParams.get("tenant");
   const searchSwmodel = url.searchParams.get("swmodel");
   const searchHwmodel = url.searchParams.get("hwmodel");
   const searchSitename = url.searchParams.get("sitename");
-  const searchVendor = params.vendor;
 
   // Construct the URL with search parameters
   const queryParams = new URLSearchParams({
+    vendor: searchVendor,
     tenant: searchTenant,
     swmodel: searchSwmodel,
     hwmodel: searchHwmodel,
     sitename: searchSitename,
     vendor: searchVendor,
+  });
+
+  const vItems = await fetch(`http://${API_ENDPOINT}/vendors/`, {
+    method: "GET",
+    credentials: "include",
   });
 
   const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
@@ -74,6 +80,7 @@ export const FleetDataLoader = async ({ params, request }) => {
   }
 
   return {
+    vItems: await vItems.json(),
     tItems: await tItems.json(),
     swItems: await swItems.json(),
     hwItems: await hwItems.json(),

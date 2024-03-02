@@ -39,7 +39,7 @@ function RegisterForm() {
         height="100%"
       >
         <Center>
-          <Heading margin={"0.5em"} size="xl" color={"teal.600"}>
+          <Heading margin={"0.5em"} size="xl" color={"teal.600"} fontWeight="600">
             Request access
           </Heading>
         </Center>
@@ -98,6 +98,22 @@ function RegisterForm() {
           <Box>
             <Center>
               <Input
+                placeholder="Title"
+                size="md"
+                width={{
+                  base: "25em",
+                  sm: "20em",
+                  md: "20em",
+                  lg: "20em",
+                  xl: "20em",
+                  "2xl": "20em",
+                }}
+              />
+            </Center>
+          </Box>
+          <Box>
+            <Center>
+              <Input
                 placeholder="Phone number"
                 size="md"
                 width={{
@@ -129,22 +145,6 @@ function RegisterForm() {
           </Box>
           <Box>
             <Center>
-              <Input
-                placeholder="Title"
-                size="md"
-                width={{
-                  base: "25em",
-                  sm: "20em",
-                  md: "20em",
-                  lg: "20em",
-                  xl: "20em",
-                  "2xl": "20em",
-                }}
-              />
-            </Center>
-          </Box>
-          <Box>
-            <Center>
               <InputGroup
                 size="md"
                 width={{
@@ -159,7 +159,7 @@ function RegisterForm() {
                 <Input
                   pr="4.5rem"
                   type={show ? "text" : "password"}
-                  placeholder="Enter password"
+                  placeholder="Password"
                 />
                 <InputRightElement width="4.5rem">
                   <Button

@@ -44,19 +44,13 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />,
       },
       {
-        path: "fleet/:vendor?",
+        path: "assets/:something?",
         element: <Fleet/>,
         loader: FleetDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
-        path: "support",
-        element: <Contracts/>,
-        loader: ContractsDataLoader,
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "support/contracts",
+        path: "support/:something?",
         element: <Contracts/>,
         loader: ContractsDataLoader,
         errorElement: <ErrorBoundary />,

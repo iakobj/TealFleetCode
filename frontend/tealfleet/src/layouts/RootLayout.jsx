@@ -4,7 +4,6 @@ import { Outlet } from "react-router-dom";
 
 // Components
 import Header from "./header/Header";
-import Footer from "./footer/Footer";
 
 // Chakra-UI components
 import { Grid, GridItem, Container } from "@chakra-ui/react";
@@ -28,19 +27,11 @@ function RootLayout() {
 
         <GridItem
           as="main"
-          marginBottom={"2em"}
+          marginBottom="3em"
           colSpan={{ base: 12, sm: 12, md: 12 }}
           colStart={{ base: 1, sm: 1, md: 1 }}
         >
           <Outlet/>
-        </GridItem>
-        <GridItem
-          as="footer"
-          colSpan={{ base: 12, sm: 12, md: 12 }}
-          colStart={{ base: 1, sm: 1, md: 1 }}
-          position="sticky" zIndex="1" bottom="0"
-        >
-          <Footer />
         </GridItem>
       </Grid>
     </Container>

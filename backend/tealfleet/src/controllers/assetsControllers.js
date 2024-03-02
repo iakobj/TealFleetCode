@@ -11,13 +11,13 @@ module.exports.cAssetsGetAll = async (req, res) => {
     const identity = await checkIdentity(req);
 
     // Access search parameters from req.query
+    const searchVendor = req.query.vendor;
     const searchTenant = req.query.tenant;
     const searchSwmodel = req.query.swmodel;
     const searchHwmodel = req.query.hwmodel;
     const searchSitename = req.query.sitename;
-    const searchVendor = req.query.vendor;
 
-    console.log(searchTenant, searchSwmodel, searchHwmodel, searchSitename, searchVendor );
+    console.log(searchVendor, searchTenant, searchSwmodel, searchHwmodel, searchSitename );
 
     let searchParams = {};
 

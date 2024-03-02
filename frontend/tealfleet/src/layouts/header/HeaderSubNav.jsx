@@ -1,6 +1,6 @@
 // React components
 import * as React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
@@ -8,42 +8,21 @@ import { API_ENDPOINT } from "../../constants/apiEndpoint";
 // Chakra-UI components
 import { Flex, Text, HStack, Button } from "@chakra-ui/react";
 
-function HeaderSubNav({ location }) {
+function HeaderSubNav({ link, subLink }) {
+  let subLinkBold = subLink;
   const [subNavItems, setSubNavItems] = useState();
-  const [clickedIndex, setClickedIndex] = useState(null);
-
-  let link =
-    location.split("/")[0] === ""
-      ? location.split("/")[1]
-      : location.split("/")[0];
+  const [clickedIndex, setClickedIndex] = useState(1);
 
   const handleLinkClick = (index) => {
-    const delay = 100; // Adjust delay time in milliseconds as needed
-    const timer = setTimeout(() => {
-      setClickedIndex(index);
-    }, delay);
-    return () => clearTimeout(timer);
+    setClickedIndex(index);
   };
 
   useEffect(() => {
     setClickedIndex(null);
-  }, [location]);
-
-  const fetchData = async () => {
-    const data = await fetch(`http://${API_ENDPOINT}/vendors`, {
-      method: "GET",
-      credentials: "include",
-    });
-    return { subNavData: await data.json() };
-  };
-
-  const fetchSubNavItems = async () => {
-    const items = await fetchData();
-    return items.subNavData.data;
-  };
+  }, [link]);
 
   const fetchTenants = async () => {
-    const data = await fetch(`http://localhost:3000/tenants`, {
+    const data = await fetch(`http://${API_ENDPOINT}/tenants`, {
       method: "GET",
       credentials: "include",
     });
@@ -55,17 +34,19 @@ function HeaderSubNav({ location }) {
     return items.subNavData.data;
   };
 
+  const assets = [{ administration: "fleet" }, { administration: "inventory" }];
+
   const support = [
-    { support: "Contracts" },
-    { support: "Tickets" },
-    { support: "Alerts" },
+    { support: "contracts" },
+    { support: "tickets" },
+    { support: "alerts" },
   ];
 
   const administration = [
-    { administration: "Users" },
-    { administration: "Tenants" },
-    { administration: "Audit Log" },
-    { administration: "Catalogs" },
+    { administration: "users" },
+    { administration: "tenants" },
+    { administration: "log" },
+    { administration: "catalogs" },
   ];
 
   useEffect(() => {
@@ -73,10 +54,8 @@ function HeaderSubNav({ location }) {
       fetchSubNavTenants().then((items) => {
         setSubNavItems(items);
       });
-    } else if (link == "fleet") {
-      fetchSubNavItems().then((items) => {
-        setSubNavItems(items);
-      });
+    } else if (link == "assets") {
+      setSubNavItems(assets);
     } else if (link == "support") {
       setSubNavItems(support);
     } else if (link == "administration") {
@@ -107,7 +86,7 @@ function HeaderSubNav({ location }) {
             .filter(
               (item) =>
                 item.tenant_name ||
-                item.vendor_name ||
+                item.assets ||
                 item.support ||
                 item.administration
             )
@@ -117,7 +96,7 @@ function HeaderSubNav({ location }) {
                   link +
                   "/" +
                   (subNavItem.tenant_name ||
-                    subNavItem.vendor_name ||
+                    subNavItem.assets ||
                     (typeof subNavItem.support === "string"
                       ? subNavItem.support.toLowerCase()
                       : "") ||
@@ -127,7 +106,7 @@ function HeaderSubNav({ location }) {
                 }
                 key={
                   subNavItem.tenant_name ||
-                  subNavItem.vendor_name ||
+                  subNavItem.assets ||
                   subNavItem.support ||
                   subNavItem.administration
                 }
@@ -141,10 +120,19 @@ function HeaderSubNav({ location }) {
                   <Text
                     color="blackAlpha.700"
                     fontSize={{ base: "sm", sm: "sm", md: "md" }}
-                    fontWeight={index === clickedIndex ? "600" : "400"}
+                    textTransform="capitalize"
+                    fontWeight={
+                      (index == clickedIndex ||
+                      (subNavItem.tenant_name === subLinkBold ||
+                        subNavItem.assets === subLinkBold ||
+                        subNavItem.support === subLinkBold ||
+                        subNavItem.administration === subLinkBold)
+                      )? "bold"
+                        : "normal"
+                    }
                   >
                     {subNavItem.tenant_name ||
-                      subNavItem.vendor_name ||
+                      subNavItem.assets ||
                       subNavItem.support ||
                       subNavItem.administration}
                   </Text>

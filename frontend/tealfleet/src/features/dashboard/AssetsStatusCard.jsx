@@ -26,7 +26,7 @@ function AssetsStatusCard({ AssetsStatusCardData }) {
             <Text fontSize="2xl" color="gray.800">{AssetsStatusCardData.total}</Text>
           </Box>
           <Spacer />
-          <Box marginTop="-1.8em">
+          <Box marginTop="-2.2em">
             <CircularProgress
               value={AssetsStatusCardData.percent}
               color="teal"

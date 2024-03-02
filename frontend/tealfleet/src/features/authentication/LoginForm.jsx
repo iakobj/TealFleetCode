@@ -72,6 +72,8 @@ function LoginForm() {
   return (
     <Card
       marginTop={"3em"}
+      marginBottom="6em"
+      borderRadius="0.6em 0.6em 0.6em 0.6em"
       width={{
         base: "22em",
         sm: "25em",
@@ -86,9 +88,10 @@ function LoginForm() {
         flex="1"
         style={{ overflow: "hidden" }}
         height="100%"
+        borderRadius="0.6em 0.6em 0.6em 0.6em"
       >
         <Center>
-          <Heading fontWeight="extrabold" margin={"0.5em"} size="xl" color={"teal.600"}>
+          <Heading fontWeight="600" margin={"0.5em"} size="xl" color={"teal.600"}>
             Login
           </Heading>
         </Center>

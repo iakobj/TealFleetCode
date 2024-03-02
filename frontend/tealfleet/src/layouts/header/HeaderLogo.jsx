@@ -23,9 +23,10 @@ function HeaderLogo() {
         <Box>
           <Text
             color="white"
-            fontSize="1.3em"
+            fontSize="1.4em"
+            fontWeight="400"
           >
-            <b>Teal</b>fleet
+            Tealfleet
           </Text>
         </Box>
       </Hide>

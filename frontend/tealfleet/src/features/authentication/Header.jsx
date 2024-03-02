@@ -53,7 +53,7 @@ function Header() {
               fontSize="1.5em"
               marginLeft={{ base: "0.15em", sm: "0.15em", md: "0.15em" }}
             >
-              TealFleet
+              Tealfleet
             </Text>
           </Box>
           <Spacer />

@@ -23,11 +23,32 @@ import HeaderProfileMenu from "./HeaderProfileMenu";
 
 function HeaderMainNav() {
   const { pathname: location = "dashboard" } = useLocation();
+
+  let link =
+    location.split("/")[0] === ""
+      ? location.split("/")[1]
+      : location.split("/")[0];
+
+  let subLink =
+    location.split("/")[0] === ""
+      ? location.split("/")[2]
+      : location.split("/")[0];
+
   const [clickedIndex, setClickedIndex] = useState(-1);
 
-  const handleLinkClick = (index) => {
-    setClickedIndex(index);
-  };
+  useEffect(() => {
+    if (link == "dashboard") {
+      setClickedIndex(0);
+    } else if (link == "assets") {
+      setClickedIndex(1);
+    } else if (link == "support") {
+      setClickedIndex(2);
+    } else if (link == "administration") {
+      setClickedIndex(3);
+    } else {
+      setClickedIndex(-1);
+    }
+  }, [link]);
 
   // Fetch user data
   const [user, setUser] = useState(["null"]);
@@ -53,7 +74,26 @@ function HeaderMainNav() {
     });
   }, [location]);
 
-  const mainNavItems = ["dashboard", "fleet", "support", "administration"];
+  const mainNavItems = {
+    data: [
+      {
+        title: "dashboard",
+        navigate: "dashboard",
+      },
+      {
+        title: "assets",
+        navigate: "assets/fleet",
+      },
+      {
+        title: "support",
+        navigate: "support/contracts",
+      },
+      {
+        title: "administration",
+        navigate: "administration/users",
+      },
+    ],
+  };
 
   return (
     <Grid
@@ -83,21 +123,16 @@ function HeaderMainNav() {
           <Spacer />
           <Box marginTop={{ base: "1.0em", sm: "0.5em", md: "0.5em" }}>
             <HStack>
-              {mainNavItems.map((mainNavItem, index) => (
-                <NavLink to={mainNavItem} key={mainNavItem}>
-                  <Button
-                    size="sm"
-                    colorScheme="teal"
-                    variant="hgost"
-                    onClick={() => handleLinkClick(index)}
-                  >
+              {mainNavItems.data.map((mainNavItem, index) => (
+                <NavLink to={mainNavItem.navigate} key={mainNavItem.title}>
+                  <Button size="sm" colorScheme="teal" variant="hgost">
                     <Text
                       color="white"
                       fontSize={{ base: "sm", sm: "sm", md: "lg" }}
-                      key={mainNavItem}
+                      key={mainNavItem.title}
                       fontWeight={index === clickedIndex ? "600" : "400"}
                     >
-                      {mainNavItem.toUpperCase()}
+                      {mainNavItem.title.toUpperCase()}
                     </Text>
                   </Button>
                 </NavLink>
@@ -123,7 +158,7 @@ function HeaderMainNav() {
         borderRadius={{ md: "0em 0em 0em 0em" }}
       >
         <Center margin={{ base: "0.7em", sm: "0.7em", md: "0.2em" }}>
-          <HeaderSubNav location={location} />
+          <HeaderSubNav link={link} subLink={subLink} />
         </Center>
       </GridItem>
     </Grid>
