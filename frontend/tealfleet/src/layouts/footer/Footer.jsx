@@ -5,18 +5,15 @@ import * as React from "react";
 import {
   Grid,
   GridItem,
-  HStack,
   Text,
-  Box,
+  Link,
   Image,
   Spacer,
-  Center,
-  Show,
-  Hide,
   Flex,
-  Heading,
   Card,
 } from "@chakra-ui/react";
+
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 
 function Footer() {
   return (
@@ -26,7 +23,7 @@ function Footer() {
       gridTemplateRows="repeat(1, 1fr)"
       width="100%"
       position="fixed"
-      bottom="8"
+      bottom="5"
     >
       <GridItem
         colSpan={{ base: 12, sm: 12, md: 10 }}
@@ -43,9 +40,19 @@ function Footer() {
           borderRadius={"0.6em 0.6em 0.0em 0.0em"}
         >
           <Flex justifyContent="center">
-            <Text marginLeft="1em">Tealfleet early development version</Text>
+          <Image
+              src="../images/TealFleet-Teal.png"
+              alt="TealFleet Logo"
+              boxSize={{ base: "1.3em", sm: "1.3em", md: "1.3em" }}
+              marginTop={{ base: "0.1em", sm: "0.1em", md: "0.1em" }}
+              marginLeft="1em"
+              objectFit="cover"
+            />
+            <Text marginLeft="0.4em">Tealfleet early development version</Text>
             <Spacer/>
-            <Text marginRight="1em">Build: 0.0.1</Text>
+            <Link marginRight="1em" href="https://github.com/iakobj/TealFleetCode" isExternal>
+              GitHub <ExternalLinkIcon marginBottom="0.3em" />
+            </Link>
           </Flex>
         </Card>
       </GridItem>

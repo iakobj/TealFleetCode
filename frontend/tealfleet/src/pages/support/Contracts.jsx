@@ -6,9 +6,8 @@ import { useLoaderData } from "react-router-dom";
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 // Chakra-UI components
-import { Text, Box, SimpleGrid, Grid, GridItem } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
-import ContractsListCard from "../../features/contracts/ContractsListCard";
 import ContractsFilter from "../../features/contracts/contractsFilter";
 
 function Contracts() {

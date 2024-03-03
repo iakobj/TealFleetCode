@@ -26,11 +26,11 @@ function FleetCard({ fleetCardItems }) {
   return (
     <Card overflow="hidden" height={"23em"} variant="outline" bg="#fdfdfd">
       <CardHeader
-              flex="1"
-              style={{ overflow: "hidden" }}
-              marginTop={"0em"}
-              marginBottom={"-1.5em"}
-              height="100%"
+        flex="1"
+        style={{ overflow: "hidden" }}
+        marginTop={"0em"}
+        marginBottom={"-1.5em"}
+        height="100%"
       >
         <VStack>
           <Box
@@ -41,12 +41,12 @@ function FleetCard({ fleetCardItems }) {
             textAlign="center"
           >
             <Center color="gray.600">
-              <Heading size="sm">{fleetCardItems.tenant_name}</Heading>
+              <Heading fontWeight="400" size="sm">{fleetCardItems.tenant_name}</Heading>
             </Center>
           </Box>
           <Box marginTop={"-0.5em"}>
             <Center>
-              <Text color="gray.600" fontSize="md">
+              <Text fontWeight="500" color="gray.600" fontSize="md">
                 {" "}
                 {fleetCardItems.software_asset_name &&
                   fleetCardItems.software_asset_name}
@@ -102,7 +102,9 @@ function FleetCard({ fleetCardItems }) {
               </Text>
             </Center>
             <Center>
-              <Text color="gray.600" size="md">{fleetCardItems.software_version_number}</Text>
+              <Text color="gray.600" size="md">
+                {fleetCardItems.software_version_number}
+              </Text>
             </Center>
           </Box>
         </VStack>

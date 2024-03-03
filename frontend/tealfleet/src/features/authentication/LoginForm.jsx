@@ -74,6 +74,7 @@ function LoginForm() {
       marginTop={"3em"}
       marginBottom="6em"
       borderRadius="0.6em 0.6em 0.6em 0.6em"
+      variant="outline"
       width={{
         base: "22em",
         sm: "25em",
@@ -88,7 +89,7 @@ function LoginForm() {
         flex="1"
         style={{ overflow: "hidden" }}
         height="100%"
-        borderRadius="0.6em 0.6em 0.6em 0.6em"
+        borderRadius="0.6em 0.6em 0.0em 0.0em"
       >
         <Center>
           <Heading fontWeight="600" margin={"0.5em"} size="xl" color={"teal.600"}>

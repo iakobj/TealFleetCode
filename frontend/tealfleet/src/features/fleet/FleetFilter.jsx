@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 
@@ -22,6 +22,7 @@ import {
   FormLabel,
   FormErrorMessage,
   FormHelperText,
+  Stack,
 } from "@chakra-ui/react";
 
 import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
@@ -41,6 +42,7 @@ function FleetFilter() {
   const [swmodel, setSwmodel] = useState();
   const [hwmodel, setHwmodel] = useState();
   const [sitename, setSitename] = useState();
+  const [offset, setOffset] = useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -62,18 +64,34 @@ function FleetFilter() {
       case "sitename":
         setSitename(selected);
         break;
+      case "offset":
+        setOffset(selected);
       default:
         break;
     }
+
     let params = {
       vendor: filterName == "vendor" ? selected : vendor,
       tenant: filterName === "tenant" ? selected : tenant,
       swmodel: filterName === "swmodel" ? selected : swmodel,
       hwmodel: filterName === "hwmodel" ? selected : hwmodel,
       sitename: filterName === "sitename" ? selected : sitename,
+      offset: filterName === "offset" ? selected : offset,
     };
+    console.log(params);
     setSearchParams(params);
   }
+
+    let numberOfAssetsOnPage = 2;
+    let elements = [];
+    let totalPages = 0;
+    let foundAssets = 0;
+
+    if (fleetCardItems && fleetCardItems.length > 0 && fleetCardItems[0].total_count !== undefined) {
+      foundAssets = fleetCardItems[0].total_count;
+      totalPages = Math.ceil(fleetCardItems[0].total_count / numberOfAssetsOnPage);
+      elements = Array.from({ length: totalPages });
+    }
 
   function resetForm() {
     setVendor("");
@@ -81,6 +99,7 @@ function FleetFilter() {
     setSwmodel("");
     setHwmodel("");
     setSitename("");
+    setOffset("0");
   }
 
   return (
@@ -93,12 +112,13 @@ function FleetFilter() {
           variant="outline"
           bg="#fdfdfd"
           borderRadius={"0.6em 0.6em 0.6em 0.6em"}
+          marginLeft={{base: "0.5em", sm: "0.5em", md: "0em"}}
+          marginRight={{base: "0.5em", sm: "0.5em", md: "0em"}}
         >
           <Wrap>
             <WrapItem>
               <NavLink to={"/assets/fleet"}>
                 <IconButton
-                  marginRight={"0.6em"}
                   aria-label="Reset filter"
                   icon={<RepeatIcon />}
                   size={"sm"}
@@ -109,7 +129,7 @@ function FleetFilter() {
               </NavLink>
             </WrapItem>
 
-            <WrapItem marginRight={"0.5em"}>
+            <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
                   placeholder="Vendor"
@@ -134,7 +154,7 @@ function FleetFilter() {
                 </Select>
               </FormControl>
             </WrapItem>
-            <WrapItem marginRight={"0.5em"}>
+            <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
                   placeholder="Tenant"
@@ -159,7 +179,7 @@ function FleetFilter() {
                 </Select>
               </FormControl>
             </WrapItem>
-            <WrapItem marginRight={"0.5em"}>
+            <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
                   placeholder="Software"
@@ -181,7 +201,7 @@ function FleetFilter() {
                 </Select>
               </FormControl>
             </WrapItem>
-            <WrapItem marginRight={"0.5em"}>
+            <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
                   placeholder="Hardware"
@@ -203,7 +223,7 @@ function FleetFilter() {
                 </Select>
               </FormControl>
             </WrapItem>
-            <WrapItem>
+            <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
                   placeholder="Site"
@@ -226,9 +246,9 @@ function FleetFilter() {
               </FormControl>
             </WrapItem>
             <Spacer />
-            <WrapItem>
-              <Spacer />
-              <Button marginRight="0.6em" size={"sm"} colorScheme={"teal"}>
+            <WrapItem marginRight="0.5em">
+              <Spacer marginRight="0.5em"/>
+              <Button size={"sm"} colorScheme={"teal"}>
                 New Asset
               </Button>
             </WrapItem>
@@ -237,7 +257,9 @@ function FleetFilter() {
       </Hide>
       <SimpleGrid
         spacing="1em"
-        columns={{ base: "1", sm: "2", md: "3", lg: "3", xl: "4", "2xl": "5" }}
+        columns={{ base: "1", sm: "2", md: "3", lg: "4", xl: "4", "2xl": "5" }}
+        marginLeft={{base: "0.5em", sm: "0.5em", md: "0em"}}
+        marginRight={{base: "0.5em", sm: "0.5em", md: "0em"}}
       >
         {fleetCardItems &&
           fleetCardItems
@@ -271,9 +293,32 @@ function FleetFilter() {
               size={"sm"}
               colorScheme={"teal"}
               marginLeft={"0.6em"}
+              onClick={() => handleChange(offset - 2, "offset")}
             />
           </WrapItem>
-          <WrapItem marginTop="0.3em">20 / 55</WrapItem>
+          <WrapItem marginTop="0.3em"> 
+          <Stack direction='row' >
+          {elements.map((_, index) => (
+            <Button
+              colorScheme="blackAlpha"
+              variant="ghost"
+              size="sm"
+              key={index}
+              paddingLeft="-1em"
+              paddingRight="-1em"
+              marginTop="-0.35em"
+              onClick={() => handleChange(index * numberOfAssetsOnPage, "offset")}
+              >
+            <Text  
+              fontWeight="400"
+              fontSize="md"
+              > 
+              {index + 1} 
+            </Text> 
+            </Button>
+            ))}
+            </Stack>
+          </WrapItem>
           <WrapItem>
             <IconButton
               marginRight={"0.6em"}
@@ -282,7 +327,12 @@ function FleetFilter() {
               size={"sm"}
               colorScheme={"teal"}
               marginLeft={"0.6em"}
+              onClick={() => handleChange(offset + 2, "offset")}
             />
+          </WrapItem>
+          <Spacer/>
+          <WrapItem marginRight="1em" marginTop="0.2em">
+            <Text>Found {foundAssets} assets</Text>
           </WrapItem>
         </Wrap>
       </Card>

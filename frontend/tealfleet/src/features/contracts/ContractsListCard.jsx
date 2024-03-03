@@ -39,7 +39,7 @@ function ContractsListCard({ contractsData }) {
 
   return (
     <Box marginTop="1em">
-      <Grid templateColumns="repeat(10, 1fr)" templateRows="1" gap="0em">
+      <Grid templateColumns="repeat(12, 1fr)" templateRows="1" gap="0em">
         <GridItem colSpan={3}>
           <SimpleGrid spacing="1em">
             {contractsData.map((contractsData) => (
@@ -62,6 +62,7 @@ function ContractsListCard({ contractsData }) {
                       size="sm"
                       color="gray.600"
                       textTransform="uppercase"
+                      fontWeight="500"
                     >
                       {contractsData.contract_no}
                     </Heading>
@@ -75,7 +76,7 @@ function ContractsListCard({ contractsData }) {
                 </CardHeader>
                 <Stack>
                   <CardBody paddingTop="0.6em" paddingBottom="0.6em">
-                    <Text as="b" fontSize="sm" color="gray.600">
+                    <Text fontWeight="400" fontSize="sm" color="gray.600">
                       {contractsData.contractor_name}
                     </Text>
                     <Box marginTop="0.2em">
@@ -99,7 +100,7 @@ function ContractsListCard({ contractsData }) {
             ))}
           </SimpleGrid>
         </GridItem>
-        <GridItem colSpan={7}>
+        <GridItem colSpan={9}>
           <Box>
             <ContractsAssetsList selectedContractData={selectedContractData} />
           </Box>

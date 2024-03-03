@@ -35,7 +35,7 @@ function AssetsSupportCard({ AssetsSupportCardData }) {
             }}
           >
             <TableCaption>
-              Support status of assets by vendor
+              Contracts status
             </TableCaption>
             <Thead>
               <Tr>

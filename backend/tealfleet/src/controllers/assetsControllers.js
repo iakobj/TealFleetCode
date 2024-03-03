@@ -16,8 +16,9 @@ module.exports.cAssetsGetAll = async (req, res) => {
     const searchSwmodel = req.query.swmodel;
     const searchHwmodel = req.query.hwmodel;
     const searchSitename = req.query.sitename;
+    const searchOffset = req.query.offset;
 
-    console.log(searchVendor, searchTenant, searchSwmodel, searchHwmodel, searchSitename );
+    console.log(searchVendor, searchTenant, searchSwmodel, searchHwmodel, searchSitename, searchOffset );
 
     let searchParams = {};
 
@@ -45,6 +46,13 @@ module.exports.cAssetsGetAll = async (req, res) => {
       searchParams["searchVendor"] = searchVendor;
     } else {
       searchParams["searchVendor"] = false;
+    }
+    if (searchOffset && searchOffset != '' && searchOffset != 'null' && searchOffset != 'undefined') {
+      console.log("controller searchOffset");
+      console.log(searchOffset);
+      searchParams["searchOffset"] = searchOffset;
+    } else {
+      searchParams["searchOffset"] = 0;
     }
 
     console.log(searchParams);

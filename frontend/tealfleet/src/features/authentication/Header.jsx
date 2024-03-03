@@ -14,11 +14,24 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-function Header() {
+function Header(action) {
   const navigate = useNavigate();
 
-  const register = () => {
-    navigate("/register");
+  const location = action.action;
+
+  let link =
+    location.split("/")[0] === ""
+      ? location.split("/")[1]
+      : location.split("/")[0];
+
+  const redirect = () => {
+    if (link == "login") {
+      navigate("/register");
+    } else if (link == "register") {
+      navigate("/login");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -38,34 +51,33 @@ function Header() {
         borderRadius={{ md: "0.6em 0.6em 0.6em 0.6em" }}
       >
         <HStack>
-          <Box>
+          <Box
+            marginTop={{ base: "0.5em", sm: "0.5em", md: "0.5em" }}
+            marginLeft="1em"
+          >
             <Image
               src="/images/TealFleet-White.png"
               alt="TealFleet Logo"
               boxSize={{ base: "2.5em", sm: "2.5em", md: "2.3em" }}
-              margin={{ base: "0.5em", sm: "0.5em", md: "0.5em" }}
               objectFit="cover"
             />
           </Box>
-          <Box>
-            <Text
-              color="white"
-              fontSize="1.5em"
-              marginLeft={{ base: "0.15em", sm: "0.15em", md: "0.15em" }}
-            >
+          <Box marginTop="0.5em">
+            <Text color="white" fontSize="1.5em">
               Tealfleet
             </Text>
           </Box>
           <Spacer />
-          <Box>
+          <Box marginTop="0.65em">
             <Button
               marginRight="1em"
               size="sm"
               variant="solid"
-              colorScheme="gray"
-              onClick={register}
+              colorScheme="teal"
+              onClick={redirect}
+              textTransform="capitalize"
             >
-              Register
+              {link === "login" ? "Register" : "Login"}
             </Button>
           </Box>
         </HStack>

@@ -23,6 +23,7 @@ export const FleetDataLoader = async ({ params, request }) => {
   const searchSwmodel = url.searchParams.get("swmodel");
   const searchHwmodel = url.searchParams.get("hwmodel");
   const searchSitename = url.searchParams.get("sitename");
+  const searchOffset = url.searchParams.get("offset");
 
   // Construct the URL with search parameters
   const queryParams = new URLSearchParams({
@@ -31,8 +32,10 @@ export const FleetDataLoader = async ({ params, request }) => {
     swmodel: searchSwmodel,
     hwmodel: searchHwmodel,
     sitename: searchSitename,
-    vendor: searchVendor,
+    offset: searchOffset,
   });
+
+  //http://localhost:5173/assets/fleet?vendor=undefined&tenant=undefined&swmodel=undefined&hwmodel=undefined&sitename=undefined&offset=4
 
   const vItems = await fetch(`http://${API_ENDPOINT}/vendors/`, {
     method: "GET",
@@ -72,7 +75,9 @@ export const FleetDataLoader = async ({ params, request }) => {
 
   const apiUrl = `http://${API_ENDPOINT}/assets/fleet/all/filter/?${queryParams.toString()}`;
 
-  if (searchTenant || searchSwmodel || searchHwmodel || searchSitename || searchVendor) {
+  if (searchTenant || searchSwmodel || searchHwmodel || searchSitename || searchVendor || searchOffset) {
+    console.log("apiUrl");
+    console.log(apiUrl);
     fItems = await fetch(apiUrl, {
       method: "GET",
       credentials: "include",

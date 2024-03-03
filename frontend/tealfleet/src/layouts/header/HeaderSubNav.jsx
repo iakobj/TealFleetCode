@@ -45,7 +45,7 @@ function HeaderSubNav({ link, subLink }) {
   const administration = [
     { administration: "users" },
     { administration: "tenants" },
-    { administration: "log" },
+    { administration: "logs"},
     { administration: "catalogs" },
   ];
 
@@ -127,7 +127,7 @@ function HeaderSubNav({ link, subLink }) {
                         subNavItem.assets === subLinkBold ||
                         subNavItem.support === subLinkBold ||
                         subNavItem.administration === subLinkBold)
-                      )? "bold"
+                      )? "500"
                         : "normal"
                     }
                   >

@@ -16,7 +16,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 
-import { Search2Icon, RepeatIcon } from "@chakra-ui/icons";
+import { RepeatIcon } from "@chakra-ui/icons";
 
 function ContractsFilter({ contractsData }) {
   return (

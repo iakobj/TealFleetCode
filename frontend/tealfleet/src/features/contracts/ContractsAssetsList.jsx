@@ -61,13 +61,13 @@ function ContractsAssetsList({ selectedContractData }) {
       >
         <CardHeader borderRadius="0.55em 0.55em 0em 0em" bg="#F4F7F4">
           <Flex>
-            <Heading color="gray.600" size="md">
+            <Heading fontWeight="500" color="gray.600" size="md">
               {selectedContractData.contract_no}
             </Heading>
             <Spacer />
-            <Text color="gray.600">
+            <Text fontWeight="500" color="gray.600">
               {" "}
-              <b>{selectedContractData.tenant_name}</b>
+              {selectedContractData.tenant_name}
             </Text>
           </Flex>
         </CardHeader>
@@ -93,18 +93,23 @@ function ContractsAssetsList({ selectedContractData }) {
           <Box marginBottom="-0.2em">
             <Flex>
               <Box paddingTop="0.35em" marginBottom="-0.3em">
+                <HStack>
+                <Text fontWeight="500">Supported by:</Text>
                 <Text color="gray.600">
-                  <b>Supported by:</b> {selectedContractData.contractor_name}{" "}
+                 {selectedContractData.contractor_name}{" "}
                 </Text>
+                </HStack>
               </Box>
               <Spacer />
               <Box paddingTop="0.35em" marginBottom="-0.3em">
                 <HStack>
+                  <Text fontWeight="500" color="gray.600">From:</Text>
                   <Text color="gray.600" marginRight="1em">
-                    <b>From:</b> {selectedContractData.contract_valid_from}
+                     {selectedContractData.contract_valid_from}
                   </Text>
+                  <Text fontWeight="500" color="gray.600">Until:</Text>
                   <Text color="gray.600">
-                    <b>Until:</b> {selectedContractData.contract_valid_to}
+                     {selectedContractData.contract_valid_to}
                   </Text>
                 </HStack>
               </Box>

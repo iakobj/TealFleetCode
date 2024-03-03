@@ -156,6 +156,7 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
     console.log(searchParams);
     let queryText = `
     SELECT
+      COUNT(*) OVER () AS total_count,
       hw.hardware_asset_id, 
       hw.hardware_catalog_id, 
       hw.hardware_asset_name, 
@@ -242,6 +243,14 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
       queryText += ` AND vendors.vendor_name = $${queryParams.length + 1}`;
       queryParams.push(searchParams.searchVendor);
     }
+    if (true) {
+      console.log("searchParams.searchOffset");
+      console.log(searchParams.searchOffset);
+      queryText += ` LIMIT 2 OFFSET $${queryParams.length + 1};`;
+      queryParams.push(searchParams.searchOffset);
+    }
+
+
 
     if (tenant_root == true && mock_tenant_id == undefined) {
       console.log(queryText, queryParams);
