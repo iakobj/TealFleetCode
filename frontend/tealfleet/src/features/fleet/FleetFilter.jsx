@@ -19,9 +19,6 @@ import {
   Hide,
   IconButton,
   FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Stack,
 } from "@chakra-ui/react";
 
@@ -37,12 +34,12 @@ function FleetFilter() {
   const hwModelItems = loaderData.hwItems.data;
   const siteNameItems = loaderData.siteItems.data;
 
+  const [offset, setOffset] = useState(0);
   const [vendor, setVendor] = useState();
   const [tenant, setTenant] = useState();
   const [swmodel, setSwmodel] = useState();
   const [hwmodel, setHwmodel] = useState();
   const [sitename, setSitename] = useState();
-  const [offset, setOffset] = useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -50,19 +47,28 @@ function FleetFilter() {
     // Update the state based on the selected filter
     switch (filterName) {
       case "vendor":
+        setOffset(0);
         setVendor(selected);
         break;
       case "tenant":
+        setOffset(0);
         setTenant(selected);
+        setOffset(0);
         break;
       case "swmodel":
+        setOffset(0);
         setSwmodel(selected);
+        setOffset(0);
         break;
       case "hwmodel":
+        setOffset(0);
         setHwmodel(selected);
+        setOffset(0);
         break;
       case "sitename":
+        setOffset(0);
         setSitename(selected);
+        setOffset(0);
         break;
       case "offset":
         setOffset(selected);
@@ -78,28 +84,69 @@ function FleetFilter() {
       sitename: filterName === "sitename" ? selected : sitename,
       offset: filterName === "offset" ? selected : offset,
     };
-    console.log(params);
     setSearchParams(params);
   }
 
-    let numberOfAssetsOnPage = 2;
-    let elements = [];
-    let totalPages = 0;
-    let foundAssets = 0;
+  const [arrowForward, setArrowForward] = useState();
+  const [arrowBack, setArrowBack] = useState();
+  const [selectedPage, setSelectedPage] = useState(1);
 
-    if (fleetCardItems && fleetCardItems.length > 0 && fleetCardItems[0].total_count !== undefined) {
-      foundAssets = fleetCardItems[0].total_count;
-      totalPages = Math.ceil(fleetCardItems[0].total_count / numberOfAssetsOnPage);
-      elements = Array.from({ length: totalPages });
+  let numberOfAssetsOnPage = 4;
+  let elements = [];
+  let totalPages = 0;
+  let foundAssets = 0;
+
+  useEffect(() => {
+    if (offset / totalPages == 0) {
+      setSelectedPage(1);
+    } else {
+      setSelectedPage(offset / totalPages);
     }
+  }, [offset, totalPages]);
+
+  useEffect(() => {
+    console.log(totalPages);
+    if (
+      offset == Math.ceil(foundAssets / numberOfAssetsOnPage) * totalPages ||
+      totalPages == 1
+    ) {
+      setArrowForward(true);
+    } else if (totalPages == 1) {
+      setArrowForward(true);
+    } else {
+      setArrowForward(false);
+    }
+  }, [offset, totalPages, fleetCardItems]);
+
+  useEffect(() => {
+    if (offset === 0) {
+      setArrowBack(true);
+    } else {
+      setArrowBack(false);
+    }
+  }, [offset, totalPages]);
+
+  if (
+    fleetCardItems &&
+    fleetCardItems.length > 0 &&
+    fleetCardItems[0].total_count !== undefined
+  ) {
+    foundAssets = fleetCardItems[0].total_count;
+    totalPages = Math.ceil(
+      fleetCardItems[0].total_count / numberOfAssetsOnPage
+    );
+    elements = Array.from({ length: totalPages });
+  }
 
   function resetForm() {
+    setOffset(0);
+    setArrowBack(true);
     setVendor("");
     setTenant("");
     setSwmodel("");
     setHwmodel("");
     setSitename("");
-    setOffset("0");
+    setArrowForward(false);
   }
 
   return (
@@ -112,8 +159,8 @@ function FleetFilter() {
           variant="outline"
           bg="#fdfdfd"
           borderRadius={"0.6em 0.6em 0.6em 0.6em"}
-          marginLeft={{base: "0.5em", sm: "0.5em", md: "0em"}}
-          marginRight={{base: "0.5em", sm: "0.5em", md: "0em"}}
+          marginLeft={{ base: "0.5em", sm: "0.5em", md: "0em" }}
+          marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
         >
           <Wrap>
             <WrapItem>
@@ -247,7 +294,7 @@ function FleetFilter() {
             </WrapItem>
             <Spacer />
             <WrapItem marginRight="0.5em">
-              <Spacer marginRight="0.5em"/>
+              <Spacer marginRight="0.5em" />
               <Button size={"sm"} colorScheme={"teal"}>
                 New Asset
               </Button>
@@ -258,8 +305,8 @@ function FleetFilter() {
       <SimpleGrid
         spacing="1em"
         columns={{ base: "1", sm: "2", md: "3", lg: "4", xl: "4", "2xl": "5" }}
-        marginLeft={{base: "0.5em", sm: "0.5em", md: "0em"}}
-        marginRight={{base: "0.5em", sm: "0.5em", md: "0em"}}
+        marginLeft={{ base: "0.5em", sm: "0.5em", md: "0em" }}
+        marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
       >
         {fleetCardItems &&
           fleetCardItems
@@ -293,30 +340,35 @@ function FleetFilter() {
               size={"sm"}
               colorScheme={"teal"}
               marginLeft={"0.6em"}
-              onClick={() => handleChange(offset - 2, "offset")}
+              onClick={() =>
+                handleChange(offset - numberOfAssetsOnPage, "offset")
+              }
+              isDisabled={arrowBack}
             />
           </WrapItem>
-          <WrapItem marginTop="0.3em"> 
-          <Stack direction='row' >
-          {elements.map((_, index) => (
-            <Button
-              colorScheme="blackAlpha"
-              variant="ghost"
-              size="sm"
-              key={index}
-              paddingLeft="-1em"
-              paddingRight="-1em"
-              marginTop="-0.35em"
-              onClick={() => handleChange(index * numberOfAssetsOnPage, "offset")}
-              >
-            <Text  
-              fontWeight="400"
-              fontSize="md"
-              > 
-              {index + 1} 
-            </Text> 
-            </Button>
-            ))}
+          <WrapItem marginTop="0.3em">
+            <Stack direction="row">
+              {elements.map((_, index) => (
+                <Button
+                  colorScheme="blackAlpha"
+                  variant="ghost"
+                  size="sm"
+                  key={index}
+                  paddingLeft="-1em"
+                  paddingRight="-1em"
+                  marginTop="-0.35em"
+                  onClick={() =>
+                    handleChange(index * numberOfAssetsOnPage, "offset")
+                  }
+                >
+                  <Text
+                    fontSize="md"
+                    fontWeight={index + 1 === selectedPage ? "600" : "400"}
+                  >
+                    {index + 1}
+                  </Text>
+                </Button>
+              ))}
             </Stack>
           </WrapItem>
           <WrapItem>
@@ -327,10 +379,13 @@ function FleetFilter() {
               size={"sm"}
               colorScheme={"teal"}
               marginLeft={"0.6em"}
-              onClick={() => handleChange(offset + 2, "offset")}
+              onClick={() =>
+                handleChange(offset + numberOfAssetsOnPage, "offset")
+              }
+              isDisabled={arrowForward}
             />
           </WrapItem>
-          <Spacer/>
+          <Spacer />
           <WrapItem marginRight="1em" marginTop="0.2em">
             <Text>Found {foundAssets} assets</Text>
           </WrapItem>

@@ -35,8 +35,6 @@ export const FleetDataLoader = async ({ params, request }) => {
     offset: searchOffset,
   });
 
-  //http://localhost:5173/assets/fleet?vendor=undefined&tenant=undefined&swmodel=undefined&hwmodel=undefined&sitename=undefined&offset=4
-
   const vItems = await fetch(`http://${API_ENDPOINT}/vendors/`, {
     method: "GET",
     credentials: "include",
@@ -76,8 +74,6 @@ export const FleetDataLoader = async ({ params, request }) => {
   const apiUrl = `http://${API_ENDPOINT}/assets/fleet/all/filter/?${queryParams.toString()}`;
 
   if (searchTenant || searchSwmodel || searchHwmodel || searchSitename || searchVendor || searchOffset) {
-    console.log("apiUrl");
-    console.log(apiUrl);
     fItems = await fetch(apiUrl, {
       method: "GET",
       credentials: "include",

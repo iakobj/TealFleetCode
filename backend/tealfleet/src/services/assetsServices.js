@@ -246,7 +246,7 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
     if (true) {
       console.log("searchParams.searchOffset");
       console.log(searchParams.searchOffset);
-      queryText += ` LIMIT 2 OFFSET $${queryParams.length + 1};`;
+      queryText += ` LIMIT 4 OFFSET $${queryParams.length + 1};`;
       queryParams.push(searchParams.searchOffset);
     }
 

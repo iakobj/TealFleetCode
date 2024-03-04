@@ -24,6 +24,7 @@ function RegisterForm() {
     <Card
       variant="outline"
       marginTop={"3em"}
+      marginBottom="5em"
       width={{
         base: "25em",
         sm: "25em",
