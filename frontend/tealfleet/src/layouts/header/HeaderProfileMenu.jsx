@@ -34,7 +34,7 @@ function HeaderProfileMenu({user}) {
           >
             <Hide breakpoint="(max-width: 980px)">
               <Text
-                as="b"
+                fontWeight="600"
                 color="white"
                 fontSize={{ base: "sm", sm: "sm", md: "md" }}
               >
