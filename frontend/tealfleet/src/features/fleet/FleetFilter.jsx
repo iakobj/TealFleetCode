@@ -41,10 +41,14 @@ function FleetFilter() {
   const [hwmodel, setHwmodel] = useState();
   const [sitename, setSitename] = useState();
 
+  const [arrowForward, setArrowForward] = useState();
+  const [arrowBack, setArrowBack] = useState();
+  const [selectedPage, setSelectedPage] = useState(1);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
+  let params = {};
   function handleChange(selected, filterName) {
-    let params = {};
     // Update the state based on the selected filter
     switch (filterName) {
       case "vendor":
@@ -78,10 +82,6 @@ function FleetFilter() {
     };
     setSearchParams(params);
   }
-
-  const [arrowForward, setArrowForward] = useState();
-  const [arrowBack, setArrowBack] = useState();
-  const [selectedPage, setSelectedPage] = useState(1);
 
   let numberOfAssetsOnPage = 4;
   let elements = [];
@@ -138,6 +138,10 @@ function FleetFilter() {
     setSwmodel("");
     setHwmodel("");
     setSitename("");
+  }
+
+  function resetOffset() {
+    setOffset(0);
   }
 
   return (
