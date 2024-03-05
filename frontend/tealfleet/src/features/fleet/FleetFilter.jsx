@@ -44,31 +44,23 @@ function FleetFilter() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleChange(selected, filterName) {
+    let params = {};
     // Update the state based on the selected filter
     switch (filterName) {
       case "vendor":
-        setOffset(0);
         setVendor(selected);
         break;
       case "tenant":
-        setOffset(0);
         setTenant(selected);
-        setOffset(0);
         break;
       case "swmodel":
-        setOffset(0);
         setSwmodel(selected);
-        setOffset(0);
         break;
       case "hwmodel":
-        setOffset(0);
         setHwmodel(selected);
-        setOffset(0);
         break;
       case "sitename":
-        setOffset(0);
         setSitename(selected);
-        setOffset(0);
         break;
       case "offset":
         setOffset(selected);
@@ -76,13 +68,13 @@ function FleetFilter() {
         break;
     }
 
-    let params = {
+    params = {
+      offset: filterName == "offset" ? selected : setOffset(0),
       vendor: filterName == "vendor" ? selected : vendor,
-      tenant: filterName === "tenant" ? selected : tenant,
-      swmodel: filterName === "swmodel" ? selected : swmodel,
-      hwmodel: filterName === "hwmodel" ? selected : hwmodel,
-      sitename: filterName === "sitename" ? selected : sitename,
-      offset: filterName === "offset" ? selected : offset,
+      tenant: filterName == "tenant" ? selected : tenant,
+      swmodel: filterName == "swmodel" ? selected : swmodel,
+      hwmodel: filterName == "hwmodel" ? selected : hwmodel,
+      sitename: filterName == "sitename" ? selected : sitename,
     };
     setSearchParams(params);
   }
@@ -105,7 +97,6 @@ function FleetFilter() {
   }, [offset, totalPages]);
 
   useEffect(() => {
-    console.log(totalPages);
     if (
       offset == Math.ceil(foundAssets / numberOfAssetsOnPage) * totalPages ||
       totalPages == 1
@@ -141,12 +132,12 @@ function FleetFilter() {
   function resetForm() {
     setOffset(0);
     setArrowBack(true);
+    setArrowForward(false);
     setVendor("");
     setTenant("");
     setSwmodel("");
     setHwmodel("");
     setSitename("");
-    setArrowForward(false);
   }
 
   return (
