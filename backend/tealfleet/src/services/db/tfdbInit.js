@@ -17,12 +17,7 @@ CREATE TABLE IF NOT EXISTS "users" (
   "email" varchar NOT NULL,
   "password" varchar NOT NULL,
   "phone" varchar NOT NULL,
-  "title" varchar,
-  "view_dashboard" boolean NOT NULL,
-  "view_fleet" boolean NOT NULL,
-  "view_support" boolean NOT NULL,
-  "view_administration" boolean NOT NULL,
-  "created_at" timestamp DEFAULT (now())
+  "title" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "roles" (
@@ -35,7 +30,6 @@ CREATE TABLE IF NOT EXISTS "alerts" (
   "alert_id" uuid PRIMARY KEY,
   "tenant_id" uuid NOT NULL,
   "alert_type_id" uuid NOT NULL,
-  "alert_category_id" uuid NOT NULL,
   "asset_id" uuid NOT NULL,
   "title" varchar NOT NULL,
   "description" varchar NOT NULL,
@@ -46,11 +40,6 @@ CREATE TABLE IF NOT EXISTS "alerts" (
 CREATE TABLE IF NOT EXISTS "alerts_type" (
   "alert_type_id" uuid PRIMARY KEY,
   "type" varchar
-);
-
-CREATE TABLE IF NOT EXISTS "alerts_category" (
-  "alert_category_id" uuid PRIMARY KEY,
-  "category" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "logs" (
@@ -68,7 +57,7 @@ CREATE TABLE IF NOT EXISTS "contracts" (
   "tenant_id" uuid NOT NULL,
   "contract_type_id" uuid NOT NULL,
   "contractor_name" text NOT NULL,
-  "contract_sla" varchar
+  "contract_sla" varchar,
   "contract_no" varchar NOT NULL,
   "contract_description" text NOT NULL,
   "contract_valid_from" date NOT NULL,
@@ -87,7 +76,6 @@ CREATE TABLE IF NOT EXISTS "contract_types" (
 CREATE TABLE IF NOT EXISTS "software_catalog" (
   "software_catalog_id" uuid PRIMARY KEY,
   "vendor_id" uuid NOT NULL,
-  "sw_category_id" uuid NOT NULL,
   "software_model_name" varchar NOT NULL,
   "software_version_number" varchar NOT NULL,
   "software_image" varchar NOT NULL,
@@ -112,7 +100,6 @@ CREATE TABLE IF NOT EXISTS "software_assets" (
 CREATE TABLE IF NOT EXISTS "hardware_catalog" (
   "hardware_catalog_id" uuid PRIMARY KEY,
   "vendor_id" uuid NOT NULL,
-  "hw_category_id" uuid NOT NULL,
   "hardware_model_name" varchar NOT NULL,
   "hardware_part_number" varchar NOT NULL,
   "hardware_image" varchar NOT NULL,
@@ -145,18 +132,6 @@ CREATE TABLE IF NOT EXISTS "hw_asset_contracts" (
   "hw_asset_contract_id" uuid PRIMARY KEY,
   "hardware_asset_id" uuid NOT NULL,
   "contract_id" uuid NOT NULL,
-  "hw_created_at" timestamp DEFAULT (now())
-);
-
-CREATE TABLE IF NOT EXISTS "sw_categories" (
-  "sw_category_id" uuid PRIMARY KEY,
-  "sw_category" varchar NOT NULL,
-  "sw_created_at" timestamp DEFAULT (now())
-);
-
-CREATE TABLE IF NOT EXISTS "hw_categories" (
-  "hw_category_id" uuid PRIMARY KEY,
-  "hw_category" varchar NOT NULL,
   "hw_created_at" timestamp DEFAULT (now())
 );
 
@@ -201,9 +176,6 @@ ALTER TABLE "sites" ADD CONSTRAINT "sites_tenant_id_fkey" FOREIGN KEY ("tenant_i
 ALTER TABLE "alerts" DROP CONSTRAINT IF EXISTS "alerts_alert_type_id_fkey";
 ALTER TABLE "alerts" ADD FOREIGN KEY ("alert_type_id") REFERENCES "alerts_type" ("alert_type_id");
 
-ALTER TABLE "alerts" DROP CONSTRAINT IF EXISTS "alerts_alert_category_id_fkey";
-ALTER TABLE "alerts" ADD CONSTRAINT "alerts_alert_category_id_fkey" FOREIGN KEY ("alert_category_id") REFERENCES "alerts_category" ("alert_category_id");
-
 ALTER TABLE "alerts" DROP CONSTRAINT IF EXISTS "alerts_tenant_id_fkey";
 ALTER TABLE "alerts" ADD CONSTRAINT "alerts_tenant_id_fkey" FOREIGN KEY ("tenant_id") REFERENCES "tenants" ("tenant_id");
 
@@ -225,9 +197,6 @@ ALTER TABLE "software_assets" ADD CONSTRAINT "software_assets_tenant_id_fkey" FO
 ALTER TABLE "software_assets" DROP CONSTRAINT IF EXISTS "software_assets_site_id_fkey";
 ALTER TABLE "software_assets" ADD CONSTRAINT "software_assets_site_id_fkey" FOREIGN KEY ("site_id") REFERENCES "sites" ("site_id");
 
-ALTER TABLE "software_catalog" DROP CONSTRAINT IF EXISTS "software_catalog_sw_category_id_fkey";
-ALTER TABLE "software_catalog" ADD CONSTRAINT "software_catalog_sw_category_id_fkey" FOREIGN KEY ("sw_category_id") REFERENCES "sw_categories" ("sw_category_id");
-
 ALTER TABLE "software_catalog" DROP CONSTRAINT IF EXISTS "software_catalog_vendor_id_fkey";
 ALTER TABLE "software_catalog" ADD CONSTRAINT "software_catalog_vendor_id_fkey" FOREIGN KEY ("vendor_id") REFERENCES "vendors" ("vendor_id");
 
@@ -242,9 +211,6 @@ ALTER TABLE "hardware_assets" ADD CONSTRAINT "hardware_assets_site_id_fkey" FORE
 
 ALTER TABLE "hardware_catalog" DROP CONSTRAINT IF EXISTS "hardware_catalog_vendor_id_fkey";
 ALTER TABLE "hardware_catalog" ADD CONSTRAINT "hardware_catalog_vendor_id_fkey" FOREIGN KEY ("vendor_id") REFERENCES "vendors" ("vendor_id");
-
-ALTER TABLE "hardware_catalog" DROP CONSTRAINT IF EXISTS "hardware_catalog_hw_category_id_fkey";
-ALTER TABLE "hardware_catalog" ADD CONSTRAINT "hardware_catalog_hw_category_id_fkey" FOREIGN KEY ("hw_category_id") REFERENCES "hw_categories" ("hw_category_id");
 
 ALTER TABLE "sw_asset_contracts" DROP CONSTRAINT IF EXISTS "sw_asset_contracts_contract_id_fkey";
 ALTER TABLE "sw_asset_contracts" ADD CONSTRAINT "sw_asset_contracts_contract_id_fkey" FOREIGN KEY ("contract_id") REFERENCES "contracts" ("contract_id");

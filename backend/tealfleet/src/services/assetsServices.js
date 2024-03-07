@@ -153,7 +153,6 @@ module.exports.assetsGetNoSW = async (identity) => {
 module.exports.assetsGetFleet = async (identity, searchParams) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
-    console.log(searchParams);
     let queryText = `
     SELECT
       COUNT(*) OVER () AS total_count,
@@ -173,7 +172,6 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
 
       swc.software_catalog_id,
       swc.vendor_id AS software_vendor_id,
-      swc.sw_category_id,
       swc.software_model_name,
       swc.software_version_number,
       swc.software_image,
@@ -183,7 +181,6 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
 
       hwc.hardware_catalog_id,
       hwc.vendor_id AS hardware_vendor_id,
-      hwc.hw_category_id,
       hwc.hardware_model_name,
       hwc.hardware_part_number,
       hwc.hardware_image,
@@ -246,11 +243,9 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
     if (true) {
       console.log("searchParams.searchOffset");
       console.log(searchParams.searchOffset);
-      queryText += ` LIMIT 4 OFFSET $${queryParams.length + 1};`;
+      queryText += ` LIMIT 24 OFFSET $${queryParams.length + 1};`;
       queryParams.push(searchParams.searchOffset);
     }
-
-
 
     if (tenant_root == true && mock_tenant_id == undefined) {
       console.log(queryText, queryParams);
@@ -258,68 +253,8 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
       return result.rows;
 
     } else {
-      const result = await query(
-        `
-      SELECT
-        hw.hardware_asset_id, 
-        hw.hardware_catalog_id, 
-        hw.hardware_asset_name, 
-        hw.tenant_id AS hardware_tenant_id,
-        hw.site_id AS hardware_site_id,
-        hw.hardware_serial_no, 
-        
-        sw.software_asset_id, 
-        sw.software_catalog_id, 
-        sw.software_asset_name,
-        sw.hardware_asset_id AS sw_hardware_asset_id,
-        sw.tenant_id AS software_tenant_id,
-        sw.site_id AS software_site_id,
-        
-        swc.software_catalog_id,
-        swc.vendor_id AS software_vendor_id,
-        swc.sw_category_id,
-        swc.software_model_name,
-        swc.software_version_number,
-        swc.software_image,
-        swc.software_release_date,
-        swc.software_end_of_life,
-        swc.software_end_of_support,
-        
-        hwc.hardware_catalog_id,
-        hwc.vendor_id AS hardware_vendor_id,
-        hwc.hw_category_id,
-        hwc.hardware_model_name,
-        hwc.hardware_part_number,
-        hwc.hardware_image,
-        hwc.hardware_release_date,
-        hwc.hardware_end_of_life,
-        hwc.hardware_end_of_support,
-        
-        vendors.vendor_id,
-        vendors.vendor_name,
-        vendors.vendor_image,
-        
-        tenants.tenant_id,
-        tenants.is_root,
-        tenants.tenant_name
-      
-      FROM  
-        hardware_assets hw
-      FULL JOIN 
-        software_assets sw ON hw.hardware_asset_id = sw.hardware_asset_id
-      LEFT JOIN
-        software_catalog swc ON sw.software_catalog_id = swc.software_catalog_id
-      LEFT JOIN
-        hardware_catalog hwc ON hw.hardware_catalog_id = hwc.hardware_catalog_id
-      LEFT JOIN
-        vendors ON vendors.vendor_id = hwc.vendor_id OR vendors.vendor_id = swc.vendor_id
-      LEFT JOIN
-        tenants ON tenants.tenant_id = hw.tenant_id OR tenants.tenant_id = sw.tenant_id
-      WHERE
-        tenants.tenant_id = $1;
-  `,
-        [tenant_id]
-      );
+      console.log(queryText, queryParams);
+      const result = await query(queryText, queryParams);
       return result.rows;
     }
   } catch (error) {

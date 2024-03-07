@@ -83,7 +83,7 @@ function FleetFilter() {
     setSearchParams(params);
   }
 
-  let numberOfAssetsOnPage = 4;
+  let numberOfAssetsOnPage = 24;
   let elements = [];
   let totalPages = 0;
   let foundAssets = 0;
