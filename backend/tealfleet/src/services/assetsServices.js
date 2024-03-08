@@ -202,7 +202,7 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
     FROM  
       hardware_assets hw
     FULL JOIN 
-      software_assets sw ON hw.hardware_asset_id = sw.hardware_asset_id
+      software_assets sw ON hw.hardware_catalog_id = sw.software_catalog_id
     LEFT JOIN
       software_catalog swc ON sw.software_catalog_id = swc.software_catalog_id
     LEFT JOIN
@@ -243,13 +243,14 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
     if (true) {
       console.log("searchParams.searchOffset");
       console.log(searchParams.searchOffset);
-      queryText += ` LIMIT 24 OFFSET $${queryParams.length + 1};`;
+      queryText += ` LIMIT 16 OFFSET $${queryParams.length + 1};`;
       queryParams.push(searchParams.searchOffset);
     }
 
     if (tenant_root == true && mock_tenant_id == undefined) {
       console.log(queryText, queryParams);
       const result = await query(queryText, queryParams);
+      console.log(result);
       return result.rows;
 
     } else {

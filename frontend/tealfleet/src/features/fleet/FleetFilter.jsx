@@ -83,7 +83,7 @@ function FleetFilter() {
     setSearchParams(params);
   }
 
-  let numberOfAssetsOnPage = 24;
+  let numberOfAssetsOnPage = 16;
   let elements = [];
   let totalPages = 0;
   let foundAssets = 0;
@@ -92,7 +92,8 @@ function FleetFilter() {
     if (offset / totalPages == 0) {
       setSelectedPage(1);
     } else {
-      setSelectedPage(offset / totalPages);
+      const currentPage = Math.floor((offset + numberOfAssetsOnPage) / numberOfAssetsOnPage);
+      setSelectedPage(currentPage);
     }
   }, [offset, totalPages]);
 
@@ -102,7 +103,9 @@ function FleetFilter() {
       totalPages == 1
     ) {
       setArrowForward(true);
-    } else if (totalPages == 1) {
+    } else if (totalPages == selectedPage) {
+      setArrowForward(true);
+    }else if (totalPages == 1) {
       setArrowForward(true);
     } else {
       setArrowForward(false);
@@ -138,10 +141,6 @@ function FleetFilter() {
     setSwmodel("");
     setHwmodel("");
     setSitename("");
-  }
-
-  function resetOffset() {
-    setOffset(0);
   }
 
   return (
