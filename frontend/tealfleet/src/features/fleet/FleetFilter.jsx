@@ -83,7 +83,7 @@ function FleetFilter() {
     setSearchParams(params);
   }
 
-  let numberOfAssetsOnPage = 16;
+  let numberOfAssetsOnPage = 24;
   let elements = [];
   let totalPages = 0;
   let foundAssets = 0;
@@ -298,7 +298,7 @@ function FleetFilter() {
       </Hide>
       <SimpleGrid
         spacing="1em"
-        columns={{ base: "1", sm: "2", md: "3", lg: "4", xl: "4", "2xl": "5" }}
+        columns={{ base: "1", sm: "2", md: "4", lg: "4", xl: "6", "2xl": "6" }}
         marginLeft={{ base: "0.5em", sm: "0.5em", md: "0em" }}
         marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
       >

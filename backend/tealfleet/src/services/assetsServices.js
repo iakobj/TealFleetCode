@@ -220,9 +220,14 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
     const queryParams = []; // Array to hold query parameters
 
     // Add conditions based on search parameters
-    if (searchParams.searchTenant !== false) {
-      queryText += ` AND tenants.tenant_name = $${queryParams.length + 1}`;
-      queryParams.push(searchParams.searchTenant);
+    if (searchParams.searchTenant !== false || tenant_root == false) {
+      if (tenant_root == true) {
+        queryText += ` AND tenants.tenant_name = $${queryParams.length + 1}`;
+        queryParams.push(searchParams.searchTenant);
+      } else if (tenant_root == false) {
+        queryText += ` AND tenants.tenant_id = $${queryParams.length + 1}`;
+        queryParams.push(tenant_id);
+      }
     }
     if (searchParams.searchSwmodel !== false) {
       queryText += ` AND swc.software_model_name = $${queryParams.length + 1}`;
@@ -241,12 +246,9 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
       queryParams.push(searchParams.searchVendor);
     }
     if (true) {
-      console.log("searchParams.searchOffset");
-      console.log(searchParams.searchOffset);
-      queryText += ` LIMIT 16 OFFSET $${queryParams.length + 1};`;
+      queryText += ` LIMIT 24 OFFSET $${queryParams.length + 1};`;
       queryParams.push(searchParams.searchOffset);
-    }
-
+    } 
     if (tenant_root == true && mock_tenant_id == undefined) {
       console.log(queryText, queryParams);
       const result = await query(queryText, queryParams);

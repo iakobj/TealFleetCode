@@ -263,30 +263,44 @@ module.exports.hwContractsGetByContractNo = async (identity, contract_no) => {
   }
 };
 
-module.exports.swContractsGetNo = async (identity) => {
+module.exports.contractsGetValid = async (identity) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
 
     if (tenant_root == true && mock_tenant_id == undefined) {
-      const result = await query(
-        "SELECT COUNT(DISTINCT software_asset_id) FROM sw_asset_contracts;"
-      );
+      const result = await query(`
+        SELECT
+        COUNT(*) OVER () AS total_count,
+        *
+        FROM sw_asset_contracts sw
+        FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+        LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+        WHERE contracts.contract_valid_to > CURRENT_DATE;
+        `);
       return result.rows;
     } else if (tenant_root == true && mock_tenant_id) {
-      const result = await query(
-        `SELECT COUNT(DISTINCT sw_asset_contracts.software_asset_id)
-        FROM sw_asset_contracts
-        JOIN contracts ON sw_asset_contracts.contract_id = contracts.contract_id
-        WHERE contracts.tenant_id = $1;`,
+      const result = await query(` 
+        SELECT
+        COUNT(*) OVER () AS total_count,
+        *
+        FROM sw_asset_contracts sw
+        FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+        LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+        WHERE contracts.contract_valid_to > CURRENT_DATE
+        AND contracts.tenant_id = $1;`,
         [mock_tenant_id]
       );
       return result.rows;
     } else {
-      const result = await query(
-        `SELECT COUNT(DISTINCT sw_asset_contracts.software_asset_id)
-        FROM sw_asset_contracts
-        JOIN contracts ON sw_asset_contracts.contract_id = contracts.contract_id
-        WHERE contracts.tenant_id = $1;`,
+      const result = await query(`
+      SELECT
+      COUNT(*) OVER () AS total_count,
+      *
+      FROM sw_asset_contracts sw
+      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+      WHERE contracts.contract_valid_to > CURRENT_DATE
+      AND contracts.tenant_id = $1;`,
         [tenant_id]
       );
       return result.rows;
@@ -296,30 +310,44 @@ module.exports.swContractsGetNo = async (identity) => {
   }
 };
 
-module.exports.hwContractsGetNo = async (identity) => {
+module.exports.contractsGetInvalid = async (identity) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
 
     if (tenant_root == true && mock_tenant_id == undefined) {
-      const result = await query(
-        "SELECT COUNT(DISTINCT hardware_asset_id) FROM hw_asset_contracts;"
-      );
+      const result = await query(`
+        SELECT
+        COUNT(*) OVER () AS total_count,
+        *
+        FROM sw_asset_contracts sw
+        FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+        LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+        WHERE contracts.contract_valid_to < CURRENT_DATE;
+        `);
       return result.rows;
     } else if (tenant_root == true && mock_tenant_id) {
-      const result = await query(
-        `SELECT COUNT(DISTINCT hw_asset_contracts.hardware_asset_id)
-        FROM hw_asset_contracts
-        JOIN contracts ON hw_asset_contracts.contract_id = contracts.contract_id
-        WHERE contracts.tenant_id = $1;`,
+      const result = await query(` 
+        SELECT
+        COUNT(*) OVER () AS total_count,
+        *
+        FROM sw_asset_contracts sw
+        FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+        LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+        WHERE contracts.contract_valid_to < CURRENT_DATE
+        AND contracts.tenant_id = $1;`,
         [mock_tenant_id]
       );
       return result.rows;
     } else {
-      const result = await query(
-        `SELECT COUNT(DISTINCT hw_asset_contracts.hardware_asset_id)
-        FROM hw_asset_contracts
-        JOIN contracts ON hw_asset_contracts.contract_id = contracts.contract_id
-        WHERE contracts.tenant_id = $1;`,
+      const result = await query(`
+      SELECT
+      COUNT(*) OVER () AS total_count,
+      *
+      FROM sw_asset_contracts sw
+      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+      WHERE contracts.contract_valid_to < CURRENT_DATE
+      AND contracts.tenant_id = $1;`,
         [tenant_id]
       );
       return result.rows;

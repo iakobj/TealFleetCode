@@ -34,7 +34,7 @@ function HeaderSubNav({ link, subLink }) {
     return items.subNavData.data;
   };
 
-  const assets = [{ administration: "fleet" }, { administration: "inventory" }];
+  const assets = [{ administration: "fleet" }, { administration: "spare parts inventory" }];
 
   const support = [
     { support: "contracts" },

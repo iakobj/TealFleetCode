@@ -13,6 +13,7 @@ import {
   Divider,
   Button,
   Center,
+  Stack,
   VStack,
   HStack,
   Image,
@@ -24,36 +25,40 @@ import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 function FleetCard({ fleetCardItems }) {
   return (
-    <Card overflow="hidden" height={"23em"} variant="outline" bg="#fdfdfd">
-      <CardHeader
-        flex="1"
-        style={{ overflow: "hidden" }}
-        marginTop={"0em"}
-        marginBottom={"-1.5em"}
-        height="100%"
-      >
+    <Card overflow="hidden" height={"20em"} variant="outline" bg="#fdfdfd">
+      <CardHeader marginTop={"0em"} marginBottom={"0em"}>
         <VStack>
           <Box
-            marginTop={"-0.6em"}
+            marginTop={"-0.8em"}
             display="flex"
             flexDirection="column"
             alignItems="center"
             textAlign="center"
           >
-            <Center color="gray.600">
-              <Heading fontWeight="400" size="sm">{fleetCardItems.tenant_name}</Heading>
-            </Center>
+            <Text
+              textAlign="center"
+              fontWeight="400"
+              color="gray.600"
+              fontSize="sm"
+            >
+              {fleetCardItems.tenant_name.length > 20
+                ? `${fleetCardItems.tenant_name.slice(0, 20)}...`
+                : fleetCardItems.tenant_name}
+            </Text>
           </Box>
           <Box marginTop={"-0.5em"}>
-            <Center>
-              <Text fontWeight="500" color="gray.600" fontSize="md">
-                {" "}
-                {fleetCardItems.software_asset_name &&
-                  fleetCardItems.software_asset_name}
-                {!fleetCardItems.software_asset_name &&
-                  fleetCardItems.hardware_asset_name}
-              </Text>
-            </Center>
+            <Text
+              textAlign="center"
+              fontWeight="500"
+              color="gray.600"
+              fontSize="sm"
+            >
+              {" "}
+              {fleetCardItems.software_asset_name &&
+                fleetCardItems.software_asset_name}
+              {!fleetCardItems.software_asset_name &&
+                fleetCardItems.hardware_asset_name}
+            </Text>
           </Box>
         </VStack>
       </CardHeader>
@@ -81,45 +86,41 @@ function FleetCard({ fleetCardItems }) {
       </CardBody>
 
       <CardBody flex="1" style={{ overflow: "hidden" }}>
-        <VStack height="50%">
-          <Box>
-            <Center>
-              <Text color="gray.600" size="md">
-                {fleetCardItems.vendor_name
-                  ? fleetCardItems.vendor_name + " "
-                  : ""}
-              </Text>
-            </Center>
-            <Divider orientation="horizontal" />
-            <Center>
-              <Text color="gray.600" size="md">
-                {fleetCardItems.hardware_model_name
-                  ? fleetCardItems.hardware_model_name + " "
-                  : ""}
-                {fleetCardItems.software_model_name
-                  ? fleetCardItems.software_model_name + " "
-                  : ""}
-              </Text>
-            </Center>
-            <Center>
-              <Text color="gray.600" size="md">
-                {fleetCardItems.software_version_number}
-              </Text>
-            </Center>
-          </Box>
-        </VStack>
+        <Stack direction="row">
+          <Text color="gray.600" fontSize="sm" textAlign="left">
+            {fleetCardItems.vendor_name ? fleetCardItems.vendor_name + " " : ""}
+          </Text>
+          <Spacer />
+          <Text color="gray.600" fontSize="sm" textAlign="right">
+            {fleetCardItems.hardware_model_name
+              ? fleetCardItems.hardware_part_number + " "
+              : ""}
+            {fleetCardItems.software_model_name
+              ? fleetCardItems.software_model_name + " "
+              : ""}
+          </Text>
+        </Stack>
+        <Divider marginTop="0.2em" marginBottom="0.2em"/>
+        <Flex justifyContent="space-between">
+          <Text color="gray.600" fontSize="sm" textAlign="left">
+            {fleetCardItems.software_version_number ? "Version:" : "Serial:"}
+          </Text>
+          <Text color="gray.600" fontSize="sm" textAlign="right">
+            {fleetCardItems.software_version_number ||
+              fleetCardItems.hardware_serial_no}
+          </Text>
+        </Flex>
+        <Divider marginTop="0.2em" marginBottom="0.2em"/>
       </CardBody>
-      <Divider orientation="horizontal" />
       <CardFooter>
-        <HStack>
+        <HStack spacing="0.3em">
           <IconButton
             colorScheme="teal"
-            size="sm"
-            aria-label="Search database"
+            size="xs"
+            aria-label="Open Ticket"
             icon={<EmailIcon />}
           />
-
-          <Button colorScheme="teal" size="sm" leftIcon={<InfoOutlineIcon />}>
+          <Button colorScheme="teal" size="xs" leftIcon={<InfoOutlineIcon />}>
             Details
           </Button>
         </HStack>

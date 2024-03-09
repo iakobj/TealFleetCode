@@ -8,8 +8,7 @@ const {
 const {
   contractsGetAll,
   contractsGetAllNo,
-  swContractsGetNo,
-  hwContractsGetNo,
+  contractsGetValid
 } = require("../services/contractsServices");
 
 const { vendorsGetAll } = require("../services/vendorsServices");
@@ -23,23 +22,30 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
     const resultArray = await Promise.all([
       assetsGetNoSW(identity),
       assetsGetNoHW(identity),
-      swContractsGetNo(identity),
-      hwContractsGetNo(identity),
+      contractsGetValid(identity),
       contractsGetAllNo(identity),
       contractsGetAll(identity),
     ]);
 
     const assetsNoSW = resultArray[0][0].count;
     const assetsNoHW = resultArray[1][0].count;
-    const contractsNoSW = resultArray[2][0].count;
-    const contractsNoHW = resultArray[3][0].count;
-    const contractsAllNo = resultArray[4][0].count;
-    const contractsAll = resultArray[5];
+    const contractsValid = resultArray[2][0] || 0;
+    const contractsAllNo = resultArray[3][0].count;
+    const contractsAll = resultArray[4];
+
+    console.log(`assetsNoSW`, assetsNoSW);
+    console.log(`assetsNoHW`, assetsNoHW);
+    console.log(`contractsValid`, contractsValid);
+    console.log(`contractsAllNo`, contractsAllNo);
+    console.log(`contractsAll`, contractsAll);
 
     const noOfAllAssets = parseInt(assetsNoSW) + parseInt(assetsNoHW);
-    const noOfAllCoveredAssets =
-      parseInt(contractsNoSW) + parseInt(contractsNoHW);
+    const noOfAllCoveredAssets = contractsValid.total_count || 0;
     const noOfAllUncoveredAssets = noOfAllAssets - noOfAllCoveredAssets;
+
+    console.log(`noOfAllAssets`, noOfAllAssets);
+    console.log(`noOfAllCoveredAssets`, noOfAllCoveredAssets);
+    console.log(`noOfAllUncoveredAssets`, noOfAllUncoveredAssets);
 
     const today = new Date();
     const validContractsCount = contractsAll.reduce((count, contract) => {
@@ -165,6 +171,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       expiredContracts,
       soonExpired,
     ];
+    console.log(result);
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });

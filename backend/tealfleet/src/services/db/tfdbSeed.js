@@ -8,7 +8,7 @@ VALUES
 
 INSERT INTO "tenants" ("tenant_id", "is_root", "tenant_name")
 VALUES
-  ('11111111-4cbb-2a1d-1f9a-012345678901', true, 'Integrated Innovations Co'),
+  ('11111111-4cbb-2a1d-1f9a-012345678901', true, 'Integrated Innovations Center'),
   ('11111111-4cbb-2a1d-1f9a-012345678902', false, 'ByteTech'),
   ('11111111-4cbb-2a1d-1f9a-012345678903', false, 'EchoFinance'),
   ('11111111-4cbb-2a1d-1f9a-012345678904', false, 'Green Grow'),
@@ -36,7 +36,7 @@ VALUES
   ('11111111-4cbb-2a1d-1f9a-012345678926', false, 'BuildCorp'),
   ('11111111-4cbb-2a1d-1f9a-012345678927', false, 'BlueChip Manufacturing'),
   ('11111111-4cbb-2a1d-1f9a-012345678928', false, 'DAXY'),
-  ('11111111-4cbb-2a1d-1f9a-012345678929', false, 'Demo Tenant 2'),
+  ('11111111-4cbb-2a1d-1f9a-012345678929', false, 'Noche Inc.'),
   ('11111111-4cbb-2a1d-1f9a-012345678930', false, 'Precision Works Corporation'),
   ('11111111-4cbb-2a1d-1f9a-012345678931', false, 'Nova Care'),
   ('11111111-4cbb-2a1d-1f9a-012345678932', false, 'G.E.M');
@@ -247,8 +247,9 @@ VALUES
 
 INSERT INTO "sw_asset_contracts" ("sw_asset_contract_id", "software_asset_id", "contract_id")
 VALUES
-  ('aaaa1111-5e6f-7a8b-9c0d-012345678901', 'dddddddd-b8b8-a8a8-a1a8-012345678901', 'bbbbbbbb-cccc-cccc-cccc-012345678901'),
-  ('aaaa1111-5e6f-7a8b-9c0d-012345678902', 'dddddddd-b8b8-a8a8-a1a8-012345678902', 'bbbbbbbb-cccc-cccc-cccc-012345678902');
+  ('aaaa1111-5e6f-7a8b-9c0d-012345678901', 'dddddddd-b8b8-a8a8-a1a8-012345678901', 'bbbbbbbb-cccc-cccc-cccc-012345678902'),
+  ('aaaa1111-5e6f-7a8b-9c0d-012345678902', 'dddddddd-b8b8-a8a8-a1a8-012345678902', 'bbbbbbbb-cccc-cccc-cccc-012345678902'),
+  ('aaaa1111-5e6f-7a8b-9c0d-012345678903', 'dddddddd-b8b8-a8a8-a1a8-012345678903', 'bbbbbbbb-cccc-cccc-cccc-012345678902');
 
 INSERT INTO "hw_asset_contracts" ("hw_asset_contract_id", "hardware_asset_id", "contract_id")
 VALUES
