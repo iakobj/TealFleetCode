@@ -176,6 +176,7 @@
     cContractsGetAll,
     cContractsGetAllNo,
     cContractsGetByTenant,
+    cContractsGetByContractor,
     cHwContractsGetAll,
     cSwContractsGetAll,
     cContractsGetByContractNo,
@@ -186,6 +187,7 @@
  contractsRouters.get("/", cContractsGetAll);
  contractsRouters.get("/numbers", cContractsGetAllNo);
  contractsRouters.get("/tenant/:tenant", cContractsGetByTenant);
+ contractsRouters.get("contractors/:contractor", cContractsGetByContractor);
  contractsRouters.get("/all/hardware", cHwContractsGetAll);
  contractsRouters.get("/all/software", cSwContractsGetAll);
  

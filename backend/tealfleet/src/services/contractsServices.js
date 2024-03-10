@@ -269,38 +269,53 @@ module.exports.contractsGetValid = async (identity) => {
 
     if (tenant_root == true && mock_tenant_id == undefined) {
       const result = await query(`
-        SELECT
-        COUNT(*) OVER () AS total_count,
-        *
-        FROM sw_asset_contracts sw
-        FULL JOIN contracts ON contracts.contract_id = sw.contract_id
-        LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
-        WHERE contracts.contract_valid_to > CURRENT_DATE;
+      SELECT 
+      COUNT(*) OVER () AS total_count,
+      subquery.*
+  FROM (
+      SELECT DISTINCT
+          sw.software_asset_id,
+          hw.hardware_asset_id
+      FROM sw_asset_contracts sw
+      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+      WHERE contracts.contract_valid_to > CURRENT_DATE
+  ) AS subquery;
         `);
       return result.rows;
     } else if (tenant_root == true && mock_tenant_id) {
       const result = await query(` 
-        SELECT
-        COUNT(*) OVER () AS total_count,
-        *
-        FROM sw_asset_contracts sw
-        FULL JOIN contracts ON contracts.contract_id = sw.contract_id
-        LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
-        WHERE contracts.contract_valid_to > CURRENT_DATE
-        AND contracts.tenant_id = $1;`,
+      SELECT 
+      COUNT(*) OVER () AS total_count,
+      subquery.*
+  FROM (
+      SELECT DISTINCT
+          sw.software_asset_id,
+          hw.hardware_asset_id
+      FROM sw_asset_contracts sw
+      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+      WHERE contracts.contract_valid_to > CURRENT_DATE
+      AND contracts.tenant_id = $1
+  ) AS subquery;`,
         [mock_tenant_id]
       );
       return result.rows;
     } else {
       const result = await query(`
-      SELECT
+      SELECT 
       COUNT(*) OVER () AS total_count,
-      *
+      subquery.*
+  FROM (
+      SELECT DISTINCT
+          sw.software_asset_id,
+          hw.hardware_asset_id
       FROM sw_asset_contracts sw
       FULL JOIN contracts ON contracts.contract_id = sw.contract_id
       LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
       WHERE contracts.contract_valid_to > CURRENT_DATE
-      AND contracts.tenant_id = $1;`,
+      AND contracts.tenant_id = $1
+  ) AS subquery;`,
         [tenant_id]
       );
       return result.rows;
@@ -316,38 +331,85 @@ module.exports.contractsGetInvalid = async (identity) => {
 
     if (tenant_root == true && mock_tenant_id == undefined) {
       const result = await query(`
-        SELECT
-        COUNT(*) OVER () AS total_count,
-        *
-        FROM sw_asset_contracts sw
-        FULL JOIN contracts ON contracts.contract_id = sw.contract_id
-        LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
-        WHERE contracts.contract_valid_to < CURRENT_DATE;
+      SELECT 
+      COUNT(*) OVER () AS total_count,
+      subquery.*
+  FROM (
+      SELECT DISTINCT
+          sw.software_asset_id,
+          hw.hardware_asset_id
+      FROM sw_asset_contracts sw
+      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+      WHERE contracts.contract_valid_to < CURRENT_DATE
+  ) AS subquery;
         `);
       return result.rows;
     } else if (tenant_root == true && mock_tenant_id) {
       const result = await query(` 
-        SELECT
-        COUNT(*) OVER () AS total_count,
-        *
-        FROM sw_asset_contracts sw
-        FULL JOIN contracts ON contracts.contract_id = sw.contract_id
-        LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
-        WHERE contracts.contract_valid_to < CURRENT_DATE
-        AND contracts.tenant_id = $1;`,
+      SELECT 
+      COUNT(*) OVER () AS total_count,
+      subquery.*
+  FROM (
+      SELECT DISTINCT
+          sw.software_asset_id,
+          hw.hardware_asset_id
+      FROM sw_asset_contracts sw
+      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+      WHERE contracts.contract_valid_to < CURRENT_DATE
+      AND contracts.tenant_id = $1
+  ) AS subquery;`,
         [mock_tenant_id]
       );
       return result.rows;
     } else {
       const result = await query(`
-      SELECT
+      SELECT 
       COUNT(*) OVER () AS total_count,
-      *
+      subquery.*
+  FROM (
+      SELECT DISTINCT
+          sw.software_asset_id,
+          hw.hardware_asset_id
       FROM sw_asset_contracts sw
       FULL JOIN contracts ON contracts.contract_id = sw.contract_id
       LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
       WHERE contracts.contract_valid_to < CURRENT_DATE
-      AND contracts.tenant_id = $1;`,
+      AND contracts.tenant_id = $1
+  ) AS subquery;`,
+        [tenant_id]
+      );
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
+
+module.exports.contractsGetByContractor = async (identity, ten_id) => {
+  try {
+    const { tenant_id, tenant_root } = await identity.data;
+
+    if (tenant_root == true) {
+      const result = await query(
+        `
+        SELECT * 
+        FROM contracts
+        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
+        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
+        WHERE contracts.tenant_id = $1`,
+        [ten_id]
+      );
+      return result.rows;
+    } else {
+      const result = await query(
+        `
+        SELECT * 
+        FROM contracts
+        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
+        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
+        WHERE contracts.tenant_id = $1`,
         [tenant_id]
       );
       return result.rows;

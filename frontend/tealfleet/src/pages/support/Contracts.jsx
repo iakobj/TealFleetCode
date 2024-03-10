@@ -24,6 +24,19 @@ function Contracts() {
 export default Contracts;
 
 export const ContractsDataLoader = async () => {
+
+
+
+
+  const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+
+
+
+
   // Fetch Contracts info for contracts table
   const contractsItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
     method: "GET",
