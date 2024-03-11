@@ -2,13 +2,16 @@ import * as React from "react";
 
 import { API_ENDPOINT } from "../constants/apiEndpoint";
 
+// Chakra-UI components
+import { Box } from "@chakra-ui/react";
+
 import FleetFilter from "../features/fleet/FleetFilter.jsx";
 
 function Fleet() {
   return (
-    <div>
+    <Box>
       <FleetFilter />
-    </div>
+    </Box>
   );
 }
 

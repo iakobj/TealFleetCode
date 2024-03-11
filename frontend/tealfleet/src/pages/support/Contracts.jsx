@@ -1,6 +1,5 @@
 // React components
 import * as React from "react";
-import { useLoaderData } from "react-router-dom";
 
 // import location of the API server
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
@@ -11,39 +10,54 @@ import { Box } from "@chakra-ui/react";
 import ContractsFilter from "../../features/contracts/contractsFilter";
 
 function Contracts() {
-  const loaderData = useLoaderData();
-  const contractsData = loaderData.contractsItems.data;
-
   return (
     <Box>
-      <ContractsFilter contractsData={contractsData} />
+      <ContractsFilter/>
     </Box>
   );
 }
 
 export default Contracts;
 
-export const ContractsDataLoader = async () => {
+export const ContractsDataLoader = async ({ params, request }) => {
+  let cItems;
 
+  const url = new URL(request.url);
+  const searchTenant = url.searchParams.get("tenant");
+  const searchValidity = url.searchParams.get("validity");
+  const searchContractor = url.searchParams.get("contractor");
+  const searchOffset = url.searchParams.get("offset");
 
-
+  // Construct the URL with search parameters
+  const queryParams = new URLSearchParams({
+    tenant: searchTenant,
+    validity: searchValidity,
+    contractor: searchContractor,
+    offset: searchOffset,
+  });
 
   const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
     method: "GET",
     credentials: "include",
   });
 
-
-
-
-
-  // Fetch Contracts info for contracts table
-  const contractsItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
+  cItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
     method: "GET",
     credentials: "include",
   });
 
+  const apiUrl = `http://${API_ENDPOINT}/contracts/all/filter/?${queryParams.toString()}`;
+
+  if (searchTenant || searchValidity || searchContractor || searchOffset) {
+    cItems = await fetch(apiUrl, {
+      method: "GET",
+      credentials: "include",
+    });
+  }
+
+
   return {
-    contractsItems: await contractsItems.json(),
+    tItems: await tItems.json(),
+    cItems: await cItems.json(),
   };
 };

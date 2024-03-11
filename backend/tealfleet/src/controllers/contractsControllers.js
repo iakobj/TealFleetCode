@@ -2,7 +2,7 @@ const {
   contractsGetAll,
   contractsGetAllNo,
   contractsGetByTenant,
-  contractsGetByContractor,
+  supportGetContracts,
 
   hwContractsGetAll,
   hwContractsGetByContractNo,
@@ -258,10 +258,47 @@ module.exports.cSwContractsGetNo = async (req, res) => {
   }
 };
 
-module.exports.cContractsGetByContractor = async (req, res) => {
+
+module.exports.cSupportGetContracts = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
-    const result = await contractsGetByContractor(identity);
+
+    // Access search parameters from req.query
+    const searchTenant = req.query.tenant;
+    const searchValidity = req.query.validity;
+    const searchContractor = req.query.contractor;
+    const searchOffset = req.query.offset;
+
+    let searchParams = {};
+
+    if (searchTenant && searchTenant != '' && searchTenant != 'null' && searchTenant != 'undefined') {
+      searchParams["searchTenant"] = searchTenant;
+    } else {
+      searchParams["searchTenant"] = false;
+    }
+    if (searchValidity && searchValidity != '' && searchValidity != 'null' && searchValidity != 'undefined') {
+      searchParams["searchValidity"] = searchValidity;
+    } else {
+      searchParams["searchValidity"] = false;
+    }
+    if (searchContractor && searchContractor != '' && searchContractor != 'null' && searchContractor != 'undefined') {
+      searchParams["searchContractor"] = searchContractor;
+    } else {
+      searchParams["searchContractor"] = false;
+    }
+    if (searchOffset && searchOffset != '' && searchOffset != 'null' && searchOffset != 'undefined') {
+      console.log("controller searchOffset");
+      console.log(searchOffset);
+      searchParams["searchOffset"] = searchOffset;
+    } else {
+      searchParams["searchOffset"] = 0;
+    }
+
+
+    console.log(searchParams);
+
+
+    const result = await supportGetContracts(identity, searchParams);
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });

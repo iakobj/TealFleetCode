@@ -176,18 +176,17 @@
     cContractsGetAll,
     cContractsGetAllNo,
     cContractsGetByTenant,
-    cContractsGetByContractor,
     cHwContractsGetAll,
     cSwContractsGetAll,
     cContractsGetByContractNo,
     cHwContractsGetNo,
     cSwContractsGetNo,
+    cSupportGetContracts
  } = require("../controllers/contractsControllers");
  
  contractsRouters.get("/", cContractsGetAll);
  contractsRouters.get("/numbers", cContractsGetAllNo);
  contractsRouters.get("/tenant/:tenant", cContractsGetByTenant);
- contractsRouters.get("contractors/:contractor", cContractsGetByContractor);
  contractsRouters.get("/all/hardware", cHwContractsGetAll);
  contractsRouters.get("/all/software", cSwContractsGetAll);
  
@@ -195,6 +194,8 @@
  contractsRouters.get("/numbers/software", cSwContractsGetNo);
 
  contractsRouters.get("/numbers/:contract_no", cContractsGetByContractNo);
+
+ contractsRouters.get("/all/:filter?", cSupportGetContracts);
  
  module.exports = contractsRouters;
  
