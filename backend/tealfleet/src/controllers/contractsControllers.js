@@ -287,8 +287,6 @@ module.exports.cSupportGetContracts = async (req, res) => {
       searchParams["searchContractor"] = false;
     }
     if (searchOffset && searchOffset != '' && searchOffset != 'null' && searchOffset != 'undefined') {
-      console.log("controller searchOffset");
-      console.log(searchOffset);
       searchParams["searchOffset"] = searchOffset;
     } else {
       searchParams["searchOffset"] = 0;

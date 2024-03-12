@@ -27,18 +27,17 @@ import {
   Td,
 } from "@chakra-ui/react";
 
-function ContractsAssetsList({ selectedContractData }) {
+function ContractsAssetsList({ selectedContract }) {
   const [contractAssets, setContractAssets] = useState([]);
-  const AssetsDataLoader = async (selectedContractData) => {
+  const AssetsDataLoader = async (selectedContract) => {
     try {
       const contractAssets = await fetch(
-        `http://${API_ENDPOINT}/contracts/numbers/${selectedContractData.contract_no}`,
+        `http://${API_ENDPOINT}/contracts/numbers/${selectedContract}`,
         {
           method: "GET",
           credentials: "include",
         }
       );
-
       const assets = await contractAssets.json();
       setContractAssets(assets);
     } catch (error) {
@@ -46,9 +45,11 @@ function ContractsAssetsList({ selectedContractData }) {
     }
   };
 
+  console.log(selectedContract);
+
   useEffect(() => {
-    AssetsDataLoader(selectedContractData);
-  }, [selectedContractData]);
+    AssetsDataLoader(selectedContract);
+  }, [selectedContract]);
 
   return (
     <Box>
@@ -60,30 +61,45 @@ function ContractsAssetsList({ selectedContractData }) {
         <CardHeader borderRadius="0.55em 0.55em 0em 0em" bg="#F4F7F4">
           <Flex>
             <Heading fontWeight="500" color="gray.600" size="md">
-              {selectedContractData.contract_no}
+              {contractAssets &&
+              contractAssets.data &&
+              contractAssets.data.length > 0
+                ? contractAssets.data[0].contract_no
+                : "Nothing Selected"}
             </Heading>
             <Spacer />
             <Text fontWeight="500" color="gray.600">
-              {" "}
-              {selectedContractData.tenant_name}
+              {contractAssets &&
+              contractAssets.data &&
+              contractAssets.data.length > 0
+                ? contractAssets.data[0].tenant_name
+                : "Nothing Selected"}
             </Text>
           </Flex>
         </CardHeader>
 
         <CardBody bg="#F4F7F4" paddingBottom="1.2em">
           <Text color="gray.600" paddingBottom="0.4em">
-            {selectedContractData.contract_description}
+            {contractAssets &&
+            contractAssets.data &&
+            contractAssets.data.length > 0
+              ? contractAssets.data[0].contract_description
+              : "Nothing Selected"}
           </Text>
 
           <Stack direction="row" marginTop="0.2em" marginBottom="0.2em">
-            {selectedContractData.type ? (
+            {contractAssets &&
+            contractAssets.data &&
+            contractAssets.data.length > 0 ? (
               <Badge variant="outline" colorScheme="teal">
-                {selectedContractData.type}
+                {contractAssets.data && contractAssets.data[0].type}
               </Badge>
             ) : null}
-            {selectedContractData.contract_sla ? (
+            {contractAssets &&
+            contractAssets.data &&
+            contractAssets.data.length > 0 ? (
               <Badge variant="solid" colorScheme="teal">
-                {selectedContractData.contract_sla}
+                {contractAssets.data && contractAssets.data[0].contract_sla}
               </Badge>
             ) : null}
           </Stack>
@@ -92,22 +108,38 @@ function ContractsAssetsList({ selectedContractData }) {
             <Flex>
               <Box paddingTop="0.35em" marginBottom="-0.3em">
                 <HStack>
-                <Text fontWeight="500">Supported by:</Text>
-                <Text color="gray.600">
-                 {selectedContractData.contractor_name}{" "}
-                </Text>
+                  <Text fontWeight="500">Supported by:</Text>
+                  <Text color="gray.600">
+                    {contractAssets &&
+                    contractAssets.data &&
+                    contractAssets.data.length > 0
+                      ? contractAssets.data[0].contractor_name
+                      : "Nothing Selected"}
+                  </Text>
                 </HStack>
               </Box>
               <Spacer />
               <Box paddingTop="0.35em" marginBottom="-0.3em">
                 <HStack>
-                  <Text fontWeight="500" color="gray.600">From:</Text>
-                  <Text color="gray.600" marginRight="1em">
-                     {selectedContractData.contract_valid_from}
+                  <Text fontWeight="500" color="gray.600">
+                    From:
                   </Text>
-                  <Text fontWeight="500" color="gray.600">Until:</Text>
+                  <Text color="gray.600" marginRight="1em">
+                    {contractAssets &&
+                    contractAssets.data &&
+                    contractAssets.data.length > 0
+                      ? contractAssets.data[0].contract_valid_from
+                      : "Nothing Selected"}
+                  </Text>
+                  <Text fontWeight="500" color="gray.600">
+                    Until:
+                  </Text>
                   <Text color="gray.600">
-                     {selectedContractData.contract_valid_to}
+                    {contractAssets &&
+                    contractAssets.data &&
+                    contractAssets.data.length > 0
+                      ? contractAssets.data[0].contract_valid_to
+                      : "Nothing Selected"}
                   </Text>
                 </HStack>
               </Box>
@@ -129,7 +161,12 @@ function ContractsAssetsList({ selectedContractData }) {
               }}
             >
               <TableCaption>
-                Assets covered in {selectedContractData.contract_no}
+                Assets covered in
+                {contractAssets &&
+                contractAssets.data &&
+                contractAssets.data.length > 0
+                  ? contractAssets.data[0].contract_no
+                  : "Nothing Selected"}
               </TableCaption>
               <Thead>
                 <Tr>
@@ -151,9 +188,7 @@ function ContractsAssetsList({ selectedContractData }) {
                         </Text>
                       </Td>
                       <Td>
-                        <Text color="gray.800">
-                        {data.tenant_name}
-                        </Text>
+                        <Text color="gray.800">{data.tenant_name}</Text>
                       </Td>
                       <Td textTransform="capitalize">
                         <Text color="gray.800">{data.vendor_name}</Text>

@@ -28,6 +28,11 @@ export const ContractsDataLoader = async ({ params, request }) => {
   const searchContractor = url.searchParams.get("contractor");
   const searchOffset = url.searchParams.get("offset");
 
+  console.log(`searchTenant`, searchTenant);
+  console.log(`searchValidity`, searchValidity);
+  console.log(`searchContractor`, searchContractor);
+  console.log(`searchOffset`, searchOffset);
+
   // Construct the URL with search parameters
   const queryParams = new URLSearchParams({
     tenant: searchTenant,
@@ -41,7 +46,7 @@ export const ContractsDataLoader = async ({ params, request }) => {
     credentials: "include",
   });
 
-  cItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
+  cItems = await fetch(`http://${API_ENDPOINT}/contracts/all`, {
     method: "GET",
     credentials: "include",
   });

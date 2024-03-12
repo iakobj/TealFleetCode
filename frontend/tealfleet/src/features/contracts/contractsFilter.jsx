@@ -16,18 +16,17 @@ import {
   Select,
   Hide,
   IconButton,
-  Stack
+  Stack,
 } from "@chakra-ui/react";
 
 import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
 function ContractsFilter() {
-
   const loaderData = useLoaderData();
 
   const contractItems = loaderData.cItems.data;
   const tenantItems = loaderData.tItems.data;
-  console.log(contractItems);
+
   const [offset, setOffset] = useState(0);
   const [tenant, setTenant] = useState();
   const [validity, setValidity] = useState();
@@ -76,20 +75,23 @@ function ContractsFilter() {
     if (offset / totalPages == 0) {
       setSelectedPage(1);
     } else {
-      const currentPage = Math.floor((offset + numberOfContractsOnPage) / numberOfContractsOnPage);
+      const currentPage = Math.floor(
+        (offset + numberOfContractsOnPage) / numberOfContractsOnPage
+      );
       setSelectedPage(currentPage);
     }
   }, [offset, totalPages]);
 
   useEffect(() => {
     if (
-      offset == Math.ceil(foundContracts / numberOfContractsOnPage) * totalPages ||
+      offset ==
+        Math.ceil(foundContracts / numberOfContractsOnPage) * totalPages ||
       totalPages == 1
     ) {
       setArrowForward(true);
     } else if (totalPages == selectedPage) {
       setArrowForward(true);
-    }else if (totalPages == 1) {
+    } else if (totalPages == 1) {
       setArrowForward(true);
     } else {
       setArrowForward(false);
@@ -140,7 +142,7 @@ function ContractsFilter() {
         >
           <Wrap>
             <WrapItem>
-            <NavLink to={"/support/contracts"}>
+              <NavLink to={"/support/contracts"}>
                 <IconButton
                   aria-label="Reset filter"
                   icon={<RepeatIcon />}
@@ -153,27 +155,27 @@ function ContractsFilter() {
             </WrapItem>
 
             <WrapItem marginRight={"0.5em"}>
-            <Select
-                  placeholder="Tenant"
-                  id="tenant"
-                  name="tenant"
-                  size="sm"
-                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                  value={tenant}
-                  onChange={(e) => handleChange(e.target.value, "tenant")}
-                >
-                  {tenantItems &&
-                    tenantItems
-                      .filter((item) => item.tenant_id)
-                      .map((tenantItems) => (
-                        <option
-                          key={tenantItems.tenant_id}
-                          value={tenantItems.tenant_name}
-                        >
-                          {tenantItems.tenant_name}
-                        </option>
-                      ))}
-                </Select>
+              <Select
+                placeholder="Tenant"
+                id="tenant"
+                name="tenant"
+                size="sm"
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                value={tenant}
+                onChange={(e) => handleChange(e.target.value, "tenant")}
+              >
+                {tenantItems &&
+                  tenantItems
+                    .filter((item) => item.tenant_id)
+                    .map((tenantItems) => (
+                      <option
+                        key={tenantItems.tenant_id}
+                        value={tenantItems.tenant_name}
+                      >
+                        {tenantItems.tenant_name}
+                      </option>
+                    ))}
+              </Select>
             </WrapItem>
             <WrapItem marginRight={"0.5em"}>
               <Select
@@ -190,27 +192,27 @@ function ContractsFilter() {
             </WrapItem>
 
             <WrapItem marginRight={"0.5em"}>
-            <Select
-                  placeholder="Contractor"
-                  id="contractor"
-                  name="contractor"
-                  size="sm"
-                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                  value={contractor}
-                  onChange={(e) => handleChange(e.target.value, "contractor")}
-                >
-                  {contractItems &&
-                    contractItems
-                      .filter((item) => item.contractor_name)
-                      .map((contractItems) => (
-                        <option
-                          key={contractItems.contractor_name}
-                          value={contractItems.contractor_name}
-                        >
-                          {contractItems.contractor_name}
-                        </option>
-                      ))}
-                </Select>
+              <Select
+                placeholder="Contractor"
+                id="contractor"
+                name="contractor"
+                size="sm"
+                w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
+                value={contractor}
+                onChange={(e) => handleChange(e.target.value, "contractor")}
+              >
+                {contractItems &&
+                  contractItems
+                    .filter((item) => item.contractor_name)
+                    .map((contractItems) => (
+                      <option
+                        key={contractItems.contractor_name}
+                        value={contractItems.contractor_name}
+                      >
+                        {contractItems.contractor_name}
+                      </option>
+                    ))}
+              </Select>
             </WrapItem>
             <Spacer />
             <WrapItem>

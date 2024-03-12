@@ -1,6 +1,6 @@
 // React components
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ContractsAssetsList from "./ContractsAssetsList";
 
@@ -31,26 +31,23 @@ import {
 } from "@chakra-ui/icons";
 
 function ContractsListCard({ contractItems }) {
-  const [selectedContract, setSelectedContract] = useState(
-    contractItems[0].contract_no
-  );
+  const [selectedContract, setSelectedContract] = useState();
+
+  useEffect(() => {
+    if (
+      !contractItems ||
+      !contractItems.length ||
+      !contractItems[0].contract_no
+    ) {
+      console.log("Undefined");
+    } else {
+      setSelectedContract(contractItems[0].contract_no);
+    }
+  }, [contractItems]);
 
   const handleCardClick = (contract_no) => {
     setSelectedContract(contract_no);
   };
-
-  const selectedContractData = contractItems.find(
-    (contract) => contract.contract_no === selectedContract
-  );
-
-  const [arrowForward, setArrowForward] = useState();
-  const [arrowBack, setArrowBack] = useState();
-  const [selectedPage, setSelectedPage] = useState(1);
-
-  let numberOfAssetsOnPage = 4;
-  let elements = [];
-  let totalPages = 0;
-  let foundAssets = 0;
 
   return (
     <Box marginTop="1em">
@@ -70,7 +67,11 @@ function ContractsListCard({ contractItems }) {
                 _hover={{ cursor: "pointer" }}
                 variant="outline"
               >
-                <CardHeader marginLeft="-0.75em" paddingTop="0.6em" paddingBottom="0.6em">
+                <CardHeader
+                  marginLeft="-0.75em"
+                  paddingTop="0.6em"
+                  paddingBottom="0.6em"
+                >
                   <Flex>
                     <Heading
                       size="xs"
@@ -106,7 +107,7 @@ function ContractsListCard({ contractItems }) {
         </GridItem>
         <GridItem colSpan={9}>
           <Box>
-            <ContractsAssetsList selectedContractData={selectedContractData} />
+            <ContractsAssetsList selectedContract={selectedContract} />
           </Box>
         </GridItem>
       </Grid>

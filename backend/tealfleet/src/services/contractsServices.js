@@ -432,10 +432,10 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
     if (searchParams.searchValidity !== false) {
       if (searchParams.searchValidity == "Active") {
         queryText += ` AND c.contract_valid_to < CURRENT_DATE`;
-        queryParams.push(searchParams);
+
       } else if (searchParams.searchValidity == "Inactive") {
         queryText += ` AND c.contract_valid_to > CURRENT_DATE`;
-        queryParams.push(searchParams);
+
       }
     }
     if (searchParams.searchContractor !== false) {
