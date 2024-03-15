@@ -82,7 +82,7 @@ function ContractsListCard({ contractItems }) {
                       {contractItems.contract_no}
                     </Heading>
                     <Spacer />
-                    {contractItems.contract_valid === "true" ? (
+                    {contractItems.contract_status === "true" ? (
                       <CheckCircleIcon boxSize={4} color="teal" />
                     ) : (
                       <WarningTwoIcon boxSize={4} color="red.600" />
@@ -96,7 +96,7 @@ function ContractsListCard({ contractItems }) {
                     </Text>
                     <Box marginTop="0.2em">
                       <Text fontSize="sm" color="gray.600">
-                        Expires: {contractItems.contract_valid_to}
+                        Expires: {contractItems.contract_valid_to.split("T")[0]}
                       </Text>
                     </Box>
                   </CardBody>

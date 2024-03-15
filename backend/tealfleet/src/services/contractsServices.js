@@ -198,6 +198,7 @@ module.exports.swContractsGetByContractNo = async (identity, contract_no) => {
       JOIN software_catalog ON software_assets.software_catalog_id = software_catalog.software_catalog_id
       JOIN vendors ON software_catalog.vendor_id = vendors.vendor_id
       JOIN tenants ON software_assets.tenant_id = tenants.tenant_id
+      JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
       WHERE contracts.contract_no = $1; `,
         [contract_no]
       );
@@ -213,6 +214,7 @@ module.exports.swContractsGetByContractNo = async (identity, contract_no) => {
       JOIN software_catalog ON software_assets.software_catalog_id = software_catalog.software_catalog_id
       JOIN vendors ON software_catalog.vendor_id = vendors.vendor_id
       JOIN tenants ON software_assets.tenant_id = tenants.tenant_id
+      JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
       WHERE contracts.contract_no = $1 AND contracts.tenant_id = $2`,
         [contract_no, tenant_id]
       );
@@ -238,6 +240,7 @@ module.exports.hwContractsGetByContractNo = async (identity, contract_no) => {
         JOIN hardware_catalog ON hardware_assets.hardware_catalog_id = hardware_catalog.hardware_catalog_id
         JOIN vendors ON hardware_catalog.vendor_id = vendors.vendor_id
         JOIN tenants ON hardware_assets.tenant_id = tenants.tenant_id
+        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
         WHERE contracts.contract_no = $1;`,
         [contract_no]
       );
@@ -253,6 +256,7 @@ module.exports.hwContractsGetByContractNo = async (identity, contract_no) => {
         JOIN hardware_catalog ON hardware_assets.hardware_catalog_id = hardware_catalog.hardware_catalog_id
         JOIN vendors ON hardware_catalog.vendor_id = vendors.vendor_id
         JOIN tenants ON hardware_assets.tenant_id = tenants.tenant_id
+        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
         WHERE contracts.contract_no = $1 AND contracts.tenant_id = $2`,
         [contract_no, tenant_id]
       );
@@ -394,7 +398,6 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
     let queryText = `
     SELECT
     COUNT(*) OVER () AS total_count,
-
     c.contract_id,
     c.tenant_id,
     c.contract_type_id,
@@ -406,15 +409,25 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
     c.contract_valid_to,
     c.contract_changed_at,
     c.contract_created_at,
-
     tenants.tenant_id,
     tenants.is_root,
-    tenants.tenant_name
-
-    FROM contracts c
-    JOIN tenants ON c.tenant_id = tenants.tenant_id
-    JOIN contract_types ON c.contract_type_id = contract_types.contract_type_id
-    WHERE 1 = 1
+    tenants.tenant_name,
+    contract_types.contract_type_id,
+    contract_types.type,
+    contract_types.description,
+    CASE
+        WHEN c.contract_valid_to > CURRENT_DATE THEN 'true'
+        WHEN c.contract_valid_to <= CURRENT_DATE THEN 'false'
+        ELSE 'Unknown' -- Add an ELSE condition if needed
+    END AS contract_status
+    FROM 
+        contracts c
+    JOIN 
+        tenants ON c.tenant_id = tenants.tenant_id
+    JOIN 
+        contract_types ON c.contract_type_id = contract_types.contract_type_id
+    WHERE 
+    1 = 1
     `;
 
     const queryParams = []; // Array to hold query parameters
@@ -431,10 +444,10 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
     }
     if (searchParams.searchValidity !== false) {
       if (searchParams.searchValidity == "Active") {
-        queryText += ` AND c.contract_valid_to < CURRENT_DATE`;
+        queryText += ` AND c.contract_valid_to > CURRENT_DATE`;
 
       } else if (searchParams.searchValidity == "Inactive") {
-        queryText += ` AND c.contract_valid_to > CURRENT_DATE`;
+        queryText += ` AND c.contract_valid_to < CURRENT_DATE`;
 
       }
     }

@@ -292,10 +292,6 @@ module.exports.cSupportGetContracts = async (req, res) => {
       searchParams["searchOffset"] = 0;
     }
 
-
-    console.log(searchParams);
-
-
     const result = await supportGetContracts(identity, searchParams);
 
     if (result[0] && result[0].error) {

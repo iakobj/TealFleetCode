@@ -25,7 +25,10 @@ function ContractsFilter() {
   const loaderData = useLoaderData();
 
   const contractItems = loaderData.cItems.data;
+  const contractorsItems = loaderData.contractorsItems.data;
   const tenantItems = loaderData.tItems.data;
+
+  console.log(contractorsItems);
 
   const [offset, setOffset] = useState(0);
   const [tenant, setTenant] = useState();
@@ -201,15 +204,15 @@ function ContractsFilter() {
                 value={contractor}
                 onChange={(e) => handleChange(e.target.value, "contractor")}
               >
-                {contractItems &&
-                  contractItems
+                {contractorsItems &&
+                  contractorsItems
                     .filter((item) => item.contractor_name)
-                    .map((contractItems) => (
+                    .map((contractorsItems) => (
                       <option
-                        key={contractItems.contractor_name}
-                        value={contractItems.contractor_name}
+                        key={contractorsItems.contractor_name}
+                        value={contractorsItems.contractor_name}
                       >
-                        {contractItems.contractor_name}
+                        {contractorsItems.contractor_name}
                       </option>
                     ))}
               </Select>
@@ -291,7 +294,7 @@ function ContractsFilter() {
           </WrapItem>
           <Spacer />
           <WrapItem marginRight="1em" marginTop="0.2em">
-            <Text>Found {foundContracts} assets</Text>
+            <Text>Found {foundContracts} contracts</Text>
           </WrapItem>
         </Wrap>
       </Card>
