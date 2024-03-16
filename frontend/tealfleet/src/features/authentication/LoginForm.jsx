@@ -71,28 +71,25 @@ function LoginForm() {
   };
   return (
     <Card
+      bg="#fdfdfd"
       marginTop={"3em"}
       marginBottom="6em"
       borderRadius="0.6em 0.6em 0.6em 0.6em"
       variant="outline"
       width={{
         base: "22em",
-        sm: "25em",
-        md: "28em",
-        lg: "28em",
-        xl: "28em",
-        "2xl": "28em",
+        sm: "24em",
+        md: "24em",
+        lg: "24em",
+        xl: "24em",
+        "2xl": "24em",
       }}
     >
       <CardHeader
-        bg="#F4F7F4"
-        flex="1"
-        style={{ overflow: "hidden" }}
-        height="100%"
         borderRadius="0.6em 0.6em 0.0em 0.0em"
       >
         <Center>
-          <Heading fontWeight="600" margin={"0.5em"} size="xl" color={"teal.600"}>
+          <Heading fontWeight="500" margin={"0.5em"} size="lg" color={"teal.600"}>
             Login
           </Heading>
         </Center>
@@ -100,7 +97,7 @@ function LoginForm() {
       <form onSubmit={handleSubmit}>
         <CardBody>
           <Stack spacing="4">
-            <Box marginTop={"1.5em"}>
+            <Box>
               <Center>
                 <Input
                   placeholder="Email"

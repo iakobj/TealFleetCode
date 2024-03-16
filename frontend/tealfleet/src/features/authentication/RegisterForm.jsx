@@ -22,26 +22,22 @@ function RegisterForm() {
 
   return (
     <Card
+      bg="#fdfdfd"
       variant="outline"
       marginTop={"3em"}
       marginBottom="5em"
       width={{
-        base: "25em",
-        sm: "25em",
-        md: "28em",
-        lg: "28em",
-        xl: "28em",
-        "2xl": "28em",
+        base: "22em",
+        sm: "24em",
+        md: "24em",
+        lg: "24em",
+        xl: "24em",
+        "2xl": "24em",
       }}
     >
-      <CardHeader
-        bg="#F4F7F4"
-        flex="1"
-        style={{ overflow: "hidden" }}
-        height="100%"
-      >
+      <CardHeader>
         <Center>
-          <Heading margin={"0.5em"} size="xl" color={"teal.600"} fontWeight="600">
+          <Heading margin={"0.5em"} size="lg" color={"teal.600"} fontWeight="500">
             Request access
           </Heading>
         </Center>
@@ -49,7 +45,7 @@ function RegisterForm() {
 
       <CardBody>
         <Stack spacing="4">
-          <Box marginTop={"1.5em"}>
+          <Box>
             <Center>
               <Input
                 placeholder="Email"
