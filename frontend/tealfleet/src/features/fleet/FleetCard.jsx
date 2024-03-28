@@ -113,16 +113,17 @@ function FleetCard({ fleetCardItems }) {
         <Divider marginTop="0.2em" marginBottom="0.2em"/>
       </CardBody>
       <CardFooter>
-        <HStack spacing="0.3em">
+        <HStack spacing="0.5em">
           <IconButton
+            variant={'outline'}
             colorScheme="teal"
             size="xs"
             aria-label="Open Ticket"
             icon={<EmailIcon />}
           />
-          <Button colorScheme="teal" size="xs" leftIcon={<InfoOutlineIcon />}>
+          <IconButton colorScheme="teal" size="xs" variant={'outline'} icon={<InfoOutlineIcon />}>
             Details
-          </Button>
+          </IconButton>
         </HStack>
       </CardFooter>
     </Card>

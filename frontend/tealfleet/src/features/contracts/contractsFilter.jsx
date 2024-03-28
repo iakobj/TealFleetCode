@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useLoaderData, useSearchParams } from "react-router-dom";
 
 import ContractsListCard from "../../features/contracts/ContractsListCard";
+import AddNewContract from "../../features/contracts/AddNewContract";
 
 // Chakra-UI components
 import {
@@ -17,6 +18,15 @@ import {
   Hide,
   IconButton,
   Stack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
@@ -130,6 +140,9 @@ function ContractsFilter() {
     setContractor("");
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+
   return (
     <Box>
       <Hide breakpoint="(max-width: 17em)">
@@ -220,9 +233,10 @@ function ContractsFilter() {
             <Spacer />
             <WrapItem>
               <Spacer />
-              <Button size={"sm"} colorScheme={"teal"} marginRight="0.6em">
+              <Button onClick={onOpen} size={"sm"} colorScheme={"teal"} marginRight="0.6em">
                 New Contract
               </Button>
+              <AddNewContract isOpen={isOpen} onClose={onClose} />
             </WrapItem>
           </Wrap>
         </Card>

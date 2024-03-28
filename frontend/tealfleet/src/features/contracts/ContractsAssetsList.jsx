@@ -5,6 +5,15 @@ import { useState, useEffect } from "react";
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  Button,
   Card,
   CardHeader,
   CardBody,
@@ -26,6 +35,8 @@ import {
   Th,
   Td,
 } from "@chakra-ui/react";
+
+import { ChevronDownIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 function ContractsAssetsList({ selectedContract }) {
   const [contractAssets, setContractAssets] = useState([]);
@@ -58,46 +69,53 @@ function ContractsAssetsList({ selectedContract }) {
       >
         <CardHeader borderRadius="0.55em 0.55em 0em 0em" bg="#F4F7F4">
           <Flex>
-            <Heading fontWeight="500" color="gray.600" size="md">
-              {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0
-                ? contractAssets.data[0].contract_no
-                : "Nothing Selected"}
-            </Heading>
-            <Spacer />
             <Text fontWeight="500" color="gray.600">
-            {contractAssets &&
+              {contractAssets &&
               contractAssets.data &&
               contractAssets.data.length > 0
                 ? contractAssets.data[0].tenant_name
                 : "Nothing Selected"}
             </Text>
+            <Spacer />
+            <Menu>
+              <MenuButton as={Button} colorScheme='teal' variant='outline' size='sm' rightIcon={<ChevronDownIcon />}>
+              {contractAssets &&
+              contractAssets.data &&
+              contractAssets.data.length > 0
+                ? contractAssets.data[0].contract_no
+                : "Nothing Selected"}
+              </MenuButton>
+              <MenuList>
+                <MenuItem icon={<EditIcon />}>Edit Contract</MenuItem>
+                <MenuItem icon={<DeleteIcon />}>Delete Contract</MenuItem>
+              </MenuList>
+            </Menu>
           </Flex>
         </CardHeader>
 
         <CardBody bg="#F4F7F4" paddingBottom="1.2em">
           <Text color="gray.600" paddingBottom="0.4em">
-          {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0
-                ? contractAssets.data[0].contract_description
-                : "Nothing Selected"}
+            {contractAssets &&
+            contractAssets.data &&
+            contractAssets.data.length > 0
+              ? contractAssets.data[0].contract_description
+              : "Nothing Selected"}
           </Text>
 
           <Stack direction="row" marginTop="0.2em" marginBottom="0.2em">
-          {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0 ? (
+            {contractAssets &&
+            contractAssets.data &&
+            contractAssets.data.length > 0 ? (
               <Badge variant="solid" colorScheme="teal">
                 {contractAssets.data && contractAssets.data[0].type}
               </Badge>
             ) : null}
             {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0 ? (
+            contractAssets.data &&
+            contractAssets.data.length > 0 ? (
               <Badge variant="solid" colorScheme="teal">
-                SLA: {contractAssets.data && contractAssets.data[0].contract_sla}
+                SLA:{" "}
+                {contractAssets.data && contractAssets.data[0].contract_sla}
               </Badge>
             ) : null}
           </Stack>
@@ -109,9 +127,10 @@ function ContractsAssetsList({ selectedContract }) {
                   <Text fontWeight="500">Supported by:</Text>
                   <Text color="gray.600">
                     {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0 ?
-                      contractAssets.data[0].contractor_name : "Nothing Selected"}
+                    contractAssets.data &&
+                    contractAssets.data.length > 0
+                      ? contractAssets.data[0].contractor_name
+                      : "Nothing Selected"}
                   </Text>
                 </HStack>
               </Box>
@@ -123,18 +142,20 @@ function ContractsAssetsList({ selectedContract }) {
                   </Text>
                   <Text color="gray.600" marginRight="1em">
                     {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0 ? 
-                      contractAssets.data[0].contract_valid_from : "Nothing Selected"}
+                    contractAssets.data &&
+                    contractAssets.data.length > 0
+                      ? contractAssets.data[0].contract_valid_from
+                      : "Nothing Selected"}
                   </Text>
                   <Text fontWeight="500" color="gray.600">
                     Until:
                   </Text>
                   <Text color="gray.600">
-                  {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0 ? 
-                      contractAssets.data[0].contract_valid_to : "Nothing Selected"}
+                    {contractAssets &&
+                    contractAssets.data &&
+                    contractAssets.data.length > 0
+                      ? contractAssets.data[0].contract_valid_to
+                      : "Nothing Selected"}
                   </Text>
                 </HStack>
               </Box>
@@ -158,8 +179,10 @@ function ContractsAssetsList({ selectedContract }) {
               <TableCaption>
                 Assets covered in
                 {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0 ?  contractAssets.data[0].contract_no : "Nothing Selected"}
+                contractAssets.data &&
+                contractAssets.data.length > 0
+                  ? contractAssets.data[0].contract_no
+                  : "Nothing Selected"}
               </TableCaption>
               <Thead>
                 <Tr>
