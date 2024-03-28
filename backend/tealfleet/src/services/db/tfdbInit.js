@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS "software_assets" (
   "software_asset_name" varchar NOT NULL,
   "tenant_id" uuid NOT NULL,
   "site_id" uuid NOT NULL,
+  "software_license" varchar,
   "software_changed_at" timestamp NOT NULL,
   "software_created_at" timestamp DEFAULT (now())
 );
@@ -116,6 +117,7 @@ CREATE TABLE IF NOT EXISTS "hardware_assets" (
   "hardware_asset_name" varchar NOT NULL,
   "tenant_id" uuid NOT NULL,
   "site_id" uuid NOT NULL,
+  "hardware_license" varchar,
   "hardware_serial_no" varchar NOT NULL,
   "hardware_changed_at" timestamp NOT NULL,
   "hardware_created_at" timestamp DEFAULT (now())
