@@ -22,7 +22,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 
-import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon, AddIcon } from "@chakra-ui/icons";
 
 function FleetFilter() {
   const loaderData = useLoaderData();
@@ -289,7 +289,7 @@ function FleetFilter() {
             <Spacer />
             <WrapItem marginRight="0.5em">
               <Spacer marginRight="0.5em" />
-              <Button size={"sm"} colorScheme={"teal"}>
+              <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"}>
                 New Asset
               </Button>
             </WrapItem>

@@ -29,7 +29,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon, AddIcon } from "@chakra-ui/icons";
 
 function ContractsFilter() {
   const loaderData = useLoaderData();
@@ -233,7 +233,7 @@ function ContractsFilter() {
             <Spacer />
             <WrapItem>
               <Spacer />
-              <Button onClick={onOpen} size={"sm"} colorScheme={"teal"} marginRight="0.6em">
+              <Button leftIcon={<AddIcon />} onClick={onOpen} size={"sm"} colorScheme={"teal"} marginRight="0.6em">
                 New Contract
               </Button>
               <AddNewContract isOpen={isOpen} onClose={onClose} />
