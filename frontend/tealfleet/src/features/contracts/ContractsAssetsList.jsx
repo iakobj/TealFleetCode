@@ -36,7 +36,7 @@ import {
   Td,
 } from "@chakra-ui/react";
 
-import { ChevronDownIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons'
+import { ChevronDownIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 function ContractsAssetsList({ selectedContract }) {
   const [contractAssets, setContractAssets] = useState([]);
@@ -78,12 +78,18 @@ function ContractsAssetsList({ selectedContract }) {
             </Text>
             <Spacer />
             <Menu>
-              <MenuButton as={Button} colorScheme='teal' variant='outline' size='sm' rightIcon={<ChevronDownIcon />}>
-              {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0
-                ? contractAssets.data[0].contract_no
-                : "Nothing Selected"}
+              <MenuButton
+                as={Button}
+                colorScheme="teal"
+                variant="outline"
+                size="sm"
+                rightIcon={<ChevronDownIcon />}
+              >
+                {contractAssets &&
+                contractAssets.data &&
+                contractAssets.data.length > 0
+                  ? contractAssets.data[0].contract_no
+                  : "Nothing Selected"}
               </MenuButton>
               <MenuList>
                 <MenuItem icon={<EditIcon />}>Edit Contract</MenuItem>
@@ -177,12 +183,18 @@ function ContractsAssetsList({ selectedContract }) {
               }}
             >
               <TableCaption>
-                Assets covered in
-                {contractAssets &&
-                contractAssets.data &&
-                contractAssets.data.length > 0
-                  ? contractAssets.data[0].contract_no
-                  : "Nothing Selected"}
+                <HStack>
+                  <Spacer />
+                  <Text>Assets covered in</Text>
+                  <Text>
+                    {contractAssets &&
+                    contractAssets.data &&
+                    contractAssets.data.length > 0
+                      ? contractAssets.data[0].contract_no
+                      : "Nothing Selected"}
+                  </Text>
+                  <Spacer />
+                </HStack>
               </TableCaption>
               <Thead>
                 <Tr>

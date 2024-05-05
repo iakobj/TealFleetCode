@@ -8,7 +8,7 @@
  *        data:
  *         type: array
  *         items:
- *          type: object 
+ *          type: object
  *          example:
  *            "sw_asset_contract_id": "1a2b3c4d-5e6f-7a8b-9c0d-012345678901"
  *            "software_asset_id": "1a2b3c4d-b8b8-a8a8-a1a8-012345678901"
@@ -39,11 +39,11 @@
  *     contracts_name_404:
  *       type: string
  *       example: The role was not found, invalid input syntax for type name ACMEs
- * 
+ *
  * tags:
  *   name: contracts
  *   description: Contracts and related contract information
- * 
+ *
  * /contracts/numbers:
  *   get:
  *     summary: Get number of all contracts
@@ -81,7 +81,7 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/contracts_404'
- * 
+ *
  * /contracts/tenant/{tenant}:
  *   get:
  *     summary: Get contracts by tenant id
@@ -105,7 +105,7 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/contracts_id_404'
- * 
+ *
  * /contracts/numbers/{contract_no}:
  *   get:
  *     summary: Get all contracts by contract number
@@ -129,7 +129,7 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/contracts_name_404'
- * 
+ *
  * /contracts/all/hardware:
  *   get:
  *     summary: Get all hardware contracts
@@ -169,33 +169,43 @@
  *
  */
 
- const express = require("express");
- const contractsRouters = express.Router();
- 
- const {
-    cContractsGetAll,
-    cContractsGetAllNo,
-    cContractsGetByTenant,
-    cHwContractsGetAll,
-    cSwContractsGetAll,
-    cContractsGetByContractNo,
-    cHwContractsGetNo,
-    cSwContractsGetNo,
-    cSupportGetContracts
- } = require("../controllers/contractsControllers");
- 
- contractsRouters.get("/", cContractsGetAll);
- contractsRouters.get("/numbers", cContractsGetAllNo);
- contractsRouters.get("/tenant/:tenant", cContractsGetByTenant);
- contractsRouters.get("/all/hardware", cHwContractsGetAll);
- contractsRouters.get("/all/software", cSwContractsGetAll);
- 
- contractsRouters.get("/numbers/hardware", cHwContractsGetNo);
- contractsRouters.get("/numbers/software", cSwContractsGetNo);
+const express = require("express");
+const contractsRouters = express.Router();
+const bodyParser = require("body-parser");
 
- contractsRouters.get("/numbers/:contract_no", cContractsGetByContractNo);
+contractsRouters.use(express.urlencoded({ extended: true }));
+contractsRouters.use(bodyParser.json());
 
- contractsRouters.get("/all/:filter?", cSupportGetContracts);
- 
- module.exports = contractsRouters;
- 
+const {
+  cContractsGetAll,
+  cContractsGetAllNo,
+  cContractsGetByTenant,
+  cHwContractsGetAll,
+  cSwContractsGetAll,
+  cContractsGetByContractNo,
+  cHwContractsGetNo,
+  cSwContractsGetNo,
+  cSupportGetContracts,
+  cContractsGetAllContractTypes,
+
+  cContractsPostAdd,
+} = require("../controllers/contractsControllers");
+
+contractsRouters.get("/", cContractsGetAll);
+contractsRouters.get("/numbers", cContractsGetAllNo);
+contractsRouters.get("/tenant/:tenant", cContractsGetByTenant);
+contractsRouters.get("/all/hardware", cHwContractsGetAll);
+contractsRouters.get("/all/software", cSwContractsGetAll);
+
+contractsRouters.get("/numbers/hardware", cHwContractsGetNo);
+contractsRouters.get("/numbers/software", cSwContractsGetNo);
+
+contractsRouters.get("/numbers/:contract_no", cContractsGetByContractNo);
+
+contractsRouters.get("/types", cContractsGetAllContractTypes);
+
+contractsRouters.get("/all/:filter?", cSupportGetContracts);
+
+contractsRouters.post("/add", cContractsPostAdd);
+
+module.exports = contractsRouters;

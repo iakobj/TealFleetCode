@@ -167,15 +167,15 @@ VALUES
   ('66666666-1234-5678-9999-a11122678952', '55555555-8b8b-8b8b-8b8b-012345678906', 'PA-5410', 'PA-5410', '/images/vendors/paloalto/PA-5410.png', '2022-01-01', '2025-01-01', '2025-12-31', NOW()),
   ('66666666-1234-5678-9999-a11122678953', '55555555-8b8b-8b8b-8b8b-012345678906', 'PA-5420', 'PA-5420', '/images/vendors/paloalto/PA-5410.png', '2022-02-01', '2024-02-01', '2024-12-31', NOW());
   
-INSERT INTO "contract_types" ("contract_type_id", "type", "description")
+INSERT INTO "contract_types" ("contract_type_id", "tenant_id", "type", "description")
 VALUES
-  ('77777777-cccc-1111-cc11-012345678901', 'Regular Support', 'Support during bussiness hours'),
-  ('77777777-cccc-1111-cc11-012345678902', 'Non-Stop Support', 'Support 24/7/365'),
-  ('77777777-cccc-1111-cc11-012345678903', 'Break-Fix', 'Break Fix only'),
-  ('77777777-cccc-1111-cc12-012345678904', 'Support+', 'Maintenance and Support'),
-  ('77777777-cccc-1111-cc11-012345678905', 'Professional', 'Professional Services'),
-  ('77777777-cccc-1111-cc12-012345678906', 'Waranty', '1 year standard waranty'),
-  ('77777777-cccc-1111-cc12-012345678907', 'Extended Waranty', 'Extended Waranty');
+  ('77777777-cccc-1111-cc11-012345678901', '11111111-4cbb-2a1d-1f9a-012345678902', 'Regular Support', 'Support during bussiness hours'),
+  ('77777777-cccc-1111-cc11-012345678902', '11111111-4cbb-2a1d-1f9a-012345678902', 'Non-Stop Support', 'Support 24/7/365'),
+  ('77777777-cccc-1111-cc11-012345678903', '11111111-4cbb-2a1d-1f9a-012345678902', 'Break-Fix', 'Break Fix only'),
+  ('77777777-cccc-1111-cc12-012345678904', '11111111-4cbb-2a1d-1f9a-012345678902', 'Support+', 'Maintenance and Support'),
+  ('77777777-cccc-1111-cc11-012345678905', '11111111-4cbb-2a1d-1f9a-012345678901', 'Professional', 'Professional Services'),
+  ('77777777-cccc-1111-cc12-012345678906', '11111111-4cbb-2a1d-1f9a-012345678901', 'Waranty', '1 year standard waranty'),
+  ('77777777-cccc-1111-cc12-012345678907', '11111111-4cbb-2a1d-1f9a-012345678901', 'Extended Waranty', 'Extended Waranty');
 
 INSERT INTO "alerts" ("alert_id", "tenant_id", "alert_type_id", "asset_id", "title", "description", "dismissed")
 VALUES

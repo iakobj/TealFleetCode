@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS "contracts" (
 
 CREATE TABLE IF NOT EXISTS "contract_types" (
   "contract_type_id" uuid PRIMARY KEY,
+  "tenant_id" uuid NOT NULL,
   "type" varchar NOT NULL,
   "description" text NOT NULL,
   "created_at" timestamp DEFAULT (now())

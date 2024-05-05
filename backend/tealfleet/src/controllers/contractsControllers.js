@@ -10,9 +10,14 @@ const {
   swContractsGetAll,
   swContractsGetByContractNo,
   swContractsGetNo,
+  contractsGetAllContractTypes,
+
+  contractsPostAdd
 } = require("../services/contractsServices");
 
 const { checkIdentity } = require("../middlewares/identity");
+
+const Joi = require("joi");
 
 module.exports.cContractsGetAll = async (req, res) => {
   try {
@@ -258,7 +263,6 @@ module.exports.cSwContractsGetNo = async (req, res) => {
   }
 };
 
-
 module.exports.cSupportGetContracts = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
@@ -271,22 +275,42 @@ module.exports.cSupportGetContracts = async (req, res) => {
 
     let searchParams = {};
 
-    if (searchTenant && searchTenant != '' && searchTenant != 'null' && searchTenant != 'undefined') {
+    if (
+      searchTenant &&
+      searchTenant != "" &&
+      searchTenant != "null" &&
+      searchTenant != "undefined"
+    ) {
       searchParams["searchTenant"] = searchTenant;
     } else {
       searchParams["searchTenant"] = false;
     }
-    if (searchValidity && searchValidity != '' && searchValidity != 'null' && searchValidity != 'undefined') {
+    if (
+      searchValidity &&
+      searchValidity != "" &&
+      searchValidity != "null" &&
+      searchValidity != "undefined"
+    ) {
       searchParams["searchValidity"] = searchValidity;
     } else {
       searchParams["searchValidity"] = false;
     }
-    if (searchContractor && searchContractor != '' && searchContractor != 'null' && searchContractor != 'undefined') {
+    if (
+      searchContractor &&
+      searchContractor != "" &&
+      searchContractor != "null" &&
+      searchContractor != "undefined"
+    ) {
       searchParams["searchContractor"] = searchContractor;
     } else {
       searchParams["searchContractor"] = false;
     }
-    if (searchOffset && searchOffset != '' && searchOffset != 'null' && searchOffset != 'undefined') {
+    if (
+      searchOffset &&
+      searchOffset != "" &&
+      searchOffset != "null" &&
+      searchOffset != "undefined"
+    ) {
       searchParams["searchOffset"] = searchOffset;
     } else {
       searchParams["searchOffset"] = 0;
@@ -301,5 +325,73 @@ module.exports.cSupportGetContracts = async (req, res) => {
     }
   } catch (error) {
     res.status(404).send({ data: [{ error }] });
+  }
+};
+
+
+module.exports.cContractsGetAllContractTypes = async (req, res) => {
+  try {
+    const identity = await checkIdentity(req);
+    const result = await contractsGetAllNo(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
+  }
+};
+
+module.exports.cContractsPostAdd = async (req, res) => {
+  try {
+    const identity = await checkIdentity(req);
+
+    let { contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = req.body;
+
+    const data = {
+      contract_no: contract_no,
+      contract_type_id: contract_type_id,
+      contractor_name: contractor_name,
+      contract_sla: contract_sla,
+      tenant_id: tenant_id,
+      contract_valid_from: contract_valid_from,
+      contract_valid_to: contract_valid_to,
+      contract_description: contract_description,
+    };
+
+    for (const key in data) {
+      if (data[key] == "") {
+        data[key] = undefined;
+      }
+    }
+
+    const schema = Joi.object({
+      contract_no: Joi.string().alphanum().required(),
+      contract_type_id: Joi.string().alphanum().optional(),
+      contractor_name: Joi.string().alphanum().required(),
+      contract_sla: Joi.string().alphanum().optional(),
+      tenant_id: Joi.string().alphanum().required(),
+      contract_valid_from: Joi.date().required(),
+      contract_valid_to: Joi.date().required(),
+      contract_description: Joi.string().alphanum().optional(),
+    });
+
+    const validation = await schema.validate(data);
+
+    if (validation.error) {
+      res.status(400).send({ error: validation.error.details[0].message });
+      return; 
+    } else {
+      const result = await contractsPostAdd(data);
+
+      res.status(200).send( "New contract was successefuly added" );
+      return; 
+    }
+
+
+  } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
   }
 };

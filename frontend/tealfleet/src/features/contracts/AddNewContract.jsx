@@ -1,3 +1,6 @@
+import * as React from "react";
+import { useState, useEffect } from "react";
+
 import {
   Modal,
   ModalOverlay,
@@ -21,55 +24,124 @@ import {
   HStack,
 } from "@chakra-ui/react";
 
+import { useToast } from '@chakra-ui/react'
+
 import { CloseIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+
+// import location of the API server
+import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 function AddNewContract({ isOpen, onClose }) {
+
+  const [contractType, setContractType] = useState([]);
+  const formDataLoader = async () => {
+    try {
+      const Contract = await fetch(
+        `http://${API_ENDPOINT}/contracts/numbers/${selectedContract}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+
+      const assets = await contractAssets.json();
+      setContractAssets(assets);
+    } catch (error) {
+      console.error("Error loading asset data:", error);
+    }
+  };
+
+  useEffect(() => {
+    formDataLoader();
+  }, []);
+
+  const toast = useToast();
+
   const formik = useFormik({
     initialValues: {
       contract_no: "",
-      contractor: "",
-      sla: "",
-      tenant: "",
-      contractor: "",
-      contract_start: "",
-      contract_end: "",
+      contract_type_id: "",
+      contract_sla: "",
+      tenant_id: "",
+      contractor_name: "",
+      contract_valid_from: "",
+      contract_valid_to: "",
       contract_description: "",
     },
 
     validationSchema: Yup.object({
       contract_no: Yup.string().required("Required"),
-      contractor: Yup.string().required("Required"),
-      sla: Yup.string(),
-      tenant: Yup.string().required("Required"),
-      contractor: Yup.string().required("Required"),
-      contract_start: Yup.string().required("Required"),
-      contract_end: Yup.string().required("Required"),
+      contract_type_id: Yup.string().required("Required"),
+      contract_sla: Yup.string(),
+      tenant_id: Yup.string().required("Required"),
+      contractor_name: Yup.string().required("Required"),
+      contract_valid_from: Yup.date().required("Required"),
+      contract_valid_to: Yup.date().required("Required"),
       contract_description: Yup.string(),
     }),
 
-    onSubmit: (values) => {
+    onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
-    },
+
+      const newContract = JSON.stringify(values, null, 2);
+      try {
+        fetch(`http://${API_ENDPOINT}/contracts/add`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: newContract,
+          }
+        ).then(async (response) => {
+          if (response.status == 200) {
+            toast({
+              title: 'Contract added',
+              description: "New contract was successefuly added",
+              status: "success",
+              position: "bottom",
+              variant: "subtle"
+            });
+          } else {
+            const responseData = await response.json();
+            console.log(responseData);
+            const errorMessage = responseData.error;
+
+            toast({
+              title: 'Error',
+              description: errorMessage,
+              status: "error",
+              position: "bottom",
+              variant: "subtle"
+            });
+          }
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+
   });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
-      <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(5px)" />
+      <ModalOverlay bg="blackAlpha.300" />
       <ModalContent>
         <ModalHeader>Create new contract</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={formik.handleSubmit}>
-        <ModalBody>
+          <ModalBody>
             <FormControl isRequired>
-              <FormLabel>Contract Number</FormLabel>
+              <FormLabel>Contract Name</FormLabel>
               <Input
                 id="contract_no"
                 name="contract_no"
                 type="contract_no"
-                placeholder="Contract Number"
+                placeholder="Contract name"
                 focusBorderColor="teal.600"
                 onChange={formik.handleChange}
                 value={formik.values.contract_no}
@@ -80,58 +152,79 @@ function AddNewContract({ isOpen, onClose }) {
               ) : null}
             </FormControl>
 
+            <FormControl>
+              <FormLabel marginTop="1.2em">Contract type</FormLabel>
+              <Select
+                id="contract_type_id"
+                name="contract_type_id"
+                type="text"
+                placeholder="Select contract type"
+                focusBorderColor="teal.600"
+                onChange={formik.handleChange}
+                value={formik.values.tenant_id}
+                {...formik.getFieldProps("contract_type_id")}
+              >
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+              </Select>
+
+              {formik.touched.contract_type_id && formik.errors.contract_type_id ? (
+                <div>{formik.errors.contract_type_id}</div>
+              ) : null}
+            </FormControl>
+
             <FormControl isRequired>
               <FormLabel marginTop="1.2em">Contractor Name</FormLabel>
               <Input
-                id="contractor"
-                name="contractor"
+                id="contractor_name"
+                name="contractor_name"
                 type="text"
                 placeholder="Contractor Name"
                 focusBorderColor="teal.600"
                 onChange={formik.handleChange}
-                value={formik.values.contractor}
-                {...formik.getFieldProps("contractor")}
+                value={formik.values.contractor_name}
+                {...formik.getFieldProps("contractor_name")}
               />
-              {formik.touched.contractor && formik.errors.contractor ? (
-                <div>{formik.errors.contractor}</div>
+              {formik.touched.contractor_name && formik.errors.contractor_name ? (
+                <div>{formik.errors.contractor_name}</div>
               ) : null}
             </FormControl>
             <FormControl>
               <FormLabel marginTop="1.2em">Service Level Agreement</FormLabel>
               <Input
-                id="sla"
-                name="sla"
+                id="contract_sla"
+                name="contract_sla"
                 type="text"
                 placeholder="Service Level Agreement"
                 focusBorderColor="teal.600"
                 onChange={formik.handleChange}
-                value={formik.values.sla}
-                {...formik.getFieldProps("sla")}
+                value={formik.values.contract_sla}
+                {...formik.getFieldProps("contract_sla")}
               />
-              {formik.touched.sla && formik.errors.sla ? (
-                <div>{formik.errors.sla}</div>
+              {formik.touched.contract_sla && formik.errors.contract_sla ? (
+                <div>{formik.errors.contract_sla}</div>
               ) : null}
             </FormControl>
             <FormControl isRequired>
               <FormLabel marginTop="1.2em">Tenant</FormLabel>
               <Select
-                id="tenant"
-                name="tenant"
+                id="tenant_id"
+                name="tenant_id"
                 type="text"
-                placeholder="Select Tenant"
+                placeholder="Select tenant"
                 focusBorderColor="teal.600"
                 onChange={formik.handleChange}
-                value={formik.values.tenant}
-                {...formik.getFieldProps("tenant")}
+                value={formik.values.tenant_id}
+                {...formik.getFieldProps("tenant_id")}
               >
-                <option value='option1'>Option 1</option>
-                <option value='option2'>Option 2</option>
-                <option value='option3'>Option 3</option>
-                </Select>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+              </Select>
 
-
-              {formik.touched.tenant && formik.errors.tenant ? (
-                <div>{formik.errors.tenant}</div>
+              {formik.touched.tenant_id && formik.errors.tenant_id ? (
+                <div>{formik.errors.tenant_id}</div>
               ) : null}
             </FormControl>
 
@@ -140,17 +233,17 @@ function AddNewContract({ isOpen, onClose }) {
                 <FormControl isRequired>
                   <FormLabel marginTop="1.2em">Contract Start Date</FormLabel>
                   <Input
-                    id="contract_start"
-                    name="contract_start"
+                    id="contract_valid_from"
+                    name="contract_valid_from"
                     type="date"
                     focusBorderColor="teal.600"
                     onChange={formik.handleChange}
-                    value={formik.values.contract_start}
-                    {...formik.getFieldProps("contract_start")}
+                    value={formik.values.contract_valid_from}
+                    {...formik.getFieldProps("contract_valid_from")}
                   />
-                  {formik.touched.contract_start &&
-                  formik.errors.contract_start ? (
-                    <div>{formik.errors.contract_start}</div>
+                  {formik.touched.contract_valid_from &&
+                  formik.errors.contract_valid_from ? (
+                    <div>{formik.errors.contract_valid_from}</div>
                   ) : null}
                 </FormControl>
               </Box>
@@ -159,16 +252,16 @@ function AddNewContract({ isOpen, onClose }) {
                 <FormControl isRequired>
                   <FormLabel marginTop="1.2em">Contract End Date</FormLabel>
                   <Input
-                    id="contract_end"
-                    name="contract_end"
+                    id="contract_valid_to"
+                    name="contract_valid_to"
                     type="date"
                     focusBorderColor="teal.600"
                     onChange={formik.handleChange}
-                    value={formik.values.contract_end}
-                    {...formik.getFieldProps("contract_end")}
+                    value={formik.values.contract_valid_to}
+                    {...formik.getFieldProps("contract_valid_to")}
                   />
-                  {formik.touched.contract_end && formik.errors.contract_end ? (
-                    <div>{formik.errors.contract_end}</div>
+                  {formik.touched.contract_valid_to && formik.errors.contract_valid_to ? (
+                    <div>{formik.errors.contract_valid_to}</div>
                   ) : null}
                 </FormControl>
               </Box>
@@ -191,23 +284,27 @@ function AddNewContract({ isOpen, onClose }) {
                 <div>{formik.errors.contract_description}</div>
               ) : null}
             </FormControl>
-          
-        </ModalBody>
+          </ModalBody>
 
-        <ModalFooter marginTop="3em">
-          <Button
-            leftIcon={<CloseIcon />}
-            size="sm"
-            variant="ghost"
-            mr={3}
-            onClick={onClose}
-          >
-            Close
-          </Button>
-          <Button type="submit" rightIcon={<ArrowForwardIcon />} size="sm" colorScheme="teal">
-            Next
-          </Button>
-        </ModalFooter>
+          <ModalFooter marginTop="3em">
+            <Button
+              leftIcon={<CloseIcon />}
+              size="sm"
+              variant="ghost"
+              mr={3}
+              onClick={onClose}
+            >
+              Close
+            </Button>
+            <Button
+              type="submit"
+              rightIcon={<ArrowForwardIcon />}
+              size="sm"
+              colorScheme="teal"
+            >
+              Submit
+            </Button>
+          </ModalFooter>
         </form>
       </ModalContent>
     </Modal>

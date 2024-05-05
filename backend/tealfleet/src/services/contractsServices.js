@@ -474,3 +474,84 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
     return [{ error: error }];
   }
 };
+
+//TODO
+module.exports.contractsGetAllContractTypes = async (identity) => {
+  try {
+    const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
+
+    if (tenant_root == true && mock_tenant_id == undefined) {
+      const result = await query(`
+        SELECT * 
+        FROM contracts_types
+        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
+        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id;
+      `);
+      return result.rows;
+    } else if (tenant_root == true && mock_tenant_id) {
+      const result = await query(
+        `
+        SELECT * 
+        FROM contracts_types
+        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
+        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
+        WHERE contracts.tenant_id = $1`,
+        [mock_tenant_id]
+      );
+      return result.rows;
+    } else {
+      const result = await query(
+        `
+        SELECT * 
+        FROM contracts_types
+        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
+        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
+        WHERE contracts.tenant_id = $1`,
+        [tenant_id]
+      );
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
+
+module.exports.contractsPostAdd = async (data) => {
+
+  console.log("service data:")
+  console.log(data);
+
+  let { contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = data;
+
+  try {
+    const result = await query(`
+      INSERT INTO 
+        contracts (
+          contract_id, 
+          tenant_id, 
+          contract_type_id, 
+          contractor_name, 
+          contract_sla, 
+          contract_no, 
+          contract_description,
+          contract_valid_from,
+          contract_valid_to,
+          contract_created_at
+        ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`, [
+        gen_random_uuid(), 
+        tenant_id, 
+        contract_type_id, 
+        contractor_name, 
+        contract_sla, 
+        contract_no, 
+        contract_description,
+        contract_valid_from,
+        contract_valid_to,
+        new Date()]);
+  
+    
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
