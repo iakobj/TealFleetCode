@@ -483,19 +483,15 @@ module.exports.contractsGetAllContractTypes = async (identity) => {
     if (tenant_root == true && mock_tenant_id == undefined) {
       const result = await query(`
         SELECT * 
-        FROM contracts_types
-        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
-        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id;
+        FROM contract_types;
       `);
       return result.rows;
     } else if (tenant_root == true && mock_tenant_id) {
       const result = await query(
         `
         SELECT * 
-        FROM contracts_types
-        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
-        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
-        WHERE contracts.tenant_id = $1`,
+        FROM contract_types
+        WHERE tenant_id = $1;`,
         [mock_tenant_id]
       );
       return result.rows;
@@ -503,10 +499,8 @@ module.exports.contractsGetAllContractTypes = async (identity) => {
       const result = await query(
         `
         SELECT * 
-        FROM contracts_types
-        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
-        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
-        WHERE contracts.tenant_id = $1`,
+        FROM contract_types
+        WHERE tenant_id = $1;`,
         [tenant_id]
       );
       return result.rows;
@@ -523,6 +517,9 @@ module.exports.contractsPostAdd = async (data) => {
 
   let { contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = data;
 
+  let contract_valid_from_date = new Date(contract_valid_from);
+  let contract_valid_to_date = new Date(contract_valid_to);
+
   try {
     const result = await query(`
       INSERT INTO 
@@ -536,22 +533,23 @@ module.exports.contractsPostAdd = async (data) => {
           contract_description,
           contract_valid_from,
           contract_valid_to,
+          contract_changed_at,
           contract_created_at
         ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`, [
-        gen_random_uuid(), 
+      VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7, $8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`, [
         tenant_id, 
         contract_type_id, 
         contractor_name, 
         contract_sla, 
         contract_no, 
         contract_description,
-        contract_valid_from,
-        contract_valid_to,
-        new Date()]);
+        contract_valid_from_date,
+        contract_valid_to_date,
+      ]);
   
     
   } catch (error) {
+    console.log(error);
     return [{ error: error }];
   }
 };

@@ -332,7 +332,7 @@ module.exports.cSupportGetContracts = async (req, res) => {
 module.exports.cContractsGetAllContractTypes = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
-    const result = await contractsGetAllNo(identity);
+    const result = await contractsGetAllContractTypes(identity);
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });
@@ -369,10 +369,10 @@ module.exports.cContractsPostAdd = async (req, res) => {
 
     const schema = Joi.object({
       contract_no: Joi.string().alphanum().required(),
-      contract_type_id: Joi.string().alphanum().optional(),
+      contract_type_id: Joi.string().guid().optional(),
       contractor_name: Joi.string().alphanum().required(),
       contract_sla: Joi.string().alphanum().optional(),
-      tenant_id: Joi.string().alphanum().required(),
+      tenant_id: Joi.string().guid().required(),
       contract_valid_from: Joi.date().required(),
       contract_valid_to: Joi.date().required(),
       contract_description: Joi.string().alphanum().optional(),

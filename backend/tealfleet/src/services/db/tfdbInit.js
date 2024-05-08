@@ -1,5 +1,7 @@
 module.exports.tfdbInit = `
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE IF NOT EXISTS "tenants" (
   "tenant_id" uuid PRIMARY KEY,
   "is_root" boolean NOT NULL,

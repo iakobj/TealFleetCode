@@ -36,28 +36,45 @@ import * as Yup from "yup";
 
 function AddNewContract({ isOpen, onClose }) {
 
-  const [contractType, setContractType] = useState([]);
+  const [contractTypes, setContractTypes] = useState([]);
+  const [tenants, setTenants] = useState([]);
   const formDataLoader = async () => {
     try {
-      const Contract = await fetch(
-        `http://${API_ENDPOINT}/contracts/numbers/${selectedContract}`,
+      const getContractTypes = await fetch(
+        `http://${API_ENDPOINT}/contracts/types`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const getTenants = await fetch(
+        `http://${API_ENDPOINT}/tenants`,
         {
           method: "GET",
           credentials: "include",
         }
       );
 
+      const contractTypes = await getContractTypes.json();
+      const tenants = await getTenants.json();
 
-      const assets = await contractAssets.json();
-      setContractAssets(assets);
+      setContractTypes(contractTypes);
+      setTenants(tenants);
+
+      console.log("contractTypes");
+      console.log(contractTypes);
+      console.log("tenants");
+      console.log(tenants);
+
     } catch (error) {
-      console.error("Error loading asset data:", error);
+      console.error("Error loading form data:", error);
     }
   };
 
   useEffect(() => {
     formDataLoader();
   }, []);
+
 
   const toast = useToast();
 
@@ -164,11 +181,11 @@ function AddNewContract({ isOpen, onClose }) {
                 value={formik.values.tenant_id}
                 {...formik.getFieldProps("contract_type_id")}
               >
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+                {contractTypes.data &&
+                  contractTypes.data.map((data) => (
+	                  <option key={data.contract_type_id} value={data.contract_type_id}> {data.type} </option>
+                ))}
               </Select>
-
               {formik.touched.contract_type_id && formik.errors.contract_type_id ? (
                 <div>{formik.errors.contract_type_id}</div>
               ) : null}
@@ -218,10 +235,11 @@ function AddNewContract({ isOpen, onClose }) {
                 value={formik.values.tenant_id}
                 {...formik.getFieldProps("tenant_id")}
               >
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-              </Select>
+                {tenants.data &&
+                  tenants.data.map((data) => (
+	                  <option key={data.tenant_id} value={data.tenant_id}> {data.tenant_name} </option>
+                ))}
+                </Select>
 
               {formik.touched.tenant_id && formik.errors.tenant_id ? (
                 <div>{formik.errors.tenant_id}</div>
