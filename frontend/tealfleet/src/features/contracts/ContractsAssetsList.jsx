@@ -5,27 +5,10 @@ import { useState, useEffect } from "react";
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Button,
   Card,
-  CardHeader,
   CardBody,
   Box,
   Text,
-  Heading,
-  HStack,
-  Stack,
-  Badge,
-  Flex,
-  Spacer,
-  Divider,
   TableContainer,
   TableCaption,
   Table,
@@ -36,10 +19,11 @@ import {
   Td,
 } from "@chakra-ui/react";
 
-import { ChevronDownIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import ContractsAssetsListHeader from "./ContractsAssetsListHeader";
 
 function ContractsAssetsList({ selectedContract }) {
   const [contractAssets, setContractAssets] = useState([]);
+
   const AssetsDataLoader = async (selectedContract) => {
     try {
       const contractAssets = await fetch(
@@ -62,113 +46,15 @@ function ContractsAssetsList({ selectedContract }) {
 
   return (
     <Box>
+
+      <ContractsAssetsListHeader selectedContract={selectedContract} />
+
       <Card
         bg="#FDFDFD"
         variant="outline"
         borderRadius="0.6em 0.6em 0.6em 0.6em"
+        marginTop="0.75em"
       >
-        <CardHeader borderRadius="0.55em 0.55em 0em 0em" bg="#F4F7F4">
-          <Flex>
-            <Text fontWeight="500" color="gray.600">
-              {contractAssets &&
-              contractAssets.data &&
-              contractAssets.data.length > 0
-                ? contractAssets.data[0].tenant_name
-                : "Nothing Selected"}
-            </Text>
-            <Spacer />
-            <Menu>
-              <MenuButton
-                as={Button}
-                colorScheme="teal"
-                variant="outline"
-                size="sm"
-                rightIcon={<ChevronDownIcon />}
-              >
-                {contractAssets &&
-                contractAssets.data &&
-                contractAssets.data.length > 0
-                  ? contractAssets.data[0].contract_no
-                  : "Nothing Selected"}
-              </MenuButton>
-              <MenuList>
-                <MenuItem icon={<EditIcon />}>Edit Contract</MenuItem>
-                <MenuItem icon={<DeleteIcon />}>Delete Contract</MenuItem>
-              </MenuList>
-            </Menu>
-          </Flex>
-        </CardHeader>
-
-        <CardBody bg="#F4F7F4" paddingBottom="1.2em">
-          <Text color="gray.600" paddingBottom="0.4em">
-            {contractAssets &&
-            contractAssets.data &&
-            contractAssets.data.length > 0
-              ? contractAssets.data[0].contract_description
-              : "Nothing Selected"}
-          </Text>
-
-          <Stack direction="row" marginTop="0.2em" marginBottom="0.2em">
-            {contractAssets &&
-            contractAssets.data &&
-            contractAssets.data.length > 0 ? (
-              <Badge variant="solid" colorScheme="teal">
-                {contractAssets.data && contractAssets.data[0].type}
-              </Badge>
-            ) : null}
-            {contractAssets &&
-            contractAssets.data &&
-            contractAssets.data.length > 0 ? (
-              <Badge variant="solid" colorScheme="teal">
-                SLA:{" "}
-                {contractAssets.data && contractAssets.data[0].contract_sla}
-              </Badge>
-            ) : null}
-          </Stack>
-
-          <Box marginBottom="-0.2em">
-            <Flex>
-              <Box paddingTop="0.35em" marginBottom="-0.3em">
-                <HStack>
-                  <Text fontWeight="500">Supported by:</Text>
-                  <Text color="gray.600">
-                    {contractAssets &&
-                    contractAssets.data &&
-                    contractAssets.data.length > 0
-                      ? contractAssets.data[0].contractor_name
-                      : "Nothing Selected"}
-                  </Text>
-                </HStack>
-              </Box>
-              <Spacer />
-              <Box paddingTop="0.35em" marginBottom="-0.3em">
-                <HStack>
-                  <Text fontWeight="500" color="gray.600">
-                    From:
-                  </Text>
-                  <Text color="gray.600" marginRight="1em">
-                    {contractAssets &&
-                    contractAssets.data &&
-                    contractAssets.data.length > 0
-                      ? contractAssets.data[0].contract_valid_from
-                      : "Nothing Selected"}
-                  </Text>
-                  <Text fontWeight="500" color="gray.600">
-                    Until:
-                  </Text>
-                  <Text color="gray.600">
-                    {contractAssets &&
-                    contractAssets.data &&
-                    contractAssets.data.length > 0
-                      ? contractAssets.data[0].contract_valid_to
-                      : "Nothing Selected"}
-                  </Text>
-                </HStack>
-              </Box>
-            </Flex>
-          </Box>
-        </CardBody>
-        <Divider />
         <CardBody>
           <TableContainer>
             <Table
@@ -183,18 +69,13 @@ function ContractsAssetsList({ selectedContract }) {
               }}
             >
               <TableCaption>
-                <HStack>
-                  <Spacer />
-                  <Text>Assets covered in</Text>
                   <Text>
                     {contractAssets &&
                     contractAssets.data &&
                     contractAssets.data.length > 0
                       ? contractAssets.data[0].contract_no
-                      : "Nothing Selected"}
+                      : <Text fontSize='xl' >Nothing found</Text>}
                   </Text>
-                  <Spacer />
-                </HStack>
               </TableCaption>
               <Thead>
                 <Tr>
@@ -209,7 +90,7 @@ function ContractsAssetsList({ selectedContract }) {
               <Tbody>
                 {contractAssets.data &&
                   contractAssets.data.map((data) => (
-                    <Tr key={data.hardware_asset_id || data.software_asset_id}>
+                    <Tr key={data.software_asset_id || data.hardware_asset_id}>
                       <Td>
                         <Text color="gray.800">
                           {data.software_asset_name || data.hardware_asset_name}

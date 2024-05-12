@@ -187,6 +187,7 @@ const {
   cSwContractsGetNo,
   cSupportGetContracts,
   cContractsGetAllContractTypes,
+  cContractsGetByContractNoBasic,
 
   cContractsPostAdd,
 } = require("../controllers/contractsControllers");
@@ -201,6 +202,8 @@ contractsRouters.get("/numbers/hardware", cHwContractsGetNo);
 contractsRouters.get("/numbers/software", cSwContractsGetNo);
 
 contractsRouters.get("/numbers/:contract_no", cContractsGetByContractNo);
+
+contractsRouters.get("/basic/information/:contract_no", cContractsGetByContractNoBasic);
 
 contractsRouters.get("/types", cContractsGetAllContractTypes);
 

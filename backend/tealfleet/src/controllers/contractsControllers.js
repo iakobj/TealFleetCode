@@ -11,6 +11,7 @@ const {
   swContractsGetByContractNo,
   swContractsGetNo,
   contractsGetAllContractTypes,
+  contractsGetByContractNoBasic,
 
   contractsPostAdd
 } = require("../services/contractsServices");
@@ -328,7 +329,6 @@ module.exports.cSupportGetContracts = async (req, res) => {
   }
 };
 
-
 module.exports.cContractsGetAllContractTypes = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
@@ -338,6 +338,45 @@ module.exports.cContractsGetAllContractTypes = async (req, res) => {
       res.status(401).send({ data: result });
     } else {
       res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
+  }
+};
+
+module.exports.cContractsGetByContractNoBasic = async (req, res) => {
+  try {
+    const contract_no = req.params.contract_no;
+    const identity = await checkIdentity(req);
+    const result = await contractsGetByContractNoBasic(identity, contract_no);
+    const today = new Date();
+
+    const updatedContracts = result.map((result) => {
+      const validFrom = new Date(result.contract_valid_from);
+      const validTo = new Date(result.contract_valid_to);
+
+      // Add a day to validFrom and validTo so the return will be the same as in the databse
+      validFrom.setDate(validFrom.getDate() + 1);
+      validTo.setDate(validTo.getDate() + 1);
+
+      // Extracting only the date part without the time
+      const validFromDateString = validFrom.toISOString().split("T")[0];
+      const validToDateString = validTo.toISOString().split("T")[0];
+
+      const isValid = today >= validFrom && today <= validTo;
+
+      return {
+        ...result,
+        contract_valid_from: validFromDateString,
+        contract_valid_to: validToDateString,
+        contract_valid: isValid ? "true" : "false",
+      };
+    });
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: updatedContracts });
+    } else {
+      res.status(200).send({ data: updatedContracts });
     }
   } catch (error) {
     res.status(404).send({ data: [{ error }] });
@@ -368,14 +407,14 @@ module.exports.cContractsPostAdd = async (req, res) => {
     }
 
     const schema = Joi.object({
-      contract_no: Joi.string().alphanum().required(),
+      contract_no: Joi.string().required(),
       contract_type_id: Joi.string().guid().optional(),
       contractor_name: Joi.string().alphanum().required(),
       contract_sla: Joi.string().alphanum().optional(),
       tenant_id: Joi.string().guid().required(),
       contract_valid_from: Joi.date().required(),
       contract_valid_to: Joi.date().required(),
-      contract_description: Joi.string().alphanum().optional(),
+      contract_description: Joi.string().optional(),
     });
 
     const validation = await schema.validate(data);

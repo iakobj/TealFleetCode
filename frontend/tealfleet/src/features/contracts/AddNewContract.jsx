@@ -102,8 +102,6 @@ function AddNewContract({ isOpen, onClose }) {
     }),
 
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-
       const newContract = JSON.stringify(values, null, 2);
       try {
         fetch(`http://${API_ENDPOINT}/contracts/add`,
