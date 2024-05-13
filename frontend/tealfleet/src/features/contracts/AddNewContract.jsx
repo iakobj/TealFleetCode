@@ -120,6 +120,7 @@ function AddNewContract({ isOpen, onClose }) {
               position: "bottom",
               variant: "subtle"
             });
+
           } else {
             const responseData = await response.json();
             console.log(responseData);
@@ -304,6 +305,7 @@ function AddNewContract({ isOpen, onClose }) {
 
           <ModalFooter marginTop="3em">
             <Button
+              marginRight="1em"
               leftIcon={<CloseIcon />}
               size="sm"
               variant="ghost"

@@ -281,7 +281,7 @@ module.exports.contractsGetValid = async (identity) => {
           sw.software_asset_id,
           hw.hardware_asset_id
       FROM sw_asset_contracts sw
-      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN contracts ON contracts.contract_id = sw.contract_id
       LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
       WHERE contracts.contract_valid_to > CURRENT_DATE
   ) AS subquery;
@@ -297,7 +297,7 @@ module.exports.contractsGetValid = async (identity) => {
           sw.software_asset_id,
           hw.hardware_asset_id
       FROM sw_asset_contracts sw
-      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN contracts ON contracts.contract_id = sw.contract_id
       LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
       WHERE contracts.contract_valid_to > CURRENT_DATE
       AND contracts.tenant_id = $1
@@ -315,13 +315,14 @@ module.exports.contractsGetValid = async (identity) => {
           sw.software_asset_id,
           hw.hardware_asset_id
       FROM sw_asset_contracts sw
-      FULL JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN contracts ON contracts.contract_id = sw.contract_id
       LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
       WHERE contracts.contract_valid_to > CURRENT_DATE
       AND contracts.tenant_id = $1
   ) AS subquery;`,
         [tenant_id]
       );
+      
       return result.rows;
     }
   } catch (error) {
@@ -475,7 +476,6 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
   }
 };
 
-//TODO
 module.exports.contractsGetAllContractTypes = async (identity) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
@@ -512,9 +512,6 @@ module.exports.contractsGetAllContractTypes = async (identity) => {
 
 module.exports.contractsPostAdd = async (data) => {
 
-  console.log("service data:")
-  console.log(data);
-
   let { contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = data;
 
   let contract_valid_from_date = new Date(contract_valid_from);
@@ -546,7 +543,6 @@ module.exports.contractsPostAdd = async (data) => {
         contract_valid_from_date,
         contract_valid_to_date,
       ]);
-  
     
   } catch (error) {
     console.log(error);
