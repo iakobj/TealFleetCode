@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 
 import FleetCard from "./FleetCard.jsx";
+import FilterNothingFound from "../../components/FilterNothingFound.jsx";
 
 // Chakra-UI components
 import {
@@ -12,6 +13,7 @@ import {
   Box,
   Button,
   SimpleGrid,
+  GridItem,
   Wrap,
   WrapItem,
   Card,
@@ -22,7 +24,12 @@ import {
   Stack,
 } from "@chakra-ui/react";
 
-import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon, AddIcon } from "@chakra-ui/icons";
+import {
+  RepeatIcon,
+  ArrowBackIcon,
+  ArrowForwardIcon,
+  AddIcon,
+} from "@chakra-ui/icons";
 
 function FleetFilter() {
   const loaderData = useLoaderData();
@@ -92,7 +99,9 @@ function FleetFilter() {
     if (offset / totalPages == 0) {
       setSelectedPage(1);
     } else {
-      const currentPage = Math.floor((offset + numberOfAssetsOnPage) / numberOfAssetsOnPage);
+      const currentPage = Math.floor(
+        (offset + numberOfAssetsOnPage) / numberOfAssetsOnPage
+      );
       setSelectedPage(currentPage);
     }
   }, [offset, totalPages]);
@@ -105,7 +114,7 @@ function FleetFilter() {
       setArrowForward(true);
     } else if (totalPages == selectedPage) {
       setArrowForward(true);
-    }else if (totalPages == 1) {
+    } else if (totalPages == 1) {
       setArrowForward(true);
     } else {
       setArrowForward(false);
@@ -302,19 +311,24 @@ function FleetFilter() {
         marginLeft={{ base: "0.5em", sm: "0.5em", md: "0em" }}
         marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
       >
-        {fleetCardItems &&
+        {fleetCardItems && fleetCardItems.length > 0 ? (
           fleetCardItems
             .filter((item) => item.hardware_asset_id || item.software_asset_id)
-            .map((fleetCardItems) => (
+            .map((fleetCardItem) => (
               <FleetCard
-                fleetCardItems={fleetCardItems}
+                fleetCardItems={fleetCardItem}
                 key={
-                  fleetCardItems.hardware_asset_id
-                    ? fleetCardItems.hardware_asset_id
-                    : fleetCardItems.software_asset_id
+                  fleetCardItem.hardware_asset_id
+                    ? fleetCardItem.hardware_asset_id
+                    : fleetCardItem.software_asset_id
                 }
               />
-            ))}
+            ))
+        ) : (
+          <GridItem colSpan={{ base: 1, sm: 2, md: 4, lg: 4, xl: 6, "2xl": 6 }}>
+          <FilterNothingFound />
+        </GridItem>
+        )}
       </SimpleGrid>
 
       <Card

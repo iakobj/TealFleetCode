@@ -61,11 +61,6 @@ function AddNewContract({ isOpen, onClose }) {
       setContractTypes(contractTypes);
       setTenants(tenants);
 
-      console.log("contractTypes");
-      console.log(contractTypes);
-      console.log("tenants");
-      console.log(tenants);
-
     } catch (error) {
       console.error("Error loading form data:", error);
     }
@@ -123,7 +118,6 @@ function AddNewContract({ isOpen, onClose }) {
 
           } else {
             const responseData = await response.json();
-            console.log(responseData);
             const errorMessage = responseData.error;
 
             toast({

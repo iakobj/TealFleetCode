@@ -34,7 +34,6 @@ function ContractsAssetsListHeader({ selectedContract }) {
   const [contractData, setContractData] = useState([]);
   const ContractsDataLoader = async (selectedContract) => {
     try {
-        console.log(selectedContract);
       const contractData = await fetch(
         `http://${API_ENDPOINT}/contracts/basic/information/${selectedContract}`,
         {

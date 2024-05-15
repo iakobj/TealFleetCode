@@ -39,7 +39,7 @@ function ContractsListCard({ contractItems }) {
       !contractItems.length ||
       !contractItems[0].contract_no
     ) {
-      console.log("Undefined");
+      setSelectedContract(false);
     } else {
       setSelectedContract(contractItems[0].contract_no);
     }

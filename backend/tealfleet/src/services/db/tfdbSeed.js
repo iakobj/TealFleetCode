@@ -83,8 +83,8 @@ VALUES
 
 INSERT INTO "users" ("user_id", "role_id", "tenant_id", "site_id", "first_name", "last_name", "email", "password", "phone", "title")
 VALUES
-  ('33333333-dddd-7777-8888-012345678901', '00000000-aaaa-4f79-9d3a-012345678901', '11111111-4cbb-2a1d-1f9a-012345678901', '22222222-cccc-2a1d-1f9a-012345678901', 'John', 'Doe', 'john@iic.com', 'password123', '555-123-4567', 'Manager' ),
-  ('33333333-dddd-7777-8888-012345678902', '00000000-aaaa-4f79-9d3a-012345678901', '11111111-4cbb-2a1d-1f9a-012345678902', '22222222-cccc-2a1d-1f9a-012345678902', 'Jane', 'Smith', 'jane@ByteTech.com', 'password456', '555-987-6543', 'Network Engineer'),
+  ('33333333-dddd-7777-8888-012345678901', '00000000-aaaa-4f79-9d3a-012345678901', '11111111-4cbb-2a1d-1f9a-012345678901', '22222222-cccc-2a1d-1f9a-012345678901', 'John', 'Doe', 'john@iic.com', '8e14a20e90e76718e9845f96da4d99c6e4e71b3f04be4c1b74a0bdd0e894a385', '555-123-4567', 'Manager' ),
+  ('33333333-dddd-7777-8888-012345678902', '00000000-aaaa-4f79-9d3a-012345678901', '11111111-4cbb-2a1d-1f9a-012345678902', '22222222-cccc-2a1d-1f9a-012345678902', 'Jane', 'Smith', 'jane@ByteTech.com', '8e14a20e90e76718e9845f96da4d99c6e4e71b3f04be4c1b74a0bdd0e894a385', '555-987-6543', 'Network Engineer'),
   ('33333333-dddd-7777-8888-012345678903', '00000000-aaaa-4f79-9d3a-012345678901', '11111111-4cbb-2a1d-1f9a-012345678903', '22222222-cccc-2a1d-1f9a-012345678903', 'Mia', 'Drew', 'Miad@EchoFinance.com', 'password456', '555-987-6543', 'Systems Engineer'),
   ('33333333-dddd-7777-8888-012345678904', '00000000-aaaa-4f79-9d3a-012345678901', '11111111-4cbb-2a1d-1f9a-012345678904', '22222222-cccc-2a1d-1f9a-012345678904', 'Denisa', 'Doenberg', 'DenisaDoenberg@Green Grow.com', 'password123', '555-123-4567', 'Team Lead' ),
   ('33333333-dddd-7777-8888-012345678905', '00000000-aaaa-4f79-9d3a-012345678901', '11111111-4cbb-2a1d-1f9a-012345678905', '22222222-cccc-2a1d-1f9a-012345678905', 'Mellisa', 'Starsky', 'Mellisa.Starsky@example.com', 'password456', '555-987-6543', 'Database Administrator'),
@@ -233,11 +233,11 @@ VALUES
 
 INSERT INTO "software_catalog" ("software_catalog_id", "vendor_id", "software_model_name", "software_version_number", "software_image", "software_release_date", "software_end_of_life", "software_end_of_support", "software_catalog_changed_at")
 VALUES
-  ('cccccccc-6f7a-caca-caca-000045678901', '55555555-8b8b-8b8b-8b8b-012345678902', 'vCenter', '8.0.1', 'software1.jpg', '2022-01-01', '2024-01-01', '2024-12-31', NOW()),
-  ('cccccccc-6f7a-caca-caca-000045678902', '55555555-8b8b-8b8b-8b8b-012345678902', 'ESXi', '8.0.2', 'software2.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW()),
-  ('cccccccc-6f7a-caca-caca-000045678903', '55555555-8b8b-8b8b-8b8b-012345678902', 'ESXi', '8.0.1', 'software2.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW()),
-  ('cccccccc-6f7a-caca-caca-000045678904', '55555555-8b8b-8b8b-8b8b-012345678902', 'ESXi', '7.0.3', 'software2.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW()),
-  ('cccccccc-6f7a-caca-caca-000045678905', '55555555-8b8b-8b8b-8b8b-012345678907', 'Veeam Backup & Replication', '12.0', 'software3.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW());
+  ('cccccccc-6f7a-caca-caca-000045678901', '55555555-8b8b-8b8b-8b8b-012345678902', 'vCenter', '8.0.1', '/images/vendors/vmware/vmware-vcenter.jpg', '2022-01-01', '2024-01-01', '2024-12-31', NOW()),
+  ('cccccccc-6f7a-caca-caca-000045678902', '55555555-8b8b-8b8b-8b8b-012345678902', 'ESXi', '8.0.2', '/images/vendors/vmware/vmware-vcenter.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW()),
+  ('cccccccc-6f7a-caca-caca-000045678903', '55555555-8b8b-8b8b-8b8b-012345678902', 'ESXi', '8.0.1', '/images/vendors/vmware/vmware-vcenter.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW()),
+  ('cccccccc-6f7a-caca-caca-000045678904', '55555555-8b8b-8b8b-8b8b-012345678902', 'ESXi', '7.0.3', '/images/vendors/vmware/vmware-vcenter.jpg', '2022-02-01', '2023-02-01', '2023-12-31', NOW()),
+  ('cccccccc-6f7a-caca-caca-000045678905', '55555555-8b8b-8b8b-8b8b-012345678907', 'Veeam Backup & Replication', '12.0', '/images/vendors/veeam/veeam.png', '2022-02-01', '2023-02-01', '2023-12-31', NOW());
 
 INSERT INTO "software_assets" ("software_asset_id", "software_catalog_id", "hardware_asset_id", "software_asset_name", "tenant_id", "site_id", "software_changed_at")
 VALUES

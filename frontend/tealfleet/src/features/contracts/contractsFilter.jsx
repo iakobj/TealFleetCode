@@ -4,6 +4,7 @@ import { NavLink, useLoaderData, useSearchParams } from "react-router-dom";
 
 import ContractsListCard from "../../features/contracts/ContractsListCard";
 import AddNewContract from "../../features/contracts/AddNewContract";
+import FilterNothingFound from "../../components/FilterNothingFound";
 
 // Chakra-UI components
 import {
@@ -18,14 +19,6 @@ import {
   Hide,
   IconButton,
   Stack,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -37,8 +30,6 @@ function ContractsFilter() {
   const contractItems = loaderData.cItems.data;
   const contractorsItems = loaderData.contractorsItems.data;
   const tenantItems = loaderData.tItems.data;
-
-  console.log(contractorsItems);
 
   const [offset, setOffset] = useState(0);
   const [tenant, setTenant] = useState();
@@ -242,7 +233,9 @@ function ContractsFilter() {
         </Card>
       </Hide>
       <Box>
-        <ContractsListCard contractItems={contractItems} />
+        {contractItems == false
+        ? <FilterNothingFound/>
+        : <ContractsListCard contractItems={contractItems} />}
       </Box>
       <Card
         marginTop="1em"
