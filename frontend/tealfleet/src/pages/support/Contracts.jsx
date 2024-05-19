@@ -41,12 +41,13 @@ export const ContractsDataLoader = async ({ params, request }) => {
     credentials: "include",
   });
 
+  // Change into unique search for contractors
   const contractorsItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
     method: "GET",
     credentials: "include",
   });
 
-  cItems = await fetch(`http://${API_ENDPOINT}/contracts/all`, {
+  cItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
     method: "GET",
     credentials: "include",
   });

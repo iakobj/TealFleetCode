@@ -239,6 +239,10 @@ module.exports.cDashboardGetSupportCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
 
+    // Define today as a Date object representing the current date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to midnight
+
     const resultArray = await Promise.all([contractsGetAll(identity)]);
 
     const contractsAll = resultArray[0];
@@ -246,7 +250,7 @@ module.exports.cDashboardGetSupportCardData = async (req, res) => {
     const result = contractsAll.map((obj) => ({
       contract_no: obj.contract_no,
       contractor_name: obj.contractor_name,
-      contract_valid: new Date(obj.contract_valid_to) > new Date(), // Check if contract is still valid
+      contract_valid: new Date(obj.contract_valid_to) >= today,
     }));
 
     if (result[0] && result[0].error) {

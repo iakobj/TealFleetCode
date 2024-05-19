@@ -39,7 +39,7 @@ module.exports.cContractsGetAll = async (req, res) => {
       const validFromDateString = validFrom.toISOString().split("T")[0];
       const validToDateString = validTo.toISOString().split("T")[0];
 
-      const isValid = today >= validFrom && today <= validTo;
+      const isValid = today >= validFrom && today <= validTo.setDate(validTo.getDate() + 1);
 
       return {
         ...result,
@@ -94,7 +94,7 @@ module.exports.cContractsGetByTenant = async (req, res) => {
       const validFromDateString = validFrom.toISOString().split("T")[0];
       const validToDateString = validTo.toISOString().split("T")[0];
 
-      const isValid = today >= validFrom && today <= validTo;
+      const isValid = today >= validFrom && today <= validTo.setDate(validTo.getDate() + 1);
 
       return {
         ...result,
@@ -132,7 +132,7 @@ module.exports.cHwContractsGetAll = async (req, res) => {
       const validFromDateString = validFrom.toISOString().split("T")[0];
       const validToDateString = validTo.toISOString().split("T")[0];
 
-      const isValid = today >= validFrom && today <= validTo;
+      const isValid = today >= validFrom && today <= validTo.setDate(validTo.getDate() + 1);
 
       return {
         ...result,
@@ -170,7 +170,7 @@ module.exports.cSwContractsGetAll = async (req, res) => {
       const validFromDateString = validFrom.toISOString().split("T")[0];
       const validToDateString = validTo.toISOString().split("T")[0];
 
-      const isValid = today >= validFrom && today <= validTo;
+      const isValid = today >= validFrom && today <= validTo.setDate(validTo.getDate() + 1);
 
       return {
         ...result,
@@ -214,7 +214,7 @@ module.exports.cContractsGetByContractNo = async (req, res) => {
       const validFromDateString = validFrom.toISOString().split("T")[0];
       const validToDateString = validTo.toISOString().split("T")[0];
 
-      const isValid = today >= validFrom && today <= validTo;
+      const isValid = today >= validFrom && today <= validTo.setDate(validTo.getDate() + 1);
 
       return {
         ...result,
@@ -363,7 +363,7 @@ module.exports.cContractsGetByContractNoBasic = async (req, res) => {
       const validFromDateString = validFrom.toISOString().split("T")[0];
       const validToDateString = validTo.toISOString().split("T")[0];
 
-      const isValid = today >= validFrom && today <= validTo;
+      const isValid = today >= validFrom && today <= validTo.setDate(validTo.getDate() + 1);
 
       return {
         ...result,
@@ -424,6 +424,7 @@ module.exports.cContractsPostAdd = async (req, res) => {
       return; 
     } else {
       const result = await contractsPostAdd(data);
+      console.log(result);
 
       res.status(200).send( "New contract was successefuly added" );
       return; 

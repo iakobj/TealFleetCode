@@ -420,7 +420,7 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
         WHEN c.contract_valid_to > CURRENT_DATE THEN 'true'
         WHEN c.contract_valid_to <= CURRENT_DATE THEN 'false'
         ELSE 'Unknown' -- Add an ELSE condition if needed
-    END AS contract_status
+    END AS contract_valid
     FROM 
         contracts c
     JOIN 
@@ -543,6 +543,8 @@ module.exports.contractsPostAdd = async (data) => {
         contract_valid_from_date,
         contract_valid_to_date,
       ]);
+      
+      return(result)
     
   } catch (error) {
     console.log(error);

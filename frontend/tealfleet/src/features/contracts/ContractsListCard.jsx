@@ -82,7 +82,7 @@ function ContractsListCard({ contractItems }) {
                       {contractItems.contract_no}
                     </Heading>
                     <Spacer />
-                    {contractItems.contract_status === "true" ? (
+                    {contractItems.contract_valid === "true" ? (
                       <CheckCircleIcon boxSize={4} color="teal" />
                     ) : (
                       <WarningTwoIcon boxSize={4} color="red.600" />
