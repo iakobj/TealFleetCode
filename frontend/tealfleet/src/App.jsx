@@ -20,6 +20,7 @@ import Fleet, {FleetDataLoader} from "./pages/Fleet";
 
 // Support
 import Contracts, {ContractsDataLoader} from "./pages/support/Contracts";
+import NewContract from "./pages/support/NewContract";
 
 import Administration from "./pages/Administration";
 
@@ -44,13 +45,19 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />,
       },
       {
-        path: "assets/:something?",
+        path: "assets/fleet",
         element: <Fleet/>,
         loader: FleetDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {
-        path: "support/:something?",
+        path: "support/contracts/new",
+        element: <NewContract/>,
+        loader: FleetDataLoader,
+        errorElement: <ErrorBoundary />,
+      },
+      {
+        path: "support/contracts",
         element: <Contracts/>,
         loader: ContractsDataLoader,
         errorElement: <ErrorBoundary />,

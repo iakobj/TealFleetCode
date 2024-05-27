@@ -224,10 +224,11 @@ function ContractsFilter() {
             <Spacer />
             <WrapItem>
               <Spacer />
-              <Button leftIcon={<AddIcon />} onClick={onOpen} size={"sm"} colorScheme={"teal"} marginRight="0.6em">
-                New Contract
-              </Button>
-              <AddNewContract isOpen={isOpen} onClose={onClose} />
+              <NavLink to="new">
+                <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"} marginRight="0.6em">
+                  New Contract
+                </Button>
+              </NavLink>
             </WrapItem>
           </Wrap>
         </Card>
