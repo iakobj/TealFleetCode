@@ -20,7 +20,7 @@ import Fleet, {FleetDataLoader} from "./pages/Fleet";
 
 // Support
 import Contracts, {ContractsDataLoader} from "./pages/support/Contracts";
-import NewContract from "./pages/support/NewContract";
+import NewContract from "./features/contracts/NewContract";
 
 import Administration from "./pages/Administration";
 

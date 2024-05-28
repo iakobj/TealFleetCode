@@ -22,6 +22,16 @@ import {
   IconButton,
   FormControl,
   Stack,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Checkbox,
 } from "@chakra-ui/react";
 
 import {
@@ -34,7 +44,7 @@ import {
 function AssetFilter() {
   const loaderData = useLoaderData();
 
-  const fleetCardItems = loaderData.fItems.data;
+  const assetInformations = loaderData.fItems.data;
   const vendorItems = loaderData.vItems.data;
   const tenantItems = loaderData.tItems.data;
   const swModelItems = loaderData.swItems.data;
@@ -119,7 +129,7 @@ function AssetFilter() {
     } else {
       setArrowForward(false);
     }
-  }, [offset, totalPages, fleetCardItems]);
+  }, [offset, totalPages, assetInformations]);
 
   useEffect(() => {
     if (offset === 0) {
@@ -130,13 +140,13 @@ function AssetFilter() {
   }, [offset, totalPages]);
 
   if (
-    fleetCardItems &&
-    fleetCardItems.length > 0 &&
-    fleetCardItems[0].total_count !== undefined
+    assetInformations &&
+    assetInformations.length > 0 &&
+    assetInformations[0].total_count !== undefined
   ) {
-    foundAssets = fleetCardItems[0].total_count;
+    foundAssets = assetInformations[0].total_count;
     totalPages = Math.ceil(
-      fleetCardItems[0].total_count / numberOfAssetsOnPage
+      assetInformations[0].total_count / numberOfAssetsOnPage
     );
     elements = Array.from({ length: totalPages });
   }
@@ -166,6 +176,17 @@ function AssetFilter() {
           marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
         >
           <Wrap>
+            <WrapItem marginLeft="0.5em">
+              <NavLink to={"/support/contracts"}>
+                <Button
+                  leftIcon={<ArrowBackIcon />}
+                  size={"sm"}
+                  colorScheme={"teal"}
+                >
+                  Back
+                </Button>
+              </NavLink>
+            </WrapItem>
             <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
@@ -282,41 +303,49 @@ function AssetFilter() {
                 </Select>
               </FormControl>
             </WrapItem>
-            <Spacer />
-            <WrapItem marginRight="0.5em">
-              <Spacer marginRight="0.5em" />
-              <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"}>
-                New Asset
-              </Button>
-            </WrapItem>
           </Wrap>
         </Card>
       </Hide>
-      <SimpleGrid
-        spacing="1em"
-        columns={{ base: "1", sm: "2", md: "4", lg: "4", xl: "6", "2xl": "6" }}
-        marginLeft={{ base: "0.5em", sm: "0.5em", md: "0em" }}
-        marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
-      >
-        {fleetCardItems && fleetCardItems.length > 0 ? (
-          fleetCardItems
-            .filter((item) => item.hardware_asset_id || item.software_asset_id)
-            .map((fleetCardItem) => (
-              <AssetList
-                fleetCardItems={fleetCardItem}
-                key={
-                  fleetCardItem.hardware_asset_id
-                    ? fleetCardItem.hardware_asset_id
-                    : fleetCardItem.software_asset_id
-                }
-              />
-            ))
-        ) : (
-          <GridItem colSpan={{ base: 1, sm: 2, md: 4, lg: 4, xl: 6, "2xl": 6 }}>
-          <FilterNothingFound />
-        </GridItem>
-        )}
-      </SimpleGrid>
+
+      <Card>
+        <TableContainer marginTop="0.5em" marginBottom="1.0em">
+          <Table variant="simple" size={"sm"}>
+            <Thead>
+              <Tr>
+                <Th><Checkbox size='md' colorScheme="teal"></Checkbox></Th>
+                <Th>Asset name</Th>
+                <Th>Tenant</Th>
+                <Th>Vendor</Th>
+                <Th>Model</Th>
+                <Th>Serial number</Th>
+                <Th>Software version</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {assetInformations && assetInformations.length > 0 ? (
+                assetInformations
+                  .filter(
+                    (item) => item.hardware_asset_id || item.software_asset_id
+                  )
+                  .map((assetInformations) => (
+                    <AssetList
+                      assetInformations={assetInformations}
+                      key={
+                        assetInformations.hardware_asset_id
+                          ? assetInformations.hardware_asset_id
+                          : assetInformations.software_asset_id
+                      }
+                    />
+                  ))
+              ) : (
+                <Card>
+                  <FilterNothingFound />
+                </Card>
+              )}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Card>
 
       <Card
         marginTop="1em"

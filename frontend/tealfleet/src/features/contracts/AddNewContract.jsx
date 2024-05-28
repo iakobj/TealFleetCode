@@ -143,241 +143,191 @@ function AddNewContract({ isOpen, onClose }) {
     },
   });
 
-  const steps = [
-    { title: "Create contract", description: "Contract Information" },
-    { title: "Add assets", description: "Search & Select assets" },
-  ];
-
-  const { activeStep } = useSteps({
-    index: 0,
-    count: steps.length,
-  });
-
   return (
-    <div>
-      <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
-        <ModalOverlay bg="blackAlpha.300" />
-        <ModalContent>
-          <ModalHeader bg="#f4f7f4" marginBottom={"1em"}>
-            CREATE NEW CONTRACT
-          </ModalHeader>
-          <ModalCloseButton marginTop={"0.5em"}/>
-          <form onSubmit={formik.handleSubmit}>
-            <ModalBody>
-              <Card marginBottom={"2em"} padding={"0.5em"}>
-              <Stepper index={activeStep} colorScheme='teal'>
-                {steps.map((step, index) => (
-                  <Step key={index}>
-                    <StepIndicator>
-                      <StepStatus
-                        complete={<StepIcon />}
-                        incomplete={<StepNumber />}
-                        active={<StepNumber />}
-                      />
-                    </StepIndicator>
+      <form onSubmit={formik.handleSubmit}>
+            <Card padding="1em">
+        <FormControl isRequired>
+          <FormLabel>Contract Name</FormLabel>
+          <Input
+            id="contract_no"
+            name="contract_no"
+            type="contract_no"
+            placeholder="Contract name"
+            focusBorderColor="teal.600"
+            onChange={formik.handleChange}
+            value={formik.values.contract_no}
+            {...formik.getFieldProps("contract_no")}
+          />
+          {formik.touched.contract_no && formik.errors.contract_no ? (
+            <div>{formik.errors.contract_no}</div>
+          ) : null}
+        </FormControl>
 
-                    <Box flexShrink="0">
-                      <StepTitle>{step.title}</StepTitle>
-                      <StepDescription>{step.description}</StepDescription>
-                    </Box>
-
-                    <StepSeparator />
-                  </Step>
-                ))}
-              </Stepper>
-              </Card>
-              <FormControl isRequired>
-                <FormLabel>Contract Name</FormLabel>
-                <Input
-                  id="contract_no"
-                  name="contract_no"
-                  type="contract_no"
-                  placeholder="Contract name"
-                  focusBorderColor="teal.600"
-                  onChange={formik.handleChange}
-                  value={formik.values.contract_no}
-                  {...formik.getFieldProps("contract_no")}
-                />
-                {formik.touched.contract_no && formik.errors.contract_no ? (
-                  <div>{formik.errors.contract_no}</div>
-                ) : null}
-              </FormControl>
-
-              <FormControl>
-                <FormLabel marginTop="1.2em">Contract type</FormLabel>
-                <Select
-                  id="contract_type_id"
-                  name="contract_type_id"
-                  type="text"
-                  placeholder="Select contract type"
-                  focusBorderColor="teal.600"
-                  onChange={formik.handleChange}
-                  value={formik.values.tenant_id}
-                  {...formik.getFieldProps("contract_type_id")}
+        <FormControl>
+          <FormLabel marginTop="1.2em">Contract type</FormLabel>
+          <Select
+            id="contract_type_id"
+            name="contract_type_id"
+            type="text"
+            placeholder="Select contract type"
+            focusBorderColor="teal.600"
+            onChange={formik.handleChange}
+            value={formik.values.tenant_id}
+            {...formik.getFieldProps("contract_type_id")}
+          >
+            {contractTypes.data &&
+              contractTypes.data.map((data) => (
+                <option
+                  key={data.contract_type_id}
+                  value={data.contract_type_id}
                 >
-                  {contractTypes.data &&
-                    contractTypes.data.map((data) => (
-                      <option
-                        key={data.contract_type_id}
-                        value={data.contract_type_id}
-                      >
-                        {" "}
-                        {data.type}{" "}
-                      </option>
-                    ))}
-                </Select>
-                {formik.touched.contract_type_id &&
-                formik.errors.contract_type_id ? (
-                  <div>{formik.errors.contract_type_id}</div>
-                ) : null}
-              </FormControl>
+                  {" "}
+                  {data.type}{" "}
+                </option>
+              ))}
+          </Select>
+          {formik.touched.contract_type_id && formik.errors.contract_type_id ? (
+            <div>{formik.errors.contract_type_id}</div>
+          ) : null}
+        </FormControl>
 
-              <FormControl isRequired>
-                <FormLabel marginTop="1.2em">Contractor Name</FormLabel>
-                <Input
-                  id="contractor_name"
-                  name="contractor_name"
-                  type="text"
-                  placeholder="Contractor Name"
-                  focusBorderColor="teal.600"
-                  onChange={formik.handleChange}
-                  value={formik.values.contractor_name}
-                  {...formik.getFieldProps("contractor_name")}
-                />
-                {formik.touched.contractor_name &&
-                formik.errors.contractor_name ? (
-                  <div>{formik.errors.contractor_name}</div>
-                ) : null}
-              </FormControl>
-              <FormControl>
-                <FormLabel marginTop="1.2em">Service Level Agreement</FormLabel>
-                <Input
-                  id="contract_sla"
-                  name="contract_sla"
-                  type="text"
-                  placeholder="Service Level Agreement"
-                  focusBorderColor="teal.600"
-                  onChange={formik.handleChange}
-                  value={formik.values.contract_sla}
-                  {...formik.getFieldProps("contract_sla")}
-                />
-                {formik.touched.contract_sla && formik.errors.contract_sla ? (
-                  <div>{formik.errors.contract_sla}</div>
-                ) : null}
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel marginTop="1.2em">Tenant</FormLabel>
-                <Select
-                  id="tenant_id"
-                  name="tenant_id"
-                  type="text"
-                  placeholder="Select tenant"
-                  focusBorderColor="teal.600"
-                  onChange={formik.handleChange}
-                  value={formik.values.tenant_id}
-                  {...formik.getFieldProps("tenant_id")}
-                >
-                  {tenants.data &&
-                    tenants.data.map((data) => (
-                      <option key={data.tenant_id} value={data.tenant_id}>
-                        {" "}
-                        {data.tenant_name}{" "}
-                      </option>
-                    ))}
-                </Select>
+        <FormControl isRequired>
+          <FormLabel marginTop="1.2em">Contractor Name</FormLabel>
+          <Input
+            id="contractor_name"
+            name="contractor_name"
+            type="text"
+            placeholder="Contractor Name"
+            focusBorderColor="teal.600"
+            onChange={formik.handleChange}
+            value={formik.values.contractor_name}
+            {...formik.getFieldProps("contractor_name")}
+          />
+          {formik.touched.contractor_name && formik.errors.contractor_name ? (
+            <div>{formik.errors.contractor_name}</div>
+          ) : null}
+        </FormControl>
+        <FormControl>
+          <FormLabel marginTop="1.2em">Service Level Agreement</FormLabel>
+          <Input
+            id="contract_sla"
+            name="contract_sla"
+            type="text"
+            placeholder="Service Level Agreement"
+            focusBorderColor="teal.600"
+            onChange={formik.handleChange}
+            value={formik.values.contract_sla}
+            {...formik.getFieldProps("contract_sla")}
+          />
+          {formik.touched.contract_sla && formik.errors.contract_sla ? (
+            <div>{formik.errors.contract_sla}</div>
+          ) : null}
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel marginTop="1.2em">Tenant</FormLabel>
+          <Select
+            id="tenant_id"
+            name="tenant_id"
+            type="text"
+            placeholder="Select tenant"
+            focusBorderColor="teal.600"
+            onChange={formik.handleChange}
+            value={formik.values.tenant_id}
+            {...formik.getFieldProps("tenant_id")}
+          >
+            {tenants.data &&
+              tenants.data.map((data) => (
+                <option key={data.tenant_id} value={data.tenant_id}>
+                  {" "}
+                  {data.tenant_name}{" "}
+                </option>
+              ))}
+          </Select>
 
-                {formik.touched.tenant_id && formik.errors.tenant_id ? (
-                  <div>{formik.errors.tenant_id}</div>
-                ) : null}
-              </FormControl>
+          {formik.touched.tenant_id && formik.errors.tenant_id ? (
+            <div>{formik.errors.tenant_id}</div>
+          ) : null}
+        </FormControl>
 
-              <Flex>
-                <Box>
-                  <FormControl isRequired>
-                    <FormLabel marginTop="1.2em">Contract Start Date</FormLabel>
-                    <Input
-                      id="contract_valid_from"
-                      name="contract_valid_from"
-                      type="date"
-                      focusBorderColor="teal.600"
-                      onChange={formik.handleChange}
-                      value={formik.values.contract_valid_from}
-                      {...formik.getFieldProps("contract_valid_from")}
-                    />
-                    {formik.touched.contract_valid_from &&
-                    formik.errors.contract_valid_from ? (
-                      <div>{formik.errors.contract_valid_from}</div>
-                    ) : null}
-                  </FormControl>
-                </Box>
-                <Spacer />
-                <Box>
-                  <FormControl isRequired>
-                    <FormLabel marginTop="1.2em">Contract End Date</FormLabel>
-                    <Input
-                      id="contract_valid_to"
-                      name="contract_valid_to"
-                      type="date"
-                      focusBorderColor="teal.600"
-                      onChange={formik.handleChange}
-                      value={formik.values.contract_valid_to}
-                      {...formik.getFieldProps("contract_valid_to")}
-                    />
-                    {formik.touched.contract_valid_to &&
-                    formik.errors.contract_valid_to ? (
-                      <div>{formik.errors.contract_valid_to}</div>
-                    ) : null}
-                  </FormControl>
-                </Box>
-              </Flex>
+        <Flex>
+          <Box>
+            <FormControl isRequired>
+              <FormLabel marginTop="1.2em">Contract Start Date</FormLabel>
+              <Input
+                id="contract_valid_from"
+                name="contract_valid_from"
+                type="date"
+                focusBorderColor="teal.600"
+                onChange={formik.handleChange}
+                value={formik.values.contract_valid_from}
+                {...formik.getFieldProps("contract_valid_from")}
+              />
+              {formik.touched.contract_valid_from &&
+              formik.errors.contract_valid_from ? (
+                <div>{formik.errors.contract_valid_from}</div>
+              ) : null}
+            </FormControl>
+          </Box>
+          <Spacer />
+          <Box>
+            <FormControl isRequired>
+              <FormLabel marginTop="1.2em">Contract End Date</FormLabel>
+              <Input
+                id="contract_valid_to"
+                name="contract_valid_to"
+                type="date"
+                focusBorderColor="teal.600"
+                onChange={formik.handleChange}
+                value={formik.values.contract_valid_to}
+                {...formik.getFieldProps("contract_valid_to")}
+              />
+              {formik.touched.contract_valid_to &&
+              formik.errors.contract_valid_to ? (
+                <div>{formik.errors.contract_valid_to}</div>
+              ) : null}
+            </FormControl>
+          </Box>
+        </Flex>
 
-              <FormControl>
-                <FormLabel marginTop="1.2em">Contract Description</FormLabel>
-                <Textarea
-                  id="contract_description"
-                  name="contract_description"
-                  type="contract_description"
-                  placeholder="Short contract description or notes"
-                  focusBorderColor="teal.600"
-                  onChange={formik.handleChange}
-                  value={formik.values.contract_description}
-                  {...formik.getFieldProps("contract_description")}
-                />
-                {formik.touched.contract_description &&
-                formik.errors.contract_description ? (
-                  <div>{formik.errors.contract_description}</div>
-                ) : null}
-              </FormControl>
-            </ModalBody>
+        <FormControl>
+          <FormLabel marginTop="1.2em">Contract Description</FormLabel>
+          <Textarea
+            id="contract_description"
+            name="contract_description"
+            type="contract_description"
+            placeholder="Short contract description or notes"
+            focusBorderColor="teal.600"
+            onChange={formik.handleChange}
+            value={formik.values.contract_description}
+            {...formik.getFieldProps("contract_description")}
+          />
+          {formik.touched.contract_description &&
+          formik.errors.contract_description ? (
+            <div>{formik.errors.contract_description}</div>
+          ) : null}
+        </FormControl>
 
-            <ModalFooter bg="#f4f7f4" marginTop="1em">
-              <Button
-                marginRight="1em"
-                leftIcon={<CloseIcon />}
-                size="sm"
-                variant="ghost"
-                mr={3}
-                onClick={onClose}
-              >
-                Close
-              </Button>
-              <Button
-                type="submit"
-                rightIcon={<ArrowForwardIcon />}
-                size="sm"
-                colorScheme="teal"
-              >
-                Submit
-              </Button>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
-      <AddAssetsToContracts
-        isOpen={isAssetsModalOpen}
-        onClose={() => setIsAssetsModalOpen(false)}
-      />
-    </div>
+        <Button
+          marginRight="1em"
+          leftIcon={<CloseIcon />}
+          size="sm"
+          variant="ghost"
+          mr={3}
+          onClick={onClose}
+        >
+          Close
+        </Button>
+        <Button
+          type="submit"
+          rightIcon={<ArrowForwardIcon />}
+          size="sm"
+          colorScheme="teal"
+        >
+          Submit
+        </Button>
+        </Card>
+      </form>
+
   );
 }
 
