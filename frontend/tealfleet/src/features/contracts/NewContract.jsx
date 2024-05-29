@@ -1,68 +1,18 @@
 import * as React from "react";
-
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
 
 // Chakra-UI components
 import {
-  Box,
-  SimpleGrid,
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
-  Stepper,
-  useSteps,
-  Card,
+  Box
 } from "@chakra-ui/react";
 
-import AssetFilter from "./AssetFilter";
 import AddNewContract from "./AddNewContract";
 
 function NewContract() {
-  const steps = [
-    { title: "Create contract", description: "Contract Information" },
-    { title: "Add assets", description: "Search & Select assets" },
-  ];
 
-  const { activeStep } = useSteps({
-    index: 0,
-    count: steps.length,
-  });
 
   return (
-    <div>
-      <Card marginBottom={"1.0em"} marginTop={"0.2em"} padding={"0.5em"}>
-      
-        <Stepper index={activeStep} colorScheme="teal">
-          {steps.map((step, index) => (
-            <Step key={index}>
-              <StepIndicator>
-                <StepStatus
-                  complete={<StepIcon />}
-                  incomplete={<StepNumber />}
-                  active={<StepNumber />}
-                />
-              </StepIndicator>
-              <Box flexShrink="0">
-                <StepTitle>{step.title}</StepTitle>
-                <StepDescription>{step.description}</StepDescription>
-              </Box>
-
-              <StepSeparator />
-            </Step>
-          ))}
-        </Stepper>
-      </Card>
-
-      <SimpleGrid columns={2} spacing={"1.5em"}>
-        <AddNewContract/>
-        <AssetFilter />
-      </SimpleGrid>
-    </div>
+    <AddNewContract/>
   );
 }
 

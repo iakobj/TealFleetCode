@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 
 import AssetList from "./AssetList.jsx";
@@ -177,17 +176,6 @@ function AssetFilter() {
         >
           <Wrap>
             <WrapItem marginLeft="0.5em">
-              <NavLink to={"/support/contracts"}>
-                <Button
-                  leftIcon={<ArrowBackIcon />}
-                  size={"sm"}
-                  colorScheme={"teal"}
-                >
-                  Back
-                </Button>
-              </NavLink>
-            </WrapItem>
-            <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
                   placeholder="Vendor"
@@ -307,12 +295,22 @@ function AssetFilter() {
         </Card>
       </Hide>
 
-      <Card>
+      <Card
+        variant="outline"
+        bg="#fdfdfd"
+        borderRadius={"0.6em 0.6em 0.6em 0.6em"}
+        paddingTop="0.2em"
+      >
         <TableContainer marginTop="0.5em" marginBottom="1.0em">
-          <Table variant="simple" size={"sm"}>
+          <Table
+            variant="simple"
+            size={{ sm: "sm", md: "sm", lg: "sm", xl: "sm" }}
+          >
             <Thead>
               <Tr>
-                <Th><Checkbox size='md' colorScheme="teal"></Checkbox></Th>
+                <Th>
+                  <Checkbox size="md" colorScheme="teal"></Checkbox>
+                </Th>
                 <Th>Asset name</Th>
                 <Th>Tenant</Th>
                 <Th>Vendor</Th>
