@@ -424,10 +424,13 @@ module.exports.cContractsPostAdd = async (req, res) => {
       return; 
     } else {
       const result = await contractsPostAdd(data);
-      console.log(result);
-
-      res.status(200).send( "New contract was successefuly added" );
-      return; 
+      if (result && result[0] && result[0].error) {
+        res.status(400).send("error");
+        return;
+      } else {
+        res.status(200).send("success");
+        return;
+      }
     }
 
 

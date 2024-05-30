@@ -3,16 +3,8 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
   Select,
   Button,
@@ -22,17 +14,6 @@ import {
   Text,
   Flex,
   Spacer,
-  HStack,
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
-  Stepper,
-  useSteps,
   Card,
   SimpleGrid,
   Grid,
@@ -54,6 +35,7 @@ import * as Yup from "yup";
 function AddNewContract() {
   const [contractTypes, setContractTypes] = useState([]);
   const [tenants, setTenants] = useState([]);
+  const [newContractNo, setNewContractNo] = useState("");
   const formDataLoader = async () => {
     try {
       const getContractTypes = await fetch(
@@ -124,16 +106,16 @@ function AddNewContract() {
               position: "bottom",
               variant: "subtle",
             });
-            // after contract is created show option to add assets to the contract
-            setIsAssetsModalOpen(true); // Show the AddAssetsToContracts modal
-            onClose(true);
-          } else {
-            const responseData = await response.json();
-            const errorMessage = responseData.error;
 
+            if (values && values.contract_no) {
+              setNewContractNo(values.contract_no);
+            }
+            console.log(values.contract_no);
+          } else {
             toast({
               title: "Error",
-              description: errorMessage,
+              description:
+                "Oops! Our hamsters are on a break. Submission failed.",
               status: "error",
               position: "bottom",
               variant: "subtle",
@@ -150,6 +132,32 @@ function AddNewContract() {
     <Box>
       <Grid templateColumns="repeat(12, 1fr)" gap={4}>
         <GridItem colSpan={{ sm: "12", md: "12", lg: "4", xl: "3" }}>
+          <Card
+            padding="0.6em"
+            variant="outline"
+            bg="#fdfdfd"
+            borderRadius={"0.6em 0.6em 0.6em 0.6em"}
+            marginBottom="1em"
+            textAlign={"center"}
+          >
+            <Flex>
+              <NavLink to={"/support/contracts"}>
+                <Button
+                  leftIcon={<ArrowBackIcon />}
+                  size={"sm"}
+                  colorScheme={"teal"}
+                  variant="outline"
+                >
+                  Back
+                </Button>
+              </NavLink>
+              <Spacer />
+              <Text marginTop="0.2em" as="b" color="gray.600" size="sm">
+                CREATE NEW CONTRACT
+              </Text>
+              <Spacer />
+            </Flex>
+          </Card>
           <form onSubmit={formik.handleSubmit}>
             <Card
               padding="1em"
@@ -172,6 +180,7 @@ function AddNewContract() {
                 {formik.touched.contract_no && formik.errors.contract_no ? (
                   <div>{formik.errors.contract_no}</div>
                 ) : null}
+                <FormHelperText>Must be unique.</FormHelperText>
               </FormControl>
 
               <FormControl>
@@ -324,20 +333,7 @@ function AddNewContract() {
               </FormControl>
 
               <Flex marginTop="1em">
-
-  
-                <NavLink to={"/support/contracts"}>
-                  <Button
-                    leftIcon={<ArrowBackIcon />}
-                    size={"sm"}
-                    colorScheme={"teal"}
-                    variant='outline'
-                  >
-                    Back
-                  </Button>
-                </NavLink>
-
-                <Spacer/>
+                <Spacer />
 
                 <Button
                   type="submit"
@@ -347,14 +343,13 @@ function AddNewContract() {
                 >
                   Submit
                 </Button>
-
               </Flex>
             </Card>
           </form>
         </GridItem>
 
         <GridItem colSpan={{ sm: "12", md: "12", lg: "8", xl: "9" }}>
-          <AssetFilter />
+          <AssetFilter newContractNo={newContractNo}/>
         </GridItem>
       </Grid>
     </Box>

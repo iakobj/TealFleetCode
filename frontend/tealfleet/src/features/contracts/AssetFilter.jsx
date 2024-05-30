@@ -40,7 +40,7 @@ import {
   AddIcon,
 } from "@chakra-ui/icons";
 
-function AssetFilter() {
+function AssetFilter(newContractNo) {
   const loaderData = useLoaderData();
 
   const assetInformations = loaderData.fItems.data;
@@ -300,17 +300,17 @@ function AssetFilter() {
         bg="#fdfdfd"
         borderRadius={"0.6em 0.6em 0.6em 0.6em"}
         paddingTop="0.2em"
+        
       >
         <TableContainer marginTop="0.5em" marginBottom="1.0em">
           <Table
             variant="simple"
             size={{ sm: "sm", md: "sm", lg: "sm", xl: "sm" }}
           >
+            <TableCaption>{newContractNo.newContractNo}</TableCaption>
             <Thead>
               <Tr>
-                <Th>
-                  <Checkbox size="md" colorScheme="teal"></Checkbox>
-                </Th>
+                <Th></Th>
                 <Th>Asset name</Th>
                 <Th>Tenant</Th>
                 <Th>Vendor</Th>
@@ -332,7 +332,8 @@ function AssetFilter() {
                         assetInformations.hardware_asset_id
                           ? assetInformations.hardware_asset_id
                           : assetInformations.software_asset_id
-                      }
+                      } 
+                      newContractNo={newContractNo}
                     />
                   ))
               ) : (
