@@ -36,6 +36,7 @@ function AddNewContract() {
   const [contractTypes, setContractTypes] = useState([]);
   const [tenants, setTenants] = useState([]);
   const [newContractNo, setNewContractNo] = useState("");
+  const toast = useToast();
   const formDataLoader = async () => {
     try {
       const getContractTypes = await fetch(
@@ -64,7 +65,7 @@ function AddNewContract() {
     formDataLoader();
   }, []);
 
-  const toast = useToast();
+  
 
   const formik = useFormik({
     initialValues: {
@@ -152,7 +153,7 @@ function AddNewContract() {
                 </Button>
               </NavLink>
               <Spacer />
-              <Text marginTop="0.2em" as="b" color="gray.600" size="sm">
+              <Text marginTop={{ sm: "0.2em", md: "0.2em", lg: "0.4em", xl: "0.2em" }} as="b" color="gray.600" fontSize={{ sm: "sm", md: "md", lg: "sm", xl: "md" }}>
                 CREATE NEW CONTRACT
               </Text>
               <Spacer />

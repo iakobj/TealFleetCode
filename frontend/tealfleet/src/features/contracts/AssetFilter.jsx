@@ -40,6 +40,8 @@ import {
   AddIcon,
 } from "@chakra-ui/icons";
 
+import { useToast } from "@chakra-ui/react";
+
 function AssetFilter(newContractNo) {
   const loaderData = useLoaderData();
 
@@ -62,6 +64,8 @@ function AssetFilter(newContractNo) {
   const [selectedPage, setSelectedPage] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const toast = useToast();
 
   let params = {};
   function handleChange(selected, filterName) {
@@ -161,6 +165,8 @@ function AssetFilter(newContractNo) {
     setSitename("");
   }
 
+  if (!newContractNo.newContractNo) {
+  }
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Hide breakpoint="(max-width: 17em)">
@@ -300,12 +306,23 @@ function AssetFilter(newContractNo) {
         bg="#fdfdfd"
         borderRadius={"0.6em 0.6em 0.6em 0.6em"}
         paddingTop="0.2em"
-        
       >
         <TableContainer marginTop="0.5em" marginBottom="1.0em">
           <Table
             variant="simple"
             size={{ sm: "sm", md: "sm", lg: "sm", xl: "sm" }}
+            onClick={() => {
+              if (newContractNo.newContractNo === "") {
+                toast({
+                  title: "Action Required",
+                  description:
+                    "Create a contract first to enable asset addition.",
+                  status: "warning",
+                  duration: 9000,
+                  isClosable: true,
+                });
+              }
+            }}
           >
             <TableCaption>{newContractNo.newContractNo}</TableCaption>
             <Thead>
@@ -332,7 +349,7 @@ function AssetFilter(newContractNo) {
                         assetInformations.hardware_asset_id
                           ? assetInformations.hardware_asset_id
                           : assetInformations.software_asset_id
-                      } 
+                      }
                       newContractNo={newContractNo}
                     />
                   ))
