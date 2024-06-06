@@ -8,6 +8,9 @@ const Fonts = () => (
         font-stretch: 0;
         src: url('../public/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
       }
+      body {
+        font-family: 'Rubik', sans-serif;
+      }
       `}
   />
 );

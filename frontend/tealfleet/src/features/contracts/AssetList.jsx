@@ -20,7 +20,7 @@ function AssetList({ assetInformations, newContractNo }) {
           onChange={(e) => {
             const isChecked = e.target.checked;
 
-            const asset_sn = assetInformations.hardware_asset_id
+            const asset_id = assetInformations.hardware_asset_id
               ? assetInformations.hardware_asset_id
               : assetInformations.software_asset_id;
 
@@ -28,24 +28,54 @@ function AssetList({ assetInformations, newContractNo }) {
               ? assetInformations.software_asset_name
               : assetInformations.hardware_asset_name;
 
+            let action = "none";
+
             const examplePromise = new Promise((resolve, reject) => {
+              // User unselects the asset from the contract (add asset to the contract)
+              if (isChecked == true) {
+                action = "add";
+              }
+
+              // User selects the asset from the contract (remove asset from the contract)
+              if (isChecked == false) {
+                action = "remove";
+              }
+
               setTimeout(() => resolve(200), 5000);
             });
-            console.log(isChecked);
+            console.log(asset_id, asset_name, isChecked);
 
-            // Will display the loading toast until the promise is either resolved
-            // or rejected.
-            toast.promise(examplePromise, {
-              success: {
-                title: "Promise resolved",
-                description: `${asset_name} added`,
-              },
-              error: {
-                title: "Promise rejected",
-                description: "Something wrong",
-              },
-              loading: { title: "Promise pending", description: "Please wait" },
-            });
+            if (action == "add") {
+              toast.promise(examplePromise, {
+                success: {
+                  title: "Promise resolved",
+                  description: `${asset_name} added`,
+                },
+                error: {
+                  title: "Promise rejected",
+                  description: "Something wrong",
+                },
+                loading: {
+                  title: "Promise pending",
+                  description: `Adding ${asset_name} to the contract`,
+                },
+              });
+            } else if (action == "remove") {
+              toast.promise(examplePromise, {
+                success: {
+                  title: "Promise resolved",
+                  description: `${asset_name} removed`,
+                },
+                error: {
+                  title: "Promise rejected",
+                  description: "Something wrong",
+                },
+                loading: {
+                  title: "Promise pending",
+                  description: `Removing ${asset_name} from the contract`,
+                },
+              });
+            }
           }}
         ></Checkbox>
       </Td>
