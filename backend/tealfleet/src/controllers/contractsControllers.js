@@ -13,12 +13,16 @@ const {
   contractsGetAllContractTypes,
   contractsGetByContractNoBasic,
 
-  contractsPostAdd
+  contractsPostAdd,
+  contractsPostAddAsset,
+  contractsPostRemoveAsset,
+
 } = require("../services/contractsServices");
 
 const { checkIdentity } = require("../middlewares/identity");
 
 const Joi = require("joi");
+const { v4: uuidv4 } = require('uuid');
 
 module.exports.cContractsGetAll = async (req, res) => {
   try {
@@ -389,7 +393,10 @@ module.exports.cContractsPostAdd = async (req, res) => {
 
     let { contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = req.body;
 
+    const contract_id = uuidv4();
+
     const data = {
+      contract_id: contract_id,
       contract_no: contract_no,
       contract_type_id: contract_type_id,
       contractor_name: contractor_name,
@@ -407,6 +414,7 @@ module.exports.cContractsPostAdd = async (req, res) => {
     }
 
     const schema = Joi.object({
+      contract_id: Joi.string().guid({version: 'uuidv4'}),
       contract_no: Joi.string().required(),
       contract_type_id: Joi.string().guid().optional(),
       contractor_name: Joi.string().alphanum().required(),
@@ -428,7 +436,7 @@ module.exports.cContractsPostAdd = async (req, res) => {
         res.status(400).send("error");
         return;
       } else {
-        res.status(200).send("success");
+        res.status(200).send({contract_id});
         return;
       }
     }
@@ -437,4 +445,50 @@ module.exports.cContractsPostAdd = async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: "Internal server error" });
   }
+};
+
+module.exports.cContractsPostAddAsset = async (req, res) => {
+  try {
+    const identity = await checkIdentity(req);
+
+    let { newContractId, asset_id, asset_type } = req.body;
+    console.log(newContractId, asset_id, asset_type);
+
+      const result = await contractsPostAddAsset(identity, newContractId, asset_id, asset_type);
+
+      if (result && result[0] && result[0].error) {
+        res.status(400).send("error");
+        return;
+      } else {
+        res.status(200).send("success");
+        return;
+      }
+    } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
+  }
+
+};
+
+
+// TODO
+module.exports.cContractsPostRemoveAsset = async (req, res) => {
+  
+  try {
+    const identity = await checkIdentity(req);
+
+    let { asset_id } = req.body;
+
+      const result = await contractsPostRemoveAsset(data);
+
+      if (result && result[0] && result[0].error) {
+        res.status(400).send("error");
+        return;
+      } else {
+        res.status(200).send("success");
+        return;
+      }
+    } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
+  }
+
 };

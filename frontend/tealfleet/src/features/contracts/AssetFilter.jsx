@@ -42,7 +42,7 @@ import {
 
 import { useToast } from "@chakra-ui/react";
 
-function AssetFilter(newContractNo) {
+function AssetFilter({newContractId, newContractNo}) {
   const loaderData = useLoaderData();
 
   const assetInformations = loaderData.fItems.data;
@@ -165,8 +165,6 @@ function AssetFilter(newContractNo) {
     setSitename("");
   }
 
-  if (!newContractNo.newContractNo) {
-  }
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Hide breakpoint="(max-width: 17em)">
@@ -312,7 +310,7 @@ function AssetFilter(newContractNo) {
             variant="simple"
             size={{ sm: "sm", md: "sm", lg: "sm", xl: "sm" }}
             onClick={() => {
-              if (newContractNo.newContractNo === "") {
+              if (newContractNo === "") {
                 toast({
                   title: "Action Required",
                   description:
@@ -324,7 +322,7 @@ function AssetFilter(newContractNo) {
               }
             }}
           >
-            <TableCaption>{newContractNo.newContractNo}</TableCaption>
+            <TableCaption>{newContractNo}</TableCaption>
             <Thead>
               <Tr>
                 <Th></Th>
@@ -345,12 +343,13 @@ function AssetFilter(newContractNo) {
                   .map((assetInformations) => (
                     <AssetList
                       assetInformations={assetInformations}
+                      newContractNo={newContractNo}
+                      newContractId={newContractId}
                       key={
                         assetInformations.hardware_asset_id
                           ? assetInformations.hardware_asset_id
                           : assetInformations.software_asset_id
                       }
-                      newContractNo={newContractNo}
                     />
                   ))
               ) : (

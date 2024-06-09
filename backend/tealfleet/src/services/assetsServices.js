@@ -197,7 +197,13 @@ module.exports.assetsGetFleet = async (identity, searchParams) => {
       tenants.tenant_name,
 
       sites.site_id,
-      sites.site_name
+      sites.site_name,
+
+      CASE
+        WHEN hw.hardware_asset_id IS NOT NULL THEN 'HW'
+        WHEN sw.software_asset_id IS NOT NULL THEN 'SW'
+        ELSE 'Unknown'
+      END AS asset_type
     
     FROM  
       hardware_assets hw

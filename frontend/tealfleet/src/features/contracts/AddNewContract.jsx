@@ -36,6 +36,7 @@ function AddNewContract() {
   const [contractTypes, setContractTypes] = useState([]);
   const [tenants, setTenants] = useState([]);
   const [newContractNo, setNewContractNo] = useState("");
+  const [newContractId, setNewContractId] = useState("");
   const toast = useToast();
   const formDataLoader = async () => {
     try {
@@ -100,9 +101,11 @@ function AddNewContract() {
           body: newContract,
         }).then(async (response) => {
           if (response.status == 200) {
+            let contract_id = await response.json()
+            setNewContractId(contract_id.contract_id);
             toast({
               title: "Contract added",
-              description: "New contract was successefuly added",
+              description: `New contract was successefuly added with ID: ${contract_id.contract_id}`,
               status: "success",
               position: "bottom",
               variant: "subtle",
@@ -111,7 +114,6 @@ function AddNewContract() {
             if (values && values.contract_no) {
               setNewContractNo(values.contract_no);
             }
-            console.log(values.contract_no);
           } else {
             toast({
               title: "Error",
@@ -181,7 +183,6 @@ function AddNewContract() {
                 {formik.touched.contract_no && formik.errors.contract_no ? (
                   <div>{formik.errors.contract_no}</div>
                 ) : null}
-                <FormHelperText>Must be unique.</FormHelperText>
               </FormControl>
 
               <FormControl>
@@ -350,7 +351,7 @@ function AddNewContract() {
         </GridItem>
 
         <GridItem colSpan={{ sm: "12", md: "12", lg: "8", xl: "9" }}>
-          <AssetFilter newContractNo={newContractNo}/>
+          <AssetFilter newContractId={newContractId} newContractNo={newContractNo}/>
         </GridItem>
       </Grid>
     </Box>

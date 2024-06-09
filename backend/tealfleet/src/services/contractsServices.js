@@ -510,48 +510,6 @@ module.exports.contractsGetAllContractTypes = async (identity) => {
   }
 };
 
-module.exports.contractsPostAdd = async (data) => {
-
-  let { contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = data;
-
-  let contract_valid_from_date = new Date(contract_valid_from);
-  let contract_valid_to_date = new Date(contract_valid_to);
-
-  try {
-    const result = await query(`
-      INSERT INTO 
-        contracts (
-          contract_id, 
-          tenant_id, 
-          contract_type_id, 
-          contractor_name, 
-          contract_sla, 
-          contract_no, 
-          contract_description,
-          contract_valid_from,
-          contract_valid_to,
-          contract_changed_at,
-          contract_created_at
-        ) 
-      VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7, $8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`, [
-        tenant_id, 
-        contract_type_id, 
-        contractor_name, 
-        contract_sla, 
-        contract_no, 
-        contract_description,
-        contract_valid_from_date,
-        contract_valid_to_date,
-      ]);
-      
-      return(result)
-    
-  } catch (error) {
-    console.log(error);
-    return [{ error: error }];
-  }
-};
-
 module.exports.contractsGetByContractNoBasic = async (
   identity,
   contract_no
@@ -590,6 +548,121 @@ module.exports.contractsGetByContractNoBasic = async (
         JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
         WHERE contracts.tenant_id = $1 AND contracts.contract_no = $2;`,
         [tenant_id, contract_no]
+      );
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
+
+module.exports.contractsPostAdd = async (data) => {
+
+  let { contract_id, contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = data;
+
+  let contract_valid_from_date = new Date(contract_valid_from);
+  let contract_valid_to_date = new Date(contract_valid_to);
+
+  try {
+    const result = await query(`
+      INSERT INTO 
+        contracts (
+          contract_id, 
+          tenant_id, 
+          contract_type_id, 
+          contractor_name, 
+          contract_sla, 
+          contract_no, 
+          contract_description,
+          contract_valid_from,
+          contract_valid_to,
+          contract_changed_at,
+          contract_created_at
+        ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`, [
+        contract_id,
+        tenant_id, 
+        contract_type_id, 
+        contractor_name, 
+        contract_sla, 
+        contract_no, 
+        contract_description,
+        contract_valid_from_date,
+        contract_valid_to_date,
+      ]);
+      
+      return(result)
+    
+  } catch (error) {
+    console.log(error);
+    return [{ error: error }];
+  }
+};
+
+// Add asset to the contract
+module.exports.contractsPostAddAsset = async (identity, newContractId, asset_id, asset_type) => {
+  try {
+    const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
+
+    if (tenant_root == true && mock_tenant_id == undefined) {
+      //INSERT INTO "hw_asset_contracts" ("hw_asset_contract_id", "hardware_asset_id", "contract_id")
+      const result = await query(`
+        SELECT * 
+        FROM hw_ass;
+      `);
+      return result.rows;
+    } else if (tenant_root == true && mock_tenant_id) {
+      const result = await query(
+        `
+        SELECT * 
+        FROM contract_types
+        WHERE tenant_id = $1;`,
+        [mock_tenant_id]
+      );
+      return result.rows;
+    } else {
+      const result = await query(
+        `
+        SELECT * 
+        FROM contract_types
+        WHERE tenant_id = $1;`,
+        [tenant_id]
+      );
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
+
+
+// TODO
+module.exports.contractsPostRemoveAsset = async (identity) => {
+  try {
+    const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
+
+    if (tenant_root == true && mock_tenant_id == undefined) {
+      const result = await query(`
+        SELECT * 
+        FROM contract_types;
+      `);
+      return result.rows;
+    } else if (tenant_root == true && mock_tenant_id) {
+      const result = await query(
+        `
+        SELECT * 
+        FROM contract_types
+        WHERE tenant_id = $1;`,
+        [mock_tenant_id]
+      );
+      return result.rows;
+    } else {
+      const result = await query(
+        `
+        SELECT * 
+        FROM contract_types
+        WHERE tenant_id = $1;`,
+        [tenant_id]
       );
       return result.rows;
     }

@@ -7,14 +7,17 @@ import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 import { useToast } from "@chakra-ui/react";
 
-function AssetList({ assetInformations, newContractNo }) {
+// import location of the API server
+import { API_ENDPOINT } from "../../constants/apiEndpoint";
+
+function AssetList({ assetInformations, newContractNo, newContractId }) {
   const toast = useToast();
 
   return (
     <Tr>
       <Td>
         <Checkbox
-          isDisabled={newContractNo.newContractNo === ""}
+          isDisabled={newContractNo === ""}
           size="md"
           colorScheme="teal"
           onChange={(e) => {
@@ -30,20 +33,51 @@ function AssetList({ assetInformations, newContractNo }) {
 
             let action = "none";
 
+            let assetInfo = {
+              newContractNo: newContractNo,
+              newContractId: newContractId,
+              asset_id: asset_id,
+              asset_type: assetInformations.asset_type,
+            }
+
             const examplePromise = new Promise((resolve, reject) => {
               // User unselects the asset from the contract (add asset to the contract)
               if (isChecked == true) {
                 action = "add";
+
+                const addAsset = JSON.stringify(assetInfo, null, 2);
+                try {
+                  fetch(`http://${API_ENDPOINT}/contracts/add/asset`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: addAsset,
+                  })
+                } catch (error) {
+                  console.error("Error loading form data:", error);
+                }
+
               }
 
               // User selects the asset from the contract (remove asset from the contract)
               if (isChecked == false) {
                 action = "remove";
+
+                const removeAsset = JSON.stringify(assetInfo, null, 2);
+                try {
+                  fetch(`http://${API_ENDPOINT}/contracts/remove/asset`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: removeAsset,
+                  })
+                } catch (error) {
+                  console.error("Error loading form data:", error);
+                }
               }
 
               setTimeout(() => resolve(200), 5000);
             });
-            console.log(asset_id, asset_name, isChecked);
 
             if (action == "add") {
               toast.promise(examplePromise, {
