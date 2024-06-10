@@ -38,9 +38,9 @@ function AssetList({ assetInformations, newContractNo, newContractId }) {
               newContractId: newContractId,
               asset_id: asset_id,
               asset_type: assetInformations.asset_type,
-            }
+            };
 
-            const examplePromise = new Promise((resolve, reject) => {
+            const assetCheckboxAction = new Promise((resolve, reject) => {
               // User unselects the asset from the contract (add asset to the contract)
               if (isChecked == true) {
                 action = "add";
@@ -52,11 +52,33 @@ function AssetList({ assetInformations, newContractNo, newContractId }) {
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",
                     body: addAsset,
-                  })
+                  }).then(async (response) => {
+
+                    //let action_status = await response.json();
+                    console.log(response.ok);
+                    if (response.ok == "true") {
+                    toast({
+                      title: "Asset added",
+                      description: `${asset_name}`,
+                      status: "success",
+                      position: "bottom",
+                      variant: "subtle",
+                    });
+                  } else {
+                    toast({
+                      title: "Error",
+                      description: `Error adding ${asset_name}`,
+                      status: "error",
+                      position: "bottom",
+                      variant: "subtle",
+                    });
+                  }
+
+
+                  });
                 } catch (error) {
                   console.error("Error loading form data:", error);
                 }
-
               }
 
               // User selects the asset from the contract (remove asset from the contract)
@@ -70,32 +92,33 @@ function AssetList({ assetInformations, newContractNo, newContractId }) {
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",
                     body: removeAsset,
-                  })
+                  }).then(async (response) => {
+                    let action_status = await response.json();
+                    if (action_status == "success") {
+                      toast.promise(action_status, {
+                        success: {
+                          title: "Promise resolved",
+                          description: `${asset_name} added`,
+                        },
+                        error: {
+                          title: "Promise rejected",
+                          description: "Something wrong",
+                        },
+                        loading: {
+                          title: "Promise pending",
+                          description: `Adding ${asset_name} to the contract`,
+                        },
+                      });
+                    }
+                  });
                 } catch (error) {
                   console.error("Error loading form data:", error);
                 }
               }
-
-              setTimeout(() => resolve(200), 5000);
             });
 
-            if (action == "add") {
-              toast.promise(examplePromise, {
-                success: {
-                  title: "Promise resolved",
-                  description: `${asset_name} added`,
-                },
-                error: {
-                  title: "Promise rejected",
-                  description: "Something wrong",
-                },
-                loading: {
-                  title: "Promise pending",
-                  description: `Adding ${asset_name} to the contract`,
-                },
-              });
-            } else if (action == "remove") {
-              toast.promise(examplePromise, {
+            if (action == "remove") {
+              toast.promise(assetCheckboxAction, {
                 success: {
                   title: "Promise resolved",
                   description: `${asset_name} removed`,

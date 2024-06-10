@@ -599,37 +599,105 @@ module.exports.contractsPostAdd = async (data) => {
   }
 };
 
-// Add asset to the contract
 module.exports.contractsPostAddAsset = async (identity, newContractId, asset_id, asset_type) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
 
-    if (tenant_root == true && mock_tenant_id == undefined) {
-      //INSERT INTO "hw_asset_contracts" ("hw_asset_contract_id", "hardware_asset_id", "contract_id")
-      const result = await query(`
-        SELECT * 
-        FROM hw_ass;
-      `);
-      return result.rows;
-    } else if (tenant_root == true && mock_tenant_id) {
-      const result = await query(
-        `
-        SELECT * 
-        FROM contract_types
-        WHERE tenant_id = $1;`,
-        [mock_tenant_id]
-      );
-      return result.rows;
-    } else {
-      const result = await query(
-        `
-        SELECT * 
-        FROM contract_types
-        WHERE tenant_id = $1;`,
-        [tenant_id]
-      );
-      return result.rows;
+
+    if (asset_type == "HW") {
+      if (tenant_root == true && mock_tenant_id == undefined) {
+        const result = await query(
+          `
+          INSERT INTO  
+          hw_asset_contracts (
+            hw_asset_contract_id,
+            hardware_asset_id,
+            contract_id,
+            hw_created_at
+          )
+          VALUES (uuid_generate_v4(), $1, $2, CURRENT_TIMESTAMP);`,
+          [asset_id, newContractId]
+        );
+
+        return result.rows;
+      } else if (tenant_root == true && mock_tenant_id) {
+        const result = await query(
+          `
+          INSERT INTO  
+          hw_asset_contracts (
+            hw_asset_contract_id,
+            hardware_asset_id,
+            contract_id,
+            hw_created_at
+          )
+          VALUES (uuid_generate_v4(), $1, $2, CURRENT_TIMESTAMP);`,
+          [asset_id, newContractId]
+        );
+        return result.rows;
+      } else {
+        const result = await query(
+          `
+        INSERT INTO  
+        hw_asset_contracts (
+          hw_asset_contract_id,
+          hardware_asset_id,
+          contract_id,
+          hw_created_at
+        )
+        VALUES (uuid_generate_v4(), $1, $2, CURRENT_TIMESTAMP);`,
+          [asset_id, newContractId]
+        );
+        return result.rows;
+      }
+    } else if (asset_type == "SW") {
+      if (tenant_root == true && mock_tenant_id == undefined) {
+        const result = await query(
+          `
+          INSERT INTO  
+          sw_asset_contracts (
+            sw_asset_contract_id,
+            software_asset_id,
+            contract_id,
+            sw_created_at
+          )
+          VALUES (uuid_generate_v4(), $1, $2, CURRENT_TIMESTAMP);`,
+          [asset_id, newContractId]
+        );
+
+        return result.rows;
+      } else if (tenant_root == true && mock_tenant_id) {
+        const result = await query(
+          `
+          INSERT INTO  
+          hw_asset_contracts (
+            sw_asset_contract_id,
+            software_asset_id,
+            contract_id,
+            sw_created_at
+          )
+          VALUES (uuid_generate_v4(), $1, $2, CURRENT_TIMESTAMP);`,
+          [asset_id, newContractId]
+        );
+        return result.rows;
+      } else {
+        const result = await query(
+          `
+        INSERT INTO  
+        sw_asset_contract_id,
+        software_asset_id,
+        contract_id,
+        sw_created_at
+        )
+        VALUES (uuid_generate_v4(), $1, $2, CURRENT_TIMESTAMP);`,
+          [asset_id, newContractId]
+        );
+        return result.rows;
+      }
     }
+
+
+
+
   } catch (error) {
     return [{ error: error }];
   }
