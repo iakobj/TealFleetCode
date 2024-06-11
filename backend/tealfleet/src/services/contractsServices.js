@@ -695,9 +695,6 @@ module.exports.contractsPostAddAsset = async (identity, newContractId, asset_id,
       }
     }
 
-
-
-
   } catch (error) {
     return [{ error: error }];
   }
@@ -705,35 +702,95 @@ module.exports.contractsPostAddAsset = async (identity, newContractId, asset_id,
 
 
 // TODO
-module.exports.contractsPostRemoveAsset = async (identity) => {
+module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_id, asset_type) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
 
-    if (tenant_root == true && mock_tenant_id == undefined) {
-      const result = await query(`
-        SELECT * 
-        FROM contract_types;
-      `);
+
+    if (asset_type == "HW") {
+      if (tenant_root == true && mock_tenant_id == undefined) {
+        const result = await query(
+          `
+          DELETE FROM  
+            hw_asset_contracts
+          WHERE
+            hardware_asset_id = $1
+          AND
+            contract_id = $2;
+          `,
+          [asset_id, newContractId]
+        );
+        return result.rows;
+      } else if (tenant_root == true && mock_tenant_id) {
+        const result = await query(
+          `
+          DELETE FROM  
+            hw_asset_contracts
+          WHERE
+            hardware_asset_id = $1
+          AND
+            contract_id = $2;
+          `,
+          [newContractId, asset_id]
+        );
+        return result.rows;
+      } else {
+        const result = await query(
+            `
+            DELETE FROM  
+              hw_asset_contracts
+            WHERE
+              hardware_asset_id = $1
+            AND
+              contract_id = $2;
+            `,
+            [asset_id, newContractId]
+          );
+        return result.rows;
+      }
+    } else if (asset_type == "SW") {
+      if (tenant_root == true && mock_tenant_id == undefined) {
+        const result = await query(
+          `
+          DELETE FROM  
+            sw_asset_contracts
+          WHERE
+            software_asset_id = $1
+          AND
+            contract_id = $2;
+          `,
+          [asset_id, newContractId]
+        );
       return result.rows;
-    } else if (tenant_root == true && mock_tenant_id) {
-      const result = await query(
-        `
-        SELECT * 
-        FROM contract_types
-        WHERE tenant_id = $1;`,
-        [mock_tenant_id]
-      );
+      } else if (tenant_root == true && mock_tenant_id) {
+        const result = await query(
+          `
+          DELETE FROM  
+            sw_asset_contracts
+          WHERE
+            software_asset_id = $1
+          AND
+            contract_id = $2;
+          `,
+          [asset_id, newContractId]
+        );
       return result.rows;
-    } else {
-      const result = await query(
-        `
-        SELECT * 
-        FROM contract_types
-        WHERE tenant_id = $1;`,
-        [tenant_id]
-      );
+      } else {
+        const result = await query(
+          `
+          DELETE FROM  
+            sw_asset_contracts
+          WHERE
+            software_asset_id = $1
+          AND
+            contract_id = $2;
+          `,
+          [asset_id, newContractId]
+        );
       return result.rows;
+      }
     }
+
   } catch (error) {
     return [{ error: error }];
   }

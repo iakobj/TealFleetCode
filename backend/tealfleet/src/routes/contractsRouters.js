@@ -190,7 +190,8 @@ const {
   cContractsGetByContractNoBasic,
 
   cContractsPostAdd,
-  cContractsPostAddAsset
+  cContractsPostAddAsset,
+  cContractsPostRemoveAsset,
 } = require("../controllers/contractsControllers");
 
 contractsRouters.get("/", cContractsGetAll);
@@ -212,6 +213,6 @@ contractsRouters.get("/all/:filter?", cSupportGetContracts);
 
 contractsRouters.post("/add", cContractsPostAdd);
 contractsRouters.post("/add/asset", cContractsPostAddAsset);
-contractsRouters.post("/remove/asset", cContractsPostAddAsset) // TODO
+contractsRouters.post("/remove/asset", cContractsPostRemoveAsset) // TODO
 
 module.exports = contractsRouters;

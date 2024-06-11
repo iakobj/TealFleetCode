@@ -472,13 +472,14 @@ module.exports.cContractsPostAddAsset = async (req, res) => {
 
 // TODO
 module.exports.cContractsPostRemoveAsset = async (req, res) => {
-  
   try {
     const identity = await checkIdentity(req);
 
-    let { asset_id } = req.body;
+    let { newContractId, asset_id, asset_type } = req.body;
+    console.log("remove")
+    console.log(newContractId, asset_id, asset_type);
 
-      const result = await contractsPostRemoveAsset(data);
+      const result = await contractsPostRemoveAsset(identity, newContractId, asset_id, asset_type);
 
       if (result && result[0] && result[0].error) {
         res.status(400).send("error");
