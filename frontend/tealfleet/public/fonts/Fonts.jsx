@@ -6,7 +6,7 @@ const Fonts = () => (
     @font-face {
         font-family: 'Rubik';
         font-stretch: 0;
-        src: url('../public/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
+        src: url('/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
       }
       body {
         font-family: 'Rubik', sans-serif;

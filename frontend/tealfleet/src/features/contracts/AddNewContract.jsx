@@ -150,12 +150,13 @@ function AddNewContract() {
                   size={"sm"}
                   colorScheme={"teal"}
                   variant="outline"
+                  marginTop={{ sm: "0.2em", md: "0.0em", lg: "0.0em", xl: "0.0em" }}
                 >
                   Back
                 </Button>
               </NavLink>
               <Spacer />
-              <Text marginTop={{ sm: "0.2em", md: "0.2em", lg: "0.4em", xl: "0.2em" }} as="b" color="gray.600" fontSize={{ sm: "sm", md: "md", lg: "sm", xl: "md" }}>
+              <Text marginTop={{ sm: "0.5em", md: "0.2em", lg: "0.4em", xl: "0.4em" }} as="b" color="gray.600" fontSize={{ sm: "sm", md: "md", lg: "sm", xl: "sm" }}>
                 CREATE NEW CONTRACT
               </Text>
               <Spacer />

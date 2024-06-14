@@ -69,13 +69,11 @@ function ContractsAssetsList({ selectedContract }) {
               }}
             >
               <TableCaption>
-                  <Text>
                     {contractAssets &&
                     contractAssets.data &&
                     contractAssets.data.length > 0
                       ? contractAssets.data[0].contract_no
                       : <Text fontSize='xl' >Nothing found</Text>}
-                  </Text>
               </TableCaption>
               <Thead>
                 <Tr>
