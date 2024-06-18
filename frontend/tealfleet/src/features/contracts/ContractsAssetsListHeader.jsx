@@ -53,8 +53,8 @@ function ContractsAssetsListHeader({ selectedContract }) {
   }, [selectedContract]);
 
   return (
-    <Card bg="#FDFDFD" variant="outline" borderRadius="0.6em 0.6em 0.6em 0.6em">
-      <CardHeader borderRadius="0.55em 0.55em 0em 0em" bg="#F4F7F4">
+    <Card bg="#FDFDFD" variant="outline" borderRadius="0.6em 0.6em 0.6em 0.6em" position="sticky" zIndex="80" top="0em">
+      <CardHeader borderRadius="0.55em 0.55em 0.55em 0.55em" bg="#F4F7F4">
         <Flex>
           <Text fontWeight="500" color="gray.600">
             {contractData &&
@@ -86,15 +86,7 @@ function ContractsAssetsListHeader({ selectedContract }) {
         </Flex>
       </CardHeader>
 
-      <CardBody bg="#F4F7F4" paddingBottom="1.2em">
-        <Text color="gray.600" paddingBottom="0.4em">
-          {contractData &&
-          contractData.data &&
-          contractData.data.length > 0
-            ? contractData.data[0].contract_description
-            : "Nothing Selected"}
-        </Text>
-
+      <CardBody bg="#F4F7F4" paddingBottom="1.2em" borderRadius="0.55em 0.55em 0.55em 0.55em">
         <Stack direction="row" marginTop="0.2em" marginBottom="0.2em">
           {contractData &&
           contractData.data &&
@@ -103,6 +95,7 @@ function ContractsAssetsListHeader({ selectedContract }) {
               {contractData.data && contractData.data[0].type}
             </Badge>
           ) : null}
+
           {contractData &&
           contractData.data &&
           contractData.data.length > 0 ? (
@@ -110,6 +103,7 @@ function ContractsAssetsListHeader({ selectedContract }) {
               SLA: {contractData.data && contractData.data[0].contract_sla}
             </Badge>
           ) : null}
+          
         </Stack>
 
         <Box marginBottom="-0.2em">

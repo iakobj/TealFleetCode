@@ -27,7 +27,7 @@ function RootLayout() {
 
         <GridItem
           as="main"
-          marginBottom="3em"
+          marginBottom="2em"
           colSpan={{ base: 12, sm: 12, md: 12 }}
           colStart={{ base: 1, sm: 1, md: 1 }}
         >

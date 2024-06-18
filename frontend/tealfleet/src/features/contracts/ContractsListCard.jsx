@@ -50,10 +50,10 @@ function ContractsListCard({ contractItems }) {
   };
 
   return (
-    <Box marginTop="1em">
-      <Grid templateColumns="repeat(12, 1fr)" templateRows="1" gap="0em">
-        <GridItem colSpan={3}>
-          <SimpleGrid spacing="0.8em" marginRight="1em">
+    <Box marginTop="1em" >
+      <Grid templateColumns="repeat(12, 1fr)" templateRows="1" gap="0.5em" height={"calc((100vh) - 11.8em)"}>
+        <GridItem colSpan={3} height={"100%"} flex={1} overflowY={"auto"} >
+          <SimpleGrid spacing="0.8em" marginRight={"1em"}>
             {contractItems.map((contractItems) => (
               <Card
                 borderRadius="0.6em 0.6em 0.6em 0.6em"
@@ -64,8 +64,14 @@ function ContractsListCard({ contractItems }) {
                     ? "#F4F7F4"
                     : "#FDFDFD"
                 }
+                borderColor={
+                  selectedContract === contractItems.contract_no
+                    ? "gray.300"
+                    : "gray.200"
+                }
                 _hover={{ cursor: "pointer" }}
                 variant="outline"
+
               >
                 <CardHeader
                   marginLeft="-0.75em"
@@ -106,7 +112,7 @@ function ContractsListCard({ contractItems }) {
           </SimpleGrid>
         </GridItem>
         <GridItem colSpan={9}>
-          <Box>
+          <Box borderColor={"red"} height={"calc((100vh) - 11.8em)"}>
             <ContractsAssetsList selectedContract={selectedContract} />
           </Box>
         </GridItem>

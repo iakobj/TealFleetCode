@@ -45,18 +45,19 @@ function ContractsAssetsList({ selectedContract }) {
   }, [selectedContract]);
 
   return (
-    <Box>
+    <Box >
 
-      <ContractsAssetsListHeader selectedContract={selectedContract} />
+      <ContractsAssetsListHeader selectedContract={selectedContract}/>
 
       <Card
         bg="#FDFDFD"
         variant="outline"
         borderRadius="0.6em 0.6em 0.6em 0.6em"
         marginTop="0.75em"
+        height={"100%"} flex={1}
       >
-        <CardBody>
-          <TableContainer>
+        <CardBody >
+          <TableContainer height={"calc((100vh) - 25.3em)"} overflowY="auto">
             <Table
               variant="simple"
               size={{
@@ -75,7 +76,7 @@ function ContractsAssetsList({ selectedContract }) {
                       ? contractAssets.data[0].contract_no
                       : <Text fontSize='xl' >Nothing found</Text>}
               </TableCaption>
-              <Thead>
+              <Thead position="sticky" zIndex="80" top="0em" backgroundColor={"#FDFDFD"}>
                 <Tr>
                   <Th>ASSET NAME</Th>
                   <Th>TENANT</Th>

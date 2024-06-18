@@ -154,17 +154,6 @@ function AssetFilter({newContractId, newContractNo}) {
     elements = Array.from({ length: totalPages });
   }
 
-  function resetForm() {
-    setOffset(0);
-    setArrowBack(true);
-    setArrowForward(false);
-    setVendor("");
-    setTenant("");
-    setSwmodel("");
-    setHwmodel("");
-    setSitename("");
-  }
-
   return (
     <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
       <Hide breakpoint="(max-width: 17em)">

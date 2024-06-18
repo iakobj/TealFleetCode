@@ -19,7 +19,6 @@ import {
   Hide,
   IconButton,
   Stack,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import { RepeatIcon, ArrowBackIcon, ArrowForwardIcon, AddIcon } from "@chakra-ui/icons";
@@ -70,58 +69,6 @@ function ContractsFilter() {
     setSearchParams(params);
   }
 
-  let numberOfContractsOnPage = 24;
-  let elements = [];
-  let totalPages = 0;
-  let foundContracts = 0;
-
-  useEffect(() => {
-    if (offset / totalPages == 0) {
-      setSelectedPage(1);
-    } else {
-      const currentPage = Math.floor(
-        (offset + numberOfContractsOnPage) / numberOfContractsOnPage
-      );
-      setSelectedPage(currentPage);
-    }
-  }, [offset, totalPages]);
-
-  useEffect(() => {
-    if (
-      offset ==
-        Math.ceil(foundContracts / numberOfContractsOnPage) * totalPages ||
-      totalPages == 1
-    ) {
-      setArrowForward(true);
-    } else if (totalPages == selectedPage) {
-      setArrowForward(true);
-    } else if (totalPages == 1) {
-      setArrowForward(true);
-    } else {
-      setArrowForward(false);
-    }
-  }, [offset, totalPages, contractItems]);
-
-  useEffect(() => {
-    if (offset === 0) {
-      setArrowBack(true);
-    } else {
-      setArrowBack(false);
-    }
-  }, [offset, totalPages]);
-
-  if (
-    contractItems &&
-    contractItems.length > 0 &&
-    contractItems[0].total_count !== undefined
-  ) {
-    foundContracts = contractItems[0].total_count;
-    totalPages = Math.ceil(
-      contractItems[0].total_count / numberOfContractsOnPage
-    );
-    elements = Array.from({ length: totalPages });
-  }
-
   function resetForm() {
     setOffset(0);
     setArrowBack(true);
@@ -131,14 +78,12 @@ function ContractsFilter() {
     setContractor("");
   }
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
 
   return (
     <Box>
-      <Hide breakpoint="(max-width: 17em)">
+      <Hide breakpoint="(max-width: 17em)" >
         <Card
-          marginBottom="1em"
+          marginBottom="0em"
           paddingTop="0.6em"
           paddingBottom="0.6em"
           variant="outline"
@@ -146,6 +91,7 @@ function ContractsFilter() {
           borderRadius={"0.6em 0.6em 0.6em 0.6em"}
           marginLeft={{ base: "0.5em", sm: "0.5em", md: "0em" }}
           marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
+          position="sticky" zIndex="90" top="6.5em"
         >
           <Wrap>
             <WrapItem>
@@ -225,7 +171,12 @@ function ContractsFilter() {
             <WrapItem>
               <Spacer />
               <NavLink to="new">
-                <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"} marginRight="0.6em">
+                <Button
+                  leftIcon={<AddIcon />}
+                  size={"sm"}
+                  colorScheme={"teal"}
+                  marginRight="0.6em"
+                >
                   New Contract
                 </Button>
               </NavLink>
@@ -233,79 +184,14 @@ function ContractsFilter() {
           </Wrap>
         </Card>
       </Hide>
-      <Box>
-        {contractItems == false
-        ? <FilterNothingFound/>
-        : <ContractsListCard contractItems={contractItems} />}
+      <Box height={"calc((100vh) - 12.9em)"} >
+        {contractItems == false ? (
+          <FilterNothingFound />
+        ) : (
+          <ContractsListCard contractItems={contractItems} />
+        )}
       </Box>
-      <Card
-        marginTop="1em"
-        paddingTop="0.6em"
-        paddingBottom="0.6em"
-        variant="outline"
-        bg="#fdfdfd"
-        borderRadius={"0.6em 0.6em 0.6em 0.6em"}
-      >
-        <Wrap>
-          <WrapItem>
-            <IconButton
-              marginRight={"0.6em"}
-              aria-label="Reset filter"
-              icon={<ArrowBackIcon />}
-              size={"sm"}
-              colorScheme={"teal"}
-              marginLeft={"0.6em"}
-              onClick={() =>
-                handleChange(offset - numberOfContractsOnPage, "offset")
-              }
-              isDisabled={arrowBack}
-            />
-          </WrapItem>
-          <WrapItem marginTop="0.3em">
-            <Stack direction="row">
-              {elements.map((_, index) => (
-                <Button
-                  colorScheme="blackAlpha"
-                  variant="ghost"
-                  size="sm"
-                  key={index}
-                  paddingLeft="-1em"
-                  paddingRight="-1em"
-                  marginTop="-0.35em"
-                  onClick={() =>
-                    handleChange(index * numberOfContractsOnPage, "offset")
-                  }
-                >
-                  <Text
-                    fontSize="md"
-                    fontWeight={index + 1 === selectedPage ? "600" : "400"}
-                  >
-                    {index + 1}
-                  </Text>
-                </Button>
-              ))}
-            </Stack>
-          </WrapItem>
-          <WrapItem>
-            <IconButton
-              marginRight={"0.6em"}
-              aria-label="Reset filter"
-              icon={<ArrowForwardIcon />}
-              size={"sm"}
-              colorScheme={"teal"}
-              marginLeft={"0.6em"}
-              onClick={() =>
-                handleChange(offset + numberOfContractsOnPage, "offset")
-              }
-              isDisabled={arrowForward}
-            />
-          </WrapItem>
-          <Spacer />
-          <WrapItem marginRight="1em" marginTop="0.2em">
-            <Text>Found {foundContracts} contracts</Text>
-          </WrapItem>
-        </Wrap>
-      </Card>
+     
     </Box>
   );
 }
