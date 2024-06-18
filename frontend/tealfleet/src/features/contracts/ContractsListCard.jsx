@@ -1,6 +1,6 @@
 // React components
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import ContractsAssetsList from "./ContractsAssetsList";
 
