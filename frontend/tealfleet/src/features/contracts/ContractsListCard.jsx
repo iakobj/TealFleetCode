@@ -112,7 +112,7 @@ function ContractsListCard({ contractItems }) {
           </SimpleGrid>
         </GridItem>
         <GridItem colSpan={9}>
-          <Box borderColor={"red"} height={"calc((100vh) - 11.8em)"}>
+          <Box>
             <ContractsAssetsList selectedContract={selectedContract} />
           </Box>
         </GridItem>

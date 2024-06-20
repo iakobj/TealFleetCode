@@ -54,10 +54,10 @@ function ContractsAssetsList({ selectedContract }) {
         variant="outline"
         borderRadius="0.6em 0.6em 0.6em 0.6em"
         marginTop="0.75em"
-        height={"100%"} flex={1}
+
       >
         <CardBody >
-          <TableContainer height={"calc((100vh) - 25.3em)"} overflowY="auto">
+          <TableContainer height={"calc((100vh) - 25.13em)"} overflowY="auto">
             <Table
               variant="simple"
               size={{
@@ -83,7 +83,7 @@ function ContractsAssetsList({ selectedContract }) {
                   <Th>VENDOR</Th>
                   <Th>MODEL</Th>
                   <Th>SERIAL NUMBER</Th>
-                  <Th></Th>
+                  <Th>OS Version</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -105,6 +105,9 @@ function ContractsAssetsList({ selectedContract }) {
                         <Text color="gray.800">
                           {data.software_model_name || data.hardware_model_name}
                         </Text>
+                      </Td>
+                      <Td>
+                        <Text color="gray.800">{data.hardware_serial_no}</Text>
                       </Td>
                       <Td>
                         <Text color="gray.800">{data.hardware_serial_no}</Text>
