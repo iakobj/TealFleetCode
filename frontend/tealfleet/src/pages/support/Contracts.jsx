@@ -11,7 +11,7 @@ import ContractsFilter from "../../features/contracts/contractsFilter";
 
 function Contracts() {
   return (
-    <Box>
+    <Box height={"10vh"}>
       <ContractsFilter/>
     </Box>
   );

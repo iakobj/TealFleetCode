@@ -110,7 +110,7 @@ function ContractsAssetsList({ selectedContract }) {
                         <Text color="gray.800">{data.hardware_serial_no}</Text>
                       </Td>
                       <Td>
-                        <Text color="gray.800">{data.hardware_serial_no}</Text>
+                        <Text color="gray.800">{data.software_version_number}</Text>
                       </Td>
                     </Tr>
                   ))}

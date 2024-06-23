@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { NavLink, useLoaderData, useSearchParams } from "react-router-dom";
 
 import ContractsListCard from "../../features/contracts/ContractsListCard";
-import AddNewContract from "../../features/contracts/AddNewContract";
 import FilterNothingFound from "../../components/FilterNothingFound";
 
 // Chakra-UI components

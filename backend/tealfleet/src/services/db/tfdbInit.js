@@ -185,10 +185,10 @@ ALTER TABLE "alerts" DROP CONSTRAINT IF EXISTS "alerts_tenant_id_fkey";
 ALTER TABLE "alerts" ADD CONSTRAINT "alerts_tenant_id_fkey" FOREIGN KEY ("tenant_id") REFERENCES "tenants" ("tenant_id");
 
 ALTER TABLE "contracts" DROP CONSTRAINT IF EXISTS "contracts_contract_type_id_fkey";
-ALTER TABLE "contracts" ADD CONSTRAINT "contracts_contract_type_id_fkey" FOREIGN KEY ("contract_type_id") REFERENCES "contract_types" ("contract_type_id");
+ALTER TABLE "contracts" ADD CONSTRAINT "contracts_contract_type_id_fkey" FOREIGN KEY ("contract_type_id") REFERENCES "contract_types" ("contract_type_id") ON DELETE CASCADE;
 
 ALTER TABLE "contracts" DROP CONSTRAINT IF EXISTS "contracts_tenant_id_fkey";
-ALTER TABLE "contracts" ADD CONSTRAINT "contracts_tenant_id_fkey" FOREIGN KEY ("tenant_id") REFERENCES "tenants" ("tenant_id");
+ALTER TABLE "contracts" ADD CONSTRAINT "contracts_tenant_id_fkey" FOREIGN KEY ("tenant_id") REFERENCES "tenants" ("tenant_id") ON DELETE CASCADE;
 
 ALTER TABLE "software_assets" DROP CONSTRAINT IF EXISTS "software_assets_software_catalog_id_fkey";
 ALTER TABLE "software_assets" ADD CONSTRAINT "software_assets_software_catalog_id_fkey" FOREIGN KEY ("software_catalog_id") REFERENCES "software_catalog" ("software_catalog_id");
@@ -218,15 +218,15 @@ ALTER TABLE "hardware_catalog" DROP CONSTRAINT IF EXISTS "hardware_catalog_vendo
 ALTER TABLE "hardware_catalog" ADD CONSTRAINT "hardware_catalog_vendor_id_fkey" FOREIGN KEY ("vendor_id") REFERENCES "vendors" ("vendor_id");
 
 ALTER TABLE "sw_asset_contracts" DROP CONSTRAINT IF EXISTS "sw_asset_contracts_contract_id_fkey";
-ALTER TABLE "sw_asset_contracts" ADD CONSTRAINT "sw_asset_contracts_contract_id_fkey" FOREIGN KEY ("contract_id") REFERENCES "contracts" ("contract_id");
+ALTER TABLE "sw_asset_contracts" ADD CONSTRAINT "sw_asset_contracts_contract_id_fkey" FOREIGN KEY ("contract_id") REFERENCES "contracts" ("contract_id") ON DELETE CASCADE;
 
 ALTER TABLE "sw_asset_contracts" DROP CONSTRAINT IF EXISTS "sw_asset_contracts_software_asset_id_fkey";
-ALTER TABLE "sw_asset_contracts" ADD CONSTRAINT "sw_asset_contracts_software_asset_id_fkey" FOREIGN KEY ("software_asset_id") REFERENCES "software_assets" ("software_asset_id");
+ALTER TABLE "sw_asset_contracts" ADD CONSTRAINT "sw_asset_contracts_software_asset_id_fkey" FOREIGN KEY ("software_asset_id") REFERENCES "software_assets" ("software_asset_id") ON DELETE CASCADE;
 
 ALTER TABLE "hw_asset_contracts" DROP CONSTRAINT IF EXISTS "hw_asset_contracts_contract_id_fkey";
-ALTER TABLE "hw_asset_contracts" ADD CONSTRAINT "hw_asset_contracts_contract_id_fkey" FOREIGN KEY ("contract_id") REFERENCES "contracts" ("contract_id");
+ALTER TABLE "hw_asset_contracts" ADD CONSTRAINT "hw_asset_contracts_contract_id_fkey" FOREIGN KEY ("contract_id") REFERENCES "contracts" ("contract_id") ON DELETE CASCADE;
 
 ALTER TABLE "hw_asset_contracts" DROP CONSTRAINT IF EXISTS "hw_asset_contracts_hardware_asset_id_fkey";
-ALTER TABLE "hw_asset_contracts" ADD CONSTRAINT "hw_asset_contracts_hardware_asset_id_fkey" FOREIGN KEY ("hardware_asset_id") REFERENCES "hardware_assets" ("hardware_asset_id");
+ALTER TABLE "hw_asset_contracts" ADD CONSTRAINT "hw_asset_contracts_hardware_asset_id_fkey" FOREIGN KEY ("hardware_asset_id") REFERENCES "hardware_assets" ("hardware_asset_id") ON DELETE CASCADE;
 
 `;

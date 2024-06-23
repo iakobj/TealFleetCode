@@ -803,3 +803,48 @@ module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_
     return [{ error: error }];
   }
 };
+
+module.exports.contractsPostRemoveContract = async (
+  identity,
+  contract_id
+) => {
+
+  console.log(`contract_id in serv is: ${contract_id}`)
+
+  try {
+    const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
+    if (tenant_root == true && mock_tenant_id == undefined) {
+      const result = await query(
+        `
+        DELETE
+        FROM contracts
+        WHERE contract_id = $1;
+      `,
+        [contract_id]
+      );
+      return result.rows;
+    } else if (tenant_root == true && mock_tenant_id) {
+      const result = await query(
+        `
+        DELETE
+        FROM contracts
+        WHERE contract_id = $1;
+      `,
+        [contract_id]
+      );
+      return result.rows;
+    } else {
+      const result = await query(
+        `
+        DELETE
+        FROM contracts
+        WHERE contract_id = $1;
+      `,
+        [contract_id]
+      );
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};

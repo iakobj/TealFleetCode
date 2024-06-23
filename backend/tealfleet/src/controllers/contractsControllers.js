@@ -15,7 +15,9 @@ const {
 
   contractsPostAdd,
   contractsPostAddAsset,
+
   contractsPostRemoveAsset,
+  contractsPostRemoveContract,
 
 } = require("../services/contractsServices");
 
@@ -476,10 +478,36 @@ module.exports.cContractsPostRemoveAsset = async (req, res) => {
     const identity = await checkIdentity(req);
 
     let { newContractId, asset_id, asset_type } = req.body;
-    console.log("remove")
+    console.log("remove asset from contract")
     console.log(newContractId, asset_id, asset_type);
 
       const result = await contractsPostRemoveAsset(identity, newContractId, asset_id, asset_type);
+
+      if (result && result[0] && result[0].error) {
+        res.status(400).send("error");
+        return;
+      } else {
+        res.status(200).send("success");
+        return;
+      }
+    } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
+  }
+
+};
+
+
+
+// TODO
+module.exports.cContractsPostRemoveContract = async (req, res) => {
+  try {
+    const identity = await checkIdentity(req); 
+
+    let { contract_id } = req.body;
+    console.log("remove contract")
+    console.log(contract_id);
+
+      const result = await contractsPostRemoveContract(identity, contract_id);
 
       if (result && result[0] && result[0].error) {
         res.status(400).send("error");

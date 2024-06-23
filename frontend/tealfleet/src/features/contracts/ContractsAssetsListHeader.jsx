@@ -1,8 +1,10 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useDisclosure } from "@chakra-ui/react"; 
 
 // import location of the API server
 import { API_ENDPOINT } from "../../constants/apiEndpoint";
+
 
 import {
   Menu,
@@ -29,6 +31,7 @@ import {
 } from "@chakra-ui/react";
 
 import { ChevronDownIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import DeleteContract from "./DeleteContract";
 
 function ContractsAssetsListHeader({ selectedContract }) {
   const [contractData, setContractData] = useState([]);
@@ -52,19 +55,15 @@ function ContractsAssetsListHeader({ selectedContract }) {
     ContractsDataLoader(selectedContract);
   }, [selectedContract]);
 
+  const { isOpen, onOpen, onClose } = useDisclosure(); 
+  const cancelRef = React.useRef();
+
   return (
     <Card bg="#FDFDFD" variant="outline" borderRadius="0.6em 0.6em 0.6em 0.6em" position="sticky" zIndex="80" top="0em">
+      <DeleteContract isOpen={isOpen} onClose={onClose} cancelRef={cancelRef} selectedContract={contractData}/>
       <CardHeader borderRadius="0.55em 0.55em 0.55em 0.55em" bg="#F4F7F4">
         <Flex>
-          <Text fontWeight="500" color="gray.600">
-            {contractData &&
-            contractData.data &&
-            contractData.data.length > 0
-              ? contractData.data[0].tenant_name
-              : "Nothing Selected"}
-          </Text>
-          <Spacer />
-          <Menu>
+        <Menu>
             <MenuButton
               as={Button}
               colorScheme="teal"
@@ -80,9 +79,19 @@ function ContractsAssetsListHeader({ selectedContract }) {
             </MenuButton>
             <MenuList>
               <MenuItem icon={<EditIcon />}>Edit Contract</MenuItem>
-              <MenuItem icon={<DeleteIcon />}>Delete Contract</MenuItem>
+              <MenuItem icon={<DeleteIcon />} onClick={onOpen}>Delete Contract</MenuItem>
             </MenuList>
           </Menu>
+          <Spacer />
+          <Text fontWeight="500" color="gray.600">
+            {contractData &&
+            contractData.data &&
+            contractData.data.length > 0
+              ? contractData.data[0].tenant_name
+              : "Nothing Selected"}
+          </Text>
+
+          
         </Flex>
       </CardHeader>
 
