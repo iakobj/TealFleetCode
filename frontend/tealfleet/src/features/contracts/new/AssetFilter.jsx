@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 
 import AssetList from "./AssetList.jsx";
-import FilterNothingFound from "../../components/FilterNothingFound.jsx";
+import FilterNothingFound from "../../../components/FilterNothingFound.jsx";
 
 // Chakra-UI components
 import {

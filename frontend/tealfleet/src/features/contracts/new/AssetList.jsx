@@ -9,7 +9,7 @@ import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 
 // import location of the API server
-import { API_ENDPOINT } from "../../constants/apiEndpoint";
+import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
 function AssetList({ assetInformations, newContractNo, newContractId }) {
   const [isChecked, setIsChecked] = useState(false);

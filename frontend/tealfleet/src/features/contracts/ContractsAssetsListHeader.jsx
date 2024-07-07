@@ -9,6 +9,7 @@ import { API_ENDPOINT } from "../../constants/apiEndpoint";
 import {
   Menu,
   MenuButton,
+  IconButton,
   MenuList,
   MenuItem,
   MenuItemOption,
@@ -30,7 +31,7 @@ import {
 
 } from "@chakra-ui/react";
 
-import { ChevronDownIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import DeleteContract from "./DeleteContract";
 
 function ContractsAssetsListHeader({ selectedContract }) {
@@ -63,25 +64,13 @@ function ContractsAssetsListHeader({ selectedContract }) {
       <DeleteContract isOpen={isOpen} onClose={onClose} cancelRef={cancelRef} selectedContract={contractData}/>
       <CardHeader borderRadius="0.55em 0.55em 0.55em 0.55em" bg="#F4F7F4">
         <Flex>
-        <Menu>
-            <MenuButton
-              as={Button}
-              colorScheme="teal"
-              variant="outline"
-              size="sm"
-              rightIcon={<ChevronDownIcon />}
-            >
-              {contractData &&
+          <Text fontWeight="500" color="gray.600">
+          {contractData &&
               contractData.data &&
               contractData.data.length > 0
                 ? contractData.data[0].contract_no
                 : "Nothing Selected"}
-            </MenuButton>
-            <MenuList>
-              <MenuItem icon={<EditIcon />}>Edit Contract</MenuItem>
-              <MenuItem icon={<DeleteIcon />} onClick={onOpen}>Delete Contract</MenuItem>
-            </MenuList>
-          </Menu>
+          </Text>
           <Spacer />
           <Text fontWeight="500" color="gray.600">
             {contractData &&
@@ -90,7 +79,22 @@ function ContractsAssetsListHeader({ selectedContract }) {
               ? contractData.data[0].tenant_name
               : "Nothing Selected"}
           </Text>
-
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              colorScheme="teal"
+              variant="solid"
+              size="sm"
+              icon={<HamburgerIcon />}
+              marginLeft={"1em"}
+              marginTop={"-0.25em"}
+            >
+            </MenuButton>
+            <MenuList>
+              <MenuItem icon={<EditIcon />}>Edit Contract</MenuItem>
+              <MenuItem icon={<DeleteIcon />} onClick={onOpen}>Delete Contract</MenuItem>
+            </MenuList>
+          </Menu>
           
         </Flex>
       </CardHeader>

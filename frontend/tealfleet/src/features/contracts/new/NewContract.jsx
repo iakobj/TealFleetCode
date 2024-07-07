@@ -1,5 +1,5 @@
 import * as React from "react";
-import { API_ENDPOINT } from "../../constants/apiEndpoint";
+import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
 // Chakra-UI components
 import {

@@ -274,25 +274,17 @@ module.exports.contractsGetValid = async (identity) => {
     if (tenant_root == true && mock_tenant_id == undefined) {
       const result = await query(`
       SELECT 
-    COUNT(*) OVER () AS total_count,
-    subquery.*
-FROM (
-    SELECT DISTINCT
-        hw.hardware_asset_id AS asset_id,
-        contracts.contract_id
-    FROM contracts
-    JOIN hw_asset_contracts hw ON contracts.contract_id = hw.contract_id
-    WHERE contracts.contract_valid_to > CURRENT_DATE
-
-    UNION ALL
-
-    SELECT DISTINCT
-        sw.software_asset_id AS asset_id,
-        contracts.contract_id
-    FROM contracts
-    JOIN sw_asset_contracts sw ON contracts.contract_id = sw.contract_id
-    WHERE contracts.contract_valid_to > CURRENT_DATE
-) AS subquery;
+      COUNT(*) OVER () AS total_count,
+      subquery.*
+  FROM (
+      SELECT DISTINCT
+          sw.software_asset_id,
+          hw.hardware_asset_id
+      FROM sw_asset_contracts sw
+      RIGHT JOIN contracts ON contracts.contract_id = sw.contract_id
+      LEFT JOIN hw_asset_contracts hw ON hw.contract_id = contracts.contract_id
+      WHERE contracts.contract_valid_to > CURRENT_DATE
+  ) AS subquery;
         `);
       return result.rows;
     } else if (tenant_root == true && mock_tenant_id) {

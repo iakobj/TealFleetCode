@@ -25,7 +25,7 @@ import { useToast } from "@chakra-ui/react";
 import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 
 // import location of the API server
-import { API_ENDPOINT } from "../../constants/apiEndpoint";
+import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
 import AssetFilter from "./AssetFilter";
 
