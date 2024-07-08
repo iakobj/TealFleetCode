@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Chakra-UI components
 import { Tr, Td, Checkbox } from "@chakra-ui/react";
@@ -12,6 +12,7 @@ import { useToast } from "@chakra-ui/react";
 import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
 function AssetList({ assetInformations, newContractNo, newContractId }) {
+  const [checkedAssets, setCheckedAssets] = useState({});
   const [isChecked, setIsChecked] = useState(false);
   const toast = useToast();
 
@@ -56,6 +57,7 @@ function AssetList({ assetInformations, newContractNo, newContractId }) {
               position: "bottom",
               variant: "subtle",
             });
+            
           } else {
             toast({
               title: "Error",

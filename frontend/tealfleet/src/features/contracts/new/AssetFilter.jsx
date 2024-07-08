@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 
 import AssetList from "./AssetList.jsx";
@@ -416,6 +417,18 @@ function AssetFilter({newContractId, newContractNo}) {
           <Spacer />
           <WrapItem marginRight="1em" marginTop="0.2em">
             <Text>Found {foundAssets} assets</Text>
+          </WrapItem>
+          <WrapItem marginRight="1em" marginTop="0.2em">
+          <NavLink to="/support/contracts">
+                <Button
+                  marginTop={"-0.28em"}
+                  size="sm"
+                  colorScheme="teal"
+                  width={"5em"}
+                >
+                  Finish
+                </Button>
+                </NavLink>
           </WrapItem>
         </Wrap>
       </Card>
