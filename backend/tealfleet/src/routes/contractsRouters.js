@@ -217,6 +217,6 @@ contractsRouters.post("/add", cContractsPostAdd);
 contractsRouters.post("/add/asset", cContractsPostAddAsset);
 contractsRouters.post("/remove/asset/", cContractsPostRemoveAsset) // TODO
 
-contractsRouters.post("/remove/", cContractsPostRemoveContract) // TODO
+contractsRouters.post("/remove/", cContractsPostRemoveContract)
 
 module.exports = contractsRouters;

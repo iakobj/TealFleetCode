@@ -602,8 +602,6 @@ module.exports.contractsPostAdd = async (data) => {
 module.exports.contractsPostAddAsset = async (identity, newContractId, asset_id, asset_type) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
-
-
     if (asset_type == "HW") {
       if (tenant_root == true && mock_tenant_id == undefined) {
         const result = await query(
@@ -705,8 +703,6 @@ module.exports.contractsPostAddAsset = async (identity, newContractId, asset_id,
 module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_id, asset_type) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
-
-
     if (asset_type == "HW") {
       if (tenant_root == true && mock_tenant_id == undefined) {
         const result = await query(

@@ -11,8 +11,12 @@ import { useToast } from "@chakra-ui/react";
 // import location of the API server
 import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
-function AssetList({ assetInformations, newContractNo, newContractId }) {
-  const [checkedAssets, setCheckedAssets] = useState({});
+function AssetList({
+  assetInformations,
+  newContractNo,
+  newContractId,
+  selectedAssets,
+}) {
   const [isChecked, setIsChecked] = useState(false);
   const toast = useToast();
 
@@ -37,18 +41,17 @@ function AssetList({ assetInformations, newContractNo, newContractId }) {
       asset_type: assetInformations.asset_type,
     };
 
-    const assetCheckboxAction = new Promise((resolve, reject) => {
-      // User selects the asset to add to the contract
-      if (checked) {
-        action = "add";
+    if (checked) {
+      action = "add";
 
-        const addAsset = JSON.stringify(assetInfo, null, 2);
-        fetch(`http://${API_ENDPOINT}/contracts/add/asset`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: addAsset,
-        }).then(async (response) => {
+      const addAsset = JSON.stringify(assetInfo, null, 2);
+      fetch(`http://${API_ENDPOINT}/contracts/add/asset`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: addAsset,
+      })
+        .then(async (response) => {
           if (response.ok) {
             toast({
               title: "Asset added",
@@ -57,7 +60,6 @@ function AssetList({ assetInformations, newContractNo, newContractId }) {
               position: "bottom",
               variant: "subtle",
             });
-            
           } else {
             toast({
               title: "Error",
@@ -68,23 +70,22 @@ function AssetList({ assetInformations, newContractNo, newContractId }) {
             });
             setIsChecked(false);
           }
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error("Error adding asset:", error);
           setIsChecked(false);
         });
-      }
+    } else {
+      action = "remove";
 
-      // User unselects the asset to remove from the contract
-      if (!checked) {
-        action = "remove";
-
-        const removeAsset = JSON.stringify(assetInfo, null, 2);
-        fetch(`http://${API_ENDPOINT}/contracts/remove/asset`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: removeAsset,
-        }).then(async (response) => {
+      const removeAsset = JSON.stringify(assetInfo, null, 2);
+      fetch(`http://${API_ENDPOINT}/contracts/remove/asset`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: removeAsset,
+      })
+        .then(async (response) => {
           if (response.ok) {
             toast({
               title: "Asset removed",
@@ -103,25 +104,35 @@ function AssetList({ assetInformations, newContractNo, newContractId }) {
             });
             setIsChecked(true);
           }
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error("Error removing asset:", error);
           setIsChecked(true);
         });
-      }
-    });
+    }
   };
 
+  useEffect(() => {
+    if (selectedAssets && selectedAssets.data) {
+      const isSelected = selectedAssets.data.some(
+        (asset) =>
+          asset.hardware_asset_id === assetInformations.hardware_asset_id ||
+          asset.software_asset_id === assetInformations.software_asset_id
+      );
+      setIsChecked(isSelected);
+    }
+  }, [selectedAssets, assetInformations]);
 
   return (
     <Tr>
       <Td>
-      <Checkbox
-      isDisabled={newContractNo === ""}
-      size="md"
-      colorScheme="teal"
-      isChecked={isChecked}
-      onChange={handleChange}
-    />
+        <Checkbox
+          isDisabled={newContractNo === ""}
+          size="md"
+          colorScheme="teal"
+          isChecked={isChecked}
+          onChange={handleChange}
+        />
       </Td>
       <Td>
         {assetInformations.software_asset_name &&

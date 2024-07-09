@@ -6,14 +6,15 @@ import { useLoaderData, useSearchParams } from "react-router-dom";
 import AssetList from "./AssetList.jsx";
 import FilterNothingFound from "../../../components/FilterNothingFound.jsx";
 
+// import location of the API server
+import { API_ENDPOINT } from "../../../constants/apiEndpoint";
+
 // Chakra-UI components
 import {
   Spacer,
   Text,
   Box,
   Button,
-  SimpleGrid,
-  GridItem,
   Wrap,
   WrapItem,
   Card,
@@ -25,13 +26,10 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
-  Td,
   TableCaption,
   TableContainer,
-  Checkbox,
 } from "@chakra-ui/react";
 
 import {
@@ -64,9 +62,36 @@ function AssetFilter({newContractId, newContractNo}) {
   const [arrowBack, setArrowBack] = useState();
   const [selectedPage, setSelectedPage] = useState(1);
 
+  const [selectedAssets, setSelectedAssets] = useState()
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const toast = useToast();
+
+
+
+  useEffect(() => {
+
+    const isChecked = async () => {
+      try {
+        const getIsChecked = await fetch(
+          `http://${API_ENDPOINT}/contracts/numbers/${newContractNo}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        const addAssets = await getIsChecked.json();
+        setSelectedAssets(addAssets);
+        
+      } catch (error) {
+        console.error("Error loading form data:", error);
+      }
+    };
+
+    isChecked();
+
+  }, [offset, arrowForward, selectedPage]);
 
   let params = {};
   function handleChange(selected, filterName) {
@@ -335,6 +360,7 @@ function AssetFilter({newContractId, newContractNo}) {
                       assetInformations={assetInformations}
                       newContractNo={newContractNo}
                       newContractId={newContractId}
+                      selectedAssets={selectedAssets}
                       key={
                         assetInformations.hardware_asset_id
                           ? assetInformations.hardware_asset_id
@@ -421,10 +447,11 @@ function AssetFilter({newContractId, newContractNo}) {
           <WrapItem marginRight="1em" marginTop="0.2em">
           <NavLink to="/support/contracts">
                 <Button
+                  rightIcon={<ArrowForwardIcon />}
                   marginTop={"-0.28em"}
                   size="sm"
                   colorScheme="teal"
-                  width={"5em"}
+                  width={"7em"}
                 >
                   Finish
                 </Button>
