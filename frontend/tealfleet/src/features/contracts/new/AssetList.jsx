@@ -19,7 +19,6 @@ function AssetList({
 }) {
   const [isChecked, setIsChecked] = useState(false);
   const toast = useToast();
-
   const handleChange = (e) => {
     const checked = e.target.checked;
     setIsChecked(checked);
@@ -111,17 +110,24 @@ function AssetList({
         });
     }
   };
-
+console.log(assetInformations.asset_type);
   useEffect(() => {
     if (selectedAssets && selectedAssets.data) {
-      const isSelected = selectedAssets.data.some(
-        (asset) =>
-          asset.hardware_asset_id === assetInformations.hardware_asset_id ||
-          asset.software_asset_id === assetInformations.software_asset_id
-      );
+      const isSelected = selectedAssets.data.some((asset) => {
+        if (assetInformations.asset_type == "SW") {
+          console.log("first");
+          return asset.software_asset_id === assetInformations.software_asset_id;
+        } else if (assetInformations.asset_type == "HW" && !asset.software_asset_id) {
+          console.log("second");
+          return asset.hardware_asset_id === assetInformations.hardware_asset_id;
+        }
+        return false;
+      });
       setIsChecked(isSelected);
     }
   }, [selectedAssets, assetInformations]);
+  
+  
 
   return (
     <Tr>
