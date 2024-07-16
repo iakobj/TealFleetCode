@@ -270,7 +270,7 @@ function AddNewContract() {
                     ) : null}
                   </FormControl>
 
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Contract type</FormLabel>
                     <Select
                       id="contract_type_id"

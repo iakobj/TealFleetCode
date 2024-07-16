@@ -96,6 +96,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       percent: isNaN(((100 / noOfAllAssets) * noOfAllAssets).toFixed(0))
       ? 0
       : ((100 / noOfAllAssets) * noOfAllAssets).toFixed(0),
+      StatHelpText: "All assets",
   };
     const coveredAssets = {
       title: "Covered assets",
@@ -103,6 +104,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       percent: isNaN(((100 / noOfAllAssets) * noOfAllCoveredAssets).toFixed(0))
         ? 0
         : ((100 / noOfAllAssets) * noOfAllCoveredAssets).toFixed(0),
+        StatHelpText: "Assets that are under contract",
     };
     const uncoveredAssets = {
       title: "Uncovered assets",
@@ -112,6 +114,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       )
         ? 0
         : ((100 / noOfAllAssets) * noOfAllUncoveredAssets).toFixed(0),
+        StatHelpText: "Assets under no contracts",
     };
     const newAssets = {
       title: "New assets",
@@ -121,6 +124,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       )
         ? 0
         : ((100 / noOfAllAssets) * hardwareCreatedLastMonthCount).toFixed(0),
+        StatHelpText: "Added in the last month",
     };
     const allContracts = {
       title: "All contracts",
@@ -128,6 +132,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       percent: isNaN(((100 / contractsAllNo) * contractsAllNo).toFixed(0))
       ? 0
       : ((100 / contractsAllNo) * contractsAllNo).toFixed(0),
+      StatHelpText: "Active and expired",
   };
     const activeContracts = {
       title: "Active contracts",
@@ -135,6 +140,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       percent: isNaN(((100 / contractsAllNo) * validContractsCount).toFixed(0))
         ? 0
         : ((100 / contractsAllNo) * validContractsCount).toFixed(0),
+        StatHelpText: "Valid and active contracts",
     };
     const expiredContracts = {
       title: "Expired contracts",
@@ -150,6 +156,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
             (100 / contractsAllNo) *
             (contractsAllNo - validContractsCount)
           ).toFixed(0),
+          StatHelpText: "Already expired contracts",
     };
     const soonExpired = {
       title: "Contracts ends soon",
@@ -159,6 +166,7 @@ module.exports.cDashboardGetStatusCardData = async (req, res) => {
       )
         ? 0
         : ((100 / contractsAllNo) * contractsWithinFourMonthsCount).toFixed(0),
+        StatHelpText: "Will expire in 4 months",
     };
 
     const result = [
