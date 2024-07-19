@@ -126,6 +126,27 @@ CREATE TABLE IF NOT EXISTS "hardware_assets" (
   "hardware_created_at" timestamp DEFAULT (now())
 );
 
+CREATE TABLE IF NOT EXISTS "hw_sub_components" (
+  "hw_sub_components_id" uuid PRIMARY KEY,
+  "hardware_asset_id" uuid NOT NULL,
+  "hw_part_make" varchar NOT NULL,
+  "hw_part_model" varchar NOT NULL,
+  "hw_serial_no" varchar,
+  "hw_changed_at" timestamp NOT NULL,
+  "hw_created_at" timestamp DEFAULT (now())
+);
+
+CREATE TABLE IF NOT EXISTS "spare_parts" (
+  "spare_parts_id" uuid PRIMARY KEY,
+  "spare_amount" integer NOT NULL,
+  "spare_part_make" varchar NOT NULL,
+  "spare_part_model" varchar NOT NULL,
+  "spare_serial_no" varchar,
+  "spare_description" varchar,
+  "spare_changed_at" timestamp NOT NULL,
+  "spare_created_at" timestamp DEFAULT (now())
+);
+
 CREATE TABLE IF NOT EXISTS "sw_asset_contracts" (
   "sw_asset_contract_id" uuid PRIMARY KEY,
   "software_asset_id" uuid NOT NULL,
@@ -228,5 +249,8 @@ ALTER TABLE "hw_asset_contracts" ADD CONSTRAINT "hw_asset_contracts_contract_id_
 
 ALTER TABLE "hw_asset_contracts" DROP CONSTRAINT IF EXISTS "hw_asset_contracts_hardware_asset_id_fkey";
 ALTER TABLE "hw_asset_contracts" ADD CONSTRAINT "hw_asset_contracts_hardware_asset_id_fkey" FOREIGN KEY ("hardware_asset_id") REFERENCES "hardware_assets" ("hardware_asset_id") ON DELETE CASCADE;
+
+ALTER TABLE "hw_sub_components" DROP CONSTRAINT IF EXISTS "hw_sub_components_hardware_asset_id_fkey";
+ALTER TABLE "hw_sub_components" ADD CONSTRAINT "hw_sub_components_hardware_asset_id_fkey" FOREIGN KEY ("hardware_asset_id") REFERENCES "hardware_assets" ("hardware_asset_id") ON DELETE CASCADE;
 
 `;
