@@ -298,9 +298,11 @@ function FleetFilter() {
             <Spacer />
             <WrapItem marginRight="0.5em">
               <Spacer marginRight="0.5em" />
-              <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"}>
+              <NavLink to="new">
+                <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"}>
                 New Asset
-              </Button>
+                </Button>
+              </NavLink>
             </WrapItem>
           </Wrap>
         </Card>
