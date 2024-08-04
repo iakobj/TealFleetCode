@@ -218,7 +218,7 @@ function AddNewContract() {
           {newContractNo && newContractId ? (
             <AssetFilter newContractId={newContractId} newContractNo={newContractNo} />
           ) : (
-<form onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
               <Card
                 padding="1em"

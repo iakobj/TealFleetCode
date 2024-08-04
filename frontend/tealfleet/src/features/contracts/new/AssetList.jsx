@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 // Chakra-UI components
 import { Tr, Td, Checkbox } from "@chakra-ui/react";
 
-import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-
 import { useToast } from "@chakra-ui/react";
 
 // import location of the API server
@@ -110,15 +108,13 @@ function AssetList({
         });
     }
   };
-console.log(assetInformations.asset_type);
+
   useEffect(() => {
     if (selectedAssets && selectedAssets.data) {
       const isSelected = selectedAssets.data.some((asset) => {
         if (assetInformations.asset_type == "SW") {
-          console.log("first");
           return asset.software_asset_id === assetInformations.software_asset_id;
         } else if (assetInformations.asset_type == "HW" && !asset.software_asset_id) {
-          console.log("second");
           return asset.hardware_asset_id === assetInformations.hardware_asset_id;
         }
         return false;
@@ -126,7 +122,6 @@ console.log(assetInformations.asset_type);
       setIsChecked(isSelected);
     }
   }, [selectedAssets, assetInformations]);
-  
   
 
   return (
