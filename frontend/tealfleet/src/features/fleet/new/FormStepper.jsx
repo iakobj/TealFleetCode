@@ -59,7 +59,7 @@ function FormStepper(location) {
         orientation="vertical"
         colorScheme="teal"
         gap="0"
-        height="15em"
+        height="14em"
         marginTop={"0.5em"}
         marginLeft={{
           sm: "0.6em",

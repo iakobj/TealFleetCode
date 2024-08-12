@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import AddNewAsset from "./AddNewAsset";
+import SelectCatalog from "./SelectCatalog";
 
 function NewAsset() {
   return (
-    <AddNewAsset/>
+    <SelectCatalog/>
   );
 }
 
