@@ -164,6 +164,34 @@ module.exports.hardwareCatGetHWModelName = async (identity) => {
   }
 };
 
+module.exports.HardwareCatGetSWModelNameByVendor = async (identity, vendor_name) => {
+  try {
+    const { tenant_id, tenant_root } = await identity.data;
+
+    const get_vendor_id = await query(
+      "SELECT vendor_id FROM vendors WHERE vendor_name = $1",
+      [vendor_name]
+    );
+    const vendor_id = get_vendor_id.rows[0].vendor_id;
+
+    if (tenant_root == true) {
+      const result = await query(
+        "SELECT DISTINCT hardware_model_name, 'HW' as asset_type FROM hardware_catalog WHERE vendor_id = $1",
+        [vendor_id]
+      );
+      return result.rows;
+    } else {
+      const result = await query(
+        "SELECT DISTINCT hardware_model_name, 'HW' as asset_type FROM hardware_catalog WHERE vendor_id = $1",
+        [vendor_id]
+      );
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
+
 // Hardware Asset Services
 
 module.exports.hardwareAssGetAll = async (identity) => {

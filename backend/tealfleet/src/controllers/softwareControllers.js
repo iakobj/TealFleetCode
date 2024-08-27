@@ -6,6 +6,7 @@ const {
   softwareCatGetByVersion,
   softwareCatGetByCategory,
   softwareCatGetSWModelName,
+  softwareCatGetSWModelNameByVendor,
 
   softwareAssGetAll,
   softwareAssGetById,
@@ -119,6 +120,22 @@ module.exports.cSoftwareCatGetSWModelName = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
     const result = await softwareCatGetSWModelName(identity);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
+  }
+};
+
+module.exports.cSoftwareCatGetSWModelNameByVendor = async (req, res) => {
+  const vendor_name = req.params.vendor;
+  try {
+    const identity = await checkIdentity(req);
+    const result = await softwareCatGetSWModelNameByVendor(identity, vendor_name);
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });

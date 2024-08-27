@@ -410,6 +410,7 @@ const {
   cHardwareCatGetByPartnumber,
   cHardwareCatGetByCategory,
   cHardwareCatGetHWModelName,
+  cHardwareCatGetSWModelNameByVendor,
 
   cHardwareAssGetAll,
   cHardwareAssGetById,
@@ -428,6 +429,7 @@ hardwareRouters.get("/catalogs/vendors/:vendor", cHardwareCatGetByVendor);
 hardwareRouters.get("/catalogs/partnumbers/:partnumber", cHardwareCatGetByPartnumber);
 hardwareRouters.get("/catalogs/categories/:category", cHardwareCatGetByCategory);
 hardwareRouters.get("/catalogs/models/names", cHardwareCatGetHWModelName);
+hardwareRouters.get("/catalogs/models/names/:vendor", cHardwareCatGetSWModelNameByVendor);
 
 hardwareRouters.get("/assets/", cHardwareAssGetAll);
 hardwareRouters.get("/assets/id/:id", cHardwareAssGetById);
