@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />,
       },
       {
-        path: "assets/fleet/new",
+        path: "assets/new",
         element: <NewAsset/>,
         loader: ContractsDataLoader,
         errorElement: <ErrorBoundary />,

@@ -298,7 +298,7 @@ function FleetFilter() {
             <Spacer />
             <WrapItem marginRight="0.5em">
               <Spacer marginRight="0.5em" />
-              <NavLink to="new">
+              <NavLink to="/assets/new">
                 <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"}>
                 New Asset
                 </Button>

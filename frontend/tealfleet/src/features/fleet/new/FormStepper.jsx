@@ -21,7 +21,7 @@ function FormStepper(location) {
   const stepperAt = location.stepperAt;
 
   const steps = [
-    { title: "Catalog", description: "Select catalog" },
+    { title: "Catalog", description: "Select from catalog" },
     { title: "Information", description: "Asset information" },
     { title: "Components", description: "Asset components" },
     { title: "Contract", description: "Select contract" },

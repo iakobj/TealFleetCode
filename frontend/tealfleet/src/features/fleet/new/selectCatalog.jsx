@@ -20,6 +20,9 @@ import FormStepper from "./FormStepper";
 
 import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 
+import SwInformation from "./SwInformation";
+import HwInformation from "./HwInformation";
+
 // import location of the API server
 import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
@@ -30,10 +33,12 @@ function SelectCatalog() {
   // On Form fetch the data will be saved here
   const [vendors, setVendors] = useState([]);
   const [models, setModels] = useState([]);
+  const [nextStep, setNextStep] = useState(false);
 
   // Selected items
-  const [selectedVendor, setselectedVendor] = useState([]);
+  const [selectedVendor, setSelectedVendor] = useState([]);
   const [SelectedModel, setSelectedModel] = useState([]);
+  const [assetType, setAssetType] = useState();
 
   const vendorDataLoader = async () => {
     try {
@@ -51,30 +56,31 @@ function SelectCatalog() {
 
   const modelDataLoader = async (selectedVendor) => {
     try {
-      const getHwModels = await fetch(
-        `http://${API_ENDPOINT}/hardware/catalogs/vendors/${selectedVendor}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
 
       const getSwModels = await fetch(
-        `http://${API_ENDPOINT}/software/catalogs/vendors/${selectedVendor}`,
+        `http://${API_ENDPOINT}/software/catalogs/models/names/${selectedVendor}`,
         {
           method: "GET",
           credentials: "include",
         }
       );
 
-      const hwModels = await getHwModels.json();
-      const swModels = await getSwModels.json();
+      const getHwModels = await fetch(
+        `http://${API_ENDPOINT}/hardware/catalogs/models/names/${selectedVendor}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      
+      var swModels = await getSwModels.json();
+      var hwModels = await getHwModels.json();
+      
+      var joinedModels ={"data": [...swModels.data, ...hwModels.data] };
+      console.log(joinedModels);
 
-      Array.prototype.push.apply(hwModels,swModels); 
-      setModels(hwModels);
+      setModels(joinedModels);
 
-
-      //setVendors(vendors);
     } catch (error) {
       console.error("Error loading form data:", error);
     }
@@ -87,18 +93,25 @@ function SelectCatalog() {
   const formik = useFormik({
     initialValues: {
       vendor_id: "",
-      model_id: "",
+      model_name: "",
     },
 
     validationSchema: Yup.object({
-      vendor_id: Yup.string(),
-      model_id: Yup.string().required("Required"),
+      vendor_id: Yup.string().required("Required"),
+      model_name: Yup.string().required("Required"),
     }),
 
     onSubmit: (values) => {
       try {
         if (values) {
-          setStepperAt(1);
+          console.log(values);
+
+          var [model_name, assetType] = values.model_name.split('.');
+
+          setSelectedVendor(values.vendor_id);
+          setSelectedModel(model_name);
+          setAssetType(assetType)
+          setNextStep(true);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -109,6 +122,10 @@ function SelectCatalog() {
   return (
     <Box>
       <Grid templateColumns="repeat(12, 1fr)" gap={4}>
+      {selectedVendor && SelectedModel && assetType ? (
+            <SwInformation />
+          ) : (
+            <>
         <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>
           <FormStepper stepperAt={0} />
         </GridItem>
@@ -141,7 +158,7 @@ function SelectCatalog() {
                           (vendor) => vendor.vendor_id === selectedVendorId
                         );
                         if (selectedVendor) {
-                          setselectedVendor(selectedVendor.vendor_name);
+                          setSelectedVendor(selectedVendor.vendor_name);
                           modelDataLoader(selectedVendor.vendor_name);
                           console.log(
                             "Selected Vendor Name:",
@@ -167,26 +184,28 @@ function SelectCatalog() {
                   <FormControl isRequired>
                     <FormLabel>Model</FormLabel>
                     <Select
-                      id="model_id"
-                      name="model_id"
+                      id="model_name"
+                      name="model_name"
                       type="text"
                       placeholder="Select model"
                       focusBorderColor="teal.600"
                       onChange={formik.handleChange}
-                      value={formik.values.hardware_catalog_id || formik.values.software_catalog_id}
-                      {...formik.getFieldProps("model_id")}
+                      value={formik.values.hardware_model_name || formik.values.software_model_name}
+                      {...formik.getFieldProps("model_name")}
                     >
                       {models.data &&
                         models.data.map((data) => (
-                          <option key={data.hardware_catalog_id || data.software_catalog_id} value={data.hardware_catalog_id || data.software_catalog_id}>
+                          <option 
+                            key={data.hardware_model_name || data.software_model_name} 
+                            value={`${data.hardware_model_name || data.software_model_name}.${data.asset_type || 'unknown'}`}>
                             {" "}
                             {data.hardware_model_name || data.software_model_name}{" "}
                           </option>
                         ))}
                     </Select>
 
-                    {formik.touched.vendor_id && formik.errors.vendor_id ? (
-                      <div>{formik.errors.vendor_id}</div>
+                    {formik.touched.model_name && formik.errors.model_name ? (
+                      <div>{formik.errors.model_name}</div>
                     ) : null}
                   </FormControl>
                 </SimpleGrid>
@@ -201,7 +220,7 @@ function SelectCatalog() {
             >
               <Flex>
                 <Spacer />
-                <NavLink to="/support/contracts">
+                <NavLink to="/assets/fleet">
                   <Button
                     marginRight={"1.2em"}
                     variant={"outline"}
@@ -226,6 +245,8 @@ function SelectCatalog() {
             </Card>
           </form>
         </GridItem>
+        </>
+          )}
       </Grid>
     </Box>
   );
