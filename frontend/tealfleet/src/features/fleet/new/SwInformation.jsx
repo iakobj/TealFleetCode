@@ -6,6 +6,8 @@ import {
   FormControl,
   FormLabel,
   Select,
+  Input,
+  Textarea,
   Button,
   Box,
   Flex,
@@ -26,7 +28,7 @@ import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-function SwInformation() {
+function SwInformation(selectedModel) {
   const [vendors, setVendors] = useState([]);
 
   const vendorDataLoader = async () => {

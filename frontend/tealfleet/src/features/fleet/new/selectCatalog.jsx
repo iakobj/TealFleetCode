@@ -37,7 +37,7 @@ function SelectCatalog() {
 
   // Selected items
   const [selectedVendor, setSelectedVendor] = useState([]);
-  const [SelectedModel, setSelectedModel] = useState([]);
+  const [selectedModel, setSelectedModel] = useState([]);
   const [assetType, setAssetType] = useState();
 
   const vendorDataLoader = async () => {
@@ -58,7 +58,7 @@ function SelectCatalog() {
     try {
 
       const getSwModels = await fetch(
-        `http://${API_ENDPOINT}/software/catalogs/models/names/${selectedVendor}`,
+        `http://${API_ENDPOINT}/software/catalogs/models/names/vendors/${selectedVendor}`,
         {
           method: "GET",
           credentials: "include",
@@ -66,7 +66,7 @@ function SelectCatalog() {
       );
 
       const getHwModels = await fetch(
-        `http://${API_ENDPOINT}/hardware/catalogs/models/names/${selectedVendor}`,
+        `http://${API_ENDPOINT}/hardware/catalogs/models/names/vendors/${selectedVendor}`,
         {
           method: "GET",
           credentials: "include",
@@ -122,8 +122,12 @@ function SelectCatalog() {
   return (
     <Box>
       <Grid templateColumns="repeat(12, 1fr)" gap={4}>
-      {selectedVendor && SelectedModel && assetType ? (
-            <SwInformation />
+      {selectedVendor && selectedModel && assetType && nextStep ? (
+        assetType === 'SW' ? (
+            <SwInformation selectedModel={selectedModel}/>
+          ) : (
+            <HwInformation selectedModel={selectedModel}/>
+          )
           ) : (
             <>
         <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>

@@ -6,6 +6,8 @@ import {
   FormControl,
   FormLabel,
   Select,
+  Input,
+  Textarea,
   Button,
   Box,
   Flex,
@@ -20,53 +22,35 @@ import FormStepper from "./FormStepper";
 
 import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 
-// import location of the API server
-import { API_ENDPOINT } from "../../../constants/apiEndpoint";
+// import API endpoints
+import { tenantsGetAll } from "../../../constants/api/tenants";
+import { hardwareCatGetByHWModelName } from "../../../constants/api/hardware";
+import { sitesGetAll } from "../../../constants/api/sites";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-function HwInformation() {
-  const [vendors, setVendors] = useState([]);
-
-  const vendorDataLoader = async () => {
-    try {
-      const getVendors = await fetch(`http://${API_ENDPOINT}/vendors`, {
-        method: "GET",
-        credentials: "include",
-      });
-
-      const vendors = await getVendors.json();
-      setVendors(vendors);
-    } catch (error) {
-      console.error("Error loading form data:", error);
-    }
-  };
-
-  const modelDataLoader = async (vendor_id) => {
-    try {
-      const getVendors = await fetch(
-        `http://${API_ENDPOINT}/vendors/id/${vendor_id}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-
-      const vendors = await getVendors.json();
-      setVendors(vendors);
-    } catch (error) {
-      console.error("Error loading form data:", error);
-    }
-  };
+function HwInformation(selectedModel) {
+  const [tenants, setTenants] = useState([]);
+  const [hwModels, setHwModels] = useState([]);
+  const [sites, setSites] = useState([]);
 
   useEffect(() => {
-    vendorDataLoader();
+    const fetchData = async () => {
+      const tenantsList = await tenantsGetAll();
+      const HwModelList = await hardwareCatGetByHWModelName(selectedModel.selectedModel);
+      const sitesList = await sitesGetAll();
+
+      setHwModels(HwModelList);
+      setTenants(tenantsList);
+      setSites(sitesList);
+    };
+
+    fetchData();
   }, []);
 
-  useEffect((vendor_id) => {
-    modelDataLoader(vendor_id);
-  }, []);
+  console.log(selectedModel.selectedModel);
+  console.log(hwModels)
 
   const formik = useFormik({
     initialValues: {
@@ -93,10 +77,9 @@ function HwInformation() {
   });
 
   return (
-    <Box>
-      <Grid templateColumns="repeat(12, 1fr)" gap={4}>
-        <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>
-          <FormStepper stepperAt={0} />
+    <>
+      <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>
+          <FormStepper stepperAt={1} />
         </GridItem>
 
         <GridItem colSpan={{ sm: "12", md: "12", lg: "9", xl: "10" }}>
@@ -110,20 +93,21 @@ function HwInformation() {
                 borderRadius={"0.6em 0.6em 0.6em 0.6em"}
               >
                 <SimpleGrid columns={[1, null, 2]} spacing="1em">
-                  <FormControl isRequired>
+
+                <FormControl isRequired>
                     <FormLabel>Part Number</FormLabel>
                     <Select
-                      id="hardware_catalog_id"
-                      name="hardware_catalog_id"
+                      id="part_number"
+                      name="part_number"
                       type="text"
-                      placeholder="Part Number"
+                      placeholder="Select part number"
                       focusBorderColor="teal.600"
                       onChange={formik.handleChange}
-                      value={formik.values.hardware_catalog_id}
-                      {...formik.getFieldProps("item_id")}
+                      value={formik.values.tenant_id}
+                      {...formik.getFieldProps("part_number")}
                     >
-                      {items.data &&
-                        items.data.map((data) => (
+                      {hwModels.data &&
+                        hwModels.data.map((data) => (
                           <option key={data.hardware_catalog_id} value={data.hardware_catalog_id}>
                             {" "}
                             {data.hardware_part_number}{" "}
@@ -132,12 +116,12 @@ function HwInformation() {
                     </Select>
 
                     {formik.touched.hardware_catalog_id && formik.errors.hardware_catalog_id ? (
-                      <div>{formik.errors.vendor_id}</div>
+                      <div>{formik.errors.hardware_catalog_id}</div>
                     ) : null}
                   </FormControl>
 
                   <FormControl>
-                    <FormLabel marginTop="1.2em">Asset Name</FormLabel>
+                    <FormLabel>Asset Name</FormLabel>
                     <Input
                       id="hardware_asset_name"
                       name="hardware_asset_name"
@@ -154,7 +138,7 @@ function HwInformation() {
                   </FormControl>
 
                   <FormControl>
-                    <FormLabel marginTop="1.2em">Management IP Address</FormLabel>
+                    <FormLabel>Management IP Address</FormLabel>
                     <Input
                       id="hardware_asset_ip"
                       name="hardware_asset_ip"
@@ -171,7 +155,7 @@ function HwInformation() {
                   </FormControl>
 
                   <FormControl>
-                    <FormLabel marginTop="1.2em">Serial Number</FormLabel>
+                    <FormLabel>Serial Number</FormLabel>
                     <Input
                       id="hardware_serial_no"
                       name="hardware_serial_no"
@@ -188,7 +172,7 @@ function HwInformation() {
                   </FormControl>
 
                   <FormControl>
-                    <FormLabel marginTop="1.2em">Asset Tag</FormLabel>
+                    <FormLabel>Asset Tag</FormLabel>
                     <Input
                       id="hardware_tag"
                       name="hardware_tag"
@@ -201,33 +185,6 @@ function HwInformation() {
                     />
                     {formik.touched.hardware_tag && formik.errors.hardware_tag ? (
                       <div>{formik.errors.hardware_tag}</div>
-                    ) : null}
-                  </FormControl>
-
-                  <FormControl isRequired>
-                    <FormLabel>Location</FormLabel>
-                    <Select
-                      id="site_id"
-                      name="site_id"
-                      type="text"
-                      placeholder="Select location"
-                      focusBorderColor="teal.600"
-                      onChange={formik.handleChange}
-                      value={formik.values.site_id}
-                      {...formik.getFieldProps("site_id")}
-                    >
-                      {sites.data &&
-                        sites.data.map((data) => (
-                          <option key={data.site_id} value={data.site_id}>
-                            {" "}
-                            {data.site_name} {data.site_city}{" "}
-                            {data.site_address}{" "}
-                          </option>
-                        ))}
-                    </Select>
-
-                    {formik.touched.site_id && formik.errors.site_id ? (
-                      <div>{formik.errors.site_id}</div>
                     ) : null}
                   </FormControl>
 
@@ -257,8 +214,33 @@ function HwInformation() {
                     ) : null}
                   </FormControl>
 
+                  <FormControl isRequired>
+                    <FormLabel>Asset Location</FormLabel>
+                    <Select
+                      id="site_id"
+                      name="site_id"
+                      type="text"
+                      placeholder="Select asset location"
+                      focusBorderColor="teal.600"
+                      onChange={formik.handleChange}
+                      value={formik.values.site_id}
+                      {...formik.getFieldProps("site_id")}
+                    >
+                      {sites.data &&
+                        sites.data.map((data) => (
+                          <option key={data.site_id} value={data.site_id}>
+                            {data.site_name} {" - "} {data.site_city} {" "} {data.site_address}
+                          </option>
+                        ))}
+                    </Select>
+
+                    {formik.touched.site_id && formik.errors.site_id ? (
+                      <div>{formik.errors.site_id}</div>
+                    ) : null}
+                  </FormControl>
+
                   <FormControl>
-                    <FormLabel marginTop="1.2em">
+                    <FormLabel>
                       Notes
                     </FormLabel>
                     <Textarea
@@ -314,8 +296,7 @@ function HwInformation() {
             </Card>
           </form>
         </GridItem>
-      </Grid>
-    </Box>
+    </>
   );
 }
 

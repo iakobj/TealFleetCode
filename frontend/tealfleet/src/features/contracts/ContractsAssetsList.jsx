@@ -83,7 +83,7 @@ function ContractsAssetsList({ selectedContract }) {
                   <Th>VENDOR</Th>
                   <Th>MODEL</Th>
                   <Th>SERIAL NUMBER</Th>
-                  <Th>OS Version</Th>
+                  <Th>SOFTWARE VERSION</Th>
                 </Tr>
               </Thead>
               <Tbody>
