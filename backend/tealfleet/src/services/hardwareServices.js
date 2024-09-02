@@ -164,7 +164,29 @@ module.exports.hardwareCatGetHWModelName = async (identity) => {
   }
 };
 
-module.exports.HardwareCatGetSWModelNameByVendor = async (identity, vendor_name) => {
+module.exports.hardwareCatGetByHWModelName = async (identity, hardware_model_name) => {
+  try {
+    const { tenant_id, tenant_root } = await identity.data;
+
+    console.log(hardware_model_name);
+
+    if (tenant_root == true) {
+      const result = await query(
+        "SELECT * FROM hardware_catalog WHERE hardware_model_name = $1", [hardware_model_name]
+      );
+      return result.rows;
+    } else {
+      const result = await query(
+        "SELECT * FROM hardware_catalog WHERE hardware_model_name = $1", [hardware_model_name]
+      );
+      return result.rows;
+    }
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
+
+module.exports.HardwareCatGetHWModelNameByVendor = async (identity, vendor_name) => {
   try {
     const { tenant_id, tenant_root } = await identity.data;
 

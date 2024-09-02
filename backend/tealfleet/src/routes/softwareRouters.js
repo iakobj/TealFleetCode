@@ -418,7 +418,7 @@ softwareRouters.get("/catalogs/vendors/:vendor", cSoftwareCatGetByVendor);
 softwareRouters.get("/catalogs/versions/:version", cSoftwareCatGetByVersion);
 softwareRouters.get("/catalogs/categories/:category", cSoftwareCatGetByCategory);
 softwareRouters.get("/catalogs/models/names", cSoftwareCatGetSWModelName);
-softwareRouters.get("/catalogs/models/names/:vendor", cSoftwareCatGetSWModelNameByVendor);
+softwareRouters.get("/catalogs/models/names/vendors/:vendor", cSoftwareCatGetSWModelNameByVendor);
 
 softwareRouters.get("/assets/", cSoftwareAssGetAll);
 softwareRouters.get("/assets/id/:id", cSoftwareAssGetById);

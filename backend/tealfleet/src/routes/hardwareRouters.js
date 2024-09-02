@@ -410,7 +410,8 @@ const {
   cHardwareCatGetByPartnumber,
   cHardwareCatGetByCategory,
   cHardwareCatGetHWModelName,
-  cHardwareCatGetSWModelNameByVendor,
+  cHardwareCatGetByHWModelName,
+  cHardwareCatGetHWModelNameByVendor,
 
   cHardwareAssGetAll,
   cHardwareAssGetById,
@@ -429,7 +430,8 @@ hardwareRouters.get("/catalogs/vendors/:vendor", cHardwareCatGetByVendor);
 hardwareRouters.get("/catalogs/partnumbers/:partnumber", cHardwareCatGetByPartnumber);
 hardwareRouters.get("/catalogs/categories/:category", cHardwareCatGetByCategory);
 hardwareRouters.get("/catalogs/models/names", cHardwareCatGetHWModelName);
-hardwareRouters.get("/catalogs/models/names/:vendor", cHardwareCatGetSWModelNameByVendor);
+hardwareRouters.get("/catalogs/models/names/:hardwaremodelname", cHardwareCatGetByHWModelName);
+hardwareRouters.get("/catalogs/models/names/vendors/:vendor", cHardwareCatGetHWModelNameByVendor);
 
 hardwareRouters.get("/assets/", cHardwareAssGetAll);
 hardwareRouters.get("/assets/id/:id", cHardwareAssGetById);
@@ -441,5 +443,3 @@ hardwareRouters.get("/assets/tenants/:tenant", cHardwareAssGetByTenant);
 hardwareRouters.get("/assets/sites/:site", cHardwareAssGetBySite);
 
 module.exports = hardwareRouters;
-
-

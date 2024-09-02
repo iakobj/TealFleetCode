@@ -6,7 +6,8 @@ const {
   hardwareCatGetByPartnumber,
   hardwareCatGetByCategory,
   hardwareCatGetHWModelName,
-  HardwareCatGetSWModelNameByVendor,
+  hardwareCatGetByHWModelName,
+  HardwareCatGetHWModelNameByVendor,
 
   hardwareAssGetAll,
   hardwareAssGetById,
@@ -132,11 +133,27 @@ module.exports.cHardwareCatGetHWModelName = async (req, res) => {
   }
 };
 
-module.exports.cHardwareCatGetSWModelNameByVendor = async (req, res) => {
+module.exports.cHardwareCatGetByHWModelName = async (req, res) => {
+  const hardware_model_name = req.params.hardwaremodelname;
+  try {
+    const identity = await checkIdentity(req);
+    const result = await hardwareCatGetByHWModelName(identity, hardware_model_name);
+
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
+    }
+  } catch (error) {
+    res.status(404).send({data: [{error}]});
+  }
+};
+
+module.exports.cHardwareCatGetHWModelNameByVendor = async (req, res) => {
   const vendor_name = req.params.vendor;
   try {
     const identity = await checkIdentity(req);
-    const result = await HardwareCatGetSWModelNameByVendor(identity, vendor_name);
+    const result = await HardwareCatGetHWModelNameByVendor(identity, vendor_name);
 
     if (result[0] && result[0].error) {
       res.status(401).send({ data: result });
