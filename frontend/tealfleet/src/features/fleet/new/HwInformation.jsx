@@ -49,26 +49,34 @@ function HwInformation(selectedModel) {
     fetchData();
   }, []);
 
-  console.log(selectedModel.selectedModel);
-  console.log(hwModels)
-
   const formik = useFormik({
     initialValues: {
-      vendor_id: "",
-      model_id: "",
-      version_id: "",
+      hardware_catalog_id: "",
+      hardware_asset_name: "",
+      hardware_asset_ip: "",
+      hardware_serial_no	: "",
+      hardware_asset_tag: "",
+      tenant_id: "",
+      site_id: "",
+      hardware_notes: "",
+      hardware_asset_ip: "",
     },
 
     validationSchema: Yup.object({
-      vendor_id: Yup.string(),
-      model_id: Yup.string().required("Required"),
-      version_id: Yup.string().required("Required"),
+      hardware_catalog_id: Yup.string().required("Required"),
+      hardware_asset_name: Yup.string(),
+      hardware_asset_ip: Yup.string(),
+      hardware_serial_no: Yup.string(),
+      hardware_asset_tag: Yup.string(),
+      tenant_id: Yup.string().required("Required"),
+      site_id: Yup.string(),
+      hardware_notes: Yup.string(),
     }),
 
     onSubmit: (values) => {
       try {
         if (values) {
-          setStepperAt(1);
+          console.log(values);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -97,20 +105,19 @@ function HwInformation(selectedModel) {
                 <FormControl isRequired>
                     <FormLabel>Part Number</FormLabel>
                     <Select
-                      id="part_number"
-                      name="part_number"
+                      id="hardware_catalog_id"
+                      name="hardware_catalog_id"
                       type="text"
                       placeholder="Select part number"
                       focusBorderColor="teal.600"
                       onChange={formik.handleChange}
                       value={formik.values.tenant_id}
-                      {...formik.getFieldProps("part_number")}
+                      {...formik.getFieldProps("hardware_catalog_id")}
                     >
                       {hwModels.data &&
                         hwModels.data.map((data) => (
                           <option key={data.hardware_catalog_id} value={data.hardware_catalog_id}>
-                            {" "}
-                            {data.hardware_part_number}{" "}
+                            {data.hardware_part_number}
                           </option>
                         ))}
                     </Select>
@@ -214,7 +221,7 @@ function HwInformation(selectedModel) {
                     ) : null}
                   </FormControl>
 
-                  <FormControl isRequired>
+                  <FormControl>
                     <FormLabel>Asset Location</FormLabel>
                     <Select
                       id="site_id"

@@ -77,7 +77,6 @@ function SelectCatalog() {
       var hwModels = await getHwModels.json();
       
       var joinedModels ={"data": [...swModels.data, ...hwModels.data] };
-      console.log(joinedModels);
 
       setModels(joinedModels);
 
