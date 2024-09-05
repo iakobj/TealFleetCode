@@ -131,21 +131,25 @@ CREATE TABLE IF NOT EXISTS "hardware_assets" (
 );
 
 CREATE TABLE IF NOT EXISTS "hw_sub_components" (
-  "hw_sub_components_id" uuid PRIMARY KEY,
+  "hw_sub_component_id" uuid PRIMARY KEY,
   "hardware_asset_id" uuid NOT NULL,
+  "amount" integer NOT NULL,
   "hw_part_make" varchar NOT NULL,
   "hw_part_model" varchar NOT NULL,
+  "hw_part_number" varchar NOT NULL,
   "hw_serial_no" varchar,
   "hw_changed_at" timestamp NOT NULL,
   "hw_created_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "spare_parts" (
-  "spare_parts_id" uuid PRIMARY KEY,
+  "spare_part_id" uuid PRIMARY KEY,
   "spare_amount" integer NOT NULL,
   "spare_part_make" varchar NOT NULL,
   "spare_part_model" varchar NOT NULL,
+  "spare_part_number" varchar NOT NULL,
   "spare_serial_no" varchar,
+  "spare_asset_tag" varchar,
   "spare_description" varchar,
   "spare_changed_at" timestamp NOT NULL,
   "spare_created_at" timestamp DEFAULT (now())
