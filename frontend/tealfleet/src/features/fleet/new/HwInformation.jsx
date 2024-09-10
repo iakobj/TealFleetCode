@@ -21,6 +21,7 @@ import {
 import FormStepper from "./FormStepper";
 
 import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
+import HwComponents from "./hwComponents";
 
 // import API endpoints
 import { tenantsGetAll } from "../../../constants/api/tenants";
@@ -34,6 +35,7 @@ function HwInformation(selectedModel) {
   const [tenants, setTenants] = useState([]);
   const [hwModels, setHwModels] = useState([]);
   const [sites, setSites] = useState([]);
+  const [nextStep, setNextStep] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,6 +79,7 @@ function HwInformation(selectedModel) {
       try {
         if (values) {
           console.log(values);
+          setNextStep(true);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -85,6 +88,10 @@ function HwInformation(selectedModel) {
   });
 
   return (
+    <>
+    {nextStep ? (
+      <HwComponents/>
+    ) : (
     <>
       <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>
           <FormStepper stepperAt={1} />
@@ -303,6 +310,8 @@ function HwInformation(selectedModel) {
             </Card>
           </form>
         </GridItem>
+        </>
+        )}
     </>
   );
 }
