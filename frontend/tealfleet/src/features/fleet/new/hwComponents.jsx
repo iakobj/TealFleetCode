@@ -16,11 +16,19 @@ import {
 
 import FormStepper from "./FormStepper";
 
-import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
+import { AddIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 
 import HwComponentsForm from "./hwComponentsForm";
 
 function HwComponents(selectedModel) {
+  const [forms, setForms] = useState(10);
+
+  const handleAddForm = () => {
+    setForms(forms + 1);
+  };
+
+  console.log(forms);
+
   return (
     <>
       <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>
@@ -37,6 +45,11 @@ function HwComponents(selectedModel) {
             borderRadius={"0.6em 0.6em 0.6em 0.6em"}
           >
             <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em">
+            <GridItem colSpan={1} colStart={1}>
+                <Heading as="h5" size="sm" color="gray.700">
+                  No.
+                </Heading>
+              </GridItem>
               <GridItem colSpan={3} colStart={2}>
                 <Heading as="h5" size="sm" color="gray.700">
                   Amount
@@ -69,31 +82,23 @@ function HwComponents(selectedModel) {
               </GridItem>
             </Grid>
 
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
-            <HwComponentsForm />
+            {Array.from({ length: forms }, (_, index) => (
+              <HwComponentsForm key={index} count={index} />
+            ))}
 
+            <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em" marginTop={"1em"}>
+              <GridItem colStart={24}>
+                <Button
+                  variant={"outline"}
+                  rightIcon={<AddIcon />}
+                  size="sm"
+                  colorScheme="teal"
+                  onClick={handleAddForm}
+                >
+                  New row
+                </Button>
+              </GridItem>
+            </Grid>
           </Card>
         </Box>
         <Card
@@ -105,7 +110,7 @@ function HwComponents(selectedModel) {
         >
           <Flex>
             <Spacer />
-            <NavLink to="/support/contracts">
+            <NavLink to="/assets/fleet">
               <Button
                 marginRight={"1.2em"}
                 variant={"outline"}

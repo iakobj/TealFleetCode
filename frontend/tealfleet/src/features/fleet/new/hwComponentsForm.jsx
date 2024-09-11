@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import {
+  Text,
   FormControl,
   FormLabel,
   Select,
@@ -11,6 +12,7 @@ import {
   Button,
   Box,
   Flex,
+  HStack,
   Spacer,
   Card,
   SimpleGrid,
@@ -35,7 +37,11 @@ import { sitesGetAll } from "../../../constants/api/sites";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-function HwComponentsForm(selectedModel) {
+function HwComponentsForm(props) {
+  let count = props.count + 1;
+
+  console.log(props.count);
+
   const formik = useFormik({
     initialValues: {
       hardware_catalog_id: "",
@@ -73,6 +79,15 @@ function HwComponentsForm(selectedModel) {
 
   return (
     <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em">
+      <GridItem colSpan={1} colStart={1} marginTop={"0.0em"}>
+        <Card padding={"0.35em"} variant="outline">
+          <Text fontSize="lg">
+            <HStack>
+              <Box>{count}.</Box>
+            </HStack>
+          </Text>
+        </Card>
+      </GridItem>
       <GridItem colSpan={3} colStart={2}>
         <FormControl>
           <NumberInput
@@ -93,8 +108,7 @@ function HwComponentsForm(selectedModel) {
               <NumberDecrementStepper />
             </NumberInputStepper>
           </NumberInput>
-          {formik.touched.amount &&
-          formik.errors.amount ? (
+          {formik.touched.amount && formik.errors.amount ? (
             <div>{formik.errors.amount}</div>
           ) : null}
         </FormControl>
@@ -112,8 +126,7 @@ function HwComponentsForm(selectedModel) {
             value={formik.values.vendor}
             {...formik.getFieldProps("vendor")}
           />
-          {formik.touched.vendor &&
-          formik.errors.vendor ? (
+          {formik.touched.vendor && formik.errors.vendor ? (
             <div>{formik.errors.vendor}</div>
           ) : null}
         </FormControl>
@@ -131,8 +144,7 @@ function HwComponentsForm(selectedModel) {
             value={formik.values.model}
             {...formik.getFieldProps("model")}
           />
-          {formik.touched.model &&
-          formik.errors.model ? (
+          {formik.touched.model && formik.errors.model ? (
             <div>{formik.errors.model}</div>
           ) : null}
         </FormControl>
@@ -150,8 +162,7 @@ function HwComponentsForm(selectedModel) {
             value={formik.values.partnumber}
             {...formik.getFieldProps("partnumber")}
           />
-          {formik.touched.partnumber &&
-          formik.errors.partnumber ? (
+          {formik.touched.partnumber && formik.errors.partnumber ? (
             <div>{formik.errors.partnumber}</div>
           ) : null}
         </FormControl>
@@ -169,8 +180,7 @@ function HwComponentsForm(selectedModel) {
             value={formik.values.serialnumber}
             {...formik.getFieldProps("serialnumber")}
           />
-          {formik.touched.serialnumber &&
-          formik.errors.serialnumber ? (
+          {formik.touched.serialnumber && formik.errors.serialnumber ? (
             <div>{formik.errors.serialnumber}</div>
           ) : null}
         </FormControl>
@@ -188,8 +198,7 @@ function HwComponentsForm(selectedModel) {
             value={formik.values.assettag}
             {...formik.getFieldProps("assettag")}
           />
-          {formik.touched.assettag &&
-          formik.errors.assettag ? (
+          {formik.touched.assettag && formik.errors.assettag ? (
             <div>{formik.errors.assettag}</div>
           ) : null}
         </FormControl>
