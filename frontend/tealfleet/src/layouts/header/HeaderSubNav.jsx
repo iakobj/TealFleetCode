@@ -34,7 +34,7 @@ function HeaderSubNav({ link, subLink }) {
     return items.subNavData.data;
   };
 
-  const assets = [{ administration: "fleet" }, { administration: "spare parts" }];
+  const assets = [{ assets: "fleet" }, { assets: "spare parts" }];
 
   const support = [
     { support: "contracts" },
@@ -45,7 +45,7 @@ function HeaderSubNav({ link, subLink }) {
   const administration = [
     { administration: "users" },
     { administration: "tenants" },
-    { administration: "logs"},
+    { administration: "logs" },
     { administration: "catalogs" },
   ];
 
@@ -80,66 +80,57 @@ function HeaderSubNav({ link, subLink }) {
       }}
       overflowX="auto"
     >
-      <HStack>
-        {subNavItems &&
-          subNavItems
-            .filter(
-              (item) =>
-                item.tenant_name ||
-                item.assets ||
-                item.support ||
-                item.administration
-            )
-            .map((subNavItem, index) => (
-              <NavLink
-                to={
-                  link +
-                  "/" +
-                  (subNavItem.tenant_name ||
-                    subNavItem.assets ||
-                    (typeof subNavItem.support === "string"
-                      ? subNavItem.support.toLowerCase()
-                      : "") ||
-                    (typeof subNavItem.administration === "string"
-                      ? subNavItem.administration.toLowerCase()
-                      : ""))
-                }
-                key={
-                  subNavItem.tenant_name ||
-                  subNavItem.assets ||
-                  subNavItem.support ||
-                  subNavItem.administration
+<HStack>
+  {subNavItems &&
+    subNavItems
+      .filter(
+        (item) =>
+          item.tenant_name ||
+          item.assets ||
+          item.support ||
+          item.administration
+      )
+      .map((subNavItem, index) => {
+        const getNavItem = (item) =>
+          item.assets
+            ? item.assets.toLowerCase().replace(/\s+/g, '')
+            : item.tenant_name || item.support || item.administration;
+
+        const navItem = getNavItem(subNavItem);
+
+        return (
+          <NavLink
+            to={`${link}/${navItem}`}
+            key={navItem}
+          >
+            <Button
+              size="sm"
+              colorScheme="blackAlpha"
+              variant="ghost"
+              onClick={() => handleLinkClick(index)}
+            >
+              <Text
+                color="blackAlpha.700"
+                fontSize={{ base: 'sm', sm: 'sm', md: 'md' }}
+                textTransform="capitalize"
+                fontWeight={
+                  index === clickedIndex ||
+                  [subNavItem.tenant_name, subNavItem.assets, subNavItem.support, subNavItem.administration].includes(subLinkBold)
+                    ? '500'
+                    : 'normal'
                 }
               >
-                <Button
-                  size="sm"
-                  colorScheme="blackAlpha"
-                  variant="ghost"
-                  onClick={() => handleLinkClick(index)}
-                >
-                  <Text
-                    color="blackAlpha.700"
-                    fontSize={{ base: "sm", sm: "sm", md: "md" }}
-                    textTransform="capitalize"
-                    fontWeight={
-                      (index == clickedIndex ||
-                      (subNavItem.tenant_name === subLinkBold ||
-                        subNavItem.assets === subLinkBold ||
-                        subNavItem.support === subLinkBold ||
-                        subNavItem.administration === subLinkBold)
-                      )? "500"
-                        : "normal"
-                    }
-                  >
-                    {subNavItem.tenant_name ||
-                      subNavItem.assets ||
-                      subNavItem.support ||
-                      subNavItem.administration}
-                  </Text>
-                </Button>
-              </NavLink>
-            ))}
-      </HStack>
+                {subNavItem.tenant_name ||
+                  subNavItem.assets ||
+                  subNavItem.support ||
+                  subNavItem.administration}
+              </Text>
+            </Button>
+          </NavLink>
+        );
+      })}
+</HStack>
+
     </Flex>
   );
 }

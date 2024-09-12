@@ -18,6 +18,7 @@ import Dashboard, {DashboardDataLoader} from "./pages/Dashboard";
 
 import Fleet, {FleetDataLoader} from "./pages/Fleet";
 import NewAsset from "./features/fleet/new/NewAsset";
+import SpareParts, {SparePartsDataLoader} from "./pages/SpareParts";
 
 // Support
 import Contracts, {ContractsDataLoader} from "./pages/support/Contracts";
@@ -49,6 +50,12 @@ const router = createBrowserRouter([
         path: "assets/fleet",
         element: <Fleet/>,
         loader: FleetDataLoader,
+        errorElement: <ErrorBoundary />,
+      },
+      {
+        path: "assets/spareparts",
+        element: <SpareParts/>,
+        loader: SparePartsDataLoader,
         errorElement: <ErrorBoundary />,
       },
       {

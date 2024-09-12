@@ -18,6 +18,7 @@ const { checkIdentity } = require("../middlewares/identity");
 module.exports.cDashboardGetStatusCardData = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
+    console.log(req);
 
     const resultArray = await Promise.all([
       assetsGetNoSW(identity),
