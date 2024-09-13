@@ -2,7 +2,7 @@ version: '3.8'
 services:
   frontend:
     build:
-      context: ./frontend
+      context: ./frontend/tealfleet
       dockerfile: Dockerfile
     depends_on:
       - backend
@@ -11,7 +11,7 @@ services:
   backend:
     env_file: .env
     build:
-      context: ./backend
+      context: ./backend/tealfleet
       dockerfile: Dockerfile
     depends_on:
       - db
