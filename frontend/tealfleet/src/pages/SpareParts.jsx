@@ -5,7 +5,7 @@ import { API_ENDPOINT } from "../constants/apiEndpoint";
 // Chakra-UI components
 import { Box } from "@chakra-ui/react";
 
-import SparePartsFilter from "../features/SpareParts/SparePartsFilter.jsx";
+import SparePartsFilter from "../features/spareparts/SparePartsFilter.jsx";
 
 function SpareParts() {
   return (
