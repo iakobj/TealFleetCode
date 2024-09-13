@@ -2,7 +2,7 @@ const { Pool } = require("pg");
 
 const path = require("path");
 const result = require("dotenv").config({
-  path: path.resolve(__dirname, "../../../.env"),
+  path: path.resolve(__dirname, "../../../../../.env"),
 });
 if (result.error) {
   console.error("Error loading .env file:", result.error);
