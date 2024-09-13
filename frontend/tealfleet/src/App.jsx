@@ -27,8 +27,8 @@ import NewContract from "./features/contracts/new/NewContract";
 import Administration from "./pages/Administration";
 
 // Authentication
-import Login from "./pages/login";
-import Register from "./pages/register";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import Fonts from '../public/fonts/Fonts';
