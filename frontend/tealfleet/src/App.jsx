@@ -18,7 +18,7 @@ import Dashboard, {DashboardDataLoader} from "./pages/Dashboard";
 import Fleet, {FleetDataLoader} from "./pages/Fleet";
 
 
-import NewAsset from "./features/fleet/new/NewAsset";
+//import NewAsset from "./features/fleet/new/NewAsset";
 import SpareParts, {SparePartsDataLoader} from "./pages/SpareParts";
 
 // Support
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
       },
       {
         path: "assets/new",
-        element: <NewAsset/>,
+        //element: <NewAsset/>,
         loader: ContractsDataLoader,
         errorElement: <ErrorBoundary />,
       },
