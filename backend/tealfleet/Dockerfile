@@ -18,4 +18,4 @@ ENV SERVER_PORT=3000
 EXPOSE 3000
 
 # Start the ExpressJS server when the container starts
-CMD ["npm", "run", "start"]
+CMD ["node", "app.js"]
