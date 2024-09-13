@@ -12,11 +12,12 @@ import RootLayout from "./layouts/RootLayout";
 import FallbackPage from "./pages/FallbackPage";
 import ErrorBoundary from "./pages/ErrorBoundary";
 
-
 // Dashboard
 import Dashboard, {DashboardDataLoader} from "./pages/Dashboard";
 
 import Fleet, {FleetDataLoader} from "./pages/Fleet";
+
+
 import NewAsset from "./features/fleet/new/NewAsset";
 import SpareParts, {SparePartsDataLoader} from "./pages/SpareParts";
 
