@@ -1,1 +1,1 @@
-export const API_ENDPOINT = "backend:3000";
+export const API_ENDPOINT = "dev.tealfleet.com/api";
