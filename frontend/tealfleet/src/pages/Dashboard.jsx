@@ -73,7 +73,7 @@ export const DashboardDataLoader = async ({ params }) => {
 
   if (!tenant) {
     AssetsStatus = await fetch(
-      `http://${API_ENDPOINT}/dashboard/assets/status/`,
+      `${API_ENDPOINT}/dashboard/assets/status/`,
       {
         method: "GET",
         credentials: "include",
@@ -81,7 +81,7 @@ export const DashboardDataLoader = async ({ params }) => {
     );
 
     AssetsTotal = await fetch(
-      `http://${API_ENDPOINT}/dashboard/assets/totals/`,
+      `${API_ENDPOINT}/dashboard/assets/totals/`,
       {
         method: "GET",
         credentials: "include",
@@ -89,7 +89,7 @@ export const DashboardDataLoader = async ({ params }) => {
     );
 
     AssetsSupport = await fetch(
-      `http://${API_ENDPOINT}/dashboard/assets/support/`,
+      `${API_ENDPOINT}/dashboard/assets/support/`,
       {
         method: "GET",
         credentials: "include",
@@ -97,7 +97,7 @@ export const DashboardDataLoader = async ({ params }) => {
     );
   } else {
     AssetsStatus = await fetch(
-      `http://${API_ENDPOINT}/dashboard/assets/status/${tenant}`,
+      `${API_ENDPOINT}/dashboard/assets/status/${tenant}`,
       {
         method: "GET",
         credentials: "include",
@@ -105,7 +105,7 @@ export const DashboardDataLoader = async ({ params }) => {
     );
 
     AssetsTotal = await fetch(
-      `http://${API_ENDPOINT}/dashboard/assets/totals/${tenant}`,
+      `${API_ENDPOINT}/dashboard/assets/totals/${tenant}`,
       {
         method: "GET",
         credentials: "include",
@@ -113,7 +113,7 @@ export const DashboardDataLoader = async ({ params }) => {
     );
 
     AssetsSupport = await fetch(
-      `http://${API_ENDPOINT}/dashboard/assets/support/${tenant}`,
+      `${API_ENDPOINT}/dashboard/assets/support/${tenant}`,
       {
         method: "GET",
         credentials: "include",

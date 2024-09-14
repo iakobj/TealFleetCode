@@ -32,7 +32,7 @@ function DeleteContract({ selectedContract, isOpen, onClose, cancelRef }) {
       contract_no = selectedContract.data[0].contract_no;
     }
 
-    fetch(`http://${API_ENDPOINT}/contracts/remove/`, {
+    fetch(`${API_ENDPOINT}/contracts/remove/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

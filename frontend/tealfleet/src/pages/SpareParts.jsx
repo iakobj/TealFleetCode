@@ -38,18 +38,18 @@ export const SparePartsDataLoader = async ({ params, request }) => {
     offset: searchOffset,
   });
 
-  const vItems = await fetch(`http://${API_ENDPOINT}/vendors/`, {
+  const vItems = await fetch(`${API_ENDPOINT}/vendors/`, {
     method: "GET",
     credentials: "include",
   });
 
-  const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
+  const tItems = await fetch(`${API_ENDPOINT}/tenants/`, {
     method: "GET",
     credentials: "include",
   });
 
   const swItems = await fetch(
-    `http://${API_ENDPOINT}/software/catalogs/models/names`,
+    `${API_ENDPOINT}/software/catalogs/models/names`,
     {
       method: "GET",
       credentials: "include",
@@ -57,24 +57,24 @@ export const SparePartsDataLoader = async ({ params, request }) => {
   );
 
   const hwItems = await fetch(
-    `http://${API_ENDPOINT}/hardware/catalogs/models/names`,
+    `${API_ENDPOINT}/hardware/catalogs/models/names`,
     {
       method: "GET",
       credentials: "include",
     }
   );
 
-  const siteItems = await fetch(`http://${API_ENDPOINT}/sites/`, {
+  const siteItems = await fetch(`${API_ENDPOINT}/sites/`, {
     method: "GET",
     credentials: "include",
   });
 
-  fItems = await fetch(`http://${API_ENDPOINT}/assets/fleet/all/`, {
+  fItems = await fetch(`${API_ENDPOINT}/assets/fleet/all/`, {
     method: "GET",
     credentials: "include",
   });
 
-  const apiUrl = `http://${API_ENDPOINT}/assets/fleet/all/filter/?${queryParams.toString()}`;
+  const apiUrl = `${API_ENDPOINT}/assets/fleet/all/filter/?${queryParams.toString()}`;
 
   if (searchTenant || searchSwmodel || searchHwmodel || searchSitename || searchVendor || searchOffset) {
     fItems = await fetch(apiUrl, {

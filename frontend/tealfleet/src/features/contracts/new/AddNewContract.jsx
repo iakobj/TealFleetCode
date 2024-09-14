@@ -95,7 +95,7 @@ useEffect(() => {
     onSubmit: (values) => {
       const newContract = JSON.stringify(values, null, 2);
       try {
-        fetch(`http://${API_ENDPOINT}/contracts/add`, {
+        fetch(`${API_ENDPOINT}/contracts/add`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

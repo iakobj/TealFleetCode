@@ -27,7 +27,7 @@ function ContractsAssetsList({ selectedContract }) {
   const AssetsDataLoader = async (selectedContract) => {
     try {
       const contractAssets = await fetch(
-        `http://${API_ENDPOINT}/contracts/numbers/${selectedContract}`,
+        `${API_ENDPOINT}/contracts/numbers/${selectedContract}`,
         {
           method: "GET",
           credentials: "include",

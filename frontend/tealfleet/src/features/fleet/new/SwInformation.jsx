@@ -33,7 +33,7 @@ function SwInformation(selectedModel) {
 
   const vendorDataLoader = async () => {
     try {
-      const getVendors = await fetch(`http://${API_ENDPOINT}/vendors`, {
+      const getVendors = await fetch(`${API_ENDPOINT}/vendors`, {
         method: "GET",
         credentials: "include",
       });
@@ -48,7 +48,7 @@ function SwInformation(selectedModel) {
   const modelDataLoader = async (vendor_id) => {
     try {
       const getVendors = await fetch(
-        `http://${API_ENDPOINT}/vendors/id/${vendor_id}`,
+        `${API_ENDPOINT}/vendors/id/${vendor_id}`,
         {
           method: "GET",
           credentials: "include",

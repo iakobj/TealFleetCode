@@ -39,7 +39,7 @@ function ContractsAssetsListHeader({ selectedContract }) {
   const ContractsDataLoader = async (selectedContract) => {
     try {
       const contractData = await fetch(
-        `http://${API_ENDPOINT}/contracts/basic/information/${selectedContract}`,
+        `${API_ENDPOINT}/contracts/basic/information/${selectedContract}`,
         {
           method: "GET",
           credentials: "include",

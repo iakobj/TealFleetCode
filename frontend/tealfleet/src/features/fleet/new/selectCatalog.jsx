@@ -42,7 +42,7 @@ function SelectCatalog() {
 
   const vendorDataLoader = async () => {
     try {
-      const getVendors = await fetch(`http://${API_ENDPOINT}/vendors`, {
+      const getVendors = await fetch(`${API_ENDPOINT}/vendors`, {
         method: "GET",
         credentials: "include",
       });
@@ -58,7 +58,7 @@ function SelectCatalog() {
     try {
 
       const getSwModels = await fetch(
-        `http://${API_ENDPOINT}/software/catalogs/models/names/vendors/${selectedVendor}`,
+        `${API_ENDPOINT}/software/catalogs/models/names/vendors/${selectedVendor}`,
         {
           method: "GET",
           credentials: "include",
@@ -66,7 +66,7 @@ function SelectCatalog() {
       );
 
       const getHwModels = await fetch(
-        `http://${API_ENDPOINT}/hardware/catalogs/models/names/vendors/${selectedVendor}`,
+        `${API_ENDPOINT}/hardware/catalogs/models/names/vendors/${selectedVendor}`,
         {
           method: "GET",
           credentials: "include",

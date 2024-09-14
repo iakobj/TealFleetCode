@@ -75,7 +75,7 @@ function AssetFilter({newContractId, newContractNo}) {
     const isChecked = async () => {
       try {
         const getIsChecked = await fetch(
-          `http://${API_ENDPOINT}/contracts/numbers/${newContractNo}`,
+          `${API_ENDPOINT}/contracts/numbers/${newContractNo}`,
           {
             method: "GET",
             credentials: "include",

@@ -54,7 +54,7 @@ function HeaderMainNav() {
   const [user, setUser] = useState(["null"]);
 
   const fetchUser = async () => {
-    const userData = await fetch(`http://${API_ENDPOINT}/users/me`, {
+    const userData = await fetch(`${API_ENDPOINT}/users/me`, {
       method: "GET",
       credentials: "include",
     });

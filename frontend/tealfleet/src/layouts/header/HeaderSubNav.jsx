@@ -22,7 +22,7 @@ function HeaderSubNav({ link, subLink }) {
   }, [link]);
 
   const fetchTenants = async () => {
-    const data = await fetch(`http://${API_ENDPOINT}/tenants`, {
+    const data = await fetch(`${API_ENDPOINT}/tenants`, {
       method: "GET",
       credentials: "include",
     });

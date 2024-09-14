@@ -42,7 +42,7 @@ function AssetList({
       action = "add";
 
       const addAsset = JSON.stringify(assetInfo, null, 2);
-      fetch(`http://${API_ENDPOINT}/contracts/add/asset`, {
+      fetch(`${API_ENDPOINT}/contracts/add/asset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -76,7 +76,7 @@ function AssetList({
       action = "remove";
 
       const removeAsset = JSON.stringify(assetInfo, null, 2);
-      fetch(`http://${API_ENDPOINT}/contracts/remove/asset`, {
+      fetch(`${API_ENDPOINT}/contracts/remove/asset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
