@@ -60,8 +60,8 @@ function AddNewContract() {
 
 useEffect(() => {
   const fetchData = async () => {
-    const contractTypes = await(contractsGetAllContractTypes);
-    const tenants = await(tenantsGetAll);
+    const contractTypes = await contractsGetAllContractTypes();
+    const tenants = await tenantsGetAll();
 
     setContractTypes(contractTypes);
     setTenants(tenants);
