@@ -4,7 +4,7 @@ import { API_ENDPOINT } from "../apiEndpoint";
 
 export const sitesGetAll = async () => {
     try {
-      const getData = await fetch(`http://${API_ENDPOINT}/sites`, {
+      const getData = await fetch(`${API_ENDPOINT}/sites`, {
         method: "GET",
         credentials: "include",
       });

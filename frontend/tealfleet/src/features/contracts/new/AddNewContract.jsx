@@ -40,6 +40,10 @@ import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 // import location of the API server
 import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
+//import API endpoints
+import { contractsGetAllContractTypes } from "../../../constants/api/contracts";
+import { tenantsGetAll } from "../../../constants/api/tenants";
+
 import AssetFilter from "./AssetFilter";
 
 import { useFormik } from "formik";
@@ -52,33 +56,18 @@ function AddNewContract() {
   const [newContractId, setNewContractId] = useState("");
   const [stepperAt, setStepperAt] = useState(0);
   const toast = useToast();
-  const formDataLoader = async () => {
-    try {
-      const getContractTypes = await fetch(
-        `http://${API_ENDPOINT}/contracts/types`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-      const getTenants = await fetch(`http://${API_ENDPOINT}/tenants`, {
-        method: "GET",
-        credentials: "include",
-      });
 
-      const contractTypes = await getContractTypes.json();
-      const tenants = await getTenants.json();
 
-      setContractTypes(contractTypes);
-      setTenants(tenants);
-    } catch (error) {
-      console.error("Error loading form data:", error);
-    }
-  };
+useEffect(() => {
+  const fetchData = async () => {
+    const contractTypes = await(contractsGetAllContractTypes);
+    const tenants = await(tenantsGetAll);
 
-  useEffect(() => {
-    formDataLoader();
-  }, []);
+    setContractTypes(contractTypes);
+    setTenants(tenants);
+  }
+  fetchData();
+}, []);
 
   const formik = useFormik({
     initialValues: {

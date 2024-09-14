@@ -4,7 +4,7 @@ import { API_ENDPOINT } from "../apiEndpoint";
 
 export const hardwareCatGetHWModelName = async (partnumber) => {
     try {
-      const getData = await fetch(`http://${API_ENDPOINT}/hardware/catalogs/partnumbers/${partnumber}`, {
+      const getData = await fetch(`${API_ENDPOINT}/hardware/catalogs/partnumbers/${partnumber}`, {
         method: "GET",
         credentials: "include",
       });
@@ -21,7 +21,7 @@ export const hardwareCatGetHWModelName = async (partnumber) => {
 
   export const hardwareCatGetByHWModelName = async (hardwaremodelname) => {
     try {
-      const getData = await fetch(`http://${API_ENDPOINT}/hardware/catalogs/models/names/${hardwaremodelname}`, {
+      const getData = await fetch(`${API_ENDPOINT}/hardware/catalogs/models/names/${hardwaremodelname}`, {
         method: "GET",
         credentials: "include",
       });

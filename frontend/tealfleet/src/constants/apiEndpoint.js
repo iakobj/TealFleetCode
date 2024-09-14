@@ -1,1 +1,1 @@
-export const API_ENDPOINT = "dev.tealfleet.com/api";
+export const API_ENDPOINT = "https://dev.tealfleet.com/api";

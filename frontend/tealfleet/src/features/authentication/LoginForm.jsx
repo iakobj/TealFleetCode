@@ -42,7 +42,7 @@ function LoginForm() {
     const formData = new FormData(form);
     const jsonData = JSON.stringify(Object.fromEntries(formData));
     // You can pass formData as a fetch body directly:
-    fetch(`http://${API_ENDPOINT}/auth/login`, {
+    fetch(`${API_ENDPOINT}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
