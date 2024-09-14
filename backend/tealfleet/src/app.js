@@ -64,7 +64,7 @@ const store = new (require("connect-pg-simple")(session))({
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://frontend:5173"],
     credentials: true,
     methods: "GET,POST,DELETE",
     preflightContinue: false,
