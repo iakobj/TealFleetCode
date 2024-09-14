@@ -19,4 +19,4 @@ EXPOSE 3000
 
 # Start the ExpressJS server when the container starts
 WORKDIR /app/src
-CMD ["node", "app.js"]
+CMD ["node", "app.js", "seed"]
