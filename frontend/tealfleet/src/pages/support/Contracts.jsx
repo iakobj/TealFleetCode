@@ -36,23 +36,23 @@ export const ContractsDataLoader = async ({ params, request }) => {
     offset: searchOffset,
   });
 
-  const tItems = await fetch(`http://${API_ENDPOINT}/tenants/`, {
+  const tItems = await fetch(`${API_ENDPOINT}/tenants/`, {
     method: "GET",
     credentials: "include",
   });
 
   // TODO Change into unique search for contractors
-  const contractorsItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
+  const contractorsItems = await fetch(`${API_ENDPOINT}/contracts/`, {
     method: "GET",
     credentials: "include",
   });
 
-  cItems = await fetch(`http://${API_ENDPOINT}/contracts/`, {
+  cItems = await fetch(`${API_ENDPOINT}/contracts/`, {
     method: "GET",
     credentials: "include",
   });
 
-  const apiUrl = `http://${API_ENDPOINT}/contracts/all/filter/?${queryParams.toString()}`;
+  const apiUrl = `${API_ENDPOINT}/contracts/all/filter/?${queryParams.toString()}`;
 
   if (searchTenant || searchValidity || searchContractor || searchOffset) {
     cItems = await fetch(apiUrl, {
