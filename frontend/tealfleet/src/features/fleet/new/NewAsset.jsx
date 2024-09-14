@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import SelectCatalog from "./SelectCatalog";
+import SelectCatalog from "./selectCatalog";
 
 function NewAsset() {
   return (
