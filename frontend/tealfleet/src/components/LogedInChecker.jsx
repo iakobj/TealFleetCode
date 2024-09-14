@@ -19,7 +19,7 @@ function LogedInChecker() {
   let userInfoDataLoader = async () => {
     try {
       const userInformation = await fetch(
-        `http://${API_ENDPOINT}/users/me`,
+        `${API_ENDPOINT}/users/me`,
         {
           method: "GET",
           credentials: "include",
