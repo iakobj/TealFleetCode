@@ -8,10 +8,15 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Card, 
+  CardHeader, 
+  CardBody, 
+  CardFooter,
 } from "@chakra-ui/react";
 
 function SparePartsTable() {
   return (
+    <Card>
     <TableContainer>
       <Table variant="simple">
         <TableCaption>Imperial to metric conversion factors</TableCaption>
@@ -41,6 +46,7 @@ function SparePartsTable() {
         </Tbody>
       </Table>
     </TableContainer>
+    </Card>
   );
 }
 
