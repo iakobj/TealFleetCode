@@ -300,27 +300,20 @@ function SparePartsFilter() {
               <Spacer marginRight="0.5em" />
               <NavLink to="/assets/new">
                 <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"}>
-                New Asset
+                  New Asset
                 </Button>
               </NavLink>
             </WrapItem>
           </Wrap>
         </Card>
       </Hide>
-      <SimpleGrid
-        spacing="1em"
-        columns={{ base: "1", sm: "2", md: "4", lg: "4", xl: "6", "2xl": "6" }}
-        marginLeft={{ base: "0.5em", sm: "0.5em", md: "0em" }}
-        marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
-      >
-        <SparePartsTable/>
-
-        ) : (
-          <GridItem colSpan={{ base: 1, sm: 2, md: 4, lg: 4, xl: 6, "2xl": 6 }}>
-          <FilterNothingFound />
-        </GridItem>
+      <Box>
+        <SparePartsTable /> : (
+        <GridItem
+          colSpan={{ base: 1, sm: 2, md: 4, lg: 4, xl: 6, "2xl": 6 }}
+        ></GridItem>
         )
-      </SimpleGrid>
+      </Box>
 
       <Card
         marginTop="1em"
