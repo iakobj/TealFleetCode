@@ -308,11 +308,7 @@ function SparePartsFilter() {
         </Card>
       </Hide>
       <Box>
-        <SparePartsTable /> : (
-        <GridItem
-          colSpan={{ base: 1, sm: 2, md: 4, lg: 4, xl: 6, "2xl": 6 }}
-        ></GridItem>
-        )
+        <SparePartsTable />
       </Box>
 
       <Card
