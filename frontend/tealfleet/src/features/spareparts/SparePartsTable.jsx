@@ -29,29 +29,118 @@ function SparePartsTable() {
       <TableContainer>
         <Table variant="simple">
           <TableCaption>Imperial to metric conversion factors</TableCaption>
+
           <Thead>
             <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
+              <Th>AMOUNT</Th>
+              <Th>VENDOR</Th>
+              <Th>PART MODEL</Th>
+              <Th>PART NUMBER</Th>
+              <Th>SERIAL</Th>
+              <Th>ASSET TAG</Th>
             </Tr>
           </Thead>
+
           <Tbody>
             <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
             </Tr>
+
             <Tr>
-              <Td>feet</Td>
-              <Td>centimetres (cm)</Td>
-              <Td isNumeric>30.48</Td>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
             </Tr>
+
             <Tr>
-              <Td>yards</Td>
-              <Td>metres (m)</Td>
-              <Td isNumeric>0.91444</Td>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
             </Tr>
+
+            <Tr>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
+            </Tr>
+
+            <Tr>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
+            </Tr>
+
+            <Tr>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
+            </Tr>
+
+            <Tr>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
+            </Tr>
+
+            <Tr>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
+            </Tr>
+
+            <Tr>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
+            </Tr>
+
+            <Tr>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
+            </Tr>
+
+            <Tr>
+              <Td>1</Td>
+              <Td>Cisco</Td>
+              <Td>VIC 1445</Td>
+              <Td>UCSC-VIC-1445-2</Td>
+              <Td>290374832748</Td>
+              <Td>43534</Td>
+            </Tr>
+
           </Tbody>
         </Table>
       </TableContainer>
