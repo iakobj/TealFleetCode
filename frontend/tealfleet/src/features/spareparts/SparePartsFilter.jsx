@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 
-import FleetCard from "../fleet/FleetCard.jsx";
+import SparePartsTable from "./SparePartsTable.jsx";
 import FilterNothingFound from "../../components/FilterNothingFound.jsx";
 
 // Chakra-UI components
@@ -167,7 +167,7 @@ function SparePartsFilter() {
         >
           <Wrap>
             <WrapItem>
-              <NavLink to={"/assets/fleet"}>
+              <NavLink to={"/assets/spareparts"}>
                 <IconButton
                   aria-label="Reset filter"
                   icon={<RepeatIcon />}
@@ -313,24 +313,13 @@ function SparePartsFilter() {
         marginLeft={{ base: "0.5em", sm: "0.5em", md: "0em" }}
         marginRight={{ base: "0.5em", sm: "0.5em", md: "0em" }}
       >
-        {fleetCardItems && fleetCardItems.length > 0 ? (
-          fleetCardItems
-            .filter((item) => item.hardware_asset_id || item.software_asset_id)
-            .map((fleetCardItem) => (
-              <FleetCard
-                fleetCardItems={fleetCardItem}
-                key={
-                  fleetCardItem.hardware_asset_id
-                    ? fleetCardItem.hardware_asset_id
-                    : fleetCardItem.software_asset_id
-                }
-              />
-            ))
+        <SparePartsTable/>
+
         ) : (
           <GridItem colSpan={{ base: 1, sm: 2, md: 4, lg: 4, xl: 6, "2xl": 6 }}>
           <FilterNothingFound />
         </GridItem>
-        )}
+        )
       </SimpleGrid>
 
       <Card
