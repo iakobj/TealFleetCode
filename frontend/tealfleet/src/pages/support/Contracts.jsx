@@ -7,7 +7,7 @@ import { API_ENDPOINT } from "../../constants/apiEndpoint";
 // Chakra-UI components
 import { Box } from "@chakra-ui/react";
 
-import ContractsFilter from "../../features/contracts/contractsFilter";
+import ContractsFilter from "../../features/contracts/ContractsFilter";
 
 function Contracts() {
   return (

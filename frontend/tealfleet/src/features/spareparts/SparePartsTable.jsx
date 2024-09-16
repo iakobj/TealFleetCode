@@ -28,118 +28,101 @@ function SparePartsTable() {
     >
       <TableContainer>
         <Table variant="simple">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
+          <TableCaption>Spare Parts Table</TableCaption>
 
           <Thead>
             <Tr>
-              <Th>AMOUNT</Th>
               <Th>VENDOR</Th>
               <Th>PART MODEL</Th>
               <Th>PART NUMBER</Th>
               <Th>SERIAL</Th>
               <Th>ASSET TAG</Th>
+              <Th isNumeric>AMOUNT</Th>
             </Tr>
           </Thead>
 
           <Tbody>
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
             <Tr>
-              <Td>1</Td>
               <Td>Cisco</Td>
               <Td>VIC 1445</Td>
               <Td>UCSC-VIC-1445-2</Td>
               <Td>290374832748</Td>
               <Td>43534</Td>
+              <Td isNumeric>1</Td>
             </Tr>
 
-            <Tr>
-              <Td>1</Td>
-              <Td>Cisco</Td>
-              <Td>VIC 1445</Td>
-              <Td>UCSC-VIC-1445-2</Td>
-              <Td>290374832748</Td>
-              <Td>43534</Td>
-            </Tr>
-
-            <Tr>
-              <Td>1</Td>
-              <Td>Cisco</Td>
-              <Td>VIC 1445</Td>
-              <Td>UCSC-VIC-1445-2</Td>
-              <Td>290374832748</Td>
-              <Td>43534</Td>
-            </Tr>
 
           </Tbody>
         </Table>

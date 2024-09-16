@@ -207,9 +207,9 @@ function SparePartsFilter() {
             <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
-                  placeholder="Tenant"
-                  id="tenant"
-                  name="tenant"
+                  placeholder="Part Model"
+                  id="spare_part_model"
+                  name="spare_part_model"
                   size="sm"
                   w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
                   value={tenant}
@@ -232,11 +232,11 @@ function SparePartsFilter() {
             <WrapItem marginLeft="0.5em">
               <FormControl>
                 <Select
-                  placeholder="Software"
+                  placeholder="Part Number"
                   size="sm"
                   w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                  id="swmodel"
-                  name="swmodel"
+                  id="spare_part_number"
+                  name="spare_part_number"
                   value={swmodel}
                   onChange={(e) => handleChange(e.target.value, "swmodel")}
                 >
@@ -246,28 +246,6 @@ function SparePartsFilter() {
                       .map((swModelItems) => (
                         <option key={swModelItems.software_model_name}>
                           {swModelItems.software_model_name}
-                        </option>
-                      ))}
-                </Select>
-              </FormControl>
-            </WrapItem>
-            <WrapItem marginLeft="0.5em">
-              <FormControl>
-                <Select
-                  placeholder="Hardware"
-                  size="sm"
-                  w={{ base: "7em", sm: "7em", md: "7em", lg: "8em" }}
-                  id="hwmodel"
-                  name="hwmodel"
-                  value={hwmodel}
-                  onChange={(e) => handleChange(e.target.value, "hwmodel")}
-                >
-                  {hwModelItems &&
-                    hwModelItems
-                      .filter((item) => item.hardware_model_name)
-                      .map((hwModelItems) => (
-                        <option key={hwModelItems.hardware_model_name}>
-                          {hwModelItems.hardware_model_name}
                         </option>
                       ))}
                 </Select>
@@ -300,7 +278,7 @@ function SparePartsFilter() {
               <Spacer marginRight="0.5em" />
               <NavLink to="/assets/new">
                 <Button leftIcon={<AddIcon />} size={"sm"} colorScheme={"teal"}>
-                  New Asset
+                  New Spare Part
                 </Button>
               </NavLink>
             </WrapItem>
