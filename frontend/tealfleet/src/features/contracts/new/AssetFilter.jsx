@@ -7,7 +7,7 @@ import AssetList from "./AssetList.jsx";
 import FilterNothingFound from "../../../components/FilterNothingFound.jsx";
 
 // import location of the API server
-import { API_ENDPOINT } from "../../../constants/apiEndpoint";
+import { contractsGetByContractNo } from "../../../constants/api/contracts.js";
 
 // Chakra-UI components
 import {
@@ -41,7 +41,7 @@ import {
 
 import { useToast } from "@chakra-ui/react";
 
-function AssetFilter({newContractId, newContractNo}) {
+function AssetFilter({ newContractId, newContractNo }) {
   const loaderData = useLoaderData();
 
   const assetInformations = loaderData.fItems.data;
@@ -62,35 +62,19 @@ function AssetFilter({newContractId, newContractNo}) {
   const [arrowBack, setArrowBack] = useState();
   const [selectedPage, setSelectedPage] = useState(1);
 
-  const [selectedAssets, setSelectedAssets] = useState()
+  const [selectedAssets, setSelectedAssets] = useState();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const toast = useToast();
 
-
-
   useEffect(() => {
+    const fetchData = async () => {
+      const selAssets = await contractsGetByContractNo(newContractNo);
 
-    const isChecked = async () => {
-      try {
-        const getIsChecked = await fetch(
-          `${API_ENDPOINT}/contracts/numbers/${newContractNo}`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        const addAssets = await getIsChecked.json();
-        setSelectedAssets(addAssets);
-        
-      } catch (error) {
-        console.error("Error loading form data:", error);
-      }
+      setSelectedAssets(selAssets);
     };
-
-    isChecked();
-
+    fetchData();
   }, [offset, arrowForward, selectedPage]);
 
   let params = {};
@@ -445,17 +429,17 @@ function AssetFilter({newContractId, newContractNo}) {
             <Text>Found {foundAssets} assets</Text>
           </WrapItem>
           <WrapItem marginRight="1em" marginTop="0.2em">
-          <NavLink to="/support/contracts">
-                <Button
-                  rightIcon={<ArrowForwardIcon />}
-                  marginTop={"-0.28em"}
-                  size="sm"
-                  colorScheme="teal"
-                  width={"7em"}
-                >
-                  Finish
-                </Button>
-                </NavLink>
+            <NavLink to="/support/contracts">
+              <Button
+                rightIcon={<ArrowForwardIcon />}
+                marginTop={"-0.28em"}
+                size="sm"
+                colorScheme="teal"
+                width={"7em"}
+              >
+                Finish
+              </Button>
+            </NavLink>
           </WrapItem>
         </Wrap>
       </Card>

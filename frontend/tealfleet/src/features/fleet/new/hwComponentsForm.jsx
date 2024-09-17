@@ -52,7 +52,6 @@ function HwComponentsForm(props) {
       tenant_id: "",
       site_id: "",
       hardware_notes: "",
-      hardware_asset_ip: "",
     },
 
     validationSchema: Yup.object({

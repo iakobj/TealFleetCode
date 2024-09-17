@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react"; 
 
 // import location of the API server
-import { API_ENDPOINT } from "../../constants/apiEndpoint";
-
+import { contractsGetByContractNo } from "../../constants/api/contracts";
 
 import {
   Menu,
@@ -12,17 +11,11 @@ import {
   IconButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Button,
   Card,
   CardHeader,
   CardBody,
   Box,
   Text,
-  Heading,
   HStack,
   Stack,
   Badge,
@@ -36,24 +29,14 @@ import DeleteContract from "./DeleteContract";
 
 function ContractsAssetsListHeader({ selectedContract }) {
   const [contractData, setContractData] = useState([]);
-  const ContractsDataLoader = async (selectedContract) => {
-    try {
-      const contractData = await fetch(
-        `${API_ENDPOINT}/contracts/basic/information/${selectedContract}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-      const data = await contractData.json();
-      setContractData(data);
-    } catch (error) {
-      console.error("Error loading contract data:", error);
-    }
-  };
 
   useEffect(() => {
-    ContractsDataLoader(selectedContract);
+    const fetchData = async () => {
+      const data = await contractsGetByContractNo(selectedContract);
+  
+      setContractData(data);
+    };
+    fetchData();
   }, [selectedContract]);
 
   const { isOpen, onOpen, onClose } = useDisclosure(); 
