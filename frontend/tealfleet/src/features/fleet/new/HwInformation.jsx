@@ -133,6 +133,32 @@ function HwInformation(selectedModel) {
                     ) : null}
                   </FormControl>
 
+                  <FormControl isRequired>
+                    <FormLabel>Tenant Name</FormLabel>
+                    <Select
+                      id="tenant_id"
+                      name="tenant_id"
+                      type="text"
+                      placeholder="Select tenant"
+                      focusBorderColor="teal.600"
+                      onChange={formik.handleChange}
+                      value={formik.values.tenant_id}
+                      {...formik.getFieldProps("tenant_id")}
+                    >
+                      {tenants.data &&
+                        tenants.data.map((data) => (
+                          <option key={data.tenant_id} value={data.tenant_id}>
+                            {" "}
+                            {data.tenant_name}{" "}
+                          </option>
+                        ))}
+                    </Select>
+
+                    {formik.touched.tenant_id && formik.errors.tenant_id ? (
+                      <div>{formik.errors.tenant_id}</div>
+                    ) : null}
+                  </FormControl>
+
                   <FormControl>
                     <FormLabel>Asset Name</FormLabel>
                     <Input
@@ -198,32 +224,6 @@ function HwInformation(selectedModel) {
                     />
                     {formik.touched.hardware_tag && formik.errors.hardware_tag ? (
                       <div>{formik.errors.hardware_tag}</div>
-                    ) : null}
-                  </FormControl>
-
-                  <FormControl isRequired>
-                    <FormLabel>Tenant Name</FormLabel>
-                    <Select
-                      id="tenant_id"
-                      name="tenant_id"
-                      type="text"
-                      placeholder="Select tenant"
-                      focusBorderColor="teal.600"
-                      onChange={formik.handleChange}
-                      value={formik.values.tenant_id}
-                      {...formik.getFieldProps("tenant_id")}
-                    >
-                      {tenants.data &&
-                        tenants.data.map((data) => (
-                          <option key={data.tenant_id} value={data.tenant_id}>
-                            {" "}
-                            {data.tenant_name}{" "}
-                          </option>
-                        ))}
-                    </Select>
-
-                    {formik.touched.tenant_id && formik.errors.tenant_id ? (
-                      <div>{formik.errors.tenant_id}</div>
                     ) : null}
                   </FormControl>
 

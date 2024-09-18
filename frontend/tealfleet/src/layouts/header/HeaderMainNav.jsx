@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 // import location of the API server
-import { API_ENDPOINT } from "../../constants/apiEndpoint";
+import { usersGetMe } from "../../constants/api/users";
 
 import {
   Flex,
@@ -53,25 +53,14 @@ function HeaderMainNav() {
   // Fetch user data
   const [user, setUser] = useState(["null"]);
 
-  const fetchUser = async () => {
-    const userData = await fetch(`${API_ENDPOINT}/users/me`, {
-      method: "GET",
-      credentials: "include",
-    });
-    return {
-      logedInUserData: await userData.json(),
-    };
-  };
-
-  const fetchUserData = async () => {
-    const items = await fetchUser();
-    return items.logedInUserData.data;
-  };
-
   useEffect(() => {
-    fetchUserData().then((user) => {
-      setUser(user);
-    });
+    const fetchData = async () => {
+      const userData = await usersGetMe();
+      console.log(userData);
+  
+      setUser(userData.data);
+    };
+    fetchData();
   }, [location]);
 
   const mainNavItems = {

@@ -3,13 +3,14 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { API_ENDPOINT } from "../../constants/apiEndpoint";
+import { tenantsGetAll } from "../../constants/api/tenants";
 
 // Chakra-UI components
 import { Flex, Text, HStack, Button } from "@chakra-ui/react";
 
 function HeaderSubNav({ link, subLink }) {
-  let subLinkBold = subLink;
+  console.log(subLink);
+  let subLinkBold = decodeURIComponent(subLink);
   const [subNavItems, setSubNavItems] = useState();
   const [clickedIndex, setClickedIndex] = useState(1);
 
@@ -21,17 +22,9 @@ function HeaderSubNav({ link, subLink }) {
     setClickedIndex(null);
   }, [link]);
 
-  const fetchTenants = async () => {
-    const data = await fetch(`${API_ENDPOINT}/tenants`, {
-      method: "GET",
-      credentials: "include",
-    });
-    return { subNavData: await data.json() };
-  };
-
   const fetchSubNavTenants = async () => {
-    const items = await fetchTenants();
-    return items.subNavData.data;
+    const items = await tenantsGetAll();
+    return items.data;
   };
 
   const assets = [{ assets: "fleet" }, { assets: "spare parts" }];
@@ -80,57 +73,59 @@ function HeaderSubNav({ link, subLink }) {
       }}
       overflowX="auto"
     >
-<HStack>
-  {subNavItems &&
-    subNavItems
-      .filter(
-        (item) =>
-          item.tenant_name ||
-          item.assets ||
-          item.support ||
-          item.administration
-      )
-      .map((subNavItem, index) => {
-        const getNavItem = (item) =>
-          item.assets
-            ? item.assets.toLowerCase().replace(/\s+/g, '')
-            : item.tenant_name || item.support || item.administration;
+      <HStack>
+        {subNavItems &&
+          subNavItems
+            .filter(
+              (item) =>
+                item.tenant_name ||
+                item.assets ||
+                item.support ||
+                item.administration
+            )
+            .map((subNavItem, index) => {
+              const getNavItem = (item) =>
+                item.assets
+                  ? item.assets.toLowerCase().replace(/\s+/g, "")
+                  : item.tenant_name || item.support || item.administration;
 
-        const navItem = getNavItem(subNavItem);
+              const navItem = getNavItem(subNavItem);
 
-        return (
-          <NavLink
-            to={`${link}/${navItem}`}
-            key={navItem}
-          >
-            <Button
-              size="sm"
-              colorScheme="blackAlpha"
-              variant="ghost"
-              onClick={() => handleLinkClick(index)}
-            >
-              <Text
-                color="blackAlpha.700"
-                fontSize={{ base: 'sm', sm: 'sm', md: 'md' }}
-                textTransform="capitalize"
-                fontWeight={
-                  index === clickedIndex ||
-                  [subNavItem.tenant_name, subNavItem.assets, subNavItem.support, subNavItem.administration].includes(subLinkBold)
-                    ? '500'
-                    : 'normal'
-                }
-              >
-                {subNavItem.tenant_name ||
-                  subNavItem.assets ||
-                  subNavItem.support ||
-                  subNavItem.administration}
-              </Text>
-            </Button>
-          </NavLink>
-        );
-      })}
-</HStack>
-
+              return (
+                <NavLink to={`${link}/${navItem}`} key={navItem}>
+                  <Button
+                    size="sm"
+                    colorScheme="blackAlpha"
+                    variant="ghost"
+                    onClick={() => handleLinkClick(index)}
+                  >
+                    <Text
+                      color="blackAlpha.700"
+                      fontSize={{ base: "sm", sm: "sm", md: "md" }}
+                      textTransform="capitalize"
+                      fontWeight={
+                        index === clickedIndex ||
+                        subLinkBold === "undefined" ||
+                        [
+                          subNavItem.tenant_name,
+                          subNavItem.assets,
+                          subNavItem.support,
+                          subNavItem.administration,
+                        ].includes(subLinkBold)
+                          ? "500"
+                          : "normal"
+                      }
+                    >
+                      {subNavItem.tenant_name ||
+                        subNavItem.assets ||
+                        subNavItem.support ||
+                        subNavItem.administration}
+                    </Text>
+                  </Button>
+                </NavLink>
+              );
+            })}
+      </HStack>
     </Flex>
   );
 }
