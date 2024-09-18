@@ -86,10 +86,11 @@ function HeaderSubNav({ link, subLink }) {
             .map((subNavItem, index) => {
               const getNavItem = (item) =>
                 item.assets
-                  ? item.assets.toLowerCase().replace(/\s+/g, "")
+                  ? item.assets.toLowerCase().replace(/\s+/g, "%20")
                   : item.tenant_name || item.support || item.administration;
 
               const navItem = getNavItem(subNavItem);
+              console.log(navItem);
 
               return (
                 <NavLink to={`${link}/${navItem}`} key={navItem}>

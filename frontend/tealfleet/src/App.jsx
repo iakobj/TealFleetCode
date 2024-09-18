@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />,
       },
       {
-        path: "assets/spareparts",
+        path: "assets/spare parts",
         element: <SpareParts/>,
         loader: SparePartsDataLoader,
         errorElement: <ErrorBoundary />,
