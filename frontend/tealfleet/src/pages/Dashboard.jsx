@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router-dom";
 
 // import location of the API server
 import { API_ENDPOINT } from "../constants/apiEndpoint";
+import { dashboardGetStatusCardData,  dashboardGetTotalsCardData, dashboardGetSupportCardData } from "../constants/api/dashboard"
 
 // Chakra-UI components
 import { Box, SimpleGrid, Card } from "@chakra-ui/react";
@@ -72,58 +73,19 @@ export const DashboardDataLoader = async ({ params }) => {
   let AssetsSupport;
 
   if (!tenant) {
-    AssetsStatus = await fetch(
-      `${API_ENDPOINT}/dashboard/assets/status/`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    AssetsStatus = await dashboardGetStatusCardData();
+    AssetsTotal = await dashboardGetTotalsCardData();
+    AssetsSupport = await dashboardGetSupportCardData();
 
-    AssetsTotal = await fetch(
-      `${API_ENDPOINT}/dashboard/assets/totals/`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
-
-    AssetsSupport = await fetch(
-      `${API_ENDPOINT}/dashboard/assets/support/`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
   } else {
-    AssetsStatus = await fetch(
-      `${API_ENDPOINT}/dashboard/assets/status/${tenant}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
-
-    AssetsTotal = await fetch(
-      `${API_ENDPOINT}/dashboard/assets/totals/${tenant}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
-
-    AssetsSupport = await fetch(
-      `${API_ENDPOINT}/dashboard/assets/support/${tenant}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    AssetsStatus = await dashboardGetStatusCardData(tenant);
+    AssetsTotal = await dashboardGetTotalsCardData(tenant);
+    AssetsSupport = await dashboardGetSupportCardData(tenant);
   }
 
   return {
-    AssetsStatus: await AssetsStatus.json(),
-    AssetsTotal: await AssetsTotal.json(),
-    AssetsSupport: await AssetsSupport.json(),
+    AssetsStatus: await AssetsStatus,
+    AssetsTotal: await AssetsTotal,
+    AssetsSupport: await AssetsSupport,
   };
 };

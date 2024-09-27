@@ -2,7 +2,9 @@
 import * as React from "react";
 
 // import location of the API server
-import { API_ENDPOINT } from "../../constants/apiEndpoint";
+import { tenantsGetAll } from "../../constants/api/tenants";
+import { contractsGetAll } from "../../constants/api/contracts";
+import { supportGetContracts } from "../../constants/api/contracts";
 
 // Chakra-UI components
 import { Box } from "@chakra-ui/react";
@@ -12,7 +14,7 @@ import ContractsFilter from "../../features/contracts/ContractsFilter";
 function Contracts() {
   return (
     <Box height={"10vh"}>
-      <ContractsFilter/>
+      <ContractsFilter />
     </Box>
   );
 }
@@ -36,35 +38,17 @@ export const ContractsDataLoader = async ({ params, request }) => {
     offset: searchOffset,
   });
 
-  const tItems = await fetch(`${API_ENDPOINT}/tenants/`, {
-    method: "GET",
-    credentials: "include",
-  });
-
-  // TODO Change into unique search for contractors
-  const contractorsItems = await fetch(`${API_ENDPOINT}/contracts/`, {
-    method: "GET",
-    credentials: "include",
-  });
-
-  cItems = await fetch(`${API_ENDPOINT}/contracts/`, {
-    method: "GET",
-    credentials: "include",
-  });
-
-  const apiUrl = `${API_ENDPOINT}/contracts/all/filter/?${queryParams.toString()}`;
+  const tItems = await tenantsGetAll();
+  const contractorsItems = await contractsGetAll(); // TODO Change into unique search for contractors
+  cItems = await contractsGetAll();
 
   if (searchTenant || searchValidity || searchContractor || searchOffset) {
-    cItems = await fetch(apiUrl, {
-      method: "GET",
-      credentials: "include",
-    });
+    cItems = await supportGetContracts(queryParams);
   }
 
-
   return {
-    tItems: await tItems.json(),
-    contractorsItems: await contractorsItems.json(),
-    cItems: await cItems.json(),
+    tItems: await tItems,
+    contractorsItems: await contractorsItems,
+    cItems: await cItems,
   };
 };
