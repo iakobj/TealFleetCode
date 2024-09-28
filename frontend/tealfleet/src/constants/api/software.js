@@ -30,3 +30,18 @@ import { API_ENDPOINT } from "../apiEndpoint";
       console.error("Error loading form data:", error);
     }
   };
+
+  export const softwareCatGetSWModelName = async () => {
+    try {
+      const getData = await fetch(`${API_ENDPOINT}/software/catalogs/models/names`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      const data = await getData.json();
+      return data;
+
+    } catch (error) {
+      console.error("Error loading form data:", error);
+    }
+  };
