@@ -18,5 +18,6 @@ ENV SERVER_PORT=3000
 EXPOSE 3000
 
 # Start the ExpressJS server when the container starts
+# Starting with mode "ris" (Reset, Initialize, Seed) is used only for demo purposes
 WORKDIR /app/src
-CMD ["node", "app.js", "seed"]
+CMD ["node", "app.js", "ris"]

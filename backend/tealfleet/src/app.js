@@ -99,6 +99,10 @@ const { utilTfdbReset } = require("./utils/utilTfdbReset");
 // When starting the app it goes trough this logic to determine starting options
 const args = process.argv;
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 if (args[2] == "seed") {
   console.log("Seeding started...");
   utilTfdbSeed()
@@ -130,7 +134,41 @@ if (args[2] == "seed") {
       console.log("Exiting...");
     });
   return false;
-} else if (args[2] == "help") {
+}else if (args[2] == "init seed") {
+  console.log("Init started...");
+  utilTfdbInit()
+    .then(() => {
+      console.log("Init done");
+    })
+    .then(() => {
+      console.log("Exiting...");
+    });
+  return false;
+} else if (args[2] == "ris") {
+  utilTfdbReset()
+  .then(() => {
+    console.log("Reset completed. Waiting for delay...");
+    return delay(10000); // Delay for 10 seconds
+  })
+  .then(() => {
+    console.log("Init started...");
+    return utilTfdbInit();
+  })
+  .then(() => {
+    console.log("Init completed. Waiting for delay...");
+    return delay(10000); // Delay for 10 seconds
+  })
+  .then(() => {
+    console.log("Seed started...");
+    return utilTfdbSeed();
+  })
+  .then(() => {
+    console.log("All tasks completed.");
+  })
+  .catch(error => {
+    console.error("An error occurred:", error);
+  });
+  } else if (args[2] == "help") {
   console.log("node app.js [OPTION]");
   console.log(
     "  init         Creates the tables needed in the tealfleet database"
@@ -138,6 +176,9 @@ if (args[2] == "seed") {
   console.log("  reset        Drops all the tables in tealfleet database");
   console.log(
     "  seed         Populates the tables in the tealfleet database with seed data"
+  );
+  console.log(
+    "  ris         reset init seed"
   );
   return false;
 } else {
