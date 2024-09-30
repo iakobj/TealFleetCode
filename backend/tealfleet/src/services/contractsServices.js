@@ -557,14 +557,24 @@ module.exports.contractsGetByContractNoBasic = async (
 };
 
 module.exports.contractsPostAdd = async (data) => {
-
-  let { contract_id, contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = data;
+  let {
+    contract_id,
+    contract_no,
+    contract_type_id,
+    contractor_name,
+    contract_sla,
+    tenant_id,
+    contract_valid_from,
+    contract_valid_to,
+    contract_description,
+  } = data;
 
   let contract_valid_from_date = new Date(contract_valid_from);
   let contract_valid_to_date = new Date(contract_valid_to);
 
   try {
-    const result = await query(`
+    const result = await query(
+      `
       INSERT INTO 
         contracts (
           contract_id, 
@@ -579,20 +589,21 @@ module.exports.contractsPostAdd = async (data) => {
           contract_changed_at,
           contract_created_at
         ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`, [
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`,
+      [
         contract_id,
-        tenant_id, 
-        contract_type_id, 
-        contractor_name, 
-        contract_sla, 
-        contract_no, 
+        tenant_id,
+        contract_type_id,
+        contractor_name,
+        contract_sla,
+        contract_no,
         contract_description,
         contract_valid_from_date,
         contract_valid_to_date,
-      ]);
-      
-      return(result)
-    
+      ]
+    );
+
+    return result;
   } catch (error) {
     console.log(error);
     return [{ error: error }];

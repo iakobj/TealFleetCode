@@ -2,6 +2,8 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { API_ENDPOINT } from "../../../constants/apiEndpoint";
+
 import {
   FormControl,
   FormLabel,
@@ -17,6 +19,8 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
+
+import { useToast } from "@chakra-ui/react";
 
 import FormStepper from "./FormStepper";
 
@@ -36,6 +40,8 @@ function HwInformation(selectedModel) {
   const [hwModels, setHwModels] = useState([]);
   const [sites, setSites] = useState([]);
   const [nextStep, setNextStep] = useState(false);
+  const [newAssetId, setNewAssetId] = useState("");
+  const Toast = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,15 +81,46 @@ function HwInformation(selectedModel) {
     }),
 
     onSubmit: (values) => {
+      const NewHardwareAsset = JSON.stringify(values, null, 2);
       try {
-        if (values) {
-          console.log(values);
-          setNextStep(true);
-        }
+        fetch(`${API_ENDPOINT}/hardware/assets/add`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: NewHardwareAsset,
+        }).then(async (response) => {
+          if (response.status == 200) {
+            let hardware_asset_id = await response.json();
+            console.log(hardware_asset_id);
+            setNewAssetId(hardware_asset_id.hardware_asset_id);
+            Toast({
+              title: "Asset added",
+              description: `New asset was successefuly added with ID: ${hardware_asset_id.hardware_asset_id}`,
+              status: "success",
+              position: "bottom",
+              variant: "subtle",
+            });
+
+            if (values && hardware_asset_id) {
+              setNextStep(true);
+            }
+          } else {
+            Toast({
+              title: "Error",
+              description:
+                "Oops! Our hamsters are on a break. Submission failed.",
+              status: "error",
+              position: "bottom",
+              variant: "subtle",
+            });
+          }
+        });
       } catch (error) {
         console.error("Error:", error);
       }
     },
+
+
   });
 
   return (
@@ -185,7 +222,7 @@ function HwInformation(selectedModel) {
                       placeholder="192.168.1.1"
                       focusBorderColor="teal.600"
                       onChange={formik.handleChange}
-                      value={formik.values.Item_id}
+                      value={formik.values.hardware_asset_ip}
                       {...formik.getFieldProps("hardware_asset_ip")}
                     />
                     {formik.touched.hardware_asset_ip && formik.errors.hardware_asset_ip ? (
@@ -203,7 +240,7 @@ function HwInformation(selectedModel) {
                       focusBorderColor="teal.600"
                       onChange={formik.handleChange}
                       value={formik.values.hardware_serial_no}
-                      {...formik.getFieldProps("Item_id")}
+                      {...formik.getFieldProps("hardware_serial_no")}
                     />
                     {formik.touched.hardware_serial_no && formik.errors.hardware_serial_no ? (
                       <div>{formik.errors.hardware_serial_no}</div>
@@ -213,17 +250,17 @@ function HwInformation(selectedModel) {
                   <FormControl>
                     <FormLabel>Asset Tag</FormLabel>
                     <Input
-                      id="hardware_tag"
-                      name="hardware_tag"
+                      id="hardware_asset_tag"
+                      name="hardware_asset_tag"
                       type="text"
                       placeholder="Tenants Asset Tag"
                       focusBorderColor="teal.600"
                       onChange={formik.handleChange}
-                      value={formik.values.hardware_tag}
-                      {...formik.getFieldProps("hardware_tag")}
+                      value={formik.values.hardware_asset_tag}
+                      {...formik.getFieldProps("hardware_asset_tag")}
                     />
-                    {formik.touched.hardware_tag && formik.errors.hardware_tag ? (
-                      <div>{formik.errors.hardware_tag}</div>
+                    {formik.touched.hardware_asset_tag && formik.errors.hardware_asset_tag ? (
+                      <div>{formik.errors.hardware_asset_tag}</div>
                     ) : null}
                   </FormControl>
 
@@ -242,7 +279,7 @@ function HwInformation(selectedModel) {
                       {sites.data &&
                         sites.data.map((data) => (
                           <option key={data.site_id} value={data.site_id}>
-                            {data.site_name} {" - "} {data.site_city} {" "} {data.site_address}
+                            {data.site_name} {"  "} {data.site_city} {" "} {data.site_address}
                           </option>
                         ))}
                     </Select>
@@ -284,7 +321,7 @@ function HwInformation(selectedModel) {
             >
               <Flex>
                 <Spacer />
-                <NavLink to="/support/contracts">
+                <NavLink to="/assets/fleet">
                   <Button
                     marginRight={"1.2em"}
                     variant={"outline"}
@@ -303,7 +340,7 @@ function HwInformation(selectedModel) {
                   colorScheme="teal"
                   width={"7em"}
                 >
-                  Next
+                  Submit
                 </Button>
               </Flex>
             </Card>

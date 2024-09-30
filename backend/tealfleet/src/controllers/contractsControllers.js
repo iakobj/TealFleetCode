@@ -393,7 +393,16 @@ module.exports.cContractsPostAdd = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
 
-    let { contract_no, contract_type_id, contractor_name, contract_sla, tenant_id, contract_valid_from, contract_valid_to, contract_description } = req.body;
+    let {
+      contract_no,
+      contract_type_id,
+      contractor_name,
+      contract_sla,
+      tenant_id,
+      contract_valid_from,
+      contract_valid_to,
+      contract_description,
+    } = req.body;
 
     const contract_id = uuidv4();
 
@@ -416,7 +425,7 @@ module.exports.cContractsPostAdd = async (req, res) => {
     }
 
     const schema = Joi.object({
-      contract_id: Joi.string().guid({version: 'uuidv4'}),
+      contract_id: Joi.string().guid({ version: "uuidv4" }),
       contract_no: Joi.string().required(),
       contract_type_id: Joi.string().guid().optional(),
       contractor_name: Joi.string().alphanum().required(),
@@ -431,19 +440,17 @@ module.exports.cContractsPostAdd = async (req, res) => {
 
     if (validation.error) {
       res.status(400).send({ error: validation.error.details[0].message });
-      return; 
+      return;
     } else {
       const result = await contractsPostAdd(data);
       if (result && result[0] && result[0].error) {
         res.status(400).send("error");
         return;
       } else {
-        res.status(200).send({contract_id});
+        res.status(200).send({ contract_id });
         return;
       }
     }
-
-
   } catch (error) {
     res.status(500).send({ error: "Internal server error" });
   }

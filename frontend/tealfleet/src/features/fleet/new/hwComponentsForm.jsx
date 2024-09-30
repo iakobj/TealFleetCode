@@ -36,6 +36,7 @@ import { sitesGetAll } from "../../../constants/api/sites";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import NewAsset from "./NewAsset";
 
 function HwComponentsForm(props) {
   let count = props.count + 1;
@@ -66,10 +67,40 @@ function HwComponentsForm(props) {
     }),
 
     onSubmit: (values) => {
+      const NewHardwareAsset = JSON.stringify(values, null, 2);
       try {
-        if (values) {
-          console.log(values);
-        }
+        fetch(`${API_ENDPOINT}/hardware/assets/add/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: NewHardwareAsset,
+        }).then(async (response) => {
+          if (response.status == 200) {
+            let contract_id = await response.json();
+            setNewContractId(contract_id.contract_id);
+            toast({
+              title: "Contract added",
+              description: `New contract was successefuly added with ID: ${contract_id.contract_id}`,
+              status: "success",
+              position: "bottom",
+              variant: "subtle",
+            });
+
+            if (values && values.contract_no) {
+              setNewContractNo(values.contract_no);
+              setStepperAt(1);
+            }
+          } else {
+            toast({
+              title: "Error",
+              description:
+                "Oops! Our hamsters are on a break. Submission failed.",
+              status: "error",
+              position: "bottom",
+              variant: "subtle",
+            });
+          }
+        });
       } catch (error) {
         console.error("Error:", error);
       }
@@ -79,13 +110,11 @@ function HwComponentsForm(props) {
   return (
     <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em">
       <GridItem colSpan={1} colStart={1} marginTop={"0.0em"}>
-        <Card padding={"0.35em"} variant="outline">
-          <Text fontSize="lg">
+          <Text fontSize="lg" marginTop={"0.35em"} textColor={"gray.700"}>
             <HStack>
               <Box>{count}.</Box>
             </HStack>
           </Text>
-        </Card>
       </GridItem>
       <GridItem colSpan={3} colStart={2}>
         <FormControl>

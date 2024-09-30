@@ -129,7 +129,7 @@ function HwComponents(selectedModel) {
               colorScheme="teal"
               width={"7em"}
             >
-              Next
+              Submit
             </Button>
           </Flex>
         </Card>

@@ -55,7 +55,7 @@ function AddNewContract() {
   const [newContractNo, setNewContractNo] = useState("");
   const [newContractId, setNewContractId] = useState("");
   const [stepperAt, setStepperAt] = useState(0);
-  const toast = useToast();
+  const Toast = useToast();
 
 
 useEffect(() => {
@@ -104,7 +104,7 @@ useEffect(() => {
           if (response.status == 200) {
             let contract_id = await response.json();
             setNewContractId(contract_id.contract_id);
-            toast({
+            Toast({
               title: "Contract added",
               description: `New contract was successefuly added with ID: ${contract_id.contract_id}`,
               status: "success",
@@ -117,7 +117,7 @@ useEffect(() => {
               setStepperAt(1);
             }
           } else {
-            toast({
+            Toast({
               title: "Error",
               description:
                 "Oops! Our hamsters are on a break. Submission failed.",

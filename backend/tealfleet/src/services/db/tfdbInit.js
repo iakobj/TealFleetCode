@@ -118,14 +118,13 @@ CREATE TABLE IF NOT EXISTS "hardware_catalog" (
 CREATE TABLE IF NOT EXISTS "hardware_assets" (
   "hardware_asset_id" uuid PRIMARY KEY,
   "hardware_catalog_id" uuid NOT NULL,
-  "hardware_asset_name" varchar NOT NULL,
+  "hardware_asset_name" varchar,
   "hardware_asset_ip" varchar,
   "hardware_asset_tag" varchar,
+  "hardware_serial_no" varchar ,
   "tenant_id" uuid NOT NULL,
-  "site_id" uuid NOT NULL,
+  "site_id" uuid,
   "hardware_notes" varchar,
-  "hardware_tag" varchar,
-  "hardware_serial_no" varchar NOT NULL,
   "hardware_changed_at" timestamp NOT NULL,
   "hardware_created_at" timestamp DEFAULT (now())
 );

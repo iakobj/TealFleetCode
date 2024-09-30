@@ -38,6 +38,7 @@ function SparePartsTable() {
               <Th>SERIAL</Th>
               <Th>ASSET TAG</Th>
               <Th isNumeric>AMOUNT</Th>
+              <Th> </Th>
             </Tr>
           </Thead>
 

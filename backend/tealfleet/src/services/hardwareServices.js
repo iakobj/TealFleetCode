@@ -467,3 +467,60 @@ module.exports.hardwareAssGetBySite = async (identity, site_name) => {
     return [{ error: error }];
   }
 };
+
+
+module.exports.hardwareAddPostAsset = async (data) => {
+  console.log("HW hardwareAddPostAsset");
+  let {
+    hardware_asset_id,
+    hardware_catalog_id,
+    hardware_asset_name,
+    hardware_asset_ip,
+    hardware_serial_no,
+    hardware_asset_tag,
+    tenant_id,
+    site_id,
+    hardware_notes,
+  } = data;
+
+  console.log("HW Services");
+  console.log(data);
+
+  try {
+    const result = await query(
+      `
+      INSERT INTO 
+        hardware_assets (
+          hardware_asset_id,
+          hardware_catalog_id,
+          hardware_asset_name,
+          hardware_asset_ip,
+          hardware_serial_no,
+          hardware_asset_tag,
+          tenant_id,
+          site_id,
+          hardware_notes,
+          hardware_changed_at, 
+          hardware_created_at
+        ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`,
+      [
+        hardware_asset_id,
+        hardware_catalog_id,
+        hardware_asset_name,
+        hardware_asset_ip,
+        hardware_serial_no,
+        hardware_asset_tag,
+        tenant_id,
+        site_id,
+        hardware_notes,
+      ]
+    );
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [{ error: error }];
+  }
+};
+

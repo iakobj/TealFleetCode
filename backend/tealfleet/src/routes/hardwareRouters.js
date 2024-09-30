@@ -401,6 +401,10 @@
 
 const express = require("express");
 const hardwareRouters = express.Router();
+const bodyParser = require("body-parser");
+
+hardwareRouters.use(express.urlencoded({ extended: true }));
+hardwareRouters.use(bodyParser.json());
 
 const {
   cHardwareCatGetAll,
@@ -421,6 +425,8 @@ const {
   cHardwareAssGetBySerialnumber,
   cHardwareAssGetByTenant,
   cHardwareAssGetBySite,
+
+  cHardwareAddPostAsset,
 } = require("../controllers/hardwareControllers");
 
 hardwareRouters.get("/catalogs", cHardwareCatGetAll);
@@ -441,5 +447,7 @@ hardwareRouters.get("/assets/partnumbers/:partnumber", cHardwareAssGetByPartnumb
 hardwareRouters.get("/assets/serialnumbers/:serialnumber", cHardwareAssGetBySerialnumber);
 hardwareRouters.get("/assets/tenants/:tenant", cHardwareAssGetByTenant);
 hardwareRouters.get("/assets/sites/:site", cHardwareAssGetBySite);
+
+hardwareRouters.post("/assets/add", cHardwareAddPostAsset);
 
 module.exports = hardwareRouters;
