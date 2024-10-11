@@ -470,7 +470,6 @@ module.exports.hardwareAssGetBySite = async (identity, site_name) => {
 
 
 module.exports.hardwareAddPostAsset = async (data) => {
-  console.log("HW hardwareAddPostAsset");
   let {
     hardware_asset_id,
     hardware_catalog_id,

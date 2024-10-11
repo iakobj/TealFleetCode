@@ -42,6 +42,7 @@ function HwComponentsForm(props) {
   let count = props.count + 1;
 
   console.log(props.count);
+  console.log(props.hardware_asset_id)
 
   const formik = useFormik({
     initialValues: {
@@ -69,29 +70,29 @@ function HwComponentsForm(props) {
     onSubmit: (values) => {
       const NewHardwareAsset = JSON.stringify(values, null, 2);
       try {
-        fetch(`${API_ENDPOINT}/hardware/assets/add/`, {
+        fetch(`${API_ENDPOINT}/hardware/assets/add/components/${props.hardware_asset_id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: NewHardwareAsset,
         }).then(async (response) => {
           if (response.status == 200) {
-            let contract_id = await response.json();
-            setNewContractId(contract_id.contract_id);
-            toast({
-              title: "Contract added",
-              description: `New contract was successefuly added with ID: ${contract_id.contract_id}`,
+            let hardware_asset_id = await response.json();
+            console.log(hardware_asset_id);
+            setNewAssetId(hardware_asset_id.hardware_asset_id);
+            Toast({
+              title: "Asset added",
+              description: `New component was successefuly added with ID: ${hardware_asset_id.hardware_asset_id}`,
               status: "success",
               position: "bottom",
               variant: "subtle",
             });
 
-            if (values && values.contract_no) {
-              setNewContractNo(values.contract_no);
-              setStepperAt(1);
+            if (values && hardware_asset_id) {
+              setNextStep(true);
             }
           } else {
-            toast({
+            Toast({
               title: "Error",
               description:
                 "Oops! Our hamsters are on a break. Submission failed.",
@@ -105,6 +106,8 @@ function HwComponentsForm(props) {
         console.error("Error:", error);
       }
     },
+
+
   });
 
   return (

@@ -126,7 +126,7 @@ function HwInformation(selectedModel) {
   return (
     <>
     {nextStep ? (
-      <HwComponents/>
+      <HwComponents hardware_asset_id={newAssetId}/>
     ) : (
     <>
       <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>

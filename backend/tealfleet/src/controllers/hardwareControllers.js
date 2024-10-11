@@ -315,8 +315,73 @@ module.exports.cHardwareAddPostAsset = async (req, res) => {
       hardware_notes,
     } = req.body;
 
-    console.log("HW Controller");
-    console.log(req.body);
+    const hardware_asset_id = uuidv4();
+
+    const data = {
+      hardware_asset_id: hardware_asset_id,
+      hardware_catalog_id: hardware_catalog_id,
+      hardware_asset_name: hardware_asset_name,
+      hardware_asset_ip: hardware_asset_ip,
+      hardware_serial_no: hardware_serial_no,
+      hardware_asset_tag: hardware_asset_tag,
+      tenant_id: tenant_id,
+      site_id: site_id,
+      hardware_notes: hardware_notes,
+    };
+
+    for (const key in data) {
+      if (data[key] == "") {
+        data[key] = undefined;
+      }
+    }
+
+    const schema = Joi.object({
+      hardware_asset_id: Joi.string().guid({ version: "uuidv4" }).required(),
+      hardware_catalog_id: Joi.string().guid().required(),
+      hardware_asset_name: Joi.string().optional(),
+      hardware_asset_ip: Joi.string().optional(),
+      hardware_serial_no: Joi.string().optional(),
+      hardware_asset_tag: Joi.string().optional(),
+      tenant_id: Joi.string().guid().required(),
+      site_id: Joi.string().guid().optional(),
+      hardware_notes: Joi.string().optional(),
+    });
+
+    const validation = await schema.validate(data);
+
+    if (validation.error) {
+      res.status(400).send({ error: validation.error.details[0].message });
+      return;
+    } else {
+      const result = await hardwareAddPostAsset(data);
+      if (result && result[0] && result[0].error) {
+        res.status(400).send("error");
+        return;
+      } else {
+        res.status(200).send({ hardware_asset_id });
+        return;
+      }
+    }
+  } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
+  }
+};
+
+
+module.exports.cHardwareAddPostAssetComponent = async (req, res) => {
+  try {
+    const identity = await checkIdentity(req);
+
+    let {
+      hardware_catalog_id,
+      hardware_asset_name,
+      hardware_asset_ip,
+      hardware_serial_no,
+      hardware_asset_tag,
+      tenant_id,
+      site_id,
+      hardware_notes,
+    } = req.body;
 
     const hardware_asset_id = uuidv4();
 
@@ -356,7 +421,6 @@ module.exports.cHardwareAddPostAsset = async (req, res) => {
       res.status(400).send({ error: validation.error.details[0].message });
       return;
     } else {
-      console.log(data);
       const result = await hardwareAddPostAsset(data);
       if (result && result[0] && result[0].error) {
         res.status(400).send("error");

@@ -427,6 +427,7 @@ const {
   cHardwareAssGetBySite,
 
   cHardwareAddPostAsset,
+  cHardwareAddPostAssetComponent,
 } = require("../controllers/hardwareControllers");
 
 hardwareRouters.get("/catalogs", cHardwareCatGetAll);
@@ -449,5 +450,6 @@ hardwareRouters.get("/assets/tenants/:tenant", cHardwareAssGetByTenant);
 hardwareRouters.get("/assets/sites/:site", cHardwareAssGetBySite);
 
 hardwareRouters.post("/assets/add", cHardwareAddPostAsset);
+//hardwareRouters.post("/assets/add/components/:id", cHardwareAddPostAssetComponent);
 
 module.exports = hardwareRouters;

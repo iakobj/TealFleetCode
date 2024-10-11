@@ -20,7 +20,7 @@ import { AddIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 
 import HwComponentsForm from "./hwComponentsForm";
 
-function HwComponents(selectedModel) {
+function HwComponents(hardware_asset_id) {
   const [forms, setForms] = useState(10);
 
   const handleAddForm = () => {
@@ -83,7 +83,7 @@ function HwComponents(selectedModel) {
             </Grid>
 
             {Array.from({ length: forms }, (_, index) => (
-              <HwComponentsForm key={index} count={index} />
+              <HwComponentsForm key={index} count={index} hardware_asset_id={hardware_asset_id.hardware_asset_id}/>
             ))}
 
             <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em" marginTop={"1em"}>
