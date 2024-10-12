@@ -22,12 +22,15 @@ import HwComponentsForm from "./hwComponentsForm";
 
 function HwComponents(hardware_asset_id) {
   const [forms, setForms] = useState(10);
+  const [onSubmit, setOnSubmit] = useState(false);
 
   const handleAddForm = () => {
     setForms(forms + 1);
   };
 
-  console.log(forms);
+  const handleSubmit = () => {
+    setOnSubmit(true);
+  };
 
   return (
     <>
@@ -83,7 +86,7 @@ function HwComponents(hardware_asset_id) {
             </Grid>
 
             {Array.from({ length: forms }, (_, index) => (
-              <HwComponentsForm key={index} count={index} hardware_asset_id={hardware_asset_id.hardware_asset_id}/>
+              <HwComponentsForm key={index} count={index} hardware_asset_id={hardware_asset_id.hardware_asset_id} onSubmit={onSubmit}/>
             ))}
 
             <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em" marginTop={"1em"}>
@@ -124,6 +127,7 @@ function HwComponents(hardware_asset_id) {
 
             <Button
               type="submit"
+              onClick={handleSubmit}
               rightIcon={<ArrowForwardIcon />}
               size="sm"
               colorScheme="teal"

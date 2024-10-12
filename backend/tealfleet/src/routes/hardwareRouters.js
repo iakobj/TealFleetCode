@@ -450,6 +450,6 @@ hardwareRouters.get("/assets/tenants/:tenant", cHardwareAssGetByTenant);
 hardwareRouters.get("/assets/sites/:site", cHardwareAssGetBySite);
 
 hardwareRouters.post("/assets/add", cHardwareAddPostAsset);
-//hardwareRouters.post("/assets/add/components/:id", cHardwareAddPostAssetComponent);
+hardwareRouters.post("/assets/add/components", cHardwareAddPostAssetComponent);
 
 module.exports = hardwareRouters;

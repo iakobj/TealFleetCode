@@ -2,6 +2,8 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { API_ENDPOINT } from "../../../constants/apiEndpoint";
+
 import {
   Text,
   FormControl,
@@ -25,13 +27,14 @@ import {
   NumberDecrementStepper,
 } from "@chakra-ui/react";
 
+import { useToast } from "@chakra-ui/react";
 import FormStepper from "./FormStepper";
 
 import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 
 // import API endpoints
 import { tenantsGetAll } from "../../../constants/api/tenants";
-import { hardwareCatGetByHWModelName } from "../../../constants/api/hardware";
+import { hardwareCatGetByHWhw_part_modelName } from "../../../constants/api/hardware";
 import { sitesGetAll } from "../../../constants/api/sites";
 
 import { useFormik } from "formik";
@@ -39,85 +42,101 @@ import * as Yup from "yup";
 import NewAsset from "./NewAsset";
 
 function HwComponentsForm(props) {
+  const Toast = useToast();
   let count = props.count + 1;
 
   console.log(props.count);
-  console.log(props.hardware_asset_id)
+  console.log(props.hardware_asset_id);
+  console.log("onSubmit......");
+  console.log(props.onSubmit);
 
   const formik = useFormik({
     initialValues: {
-      hardware_catalog_id: "",
-      hardware_asset_name: "",
-      hardware_asset_ip: "",
-      hardware_serial_no: "",
-      hardware_asset_tag: "",
-      tenant_id: "",
-      site_id: "",
-      hardware_notes: "",
+      hardware_asset_id: props.hardware_asset_id,
+      amount: "1",
+      hw_part_make: "",
+      hw_part_model: "",
+      hw_part_number: "",
+      hw_serial_no: "",
+      hw_asset_tag: "",
     },
 
     validationSchema: Yup.object({
-      hardware_catalog_id: Yup.string().required("Required"),
-      hardware_asset_name: Yup.string(),
-      hardware_asset_ip: Yup.string(),
-      hardware_serial_no: Yup.string(),
-      hardware_asset_tag: Yup.string(),
-      tenant_id: Yup.string().required("Required"),
-      site_id: Yup.string(),
-      hardware_notes: Yup.string(),
+      hardware_asset_id: Yup.mixed(),
+      amount: Yup.mixed(),
+      hw_part_make: Yup.string(),
+      hw_part_model: Yup.string(),
+      hw_part_number: Yup.string(),
+      hw_serial_no: Yup.string(),
+      hw_asset_tag: Yup.string(),
     }),
 
     onSubmit: (values) => {
       const NewHardwareAsset = JSON.stringify(values, null, 2);
-      try {
-        fetch(`${API_ENDPOINT}/hardware/assets/add/components/${props.hardware_asset_id}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: NewHardwareAsset,
-        }).then(async (response) => {
-          if (response.status == 200) {
-            let hardware_asset_id = await response.json();
-            console.log(hardware_asset_id);
-            setNewAssetId(hardware_asset_id.hardware_asset_id);
-            Toast({
-              title: "Asset added",
-              description: `New component was successefuly added with ID: ${hardware_asset_id.hardware_asset_id}`,
-              status: "success",
-              position: "bottom",
-              variant: "subtle",
-            });
-
-            if (values && hardware_asset_id) {
-              setNextStep(true);
+      if (
+        values.hw_part_make ||
+        values.hw_part_model ||
+        values.hw_part_number ||
+        values.hw_serial_no ||
+        values.hw_asset_tag 
+      ) {
+        try {
+          fetch(
+            `${API_ENDPOINT}/hardware/assets/add/components/`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: NewHardwareAsset,
             }
-          } else {
-            Toast({
-              title: "Error",
-              description:
-                "Oops! Our hamsters are on a break. Submission failed.",
-              status: "error",
-              position: "bottom",
-              variant: "subtle",
-            });
-          }
-        });
-      } catch (error) {
-        console.error("Error:", error);
+          ).then(async (response) => {
+            if (response.status == 200) {
+              let hardware_asset_id = await response.json();
+              console.log(hardware_asset_id);
+              setNewAssetId(hardware_asset_id.hardware_asset_id);
+              Toast({
+                title: "Asset added",
+                description: `New component was successefuly added with ID: ${hardware_asset_id.hardware_asset_id}`,
+                status: "success",
+                position: "bottom",
+                variant: "subtle",
+              });
+
+              if (values && hardware_asset_id) {
+                setNextStep(true);
+              }
+            } else {
+              Toast({
+                title: "Error",
+                description:
+                  "Oops! Our hamsters are on a break. Submission failed.",
+                status: "error",
+                position: "bottom",
+                variant: "subtle",
+              });
+            }
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
       }
     },
-
-
   });
+
+  useEffect(() => {
+    if (props.onSubmit) {
+      formik.handleSubmit();
+    }
+  }, [props.onSubmit]);
 
   return (
     <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em">
       <GridItem colSpan={1} colStart={1} marginTop={"0.0em"}>
-          <Text fontSize="lg" marginTop={"0.35em"} textColor={"gray.700"}>
-            <HStack>
-              <Box>{count}.</Box>
-            </HStack>
-          </Text>
+        <Text fontSize="lg" marginTop={"0.35em"} textColor={"gray.700"}>
+          <HStack>
+            <Box>{count}.</Box>
+          </HStack>
+        </Text>
       </GridItem>
       <GridItem colSpan={3} colStart={2}>
         <FormControl>
@@ -126,14 +145,11 @@ function HwComponentsForm(props) {
             max={999}
             min={1}
             keepWithinRange={true}
-            id="amount"
-            name="amount"
             focusBorderColor="teal.600"
-            onChange={formik.handleChange}
+            onChange={(value) => formik.setFieldValue("amount", value)}
             value={formik.values.amount}
-            {...formik.getFieldProps("amount")}
           >
-            <NumberInputField />
+            <NumberInputField name="amount" />
             <NumberInputStepper>
               <NumberIncrementStepper />
               <NumberDecrementStepper />
@@ -148,17 +164,17 @@ function HwComponentsForm(props) {
       <GridItem colSpan={4}>
         <FormControl>
           <Input
-            id="vendor"
-            name="vendor"
+            id="hw_part_make"
+            name="hw_part_make"
             type="text"
-            placeholder="Vendor"
+            placeholder="hw_part_make"
             focusBorderColor="teal.600"
             onChange={formik.handleChange}
-            value={formik.values.vendor}
-            {...formik.getFieldProps("vendor")}
+            value={formik.values.hw_part_make}
+            {...formik.getFieldProps("hw_part_make")}
           />
-          {formik.touched.vendor && formik.errors.vendor ? (
-            <div>{formik.errors.vendor}</div>
+          {formik.touched.hw_part_make && formik.errors.hw_part_make ? (
+            <div>{formik.errors.hw_part_make}</div>
           ) : null}
         </FormControl>
       </GridItem>
@@ -166,17 +182,17 @@ function HwComponentsForm(props) {
       <GridItem colSpan={4}>
         <FormControl>
           <Input
-            id="model"
-            name="model"
+            id="hw_part_model"
+            name="hw_part_model"
             type="text"
-            placeholder="model"
+            placeholder="hw_part_model"
             focusBorderColor="teal.600"
             onChange={formik.handleChange}
-            value={formik.values.model}
-            {...formik.getFieldProps("model")}
+            value={formik.values.hw_part_model}
+            {...formik.getFieldProps("hw_part_model")}
           />
-          {formik.touched.model && formik.errors.model ? (
-            <div>{formik.errors.model}</div>
+          {formik.touched.hw_part_model && formik.errors.hw_part_model ? (
+            <div>{formik.errors.hw_part_model}</div>
           ) : null}
         </FormControl>
       </GridItem>
@@ -184,17 +200,17 @@ function HwComponentsForm(props) {
       <GridItem colSpan={4}>
         <FormControl>
           <Input
-            id="partnumber"
-            name="partnumber"
+            id="hw_part_number"
+            name="hw_part_number"
             type="text"
             placeholder="Part Number"
             focusBorderColor="teal.600"
             onChange={formik.handleChange}
-            value={formik.values.partnumber}
-            {...formik.getFieldProps("partnumber")}
+            value={formik.values.hw_part_number}
+            {...formik.getFieldProps("hw_part_number")}
           />
-          {formik.touched.partnumber && formik.errors.partnumber ? (
-            <div>{formik.errors.partnumber}</div>
+          {formik.touched.hw_part_number && formik.errors.hw_part_number ? (
+            <div>{formik.errors.hw_part_number}</div>
           ) : null}
         </FormControl>
       </GridItem>
@@ -202,17 +218,17 @@ function HwComponentsForm(props) {
       <GridItem colSpan={4}>
         <FormControl>
           <Input
-            id="serialnumber"
-            name="serialnumber"
+            id="hw_serial_no"
+            name="hw_serial_no"
             type="text"
             placeholder="Serial Number"
             focusBorderColor="teal.600"
             onChange={formik.handleChange}
-            value={formik.values.serialnumber}
-            {...formik.getFieldProps("serialnumber")}
+            value={formik.values.hw_serial_no}
+            {...formik.getFieldProps("hw_serial_no")}
           />
-          {formik.touched.serialnumber && formik.errors.serialnumber ? (
-            <div>{formik.errors.serialnumber}</div>
+          {formik.touched.hw_serial_no && formik.errors.hw_serial_no ? (
+            <div>{formik.errors.hw_serial_no}</div>
           ) : null}
         </FormControl>
       </GridItem>
@@ -220,17 +236,17 @@ function HwComponentsForm(props) {
       <GridItem colSpan={4}>
         <FormControl>
           <Input
-            id="assettag"
-            name="assettag"
+            id="hw_asset_tag"
+            name="hw_asset_tag"
             type="text"
             placeholder="Asset Tag"
             focusBorderColor="teal.600"
             onChange={formik.handleChange}
-            value={formik.values.assettag}
-            {...formik.getFieldProps("assettag")}
+            value={formik.values.hw_asset_tag}
+            {...formik.getFieldProps("hw_asset_tag")}
           />
-          {formik.touched.assettag && formik.errors.assettag ? (
-            <div>{formik.errors.assettag}</div>
+          {formik.touched.hw_asset_tag && formik.errors.hw_asset_tag ? (
+            <div>{formik.errors.hw_asset_tag}</div>
           ) : null}
         </FormControl>
       </GridItem>

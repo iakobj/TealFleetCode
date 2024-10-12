@@ -137,6 +137,7 @@ CREATE TABLE IF NOT EXISTS "hw_sub_components" (
   "hw_part_model" varchar NOT NULL,
   "hw_part_number" varchar NOT NULL,
   "hw_serial_no" varchar,
+  "hw_asset_tag" varchar,
   "hw_changed_at" timestamp NOT NULL,
   "hw_created_at" timestamp DEFAULT (now())
 );

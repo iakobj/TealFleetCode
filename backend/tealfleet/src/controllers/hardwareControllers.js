@@ -373,28 +373,26 @@ module.exports.cHardwareAddPostAssetComponent = async (req, res) => {
     const identity = await checkIdentity(req);
 
     let {
-      hardware_catalog_id,
-      hardware_asset_name,
-      hardware_asset_ip,
-      hardware_serial_no,
-      hardware_asset_tag,
-      tenant_id,
-      site_id,
-      hardware_notes,
+      hardware_asset_id,
+      amount,
+      hw_part_make,
+      hw_part_model,
+      hw_part_number,
+      hw_serial_no,
+      hw_asset_tag,
     } = req.body;
 
-    const hardware_asset_id = uuidv4();
+    const hw_sub_component_id = uuidv4();
 
     const data = {
+      hw_sub_component_id: hw_sub_component_id,
       hardware_asset_id: hardware_asset_id,
-      hardware_catalog_id: hardware_catalog_id,
-      hardware_asset_name: hardware_asset_name,
-      hardware_asset_ip: hardware_asset_ip,
-      hardware_serial_no: hardware_serial_no,
-      hardware_asset_tag: hardware_asset_tag,
-      tenant_id: tenant_id,
-      site_id: site_id,
-      hardware_notes: hardware_notes,
+      amount: amount,
+      hw_part_make: hw_part_make,
+      hw_part_model: hw_part_model,
+      hw_part_number: hw_part_number,
+      hw_serial_no: hw_serial_no,
+      hw_asset_tag: hw_asset_tag,
     };
 
     for (const key in data) {
@@ -402,8 +400,8 @@ module.exports.cHardwareAddPostAssetComponent = async (req, res) => {
         data[key] = undefined;
       }
     }
-
-    const schema = Joi.object({
+//TODO
+    const schema = Joi.object({ 
       hardware_asset_id: Joi.string().guid({ version: "uuidv4" }).required(),
       hardware_catalog_id: Joi.string().guid().required(),
       hardware_asset_name: Joi.string().optional(),
