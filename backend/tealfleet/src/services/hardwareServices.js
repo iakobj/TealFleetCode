@@ -523,3 +523,53 @@ module.exports.hardwareAddPostAsset = async (data) => {
   }
 };
 
+module.exports.hardwareAddPostAssetComponent = async (data) => {
+  let {
+    hw_sub_component_id,
+    hardware_asset_id,
+    amount,
+    hw_part_make,
+    hw_part_model,
+    hw_part_number,
+    hw_serial_no,
+    hw_asset_tag,
+  } = data;
+
+  console.log("HW Services - hardwareAddPostAssetComponent");
+  console.log(data);
+
+  try {
+    const result = await query(
+      `
+      INSERT INTO 
+        hw_sub_components (
+          hw_sub_component_id,
+          hardware_asset_id,
+          amount,
+          hw_part_make,
+          hw_part_model,
+          hw_part_number,
+          hw_serial_no,
+          hw_asset_tag,
+          hw_changed_at, 
+          hw_created_at
+        ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`,
+      [
+        hw_sub_component_id,
+        hardware_asset_id,
+        amount,
+        hw_part_make,
+        hw_part_model,
+        hw_part_number,
+        hw_serial_no,
+        hw_asset_tag,
+      ]
+    );
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [{ error: error }];
+  }
+};

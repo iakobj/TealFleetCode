@@ -2,22 +2,12 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { API_ENDPOINT } from "../../../constants/apiEndpoint";
-
 import {
   Text,
   FormControl,
-  FormLabel,
-  Select,
   Input,
-  Textarea,
-  Button,
   Box,
-  Flex,
   HStack,
-  Spacer,
-  Card,
-  SimpleGrid,
   Grid,
   GridItem,
   NumberInput,
@@ -28,27 +18,17 @@ import {
 } from "@chakra-ui/react";
 
 import { useToast } from "@chakra-ui/react";
-import FormStepper from "./FormStepper";
-
-import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 
 // import API endpoints
-import { tenantsGetAll } from "../../../constants/api/tenants";
-import { hardwareCatGetByHWhw_part_modelName } from "../../../constants/api/hardware";
-import { sitesGetAll } from "../../../constants/api/sites";
+import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import NewAsset from "./NewAsset";
 
 function HwComponentsForm(props) {
+  let [nextStep, setNextStep] = useState(false);
   const Toast = useToast();
   let count = props.count + 1;
-
-  console.log(props.count);
-  console.log(props.hardware_asset_id);
-  console.log("onSubmit......");
-  console.log(props.onSubmit);
 
   const formik = useFormik({
     initialValues: {
@@ -78,31 +58,27 @@ function HwComponentsForm(props) {
         values.hw_part_model ||
         values.hw_part_number ||
         values.hw_serial_no ||
-        values.hw_asset_tag 
+        values.hw_asset_tag
       ) {
         try {
-          fetch(
-            `${API_ENDPOINT}/hardware/assets/add/components/`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              body: NewHardwareAsset,
-            }
-          ).then(async (response) => {
+          fetch(`${API_ENDPOINT}/hardware/assets/add/components/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: NewHardwareAsset,
+          }).then(async (response) => {
             if (response.status == 200) {
-              let hardware_asset_id = await response.json();
-              console.log(hardware_asset_id);
-              setNewAssetId(hardware_asset_id.hardware_asset_id);
+              let hw_sub_component_id = await response.json();
+              console.log(hw_sub_component_id);
               Toast({
                 title: "Asset added",
-                description: `New component was successefuly added with ID: ${hardware_asset_id.hardware_asset_id}`,
+                description: `New component was successefuly added with ID: ${hw_sub_component_id.hw_sub_component_id}`,
                 status: "success",
                 position: "bottom",
                 variant: "subtle",
               });
 
-              if (values && hardware_asset_id) {
+              if (values && hw_sub_component_id) {
                 setNextStep(true);
               }
             } else {
@@ -114,6 +90,7 @@ function HwComponentsForm(props) {
                 position: "bottom",
                 variant: "subtle",
               });
+
             }
           });
         } catch (error) {
@@ -167,7 +144,7 @@ function HwComponentsForm(props) {
             id="hw_part_make"
             name="hw_part_make"
             type="text"
-            placeholder="hw_part_make"
+            placeholder="Vendor"
             focusBorderColor="teal.600"
             onChange={formik.handleChange}
             value={formik.values.hw_part_make}
@@ -185,7 +162,7 @@ function HwComponentsForm(props) {
             id="hw_part_model"
             name="hw_part_model"
             type="text"
-            placeholder="hw_part_model"
+            placeholder="Model"
             focusBorderColor="teal.600"
             onChange={formik.handleChange}
             value={formik.values.hw_part_model}

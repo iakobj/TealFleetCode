@@ -1,4 +1,4 @@
-dev.tealfleet.com {
+localhost {
 	handle_path /* {
 		reverse_proxy frontend:80
 	}

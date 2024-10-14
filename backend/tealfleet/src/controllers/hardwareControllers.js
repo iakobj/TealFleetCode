@@ -19,6 +19,7 @@ const {
   hardwareAssGetBySite,
 
   hardwareAddPostAsset,
+  hardwareAddPostAssetComponent,
 } = require("../services/hardwareServices");
 
 const { checkIdentity } = require("../middlewares/identity");
@@ -400,17 +401,16 @@ module.exports.cHardwareAddPostAssetComponent = async (req, res) => {
         data[key] = undefined;
       }
     }
-//TODO
+
     const schema = Joi.object({ 
-      hardware_asset_id: Joi.string().guid({ version: "uuidv4" }).required(),
-      hardware_catalog_id: Joi.string().guid().required(),
-      hardware_asset_name: Joi.string().optional(),
-      hardware_asset_ip: Joi.string().optional(),
-      hardware_serial_no: Joi.string().optional(),
-      hardware_asset_tag: Joi.string().optional(),
-      tenant_id: Joi.string().guid().required(),
-      site_id: Joi.string().guid().optional(),
-      hardware_notes: Joi.string().optional(),
+      hw_sub_component_id: Joi.string().guid({ version: "uuidv4" }).required(),
+      hardware_asset_id: Joi.string().guid().required(),
+      amount: Joi.number().optional(),
+      hw_part_make: Joi.string().optional(),
+      hw_part_model: Joi.string().optional(),
+      hw_part_number: Joi.string().optional(),
+      hw_serial_no: Joi.string().optional(),
+      hw_asset_tag: Joi.string().optional(),
     });
 
     const validation = await schema.validate(data);
@@ -419,12 +419,12 @@ module.exports.cHardwareAddPostAssetComponent = async (req, res) => {
       res.status(400).send({ error: validation.error.details[0].message });
       return;
     } else {
-      const result = await hardwareAddPostAsset(data);
+      const result = await hardwareAddPostAssetComponent(data);
       if (result && result[0] && result[0].error) {
         res.status(400).send("error");
         return;
       } else {
-        res.status(200).send({ hardware_asset_id });
+        res.status(200).send({ hw_sub_component_id });
         return;
       }
     }
