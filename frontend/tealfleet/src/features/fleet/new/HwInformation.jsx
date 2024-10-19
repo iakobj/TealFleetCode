@@ -25,7 +25,7 @@ import { useToast } from "@chakra-ui/react";
 import FormStepper from "./FormStepper";
 
 import { CloseIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
-import HwComponents from "./hwComponents";
+import HwComponents from "./HwComponents";
 
 // import API endpoints
 import { tenantsGetAll } from "../../../constants/api/tenants";

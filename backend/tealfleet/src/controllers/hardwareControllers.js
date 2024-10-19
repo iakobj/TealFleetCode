@@ -368,41 +368,17 @@ module.exports.cHardwareAddPostAsset = async (req, res) => {
   }
 };
 
-
 module.exports.cHardwareAddPostAssetComponent = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
 
-    let {
-      hardware_asset_id,
-      amount,
-      hw_part_make,
-      hw_part_model,
-      hw_part_number,
-      hw_serial_no,
-      hw_asset_tag,
-    } = req.body;
-
-    const hw_sub_component_id = uuidv4();
-
-    const data = {
-      hw_sub_component_id: hw_sub_component_id,
-      hardware_asset_id: hardware_asset_id,
-      amount: amount,
-      hw_part_make: hw_part_make,
-      hw_part_model: hw_part_model,
-      hw_part_number: hw_part_number,
-      hw_serial_no: hw_serial_no,
-      hw_asset_tag: hw_asset_tag,
-    };
-
-    for (const key in data) {
-      if (data[key] == "") {
-        data[key] = undefined;
-      }
+    // Ensure the request body is an array
+    if (!Array.isArray(req.body)) {
+      res.status(400).send({ error: "Request body must be an array of objects" });
+      return;
     }
 
-    const schema = Joi.object({ 
+    const schema = Joi.object({
       hw_sub_component_id: Joi.string().guid({ version: "uuidv4" }).required(),
       hardware_asset_id: Joi.string().guid().required(),
       amount: Joi.number().optional(),
@@ -413,22 +389,60 @@ module.exports.cHardwareAddPostAssetComponent = async (req, res) => {
       hw_asset_tag: Joi.string().optional(),
     });
 
-    const validation = await schema.validate(data);
+    const results = [];
 
-    if (validation.error) {
-      res.status(400).send({ error: validation.error.details[0].message });
-      return;
-    } else {
-      const result = await hardwareAddPostAssetComponent(data);
-      if (result && result[0] && result[0].error) {
-        res.status(400).send("error");
+    for (const item of req.body) {
+      let {
+        hardware_asset_id,
+        amount,
+        hw_part_make,
+        hw_part_model,
+        hw_part_number,
+        hw_serial_no,
+        hw_asset_tag,
+      } = item;
+
+      const hw_sub_component_id = uuidv4();
+
+      const data = {
+        hw_sub_component_id: hw_sub_component_id,
+        hardware_asset_id: hardware_asset_id,
+        amount: amount,
+        hw_part_make: hw_part_make,
+        hw_part_model: hw_part_model,
+        hw_part_number: hw_part_number,
+        hw_serial_no: hw_serial_no,
+        hw_asset_tag: hw_asset_tag,
+      };
+
+      // Replace empty strings with undefined
+      for (const key in data) {
+        if (data[key] === "") {
+          data[key] = undefined;
+        }
+      }
+
+      const validation = schema.validate(data);
+
+      if (validation.error) {
+        res.status(400).send({ error: validation.error.details[0].message });
         return;
       } else {
-        res.status(200).send({ hw_sub_component_id });
-        return;
+        const result = await hardwareAddPostAssetComponent(data);
+        if (result && result[0] && result[0].error) {
+          res.status(400).send("error");
+          return;
+        } else {
+          results.push({ hardware_asset_id });
+        }
       }
     }
+
+    // If we reach here, all objects have been processed successfully
+    res.status(200).send(results);
+
   } catch (error) {
+    console.error(error);
     res.status(500).send({ error: "Internal server error" });
   }
 };

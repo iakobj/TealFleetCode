@@ -1,35 +1,119 @@
 import * as React from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
-
 import {
   Button,
   Box,
   Flex,
   Spacer,
   Card,
-  SimpleGrid,
   Grid,
   GridItem,
   Heading,
 } from "@chakra-ui/react";
-
+import { AddIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import FormStepper from "./FormStepper";
+import HwComponentsForm from "./HwComponentsForm";
 
-import { AddIcon, ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
+import { useToast } from "@chakra-ui/react";
 
-import HwComponentsForm from "./hwComponentsForm";
+// import API endpoints
+import { API_ENDPOINT } from "../../../constants/apiEndpoint";
 
-function HwComponents(hardware_asset_id) {
-  const [forms, setForms] = useState(10);
-  const [onSubmit, setOnSubmit] = useState(false);
+function HwComponents({ hardware_asset_id }) {
+  const Toast = useToast();
+  const [nextStep, setNextStep] = useState(false);
+  const [forms, setForms] = useState(
+    Array.from({ length: 5 }, () => ({
+      hardware_asset_id: hardware_asset_id,
+      amount: "1",
+      hw_part_make: "",
+      hw_part_model: "",
+      hw_part_number: "",
+      hw_serial_no: "",
+      hw_asset_tag: "",
+    }))
+  );
 
   const handleAddForm = () => {
-    setForms(forms + 1);
+    setForms([
+      ...forms,
+      {
+        hardware_asset_id: hardware_asset_id,
+        amount: "1",
+        hw_part_make: "",
+        hw_part_model: "",
+        hw_part_number: "",
+        hw_serial_no: "",
+        hw_asset_tag: "",
+      },
+    ]);
+  };
+
+  const handleInputChange = (index, event) => {
+    const { name, value } = event.target;
+    const newForms = forms.map((form, i) => {
+      if (i === index) {
+        return { ...form, [name]: value };
+      }
+      return form;
+    });
+    setForms(newForms);
   };
 
   const handleSubmit = () => {
-    setOnSubmit(true);
+    // Here we handle the submission of all forms.
+    const submitData = forms.filter((form) => {
+      return (
+        form.hw_part_make ||
+        form.hw_part_model ||
+        form.hw_part_number ||
+        form.hw_serial_no ||
+        form.hw_asset_tag
+      );
+    });
+
+    if (submitData.length === 0) {
+      console.error("No valid data to submit");
+      return;
+    }
+
+    console.log("Submitting forms:", submitData);
+    try {
+      fetch(`${API_ENDPOINT}/hardware/assets/add/components/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(submitData, null, 2),
+      }).then(async (response) => {
+        if (response.status == 200) {
+          let hardware_asset_id = await response.json();
+          console.log(hardware_asset_id[0].hardware_asset_id);
+          Toast({
+            title: "Asset added",
+            description: `Asset with ID: ${hardware_asset_id[0].hardware_asset_id} was successefuly updated with new component(s)`,
+            status: "success",
+            position: "bottom",
+            variant: "subtle",
+          });
+
+          if (hardware_asset_id) {
+            setNextStep(true);
+          }
+        } else {
+          Toast({
+            title: "Error",
+            description:
+              "Oops! Our hamsters are on a break. Submission failed.",
+            status: "error",
+            position: "bottom",
+            variant: "subtle",
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -48,7 +132,7 @@ function HwComponents(hardware_asset_id) {
             borderRadius={"0.6em 0.6em 0.6em 0.6em"}
           >
             <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em">
-            <GridItem colSpan={1} colStart={1}>
+              <GridItem colSpan={1} colStart={1}>
                 <Heading as="h5" size="sm" color="gray.700">
                   No.
                 </Heading>
@@ -85,11 +169,21 @@ function HwComponents(hardware_asset_id) {
               </GridItem>
             </Grid>
 
-            {Array.from({ length: forms }, (_, index) => (
-              <HwComponentsForm key={index} count={index} hardware_asset_id={hardware_asset_id.hardware_asset_id} onSubmit={onSubmit}/>
+            {forms.map((form, index) => (
+              <HwComponentsForm
+                key={index}
+                index={index}
+                formData={form}
+                onInputChange={(event) => handleInputChange(index, event)}
+              />
             ))}
 
-            <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em" marginTop={"1em"}>
+            <Grid
+              templateColumns="repeat(24, 1fr)"
+              gap={6}
+              marginBottom="1em"
+              marginTop={"1em"}
+            >
               <GridItem colStart={24}>
                 <Button
                   variant={"outline"}
@@ -126,7 +220,7 @@ function HwComponents(hardware_asset_id) {
             </NavLink>
 
             <Button
-              type="submit"
+              type="button"
               onClick={handleSubmit}
               rightIcon={<ArrowForwardIcon />}
               size="sm"

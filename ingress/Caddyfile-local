@@ -1,8 +1,0 @@
-localhost {
-	handle_path /* {
-		reverse_proxy frontend:80
-	}
-    handle_path /api/* {
-		reverse_proxy backend:3000
-	}
-}
