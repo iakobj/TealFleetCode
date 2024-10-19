@@ -20,4 +20,6 @@ EXPOSE 3000
 # Start the ExpressJS server when the container starts
 # Starting with mode "ris" (Reset, Initialize, Seed) is used only for demo purposes
 WORKDIR /app/src
-CMD ["node", "app.js", "ris"]
+#CMD ["node", "app.js", "ris"]
+
+CMD ["sh", "-c", "node app.js ris > output.log 2>&1"]
