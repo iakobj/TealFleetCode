@@ -76,3 +76,18 @@ export const contractsGetAllContractTypes = async () => {
       console.error("Error loading form data:", error);
     }
   }
+
+  export const cContractsGetByAssetId = async (asset_id) => {
+    try {
+      const getData = await fetch(`${API_ENDPOINT}/contracts/assets/${asset_id}`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      const data = await getData.json();
+      return data;
+
+    } catch (error) {
+      console.error("Error loading form data:", error);
+    }
+  }

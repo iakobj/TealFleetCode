@@ -556,6 +556,72 @@ module.exports.contractsGetByContractNoBasic = async (
   }
 };
 
+//Work in progress
+module.exports.contractsGetByAssetId = async (identity, asset_id) => {
+  try {
+    
+    const { tenant_id, tenant_root } = await identity.data;
+
+    const sw = await query(`SELECT COUNT(*) FROM software_assets WHERE software_asset_id = $1;`, [asset_id]);
+    const swRowCount = sw.rows[0].count;
+
+
+    const hw = await query(`SELECT COUNT(*) FROM hardware_assets WHERE hardware_asset_id = $1;`, [asset_id]);
+    const hwRowCount = hw.rows[0].count;
+
+
+    if (swRowCount != 0 && swRowCount > 0 ) {
+      const result = await query(`
+        SELECT 
+          sw_asset_contracts.*, 
+          software_assets.*, 
+          contracts.*, 
+          'SW' AS asset_type
+        FROM 
+          sw_asset_contracts
+        JOIN 
+          software_assets ON sw_asset_contracts.software_asset_id = software_assets.software_asset_id
+        JOIN 
+          contracts ON sw_asset_contracts.contract_id = contracts.contract_id
+        WHERE 
+          sw_asset_contracts.software_asset_id = $1;
+      `, [asset_id]);
+    
+      return result.rows;
+    
+
+
+    } else if (hwRowCount != 0 && hwRowCount > 0 ) {
+      const result = await query(`
+        SELECT 
+          hw_asset_contracts.*, 
+          hardware_assets.*, 
+          contracts.*, 
+          'HW' AS asset_type
+        FROM 
+          hw_asset_contracts
+        JOIN 
+          hardware_assets ON hw_asset_contracts.hardware_asset_id = hardware_assets.hardware_asset_id
+        JOIN 
+          contracts ON hw_asset_contracts.contract_id = contracts.contract_id
+        WHERE 
+          hw_asset_contracts.hardware_asset_id = $1;
+      `, [asset_id]);
+
+      return result.rows;
+      
+    } else {
+      return [{ error: error }];
+    }
+    
+
+
+    
+  } catch (error) {
+    return [{ error: error }];
+  }
+};
+
 module.exports.contractsPostAdd = async (data) => {
   let {
     contract_id,

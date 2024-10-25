@@ -10,10 +10,20 @@ import {
   Grid,
   GridItem,
   Heading,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
 } from "@chakra-ui/react";
 import { AddIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import FormStepper from "./FormStepper";
 import HwComponentsForm from "./HwComponentsForm";
+import ContractsFilter from "./ContractsFilter";
 
 import { useToast } from "@chakra-ui/react";
 
@@ -24,7 +34,7 @@ function HwComponents({ hardware_asset_id }) {
   const Toast = useToast();
   const [nextStep, setNextStep] = useState(false);
   const [forms, setForms] = useState(
-    Array.from({ length: 5 }, () => ({
+    Array.from({ length: 10 }, () => ({
       hardware_asset_id: hardware_asset_id,
       amount: "1",
       hw_part_make: "",
@@ -74,8 +84,14 @@ function HwComponents({ hardware_asset_id }) {
     });
 
     if (submitData.length === 0) {
-      console.error("No valid data to submit");
-      return;
+      Toast({
+        title: "No components added",
+        description: `No components were added to the asset`,
+        status: "warning",
+        position: "bottom",
+        variant: "subtle",
+      });
+      setNextStep(true);
     }
 
     console.log("Submitting forms:", submitData);
@@ -97,7 +113,7 @@ function HwComponents({ hardware_asset_id }) {
             variant: "subtle",
           });
 
-          if (hardware_asset_id) {
+          if (hardware_asset_id[0].hardware_asset_id) {
             setNextStep(true);
           }
         } else {
@@ -118,120 +134,109 @@ function HwComponents({ hardware_asset_id }) {
 
   return (
     <>
-      <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>
-        <FormStepper stepperAt={2} />
-      </GridItem>
+      {nextStep ? (
+        <ContractsFilter hardware_asset_id={hardware_asset_id} />
+      ) : (
+        <>
+          <GridItem colSpan={{ sm: "12", md: "12", lg: "3", xl: "2" }}>
+            <FormStepper stepperAt={2} />
+          </GridItem>
 
-      <GridItem colSpan={{ sm: "12", md: "12", lg: "9", xl: "10" }}>
-        <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
-          <Card
-            padding="1em"
-            minHeight={"17em"}
-            variant="outline"
-            bg="#fdfdfd"
-            borderRadius={"0.6em 0.6em 0.6em 0.6em"}
-          >
-            <Grid templateColumns="repeat(24, 1fr)" gap={6} marginBottom="1em">
-              <GridItem colSpan={1} colStart={1}>
-                <Heading as="h5" size="sm" color="gray.700">
-                  No.
-                </Heading>
-              </GridItem>
-              <GridItem colSpan={3} colStart={2}>
-                <Heading as="h5" size="sm" color="gray.700">
-                  Amount
-                </Heading>
-              </GridItem>
-              <GridItem colSpan={4}>
-                <Heading as="h5" size="sm" color="gray.700">
-                  Vendor
-                </Heading>
-              </GridItem>
-              <GridItem colSpan={4}>
-                <Heading as="h5" size="sm" color="gray.700">
-                  Model
-                </Heading>
-              </GridItem>
-              <GridItem colSpan={4}>
-                <Heading as="h5" size="sm" color="gray.700">
-                  Part Number
-                </Heading>
-              </GridItem>
-              <GridItem colSpan={4}>
-                <Heading as="h5" size="sm" color="gray.700">
-                  Serial Number
-                </Heading>
-              </GridItem>
-              <GridItem colSpan={4}>
-                <Heading as="h5" size="sm" color="gray.700">
-                  Asset Tag
-                </Heading>
-              </GridItem>
-            </Grid>
+          <GridItem colSpan={{ sm: "12", md: "12", lg: "9", xl: "10" }}>
+            <Box marginTop={{ base: "1em", sm: "1em", md: "0em" }}>
+              <Card
+                padding="1em"
+                minHeight={"17em"}
+                variant="outline"
+                bg="#fdfdfd"
+                borderRadius={"0.6em 0.6em 0.6em 0.6em"}
+              >
+                <TableContainer>
+                  <Table variant="simple">
+                    <TableCaption>Add components to your asset</TableCaption>
+                    <Thead>
+                      <Tr>
+                        <Th isNumeric>No.</Th>
+                        <Th>Amount</Th>
+                        <Th>Vendor</Th>
+                        <Th>Model</Th>
+                        <Th>Part Number</Th>
+                        <Th>Serial Number</Th>
+                        <Th>Asset Tag</Th>
+                      </Tr>
+                    </Thead>
 
-            {forms.map((form, index) => (
-              <HwComponentsForm
-                key={index}
-                index={index}
-                formData={form}
-                onInputChange={(event) => handleInputChange(index, event)}
-              />
-            ))}
+                    <Tbody>
+                      {forms.map((form, index) => (
+                        <HwComponentsForm
+                          key={index}
+                          index={index}
+                          formData={form}
+                          onInputChange={(event) =>
+                            handleInputChange(index, event)
+                          }
+                        />
+                      ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
 
-            <Grid
-              templateColumns="repeat(24, 1fr)"
-              gap={6}
-              marginBottom="1em"
+                <Grid
+                  templateColumns="repeat(24, 1fr)"
+                  gap={6}
+                  marginBottom="1em"
+                  marginTop={"1em"}
+                >
+                  <GridItem colStart={24}>
+                    <Button
+                      variant={"outline"}
+                      rightIcon={<AddIcon />}
+                      size="sm"
+                      colorScheme="teal"
+                      onClick={handleAddForm}
+                    >
+                      New row
+                    </Button>
+                  </GridItem>
+                </Grid>
+              </Card>
+            </Box>
+            <Card
+              padding="0.6em"
               marginTop={"1em"}
+              variant="outline"
+              bg="#fdfdfd"
+              borderRadius={"0.6em 0.6em 0.6em 0.6em"}
             >
-              <GridItem colStart={24}>
+              <Flex>
+                <Spacer />
+                <NavLink to="/assets/fleet">
+                  <Button
+                    marginRight={"1.2em"}
+                    variant={"outline"}
+                    size="sm"
+                    colorScheme="teal"
+                    width={"5em"}
+                  >
+                    Close
+                  </Button>
+                </NavLink>
+
                 <Button
-                  variant={"outline"}
-                  rightIcon={<AddIcon />}
+                  type="button"
+                  onClick={handleSubmit}
+                  rightIcon={<ArrowForwardIcon />}
                   size="sm"
                   colorScheme="teal"
-                  onClick={handleAddForm}
+                  width={"7em"}
                 >
-                  New row
+                  Submit
                 </Button>
-              </GridItem>
-            </Grid>
-          </Card>
-        </Box>
-        <Card
-          padding="0.6em"
-          marginTop={"1em"}
-          variant="outline"
-          bg="#fdfdfd"
-          borderRadius={"0.6em 0.6em 0.6em 0.6em"}
-        >
-          <Flex>
-            <Spacer />
-            <NavLink to="/assets/fleet">
-              <Button
-                marginRight={"1.2em"}
-                variant={"outline"}
-                size="sm"
-                colorScheme="teal"
-                width={"5em"}
-              >
-                Close
-              </Button>
-            </NavLink>
-
-            <Button
-              type="button"
-              onClick={handleSubmit}
-              rightIcon={<ArrowForwardIcon />}
-              size="sm"
-              colorScheme="teal"
-              width={"7em"}
-            >
-              Submit
-            </Button>
-          </Flex>
-        </Card>
-      </GridItem>
+              </Flex>
+            </Card>
+          </GridItem>
+        </>
+      )}
     </>
   );
 }

@@ -12,6 +12,7 @@ const {
   swContractsGetNo,
   contractsGetAllContractTypes,
   contractsGetByContractNoBasic,
+  contractsGetByAssetId,
 
   contractsPostAdd,
   contractsPostAddAsset,
@@ -383,6 +384,22 @@ module.exports.cContractsGetByContractNoBasic = async (req, res) => {
       res.status(401).send({ data: updatedContracts });
     } else {
       res.status(200).send({ data: updatedContracts });
+    }
+  } catch (error) {
+    res.status(404).send({ data: [{ error }] });
+  }
+};
+
+module.exports.cContractsGetByAssetId = async (req, res) => {
+  try {
+    const asset_id = req.params.asset_id;
+    const identity = await checkIdentity(req);
+    const result = await contractsGetByAssetId(identity, asset_id);
+    
+    if (result[0] && result[0].error) {
+      res.status(401).send({ data: result });
+    } else {
+      res.status(200).send({ data: result });
     }
   } catch (error) {
     res.status(404).send({ data: [{ error }] });

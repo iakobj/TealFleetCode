@@ -188,6 +188,7 @@ const {
   cSupportGetContracts,
   cContractsGetAllContractTypes,
   cContractsGetByContractNoBasic,
+  cContractsGetByAssetId,
 
   cContractsPostAdd,
   cContractsPostAddAsset,
@@ -212,6 +213,8 @@ contractsRouters.get("/basic/information/:contract_no", cContractsGetByContractN
 contractsRouters.get("/types", cContractsGetAllContractTypes);
 
 contractsRouters.get("/all/:filter?", cSupportGetContracts);
+
+contractsRouters.get("/assets/:asset_id", cContractsGetByAssetId);
 
 contractsRouters.post("/add", cContractsPostAdd);
 contractsRouters.post("/add/asset", cContractsPostAddAsset);

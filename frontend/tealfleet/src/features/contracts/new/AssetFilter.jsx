@@ -374,7 +374,7 @@ function AssetFilter({ newContractId, newContractNo }) {
           <WrapItem>
             <IconButton
               marginRight={"0.6em"}
-              aria-label="Reset filter"
+              aria-label="Arrow Back"
               icon={<ArrowBackIcon />}
               size={"sm"}
               colorScheme={"teal"}
