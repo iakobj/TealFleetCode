@@ -94,7 +94,6 @@ function HwComponents({ hardware_asset_id }) {
       setNextStep(true);
     }
 
-    console.log("Submitting forms:", submitData);
     try {
       fetch(`${API_ENDPOINT}/hardware/assets/add/components/`, {
         method: "POST",
@@ -104,7 +103,6 @@ function HwComponents({ hardware_asset_id }) {
       }).then(async (response) => {
         if (response.status == 200) {
           let hardware_asset_id = await response.json();
-          console.log(hardware_asset_id[0].hardware_asset_id);
           Toast({
             title: "Asset added",
             description: `Asset with ID: ${hardware_asset_id[0].hardware_asset_id} was successefuly updated with new component(s)`,
@@ -157,7 +155,7 @@ function HwComponents({ hardware_asset_id }) {
                     <Thead>
                       <Tr>
                         <Th isNumeric>No.</Th>
-                        <Th>Amount</Th>
+                        <Th isNumeric>Amount</Th>
                         <Th>Vendor</Th>
                         <Th>Model</Th>
                         <Th>Part Number</Th>

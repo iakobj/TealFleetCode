@@ -43,7 +43,7 @@ import {
   ArrowForwardIcon,
 } from "@chakra-ui/icons";
 
-function ContractsList({ contractItems, selectedContracts }) {
+function ContractsList({ contractItems, selectedContracts, newAssetId, assetType }) {
   const [isChecked, setIsChecked] = useState(false);
   const toast = useToast();
   const handleChange = (e) => {
@@ -51,22 +51,23 @@ function ContractsList({ contractItems, selectedContracts }) {
     setIsChecked(checked);
 
     const contract_id = contractItems.contract_id;
-
     const contract_no = contractItems.contract_no;
 
     let action = "none";
 
     let contractInfo = {
-      contract_no: contract_no,
-      contract_id: contract_id,
-      asset_type: contractItems.asset_type,
+        newContractNo: contract_no,
+        newContractId: contract_id,
+      asset_id: newAssetId,
+      asset_type: assetType,
     };
 
     if (checked) {
       action = "add";
 
       const addContract = JSON.stringify(contractInfo, null, 2);
-      fetch(`${API_ENDPOINT}/asset/add/to/contract`, {
+      console.log(contractInfo);
+      fetch(`${API_ENDPOINT}/contracts/add/asset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -100,7 +101,8 @@ function ContractsList({ contractItems, selectedContracts }) {
       action = "remove";
 
       const removeContract = JSON.stringify(contractInfo, null, 2);
-      fetch(`${API_ENDPOINT}/asset/remove/from/contract`, {
+      console.log(contractInfo);
+      fetch(`${API_ENDPOINT}/contracts/remove/asset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

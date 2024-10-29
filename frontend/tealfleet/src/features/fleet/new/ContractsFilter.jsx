@@ -41,9 +41,11 @@ import {
 
 import FormStepper from "./FormStepper";
 
-function ContractsFilter() {
+function ContractsFilter(hardware_asset_id) {
   const loaderData = useLoaderData();
   const [nextStep, setNextStep] = useState(false);
+
+  const newAssetId = hardware_asset_id.hardware_asset_id;
 
   const contractItems = loaderData.cItems.data;
   const contractorsItems = loaderData.contractorsItems.data;
@@ -270,6 +272,8 @@ function ContractsFilter() {
                         <ContractsList
                           contractItems={contractItems}
                           selectedContracts={selectedContracts}
+                          newAssetId={newAssetId}
+                          assetType={"HW"}
                           key={contractItems.contract_id}
                         />
                       ))

@@ -42,6 +42,7 @@ function AssetList({
       action = "add";
 
       const addAsset = JSON.stringify(assetInfo, null, 2);
+      console.log(assetInfo);
       fetch(`${API_ENDPOINT}/contracts/add/asset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -76,6 +77,7 @@ function AssetList({
       action = "remove";
 
       const removeAsset = JSON.stringify(assetInfo, null, 2);
+      console.log(assetInfo);
       fetch(`${API_ENDPOINT}/contracts/remove/asset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
