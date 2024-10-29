@@ -218,7 +218,9 @@ contractsRouters.get("/assets/:asset_id", cContractsGetByAssetId);
 
 contractsRouters.post("/add", cContractsPostAdd);
 contractsRouters.post("/add/asset", cContractsPostAddAsset);
-contractsRouters.post("/remove/asset/", cContractsPostRemoveAsset) // TODO
+contractsRouters.post("/remove/asset/", cContractsPostRemoveAsset)
+
+
 
 contractsRouters.post("/remove/", cContractsPostRemoveContract)
 

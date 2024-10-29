@@ -496,7 +496,7 @@ module.exports.cContractsPostAddAsset = async (req, res) => {
 };
 
 
-// TODO
+
 module.exports.cContractsPostRemoveAsset = async (req, res) => {
   try {
     const identity = await checkIdentity(req);
@@ -521,8 +521,6 @@ module.exports.cContractsPostRemoveAsset = async (req, res) => {
 };
 
 
-
-// TODO
 module.exports.cContractsPostRemoveContract = async (req, res) => {
   try {
     const identity = await checkIdentity(req); 
