@@ -326,10 +326,34 @@ module.exports.cSupportGetContracts = async (req, res) => {
 
     const result = await supportGetContracts(identity, searchParams);
 
+    const today = new Date();
+
+    const updatedContracts = result.map((result) => {
+      const validFrom = new Date(result.contract_valid_from);
+      const validTo = new Date(result.contract_valid_to);
+
+      // Add a day to validFrom and validTo so the return will be the same as in the databse
+      validFrom.setDate(validFrom.getDate());
+      validTo.setDate(validTo.getDate());
+
+      // Extracting only the date part without the time
+      const validFromDateString = validFrom.toISOString().split("T")[0];
+      const validToDateString = validTo.toISOString().split("T")[0];
+
+      const isValid = today >= validFrom && today <= validTo.setDate(validTo.getDate() );
+
+      return {
+        ...result,
+        contract_valid_from: validFromDateString,
+        contract_valid_to: validToDateString,
+        contract_valid: isValid ? "true" : "false",
+      };
+    });
+
     if (result[0] && result[0].error) {
-      res.status(401).send({ data: result });
+      res.status(401).send({ data: updatedContracts });
     } else {
-      res.status(200).send({ data: result });
+      res.status(200).send({ data: updatedContracts });
     }
   } catch (error) {
     res.status(404).send({ data: [{ error }] });

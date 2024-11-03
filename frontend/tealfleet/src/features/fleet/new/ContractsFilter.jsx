@@ -6,7 +6,7 @@ import ContractsList from "./ContractsList";
 import FilterNothingFound from "../../../components/FilterNothingFound";
 
 // import location of the API server
-import { cContractsGetByAssetId } from "../../../constants/api/contracts.js";
+import { contractsGetByAssetId } from "../../../constants/api/contracts.js";
 
 // Chakra-UI components
 import {
@@ -66,7 +66,7 @@ function ContractsFilter(hardware_asset_id) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const selContracts = await cContractsGetByAssetId(newAssetId);
+      const selContracts = await contractsGetByAssetId(newAssetId);
 
       setSelectedContracts(selContracts);
     };

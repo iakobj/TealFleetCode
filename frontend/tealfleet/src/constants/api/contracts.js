@@ -3,7 +3,7 @@ import { API_ENDPOINT } from "../apiEndpoint";
 
 export const contractsGetAll = async () => {
     try {
-      const getData = await fetch(`${API_ENDPOINT}/contracts`, {
+      const getData = await fetch(`${API_ENDPOINT}/contracts/all`, {
         method: "GET",
         credentials: "include",
       });
@@ -77,7 +77,7 @@ export const contractsGetAllContractTypes = async () => {
     }
   }
 
-  export const cContractsGetByAssetId = async (asset_id) => {
+  export const contractsGetByAssetId = async (asset_id) => {
     try {
       const getData = await fetch(`${API_ENDPOINT}/contracts/assets/${asset_id}`, {
         method: "GET",

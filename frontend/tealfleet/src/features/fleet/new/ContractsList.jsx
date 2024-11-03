@@ -58,8 +58,8 @@ function ContractsList({ contractItems, selectedContracts, newAssetId, assetType
     let contractInfo = {
         newContractNo: contract_no,
         newContractId: contract_id,
-      asset_id: newAssetId,
-      asset_type: assetType,
+        asset_id: newAssetId,
+        asset_type: assetType,
     };
 
     if (checked) {
@@ -137,17 +137,17 @@ function ContractsList({ contractItems, selectedContracts, newAssetId, assetType
 
   useEffect(() => {
     if (selectedContracts && selectedContracts.data) {
-      const isSelected = selectedContracts.data.some((contract) => {
-        if (contractItems.asset_type == "SW") {
-            return contract.software_asset_id === contractItems.software_asset_id;
-          } else if (contractItems.asset_type == "HW" && !contract.software_asset_id) {
-            return contract.hardware_asset_id === contractItems.hardware_asset_id;
-          }
-          return false;
-        });
-      setIsChecked(isSelected);
-    }
-  }, [selectedContracts, contractItems]);
+        const isSelected = selectedContracts.data.some((contract) => {
+            if (assetType == "SW") {
+              return contract.contract_id === contractItems.contract_id;
+            } else if (assetType == "HW") {
+              return contract.contract_id === contractItems.contract_id;
+            }
+            return false;
+          });
+          setIsChecked(isSelected);
+        }
+    }, [selectedContracts, contractItems]);
 
   return (
     <Tr>
