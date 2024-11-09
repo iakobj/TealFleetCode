@@ -6,31 +6,72 @@ module.exports.contractsGetAll = async (identity) => {
 
     if (tenant_root == true && mock_tenant_id == undefined) {
       const result = await query(`
-        SELECT * 
-        FROM contracts
-        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
-        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id;
+        SELECT
+          COUNT(*) OVER () AS total_count,
+          c.contract_id,
+          c.tenant_id,
+          c.contract_type_id,
+          c.contractor_name,
+          c.contract_sla,
+          c.contract_no,
+          c.contract_description,
+          c.contract_valid_from,
+          c.contract_valid_to,
+          c.contract_changed_at,
+          c.contract_created_at,
+          tenants.tenant_id,
+          tenants.is_root,
+          tenants.tenant_name,
+          contract_types.contract_type_id,
+          contract_types.type,
+          contract_types.description,
+          CASE
+              WHEN c.contract_valid_to > CURRENT_DATE THEN 'true'
+              WHEN c.contract_valid_to <= CURRENT_DATE THEN 'false'
+              ELSE 'Unknown' -- Add an ELSE condition if needed
+          END AS contract_valid
+          FROM 
+              contracts c
+          JOIN 
+              tenants ON c.tenant_id = tenants.tenant_id
+          JOIN 
+        contract_types ON c.contract_type_id = contract_types.contract_type_id
       `);
-      return result.rows;
-    } else if (tenant_root == true && mock_tenant_id) {
-      const result = await query(
-        `
-        SELECT * 
-        FROM contracts
-        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
-        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
-        WHERE contracts.tenant_id = $1`,
-        [mock_tenant_id]
-      );
       return result.rows;
     } else {
       const result = await query(
         `
-        SELECT * 
-        FROM contracts
-        JOIN tenants ON contracts.tenant_id = tenants.tenant_id
-        JOIN contract_types ON contracts.contract_type_id = contract_types.contract_type_id
-        WHERE contracts.tenant_id = $1`,
+        SELECT
+          COUNT(*) OVER () AS total_count,
+          c.contract_id,
+          c.tenant_id,
+          c.contract_type_id,
+          c.contractor_name,
+          c.contract_sla,
+          c.contract_no,
+          c.contract_description,
+          c.contract_valid_from,
+          c.contract_valid_to,
+          c.contract_changed_at,
+          c.contract_created_at,
+          tenants.tenant_id,
+          tenants.is_root,
+          tenants.tenant_name,
+          contract_types.contract_type_id,
+          contract_types.type,
+          contract_types.description,
+          CASE
+              WHEN c.contract_valid_to > CURRENT_DATE THEN 'true'
+              WHEN c.contract_valid_to <= CURRENT_DATE THEN 'false'
+              ELSE 'Unknown' -- Add an ELSE condition if needed
+          END AS contract_valid
+          FROM 
+              contracts c
+          JOIN 
+              tenants ON c.tenant_id = tenants.tenant_id
+          JOIN 
+              contract_types ON c.contract_type_id = contract_types.contract_type_id
+              WHERE contracts.tenant_id = $1`,
         [tenant_id]
       );
       return result.rows;
@@ -288,7 +329,8 @@ module.exports.contractsGetValid = async (identity) => {
         `);
       return result.rows;
     } else if (tenant_root == true && mock_tenant_id) {
-      const result = await query(` 
+      const result = await query(
+        ` 
       SELECT 
       COUNT(*) OVER () AS total_count,
       subquery.*
@@ -306,7 +348,8 @@ module.exports.contractsGetValid = async (identity) => {
       );
       return result.rows;
     } else {
-      const result = await query(`
+      const result = await query(
+        `
       SELECT 
       COUNT(*) OVER () AS total_count,
       subquery.*
@@ -322,7 +365,7 @@ module.exports.contractsGetValid = async (identity) => {
   ) AS subquery;`,
         [tenant_id]
       );
-      
+
       return result.rows;
     }
   } catch (error) {
@@ -351,7 +394,8 @@ module.exports.contractsGetInvalid = async (identity) => {
         `);
       return result.rows;
     } else if (tenant_root == true && mock_tenant_id) {
-      const result = await query(` 
+      const result = await query(
+        ` 
       SELECT 
       COUNT(*) OVER () AS total_count,
       subquery.*
@@ -368,8 +412,9 @@ module.exports.contractsGetInvalid = async (identity) => {
         [mock_tenant_id]
       );
       return result.rows;
-      } else {
-      const result = await query(`
+    } else {
+      const result = await query(
+        `
       SELECT 
       COUNT(*) OVER () AS total_count,
       subquery.*
@@ -446,10 +491,8 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
     if (searchParams.searchValidity !== false) {
       if (searchParams.searchValidity == "Active") {
         queryText += ` AND c.contract_valid_to > CURRENT_DATE`;
-
       } else if (searchParams.searchValidity == "Inactive") {
         queryText += ` AND c.contract_valid_to < CURRENT_DATE`;
-
       }
     }
     if (searchParams.searchContractor !== false) {
@@ -459,13 +502,12 @@ module.exports.supportGetContracts = async (identity, searchParams) => {
     if (true) {
       queryText += ` LIMIT 24 OFFSET $${queryParams.length + 1};`;
       queryParams.push(searchParams.searchOffset);
-    } 
+    }
     if (tenant_root == true && mock_tenant_id == undefined) {
       console.log(queryText, queryParams);
       const result = await query(queryText, queryParams);
       console.log(result);
       return result.rows;
-
     } else {
       console.log(queryText, queryParams);
       const result = await query(queryText, queryParams);
@@ -559,19 +601,23 @@ module.exports.contractsGetByContractNoBasic = async (
 //Work in progress
 module.exports.contractsGetByAssetId = async (identity, asset_id) => {
   try {
-    
     const { tenant_id, tenant_root } = await identity.data;
 
-    const sw = await query(`SELECT COUNT(*) FROM software_assets WHERE software_asset_id = $1;`, [asset_id]);
+    const sw = await query(
+      `SELECT COUNT(*) FROM software_assets WHERE software_asset_id = $1;`,
+      [asset_id]
+    );
     const swRowCount = sw.rows[0].count;
 
-
-    const hw = await query(`SELECT COUNT(*) FROM hardware_assets WHERE hardware_asset_id = $1;`, [asset_id]);
+    const hw = await query(
+      `SELECT COUNT(*) FROM hardware_assets WHERE hardware_asset_id = $1;`,
+      [asset_id]
+    );
     const hwRowCount = hw.rows[0].count;
 
-
-    if (swRowCount != 0 && swRowCount > 0 ) {
-      const result = await query(`
+    if (swRowCount != 0 && swRowCount > 0) {
+      const result = await query(
+        `
         SELECT 
           sw_asset_contracts.*, 
           software_assets.*, 
@@ -585,14 +631,14 @@ module.exports.contractsGetByAssetId = async (identity, asset_id) => {
           contracts ON sw_asset_contracts.contract_id = contracts.contract_id
         WHERE 
           sw_asset_contracts.software_asset_id = $1;
-      `, [asset_id]);
-    
+      `,
+        [asset_id]
+      );
+
       return result.rows;
-    
-
-
-    } else if (hwRowCount != 0 && hwRowCount > 0 ) {
-      const result = await query(`
+    } else if (hwRowCount != 0 && hwRowCount > 0) {
+      const result = await query(
+        `
         SELECT 
           hw_asset_contracts.*, 
           hardware_assets.*, 
@@ -606,17 +652,14 @@ module.exports.contractsGetByAssetId = async (identity, asset_id) => {
           contracts ON hw_asset_contracts.contract_id = contracts.contract_id
         WHERE 
           hw_asset_contracts.hardware_asset_id = $1;
-      `, [asset_id]);
+      `,
+        [asset_id]
+      );
 
       return result.rows;
-      
     } else {
       return [{ error: error }];
     }
-    
-
-
-    
   } catch (error) {
     return [{ error: error }];
   }
@@ -676,7 +719,12 @@ module.exports.contractsPostAdd = async (data) => {
   }
 };
 
-module.exports.contractsPostAddAsset = async (identity, newContractId, asset_id, asset_type) => {
+module.exports.contractsPostAddAsset = async (
+  identity,
+  newContractId,
+  asset_id,
+  asset_type
+) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
     console.log(newContractId);
@@ -773,14 +821,17 @@ module.exports.contractsPostAddAsset = async (identity, newContractId, asset_id,
         return result.rows;
       }
     }
-
   } catch (error) {
     return [{ error: error }];
   }
 };
 
-
-module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_id, asset_type) => {
+module.exports.contractsPostRemoveAsset = async (
+  identity,
+  newContractId,
+  asset_id,
+  asset_type
+) => {
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;
     if (asset_type == "HW") {
@@ -812,7 +863,7 @@ module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_
         return result.rows;
       } else {
         const result = await query(
-            `
+          `
             DELETE FROM  
               hw_asset_contracts
             WHERE
@@ -820,8 +871,8 @@ module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_
             AND
               contract_id = $2;
             `,
-            [asset_id, newContractId]
-          );
+          [asset_id, newContractId]
+        );
         return result.rows;
       }
     } else if (asset_type == "SW") {
@@ -837,7 +888,7 @@ module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_
           `,
           [asset_id, newContractId]
         );
-      return result.rows;
+        return result.rows;
       } else if (tenant_root == true && mock_tenant_id) {
         const result = await query(
           `
@@ -850,7 +901,7 @@ module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_
           `,
           [asset_id, newContractId]
         );
-      return result.rows;
+        return result.rows;
       } else {
         const result = await query(
           `
@@ -863,21 +914,16 @@ module.exports.contractsPostRemoveAsset = async (identity, newContractId, asset_
           `,
           [asset_id, newContractId]
         );
-      return result.rows;
+        return result.rows;
       }
     }
-
   } catch (error) {
     return [{ error: error }];
   }
 };
 
-module.exports.contractsPostRemoveContract = async (
-  identity,
-  contract_id
-) => {
-
-  console.log(`contract_id in serv is: ${contract_id}`)
+module.exports.contractsPostRemoveContract = async (identity, contract_id) => {
+  console.log(`contract_id in serv is: ${contract_id}`);
 
   try {
     const { tenant_id, tenant_root, mock_tenant_id } = await identity.data;

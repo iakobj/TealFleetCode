@@ -3,7 +3,7 @@ import { API_ENDPOINT } from "../apiEndpoint";
 
 export const contractsGetAll = async () => {
     try {
-      const getData = await fetch(`${API_ENDPOINT}/contracts/all`, {
+      const getData = await fetch(`${API_ENDPOINT}/contracts/`, {
         method: "GET",
         credentials: "include",
       });
